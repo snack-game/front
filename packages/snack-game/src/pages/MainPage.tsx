@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import LogoImage from '@assets/images/logo.png';
 import PageContainer from '@components/base/PageContainer';
@@ -6,7 +7,7 @@ import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 import DropApples from '@components/DropApples';
 import Footer from '@components/layout/Footer';
-import TeamInfo from '@components/layout/TeamInfo';
+import TeamInfo from '@components/TeamInfo';
 
 interface MainPageProps {
   children?: never;
@@ -19,6 +20,9 @@ const MainPage: FC<MainPageProps> = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Snack Game</title>
+      </Helmet>
       <DropApples />
       <PageContainer className={'flex flex-col justify-between'}>
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
