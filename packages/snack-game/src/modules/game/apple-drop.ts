@@ -3,9 +3,9 @@ export class AppleDrop {
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private lastTime: number;
-  private image: HTMLImageElement;
+  private readonly image: HTMLImageElement;
   private settings = {
-    unitMaximum: 20,
+    unitMaximum: 10,
     radius: 15,
     gravity: 0.1,
     corFactor: 0.5,
@@ -39,6 +39,10 @@ export class AppleDrop {
     window.onresize(new UIEvent('resize'));
   }
 
+  public destroy(): void {
+    window.onresize = null;
+  }
+
   public addUnit(settings: any): boolean {
     if (this.units.length >= this.settings.unitMaximum) {
       return false;
@@ -58,25 +62,6 @@ export class AppleDrop {
     return true;
   }
 
-  private getVelocity(unit1: any, unit2: any): any {
-    return {
-      x:
-        ((unit1.mass - unit2.mass * this.settings.corFactor) /
-          (unit1.mass + unit2.mass)) *
-          unit1.velocity.x +
-        ((unit2.mass + unit2.mass * this.settings.corFactor) /
-          (unit1.mass + unit2.mass)) *
-          unit2.velocity.x,
-      y:
-        ((unit1.mass - unit2.mass * this.settings.corFactor) /
-          (unit1.mass + unit2.mass)) *
-          unit1.velocity.y +
-        ((unit2.mass + unit2.mass * this.settings.corFactor) /
-          (unit1.mass + unit2.mass)) *
-          unit2.velocity.y,
-    };
-  }
-
   public update(): void {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -89,11 +74,11 @@ export class AppleDrop {
       }
     }
 
-    for (let idx in this.units) {
+    for (const idx in this.units) {
       this.units[idx].cals = false;
     }
 
-    for (let idx in this.units) {
+    for (const idx in this.units) {
       let collapsed = false;
 
       const unit = this.units[idx];
@@ -103,7 +88,7 @@ export class AppleDrop {
       };
 
       if (unit.cals === false) {
-        for (let key in this.units) {
+        for (const key in this.units) {
           if (key === idx) {
             continue;
           }
@@ -116,7 +101,7 @@ export class AppleDrop {
 
           const distanceUnits = Math.sqrt(
             Math.pow(afterItemPosition.x - afterUnitPosition.x, 2) +
-              Math.pow(afterItemPosition.y - afterUnitPosition.y, 2)
+              Math.pow(afterItemPosition.y - afterUnitPosition.y, 2),
           );
           const sumRadius = item.radius + unit.radius;
 
@@ -163,7 +148,7 @@ export class AppleDrop {
       unit.x += unit.velocity.x;
       unit.y -= unit.velocity.y;
 
-      let size = unit.radius * unit.mass;
+      const size = unit.radius * unit.mass;
 
       this.context.save();
       this.context.globalAlpha = Math.max(unit.opacity, 0);
@@ -174,7 +159,7 @@ export class AppleDrop {
         size,
         0,
         2 * Math.PI,
-        false
+        false,
       );
       this.context.closePath();
       this.context.clip();
@@ -183,7 +168,7 @@ export class AppleDrop {
         unit.x - size,
         this.canvas.height - unit.y - size,
         size * 2,
-        size * 2
+        size * 2,
       );
       this.context.restore();
     }
@@ -191,5 +176,24 @@ export class AppleDrop {
     window.requestAnimationFrame(() => {
       this.update.call(this);
     });
+  }
+
+  private getVelocity(unit1: any, unit2: any): any {
+    return {
+      x:
+        ((unit1.mass - unit2.mass * this.settings.corFactor) /
+          (unit1.mass + unit2.mass)) *
+          unit1.velocity.x +
+        ((unit2.mass + unit2.mass * this.settings.corFactor) /
+          (unit1.mass + unit2.mass)) *
+          unit2.velocity.x,
+      y:
+        ((unit1.mass - unit2.mass * this.settings.corFactor) /
+          (unit1.mass + unit2.mass)) *
+          unit1.velocity.y +
+        ((unit2.mass + unit2.mass * this.settings.corFactor) /
+          (unit1.mass + unit2.mass)) *
+          unit2.velocity.y,
+    };
   }
 }
