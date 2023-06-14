@@ -1,11 +1,11 @@
 export class AppleDrop {
-  private units: any[];
+  private readonly units: any[];
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private lastTime: number;
   private readonly image: HTMLImageElement;
   private settings = {
-    unitMaximum: 4,
+    unitMaximum: 5,
     radius: 15,
     gravity: 0.1,
     corFactor: 0.5,

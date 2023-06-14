@@ -2,6 +2,7 @@ import { FC, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
+import Loading from '@components/common/Loading';
 
 const MainPage = lazy(() => import('@pages/MainPage'));
 const GamePage = lazy(() => import('@pages/AppleGame'));
@@ -13,7 +14,7 @@ interface AppProps {
 const App: FC<AppProps> = () => {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/game" element={<GamePage />} />

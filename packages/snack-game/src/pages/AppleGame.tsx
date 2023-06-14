@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 interface AppleGameProps {
   children?: never;
@@ -7,7 +8,9 @@ interface AppleGameProps {
 const AppleGame: FC<AppleGameProps> = () => {
   return (
     <div>
-
+      <Helmet>
+        <title>Game</title>
+      </Helmet>
     </div>
   );
 };
