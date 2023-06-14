@@ -26,10 +26,7 @@ const DropApples: FC<DropApplesProps> = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={'w-screen h-screen -z-20 absolute'}
-    ></canvas>
+    <canvas ref={canvasRef} className={'w-screen h-full -z-20 fixed'}></canvas>
   );
 };
 
