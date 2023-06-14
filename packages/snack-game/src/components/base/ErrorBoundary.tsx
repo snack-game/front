@@ -10,7 +10,7 @@ const ErrorPage: FC = () => {
   return (
     <>
       <Helmet>
-        <title>ERROR | Title</title>
+        <title>ERROR | Snack Game</title>
       </Helmet>
       <div>Error</div>
     </>
