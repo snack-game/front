@@ -5,7 +5,7 @@ export class AppleDrop {
   private lastTime: number;
   private readonly image: HTMLImageElement;
   private settings = {
-    unitMaximum: 10,
+    unitMaximum: 4,
     radius: 15,
     gravity: 0.1,
     corFactor: 0.5,

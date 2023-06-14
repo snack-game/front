@@ -5,7 +5,8 @@ import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 import DropApples from '@components/DropApples';
-import Header from '@components/layout/Header';
+import Footer from '@components/layout/Footer';
+import TeamInfo from '@components/layout/TeamInfo';
 
 interface MainPageProps {
   children?: never;
@@ -17,10 +18,9 @@ const MainPage: FC<MainPageProps> = () => {
   };
 
   return (
-    <div>
-      <Header />
+    <>
       <DropApples />
-      <PageContainer>
+      <PageContainer className={'flex flex-col justify-between'}>
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
             <p className="title-font sm:text-4xl text-2xl text-gray-900 font-kcc">
@@ -48,8 +48,10 @@ const MainPage: FC<MainPageProps> = () => {
             />
           </div>
         </div>
+        <TeamInfo></TeamInfo>
       </PageContainer>
-    </div>
+      <Footer></Footer>
+    </>
   );
 };
 
