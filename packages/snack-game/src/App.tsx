@@ -13,14 +13,16 @@ interface AppProps {
 
 const App: FC<AppProps> = () => {
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path="/" element={<AuthPage />} />
-          <Route path="/game" element={<MainPage />} />
-        </Routes>
-      </Suspense>
-    </ErrorBoundary>
+    <>
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<AuthPage />} />
+            <Route path="/game" element={<MainPage />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
+    </>
   );
 };
 
