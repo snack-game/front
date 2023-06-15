@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from 'react';
 
-import AppleImage from '@assets/images/logo.png';
+import AppleImage from '@assets/images/apple.png';
 import { AppleDrop } from '@modules/game/apple-drop';
 
 interface DropApplesProps {
@@ -26,7 +26,7 @@ const DropApples: FC<DropApplesProps> = () => {
   }, []);
 
   return (
-    <canvas ref={canvasRef} className={'w-screen h-full -z-20 fixed'}></canvas>
+    <canvas ref={canvasRef} className={'w-screen h-full -z-10 fixed'}></canvas>
   );
 };
 
