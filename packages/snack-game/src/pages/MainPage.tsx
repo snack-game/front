@@ -1,61 +1,58 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import LogoImage from '@assets/images/logo.png';
+import AppleGameImage from '@assets/images/apple-game.png';
 import PageContainer from '@components/base/PageContainer';
-import Button from '@components/common/Button';
-import Input from '@components/common/Input';
-import DropApples from '@components/DropApples';
 import Footer from '@components/layout/Footer';
-import TeamInfo from '@components/TeamInfo';
+import Header from '@components/layout/Header';
 
-interface MainPageProps {
+interface AppleGameProps {
   children?: never;
 }
 
-const MainPage: FC<MainPageProps> = () => {
-  const handleOnClick = () => {
-    location.href = '/game';
-  };
-
+const MainPage: FC<AppleGameProps> = () => {
   return (
-    <>
+    <div>
       <Helmet>
-        <title>Snack Game</title>
+        <title>Snack Game || Main</title>
       </Helmet>
-      <DropApples />
-      <PageContainer className={'flex flex-col justify-between'}>
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <p className="title-font sm:text-4xl text-2xl text-gray-900 font-kcc">
-              Snack Game
-            </p>
-            <p className="mb-8 leading-relaxed whitespace-pre">
-              {
-                '\n재미있는 시간을 보내고 싶으신가요?\n사과게임과 함께 여러분을 미소 짓게 만들어줄\n 다양한 게임들을 준비하고 있습니다!\n'
-              }
-            </p>
-            <div className="flex flex-col w-full md:justify-start justify-center items-start gap-2">
-              <Input placeholder={'이름'}></Input>
-              <Input placeholder={'소속'}></Input>
-              <p className="text-sm mt-2 text-gray-500 mb-8 w-full">
-                소속을 입력해서 친구들과 랭킹을 겨뤄 보아요!
-              </p>
-              <Button content={'입장'} onClick={handleOnClick}></Button>
+      <Header />
+      <PageContainer>
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-col text-center w-full mb-20">
+            <h1 className="sm:text-3xl text-2xl font-medium font-kcc title-font mb-4 text-gray-900">
+              Games
+            </h1>
+            <p className="lg:w-2/3 mx-auto leading-relaxed text-base"></p>
+          </div>
+          <div className="flex flex-wrap -m-4">
+            <div className="lg:w-1/3 sm:w-1/2 p-4 cursor-pointer">
+              <div className="flex relative">
+                <img
+                  alt="사과게임 이미지"
+                  className="absolute inset-0 w-full h-full object-cover object-center rounded-xl"
+                  src={AppleGameImage}
+                />
+                <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100 rounded-xl">
+                  <h2 className="tracking-widest text-sm title-font font-medium text-red-500 mb-1">
+                    중독적인 사과 떨구기!
+                  </h2>
+                  <h1 className="title-font text-xl font-medium text-gray-900 mb-3">
+                    사과게임
+                  </h1>
+                  <p className="leading-relaxed">
+                    {
+                      '드래그 영역의 사과들의 숫자합이 10이 되면 점수를 얻는 게임입니다! 황금사과를 제거해 사과를 새로고침 해보세요!'
+                    }
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-            <img
-              className="mx-auto animate-waving-apple"
-              alt="로고 이미지"
-              src={LogoImage}
-            />
-          </div>
         </div>
-        <TeamInfo></TeamInfo>
       </PageContainer>
-      <Footer></Footer>
-    </>
+      <Footer />
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ const Footer: FC<FooterProps> = () => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          @dev-dong-su, @0chill
+          @dev-dong-su, @0chil
         </a>
       </p>
       <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start text-xs text-gray-500">

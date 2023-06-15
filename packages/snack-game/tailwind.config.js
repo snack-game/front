@@ -20,7 +20,6 @@ export default {
       },
       fontFamily: {
         omyu: 'omyu_pretty',
-        bitbit: 'bitbit',
         kcc: 'KCC-Ganpan',
       },
     },
