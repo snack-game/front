@@ -26,11 +26,16 @@ const MainPage: FC<AppleGameProps> = () => {
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base"></p>
           </div>
           <div className="flex flex-wrap -m-4">
-            <div className="lg:w-1/3 sm:w-1/2 p-4 cursor-pointer">
+            <div
+              className="lg:w-1/3 sm:w-1/2 p-4 cursor-pointer"
+              onClick={() => {
+                location.href = '/game/apple-game';
+              }}
+            >
               <div className="flex relative">
                 <img
                   alt="사과게임 이미지"
-                  className="absolute inset-0 w-full h-full object-cover object-center rounded-xl"
+                  className="absolute inset-0 w-full h-full object-cover object-center rounded-xl border-4 border-gray-200"
                   src={AppleGameImage}
                 />
                 <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100 rounded-xl">

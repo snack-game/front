@@ -7,6 +7,8 @@ import Loading from '@components/common/Loading';
 const AuthPage = lazy(() => import('@pages/AuthPage'));
 const MainPage = lazy(() => import('@pages/MainPage'));
 
+const AppleGamePage = lazy(() => import('@pages/Games/AppleGamePage'));
+
 interface AppProps {
   children?: never;
 }
@@ -18,7 +20,8 @@ const App: FC<AppProps> = () => {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<AuthPage />} />
-            <Route path="/game" element={<MainPage />} />
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/game/apple-game" element={<AppleGamePage />} />
           </Routes>
         </Suspense>
       </ErrorBoundary>
