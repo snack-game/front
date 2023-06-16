@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import LogoImage from '@assets/images/logo.png';
+import LogoImage from '@assets/images/logo.webp';
 
 interface HeaderProps {
   children?: never;
@@ -9,7 +9,10 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = () => {
   return (
     <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-      <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <a
+        className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+        href={'/'}
+      >
         <img src={LogoImage} alt={'로고 이미지'} className={'w-8 h-8'} />
         <span className="ml-3 text-xl">Snack Game</span>
       </a>

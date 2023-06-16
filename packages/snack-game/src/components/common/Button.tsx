@@ -10,8 +10,8 @@ interface ButtonProps {
 }
 
 const StyledButton = tw.button`
-inline-flex text-white bg-red-500 border-0 py-2 px-6 rounded text-lg
-hover:bg-red-600
+inline-flex text-white bg-rose-500 border-0 py-2 px-6 rounded text-lg
+hover:bg-rose-400
 focus:outline-none 
 `;
 

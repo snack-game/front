@@ -3,11 +3,11 @@ export class Apple {
   public image: HTMLImageElement;
   public radius: number;
   public number: number = Math.floor(Math.random() * 9) + 1;
-  public mass: number = 1;
-  public bounceCount: number = 0;
-  public gravity: number = 0.4;
-  public corFactor: number = 0.5;
-  public toRemove: boolean = false;
+  public mass = 1;
+  public bounceCount = 0;
+  public gravity = 0.4;
+  public corFactor = 0.5;
+  public toRemove = false;
   public velocity: { x: number; y: number } = {
     x: Math.random() * 4 - 2,
     y: 0,
