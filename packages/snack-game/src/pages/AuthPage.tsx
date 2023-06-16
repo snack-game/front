@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import AppleImage from '@assets/images/apple.png';
+import AppleImage from '@assets/images/apple.webp';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button';
 import Input from '@components/common/Input';
@@ -48,7 +48,7 @@ const AuthPage: FC<MainPageProps> = () => {
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 -z-20">
             <img
-              className="mx-auto animate-waving-apple"
+              className="mx-auto animate-waving-apple w-48 h-48"
               alt="로고 이미지"
               src={AppleImage}
             />

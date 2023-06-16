@@ -19,7 +19,7 @@ export default {
         'waving-apple': 'wave 2s linear infinite',
       },
       fontFamily: {
-        omyu: 'omyu_pretty',
+        dove: 'Dovemayo_gothic',
         kcc: 'KCC-Ganpan',
       },
     },

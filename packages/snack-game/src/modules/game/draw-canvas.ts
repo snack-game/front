@@ -1,5 +1,5 @@
-import { Drag } from '@modules/game/drag';
 import { Apple } from '@modules/game/apple';
+import { Drag } from '@modules/game/drag';
 
 export class DrawCanvas {
   private canvas: HTMLCanvasElement;
@@ -12,13 +12,9 @@ export class DrawCanvas {
   public droppedApples: Apple[] = [];
   private gameService?: any;
   private score: number;
-  private src: string;
+  private readonly src: string;
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    gameService: any,
-    src: string
-  ) {
+  constructor(canvas: HTMLCanvasElement, gameService: any, src: string) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
     this.ctx.strokeStyle = 'black';
@@ -135,7 +131,7 @@ export class DrawCanvas {
         apple.position.y + apple.radius,
         apple.radius,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       this.ctx.stroke();
     });
@@ -151,7 +147,7 @@ export class DrawCanvas {
     if (sum === 10) {
       this.droppedApples.push(...this.applesInDragArea);
       this.units = this.units.filter(
-        (apple) => !this.applesInDragArea.includes(apple)
+        (apple) => !this.applesInDragArea.includes(apple),
       );
 
       const newScore = (this.score += this.applesInDragArea.length);
@@ -170,7 +166,7 @@ export class DrawCanvas {
         this.drag.startX,
         this.drag.startY,
         width,
-        height
+        height,
       );
       this.ctx.stroke();
       this.highlightApplesInDragArea();
@@ -182,7 +178,7 @@ export class DrawCanvas {
         apple.position.x,
         apple.position.y,
         apple.radius * 2,
-        apple.radius * 2
+        apple.radius * 2,
       );
 
       this.ctx.font = `${apple.radius + 1}px Poor Story`;
@@ -192,7 +188,7 @@ export class DrawCanvas {
       this.ctx.fillText(
         apple.number.toString(),
         apple.position.x + apple.radius,
-        apple.position.y + apple.radius
+        apple.position.y + apple.radius,
       );
     });
 
@@ -208,7 +204,7 @@ export class DrawCanvas {
 
       if (apple.position.y + apple.radius * 2 >= this.canvas.height) {
         this.droppedApples = this.droppedApples.filter(
-          (apple) => !apple.toRemove
+          (apple) => !apple.toRemove,
         );
       }
 
@@ -217,7 +213,7 @@ export class DrawCanvas {
         apple.position.x,
         apple.position.y,
         apple.radius * 2,
-        apple.radius * 2
+        apple.radius * 2,
       );
 
       this.ctx.font = `${apple.radius + 1}px Poor Story`;
@@ -227,7 +223,7 @@ export class DrawCanvas {
       this.ctx.fillText(
         apple.number.toString(),
         apple.position.x + apple.radius,
-        apple.position.y + apple.radius
+        apple.position.y + apple.radius,
       );
     });
 

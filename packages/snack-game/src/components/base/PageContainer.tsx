@@ -8,7 +8,7 @@ interface PageContainerProps {
 }
 
 const PageContainerWrapper = tw.div`
-mx-auto mx-auto md:max-w-screen-xl max-md:min-w-sm font-omyu
+mx-auto mx-auto md:max-w-screen-xl max-md:min-w-sm font-dove
 `;
 
 const PageContainerInner = tw.div`

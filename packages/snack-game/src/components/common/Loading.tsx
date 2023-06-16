@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import LoadingImage from '@assets/images/logo.png';
+import LoadingImage from '@assets/images/logo.webp';
 
 interface LoadingProps {
   children?: never;

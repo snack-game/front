@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import AppleGameImage from '@assets/images/apple-game.png';
+import AppleGameImage from '@assets/images/apple-game.jpg';
 import PageContainer from '@components/base/PageContainer';
 import Footer from '@components/layout/Footer';
 import Header from '@components/layout/Header';
@@ -20,7 +20,7 @@ const MainPage: FC<AppleGameProps> = () => {
       <PageContainer>
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-3xl text-2xl font-medium font-kcc title-font mb-4 text-gray-900">
+            <h1 className="sm:text-3xl text-2xl font-kcc font-medium title-font mb-4 text-gray-900">
               Games
             </h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base"></p>
