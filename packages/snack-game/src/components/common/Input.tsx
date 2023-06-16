@@ -9,7 +9,7 @@ interface InputProps {
 
 const Input: FC<InputProps> = ({ className, placeholder }) => {
   return (
-    <div className="relative mr-4 md:w-full lg:w-full xl:w-1/2 w-2/4">
+    <div className="relative mr-4 xl:w-1/2 w-full">
       <label className="leading-7 text-lg text-gray-600">
         {placeholder}
         <input

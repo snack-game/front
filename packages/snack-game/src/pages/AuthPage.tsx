@@ -15,10 +15,6 @@ interface MainPageProps {
 }
 
 const AuthPage: FC<MainPageProps> = () => {
-  const handleOnClick = () => {
-    location.href = '/game';
-  };
-
   return (
     <>
       <Helmet>
@@ -43,7 +39,13 @@ const AuthPage: FC<MainPageProps> = () => {
               <p className="text-sm mt-2 text-gray-500 mb-8 w-full">
                 소속을 입력해서 친구들과 랭킹을 겨뤄 보아요!
               </p>
-              <Button content={'입장'} onClick={handleOnClick}></Button>
+              <Button
+                content={'입장'}
+                className={'mx-auto xl:mx-0'}
+                onClick={() => {
+                  location.href = '/main';
+                }}
+              ></Button>
             </div>
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 -z-20">
