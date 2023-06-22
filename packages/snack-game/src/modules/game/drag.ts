@@ -1,4 +1,4 @@
-import { DrawCanvas } from '@modules/game/draw-canvas';
+import React from 'react';
 
 export class Drag {
   public startX: number;
@@ -6,15 +6,8 @@ export class Drag {
   public currentX: number;
   public currentY: number;
   public isDrawing: boolean;
-  private canvas: HTMLCanvasElement;
-  private ctx: CanvasRenderingContext2D;
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    private drawCanvasInstance: DrawCanvas
-  ) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d')!;
+  constructor() {
     this.startX = 0;
     this.startY = 0;
     this.currentX = 0;
@@ -22,14 +15,10 @@ export class Drag {
     this.isDrawing = false;
   }
 
-  onMouseDown(event: MouseEvent | TouchEvent): void {
-    event.preventDefault();
+  onMouseDown(event: React.MouseEvent<HTMLCanvasElement>, rect: DOMRect): void {
     this.isDrawing = true;
-    const rect = this.canvas.getBoundingClientRect();
-    const clientX =
-      'touches' in event ? event.touches[0].clientX : event.clientX;
-    const clientY =
-      'touches' in event ? event.touches[0].clientY : event.clientY;
+    const clientX = event.clientX;
+    const clientY = event.clientY;
     this.startX = clientX - rect.left;
     this.startY = clientY - rect.top;
 
@@ -37,32 +26,35 @@ export class Drag {
     this.currentY = this.startY;
   }
 
-  onMouseMove(event: MouseEvent | TouchEvent): void {
-    event.preventDefault();
-    const clientX =
-      'touches' in event ? event.touches[0].clientX : event.clientX;
-    const clientY =
-      'touches' in event ? event.touches[0].clientY : event.clientY;
+  onMouseMove(event: React.MouseEvent<HTMLCanvasElement>, rect: DOMRect): void {
+    const clientX = event.clientX;
+    const clientY = event.clientY;
 
-    this.currentX = clientX - this.canvas.getBoundingClientRect().left;
-    this.currentY = clientY - this.canvas.getBoundingClientRect().top;
+    this.currentX = clientX - rect.left;
+    this.currentY = clientY - rect.top;
   }
 
-  onMouseUp(event: MouseEvent | TouchEvent): void {
-    event.preventDefault();
+  onMouseUp(eventFunc: () => void): void {
     this.isDrawing = false;
 
-    this.drawCanvasInstance.checkApplesInDragArea();
+    eventFunc();
   }
 
-  drawRectangle(x: number, y: number, width: number, height: number): void {
-    this.ctx.beginPath();
-    this.ctx.rect(x, y, width, height);
+  drawDragArea(ctx: CanvasRenderingContext2D) {
+    if (this.isDrawing) {
+      const width = this.currentX - this.startX;
+      const height = this.currentY - this.startY;
 
-    this.ctx.fillStyle = 'rgba(248, 114, 114, 0.3)';
-    this.ctx.fill();
+      ctx.beginPath();
+      ctx.rect(this.startX, this.startY, width, height);
 
-    this.ctx.strokeStyle = 'rgba(248, 114, 114, 1)';
-    this.ctx.stroke();
+      ctx.fillStyle = 'rgba(248, 114, 114, 0.3)';
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(248, 114, 114, 1)';
+      ctx.stroke();
+
+      ctx.stroke();
+    }
   }
 }
