@@ -34,10 +34,8 @@ export class Drag {
     this.currentY = clientY - rect.top;
   }
 
-  onMouseUp(eventFunc: () => void): void {
+  onMouseUp(): void {
     this.isDrawing = false;
-
-    eventFunc();
   }
 
   drawDragArea(ctx: CanvasRenderingContext2D) {
