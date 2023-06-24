@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import Button from '@components/common/Button';
 import { Apple } from '@modules/game/apple';
+import { AppleGameManager } from '@modules/game/apple-game-manager';
 import { Drag } from '@modules/game/drag';
 
 import useCanvas from '@hooks/useCanvas';
@@ -14,50 +15,16 @@ interface AppleGameProps {
 
 const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
   const [apples, setApples] = useState<Apple[]>([]);
+  const [removedApples, setRemovedApples] = useState<Apple[]>([]);
+  const [score, setScore] = useState<number>(0);
   const [start, setStart] = useState<boolean>(false);
   const [rect, setRect] = useState<DOMRect>();
 
   const drag: Drag = new Drag();
-
-  const generateApples = (rect: DOMRect): void => {
-    if (rect) {
-      const units = [];
-
-      const rows = 10;
-      const columns = 18;
-
-      const borderOffset = 30;
-
-      const availableWidth = (rect.width - borderOffset * 2) / columns;
-      const availableHeight = (rect.height - borderOffset * 2) / rows;
-
-      const appleRadius = Math.min(availableWidth, availableHeight) * 0.4;
-
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-          const x =
-            j * availableWidth +
-            availableWidth / 2 -
-            appleRadius +
-            borderOffset;
-          const y =
-            i * availableHeight +
-            availableHeight / 2 -
-            appleRadius +
-            borderOffset;
-          const apple = new Apple(x, y, appleRadius, 1, 0.4, 0.5, {
-            x: Math.random() * 4 - 2,
-            y: 0,
-          });
-          units.push(apple);
-        }
-      }
-      setApples(units);
-    }
-  };
+  const appleGameManager: AppleGameManager = new AppleGameManager();
 
   const fillBackground = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = 'rgb(31, 31, 36)';
+    ctx.fillStyle = '#ffedd5';
     ctx.fillRect(0, 0, clientWidth, clientHeight);
   };
 
@@ -66,9 +33,26 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
     fillBackground(ctx);
     drag.drawDragArea(ctx);
 
-    apples.forEach((apple) => {
-      apple.drawApple(ctx);
-    });
+    if (rect) {
+      apples.forEach((apple: Apple) => {
+        apple.handleAppleRendering(
+          ctx,
+          rect.height,
+          drag.startX,
+          drag.startY,
+          drag.currentX,
+          drag.currentY,
+          drag.isDrawing,
+        );
+      });
+
+      removedApples.forEach((apple: Apple) => {
+        apple.updateFallingPosition(ctx, rect.height);
+        if (apple.remove) {
+          setRemovedApples([]);
+        }
+      });
+    }
   };
 
   const canvasRef = useCanvas(clientWidth, clientHeight, animate);
@@ -92,14 +76,23 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
   };
 
   const handleMouseUp = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    drag.onMouseUp(() => {
-      console.log('Mouse up');
-    });
+    drag.onMouseUp();
+    const { newApples, removedApples } = appleGameManager.checkApplesInDragArea(
+      apples,
+      drag.startX,
+      drag.startY,
+      drag.currentX,
+      drag.currentY,
+    );
+    console.log(appleGameManager.applesInDragArea);
+
+    setApples(newApples);
+    setRemovedApples(removedApples);
   };
 
   const handleStartButton = () => {
     if (rect) {
-      generateApples(rect);
+      setApples(appleGameManager.generateApples(rect));
       setStart(true);
     }
   };
