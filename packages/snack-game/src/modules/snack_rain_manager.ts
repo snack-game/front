@@ -1,76 +1,93 @@
-export class AppleDrop {
-  private readonly units: any[];
-  private canvas: HTMLCanvasElement;
-  private context: CanvasRenderingContext2D;
-  private lastTime: number;
-  private readonly image: HTMLImageElement;
-  private settings = {
-    unitMaximum: 5,
-    radius: 15,
-    gravity: 0.1,
-    corFactor: 0.5,
-    mass: 1,
-    creationFactor: 0.02,
+import AppleImage from '@assets/images/apple.png';
+import CandyCaneImage from '@assets/images/candy-cane.png';
+import CandyImage from '@assets/images/candy.png';
+import ChocolateImage from '@assets/images/chocolate.png';
+import CookieImage from '@assets/images/cookie.png';
+import JellyImage from '@assets/images/jelly.png';
+import OrangeImage from '@assets/images/orange.png';
+
+interface Unit {
+  x: number;
+  y: number;
+  radius: number;
+  mass: number;
+  bounceCount: number;
+  velocity: {
+    x: number;
+    y: number;
   };
+  cals: boolean;
+  image: HTMLImageElement;
+}
 
-  constructor(canvas: HTMLCanvasElement, src: string) {
+interface Settings {
+  unitMaximum: number;
+  radius: number;
+  gravity: number;
+  corFactor: number;
+  mass: number;
+  creationFactor: number;
+}
+
+export class SnackRainManager {
+  private readonly units: Unit[];
+  private settings: Settings;
+
+  constructor() {
     this.units = [];
-    this.canvas = canvas;
-    this.context = canvas.getContext('2d')!;
-    this.lastTime = new Date().getTime();
-    this.image = new Image();
-    this.image.src = src;
-  }
-
-  public init(): void {
-    window.onresize = () => {
-      const width =
-        window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
-      const height =
-        window.innerHeight ||
-        document.documentElement.clientHeight ||
-        document.body.clientHeight;
-      this.canvas.width = width;
-      this.canvas.height = height;
+    this.settings = {
+      unitMaximum: 8,
+      radius: 15,
+      gravity: 0.1,
+      corFactor: 0.5,
+      mass: 1,
+      creationFactor: 0.02,
     };
-
-    window.onresize(new UIEvent('resize'));
   }
 
-  public destroy(): void {
-    window.onresize = null;
-  }
-
-  public addUnit(settings: any): boolean {
+  addUnit(x: number, y: number): void {
     if (this.units.length >= this.settings.unitMaximum) {
-      return false;
+      return;
     }
 
-    settings.radius = this.settings.radius;
-    settings.mass =
-      (Math.random() * this.settings.mass) / 2 + (this.settings.mass / 4) * 3;
-    settings.bounceCount = 0;
+    const images = [
+      CandyImage,
+      CandyCaneImage,
+      AppleImage,
+      OrangeImage,
+      JellyImage,
+      CookieImage,
+      ChocolateImage,
+    ];
 
-    settings.velocity = {
-      x: Math.random() * 4 - 2,
-      y: 0,
+    const unit: Unit = {
+      x: x,
+      y: y,
+      radius: this.settings.radius,
+      mass:
+        (Math.random() * this.settings.mass) / 2 + (this.settings.mass / 4) * 3,
+      bounceCount: 0,
+      velocity: {
+        x: Math.random() * 4 - 2,
+        y: 0,
+      },
+      cals: false,
+      image: new Image(),
     };
 
-    this.units.push(settings);
-    return true;
+    unit.image.src = images[Math.floor(Math.random() * images.length)];
+
+    this.units.push(unit);
   }
 
-  public update(): void {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+  drawSnackRain(
+    ctx: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+  ): void {
     if (this.units.length < this.settings.unitMaximum) {
       if (Math.random() <= this.settings.creationFactor) {
-        this.addUnit({
-          x: this.canvas.width * Math.random(),
-          y: this.canvas.height,
-        });
+        this.addUnit(width * Math.random(), height);
       }
     }
 
@@ -87,7 +104,7 @@ export class AppleDrop {
         y: unit.y - unit.velocity.y,
       };
 
-      if (unit.cals === false) {
+      if (!unit.cals) {
         for (const key in this.units) {
           if (key === idx) {
             continue;
@@ -126,9 +143,8 @@ export class AppleDrop {
 
       if (
         unit.x + unit.velocity.x <= 0 ||
-        unit.x + unit.velocity.x + unit.radius >= this.canvas.width
+        unit.x + unit.velocity.x + unit.radius >= width
       ) {
-        collapsed = true;
         unit.velocity.x *= -1;
       }
 
@@ -137,7 +153,6 @@ export class AppleDrop {
           this.units.splice(Number(idx), 1);
           continue;
         } else {
-          collapsed = true;
           unit.velocity.y *= -this.settings.corFactor;
           unit.bounceCount += 1;
         }
@@ -150,35 +165,23 @@ export class AppleDrop {
 
       const size = unit.radius * unit.mass;
 
-      this.context.save();
-      this.context.globalAlpha = Math.max(unit.opacity, 0);
-      this.context.beginPath();
-      this.context.arc(
-        unit.x,
-        this.canvas.height - unit.y,
-        size,
-        0,
-        2 * Math.PI,
-        false,
-      );
-      this.context.closePath();
-      this.context.clip();
-      this.context.drawImage(
-        this.image,
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(unit.x, height - unit.y, size, 0, 2 * Math.PI, false);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(
+        unit.image,
         unit.x - size,
-        this.canvas.height - unit.y - size,
+        height - unit.y - size,
         size * 2,
         size * 2,
       );
-      this.context.restore();
+      ctx.restore();
     }
-
-    window.requestAnimationFrame(() => {
-      this.update.call(this);
-    });
   }
 
-  private getVelocity(unit1: any, unit2: any): any {
+  getVelocity(unit1: Unit, unit2: Unit) {
     return {
       x:
         ((unit1.mass - unit2.mass * this.settings.corFactor) /

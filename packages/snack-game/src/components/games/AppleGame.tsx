@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import Button from '@components/common/Button';
 import { Apple } from '@modules/game/apple';
-import { AppleGameManager } from '@modules/game/apple-game-manager';
+import { AppleGameManager } from '@modules/game/apple_game_manager';
 import { Drag } from '@modules/game/drag';
 
 import useCanvas from '@hooks/useCanvas';

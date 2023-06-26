@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import AppleGameBase from '@components/base/AppleGameBase';
 import PageContainer from '@components/base/PageContainer';
-import AppleGameBase from '@components/games/apple-game/AppleGameBase';
 import Footer from '@components/layout/Footer';
 import Header from '@components/layout/Header';
 

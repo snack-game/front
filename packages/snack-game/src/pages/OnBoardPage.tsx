@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import AppleImage from '@assets/images/apple.png';
+import AppleGameBase from '@components/base/AppleGameBase';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button';
-import DropApples from '@components/DropApples';
 import Footer from '@components/layout/Footer';
 import Header from '@components/layout/Header';
 import TeamInfo from '@components/TeamInfo';
@@ -19,7 +19,7 @@ const AuthPage: FC<MainPageProps> = () => {
       <Helmet>
         <title>Snack Game || Auth</title>
       </Helmet>
-      <DropApples />
+      <AppleGameBase />
       <Header />
       <PageContainer>
         <div className="flex flex-col container h-[600px] py-12 mx-auto px-5 items-center justify-around">

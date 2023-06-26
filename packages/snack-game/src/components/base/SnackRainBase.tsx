@@ -1,14 +1,14 @@
 import React, { FC, RefObject, useRef } from 'react';
 
-import AppleGame from '@components/games/apple-game/AppleGame';
+import AppleGame from '@components/games/AppleGame';
 
 import { useClientRect } from '@hooks/useClientRect';
 
-interface CanvasBaseProps {
+interface SnackRainBaseProps {
   children?: never;
 }
 
-const AppleGameBase: FC<CanvasBaseProps> = () => {
+const SnackRainBase: FC<SnackRainBaseProps> = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const { width, height } = useClientRect(canvasBaseRef);
@@ -20,4 +20,4 @@ const AppleGameBase: FC<CanvasBaseProps> = () => {
   );
 };
 
-export default AppleGameBase;
+export default SnackRainBase;
