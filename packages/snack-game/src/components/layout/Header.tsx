@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import LogoImage from '@assets/images/logo.webp';
+import LogoImage from '@assets/images/logo.png';
 
 interface HeaderProps {
   children?: never;

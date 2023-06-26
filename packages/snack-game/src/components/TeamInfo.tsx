@@ -9,7 +9,7 @@ interface TeamInfoProps {
 
 const TeamInfo: FC<TeamInfoProps> = () => {
   return (
-    <div className="px-5 pt-48 pb-24 mx-auto">
+    <div className="px-5 pt-24 pb-24 mx-auto">
       <div className="flex flex-col text-center w-full mb-10">
         <h1 className="text-2xl font-medium title-font text-gray-900">
           OUR TEAM

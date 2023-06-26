@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading';
 
-const AuthPage = lazy(() => import('@pages/AuthPage'));
+const AuthPage = lazy(() => import('@pages/OnBoardPage'));
 const MainPage = lazy(() => import('@pages/MainPage'));
 
 const AppleGamePage = lazy(() => import('@pages/Games/AppleGamePage'));

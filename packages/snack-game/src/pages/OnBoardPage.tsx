@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import AppleImage from '@assets/images/apple.webp';
+import AppleImage from '@assets/images/apple.png';
+import AppleGameBase from '@components/base/AppleGameBase';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button';
-import Input from '@components/common/Input';
-import DropApples from '@components/DropApples';
 import Footer from '@components/layout/Footer';
 import Header from '@components/layout/Header';
 import TeamInfo from '@components/TeamInfo';
@@ -20,25 +19,25 @@ const AuthPage: FC<MainPageProps> = () => {
       <Helmet>
         <title>Snack Game || Auth</title>
       </Helmet>
-      <DropApples />
+      <AppleGameBase />
       <Header />
-      <PageContainer className={'flex flex-col justify-between'}>
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <p className="title-font sm:text-4xl text-2xl text-gray-900 font-kcc">
+      <PageContainer>
+        <div className="flex flex-col container h-[600px] py-12 mx-auto px-5 items-center justify-around">
+          <img
+            className="mx-auto animate-waving-apple w-48 h-48"
+            alt="로고 이미지"
+            src={AppleImage}
+          />
+          <div className="text-center lg:w-2/3 w-full">
+            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
               Snack Game
-            </p>
+            </h1>
             <p className="mb-8 leading-relaxed whitespace-pre">
               {
                 '\n재미있는 시간을 보내고 싶으신가요?\n사과게임과 함께 여러분을 미소 짓게 만들어줄\n 다양한 게임들을 준비하고 있습니다!\n'
               }
             </p>
-            <div className="flex flex-col w-full md:justify-start justify-center items-start gap-2">
-              <Input placeholder={'이름'}></Input>
-              <Input placeholder={'소속'}></Input>
-              <p className="text-sm mt-2 text-gray-500 mb-8 w-full">
-                소속을 입력해서 친구들과 랭킹을 겨뤄 보아요!
-              </p>
+            <div className="flex justify-center">
               <Button
                 content={'입장'}
                 className={'mx-auto xl:mx-0'}
@@ -47,13 +46,6 @@ const AuthPage: FC<MainPageProps> = () => {
                 }}
               ></Button>
             </div>
-          </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 -z-20">
-            <img
-              className="mx-auto animate-waving-apple w-48 h-48"
-              alt="로고 이미지"
-              src={AppleImage}
-            />
           </div>
         </div>
         <TeamInfo></TeamInfo>
