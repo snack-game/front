@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from 'react';
 
-import AppleImage from '@assets/images/apple.webp';
+import AppleImage from '@assets/images/apple.png';
 import { AppleDrop } from '@modules/game/apple-drop';
 
 interface DropApplesProps {

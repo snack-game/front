@@ -1,4 +1,4 @@
-import AppleImage from '@assets/images/apple.webp';
+import AppleImage from '@assets/images/apple.png';
 
 export class Apple {
   public position: { x: number; y: number };
@@ -23,7 +23,7 @@ export class Apple {
   ) {
     this.position = { x, y };
     this.image = new Image();
-    this.image.src = style ? AppleImage : 'assets/apple.webp';
+    this.image.src = style ? AppleImage : 'assets/apple.png';
     this.radius = radius;
     this.mass = mass;
     this.gravity = gravity;
