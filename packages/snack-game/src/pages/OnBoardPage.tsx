@@ -34,7 +34,7 @@ const AuthPage: FC<MainPageProps> = () => {
             </h1>
             <p className="mb-8 leading-relaxed whitespace-pre">
               {
-                '\n재미있는 시간을 보내고 싶으신가요?\n사과게임과 함께 여러분을 미소 짓게 만들어줄\n 다양한 게임들을 준비하고 있습니다!\n'
+                '\n재미있는 시간을 보내고 싶으신가요?\n사과게임과 함께 여러분을 즐겁게 할\n 다양한 게임들을 준비하고 있습니다!\n'
               }
             </p>
             <div className="flex justify-center">

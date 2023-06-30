@@ -84,7 +84,6 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
       drag.currentX,
       drag.currentY,
     );
-    console.log(appleGameManager.applesInDragArea);
 
     setApples(newApples);
     setRemovedApples(removedApples);
