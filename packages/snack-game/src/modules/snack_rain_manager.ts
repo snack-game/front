@@ -32,6 +32,15 @@ interface Settings {
 export class SnackRainManager {
   private readonly units: Unit[];
   private settings: Settings;
+  private images = [
+    CandyImage,
+    CandyCaneImage,
+    AppleImage,
+    OrangeImage,
+    JellyImage,
+    CookieImage,
+    ChocolateImage,
+  ];
 
   constructor() {
     this.units = [];
@@ -50,16 +59,6 @@ export class SnackRainManager {
       return;
     }
 
-    const images = [
-      CandyImage,
-      CandyCaneImage,
-      AppleImage,
-      OrangeImage,
-      JellyImage,
-      CookieImage,
-      ChocolateImage,
-    ];
-
     const unit: Unit = {
       x: x,
       y: y,
@@ -75,7 +74,8 @@ export class SnackRainManager {
       image: new Image(),
     };
 
-    unit.image.src = images[Math.floor(Math.random() * images.length)];
+    unit.image.src =
+      this.images[Math.floor(Math.random() * this.images.length)];
 
     this.units.push(unit);
   }
@@ -91,9 +91,9 @@ export class SnackRainManager {
       }
     }
 
-    for (const idx in this.units) {
-      this.units[idx].cals = false;
-    }
+    this.units.forEach((unit) => {
+      unit.cals = false;
+    });
 
     for (const idx in this.units) {
       let collapsed = false;

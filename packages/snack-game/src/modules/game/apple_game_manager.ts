@@ -2,7 +2,7 @@ import { Apple } from '@modules/game/apple';
 
 const BORDER_OFFSET = 30;
 const ROWS = 10;
-const COLUMNS = 12;
+const COLUMNS = 10;
 
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
@@ -16,8 +16,15 @@ export class AppleGameManager {
 
     const appleRadius = Math.min(availableWidth, availableHeight) * 0.4;
 
+    const randomNum = Math.floor(Math.random() * 100);
+
+    let cnt = 0;
+    console.log(randomNum);
+
     for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLUMNS; j++) {
+        cnt++;
+
         const x =
           j * availableWidth + availableWidth / 2 - appleRadius + BORDER_OFFSET;
         const y =
@@ -25,10 +32,19 @@ export class AppleGameManager {
           availableHeight / 2 -
           appleRadius +
           BORDER_OFFSET;
-        const apple = new Apple(x, y, appleRadius, 1, 0.4, 0.5, {
-          x: Math.random() * 4 - 2,
-          y: 0,
-        });
+        const apple = new Apple(
+          x,
+          y,
+          appleRadius,
+          cnt == randomNum ? 0 : 1,
+          0.4,
+          0.5,
+          {
+            x: Math.random() * 4 - 2,
+            y: 0,
+          },
+          cnt == randomNum,
+        );
         units.push(apple);
       }
     }
@@ -41,8 +57,9 @@ export class AppleGameManager {
     startY: number,
     currentX: number,
     currentY: number,
-  ): { newApples: Apple[]; removedApples: Apple[] } {
+  ): { newApples: Apple[]; removedApples: Apple[]; isGolden: boolean } {
     let sum = 0;
+    let isGolden = false;
     let removedApples: Apple[] = [];
 
     const x = Math.min(startX, currentX);
@@ -67,7 +84,12 @@ export class AppleGameManager {
     });
 
     if (sum == 10) {
+      this.applesInDragArea.forEach((apple) => {
+        if (apple.isGolden) isGolden = true;
+      });
+
       removedApples = this.applesInDragArea;
+
       newApples = newApples.filter(
         (apple) => !this.applesInDragArea.includes(apple),
       );
@@ -75,6 +97,6 @@ export class AppleGameManager {
 
     console.log(this.applesInDragArea);
 
-    return { newApples, removedApples };
+    return { newApples, removedApples, isGolden };
   }
 }

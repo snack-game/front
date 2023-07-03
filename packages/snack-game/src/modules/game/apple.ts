@@ -1,4 +1,5 @@
 import AppleImage from '@assets/images/apple.png';
+import GoldenApple from '@assets/images/golden-apple.png';
 
 export class Apple {
   public position: { x: number; y: number };
@@ -6,6 +7,7 @@ export class Apple {
   public number: number = Math.floor(Math.random() * 9) + 1;
   public inDragArea = false;
   public remove = false;
+  public isGolden;
 
   private readonly image: HTMLImageElement;
   private mass: number;
@@ -20,14 +22,16 @@ export class Apple {
     mass: number,
     gravity: number,
     velocity: { x: number; y: number },
+    isGolden: boolean,
   ) {
     this.position = { x, y };
     this.image = new Image();
-    this.image.src = style ? AppleImage : 'assets/apple.png';
+    this.image.src = style ? AppleImage : GoldenApple;
     this.radius = radius;
     this.mass = mass;
     this.gravity = gravity;
     this.velocity = velocity;
+    this.isGolden = isGolden;
   }
 
   handleAppleRendering(
@@ -105,7 +109,7 @@ export class Apple {
     this.position.x += this.velocity.x;
     this.position.y -= this.velocity.y;
 
-    if (this.position.y + this.radius * 2 >= height) {
+    if (this.position.y + this.radius * 2 >= height + 50) {
       this.remove = true;
     }
 

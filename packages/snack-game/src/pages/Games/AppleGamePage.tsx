@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import AppleGameBase from '@components/base/AppleGameBase';
+import AppleGameContainer from '@components/base/AppleGameContainer';
 import PageContainer from '@components/base/PageContainer';
 import Footer from '@components/layout/Footer';
 import Header from '@components/layout/Header';
@@ -18,7 +18,7 @@ const AppleGamePage: FC<AppleGamePageProps> = () => {
       </Helmet>
       <Header />
       <PageContainer>
-        <AppleGameBase />
+        <AppleGameContainer />
       </PageContainer>
       <Footer></Footer>
     </>

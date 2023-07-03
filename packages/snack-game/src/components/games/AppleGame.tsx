@@ -77,17 +77,19 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
 
   const handleMouseUp = (event: React.MouseEvent<HTMLCanvasElement>) => {
     drag.onMouseUp();
-    const { newApples, removedApples } = appleGameManager.checkApplesInDragArea(
-      apples,
-      drag.startX,
-      drag.startY,
-      drag.currentX,
-      drag.currentY,
-    );
-    console.log(appleGameManager.applesInDragArea);
+    const { newApples, removedApples, isGolden } =
+      appleGameManager.checkApplesInDragArea(
+        apples,
+        drag.startX,
+        drag.startY,
+        drag.currentX,
+        drag.currentY,
+      );
 
     setApples(newApples);
     setRemovedApples(removedApples);
+
+    if (rect && isGolden) setApples(appleGameManager.generateApples(rect));
   };
 
   const handleStartButton = () => {
