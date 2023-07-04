@@ -9,12 +9,12 @@ interface InputProps {
 
 const Input: FC<InputProps> = ({ className, placeholder }) => {
   return (
-    <div className="relative mr-4 xl:w-1/2 w-full">
-      <label className="leading-7 text-lg text-gray-600">
+    <div className="relative mr-4 w-full xl:w-1/2">
+      <label className="text-lg leading-7 text-gray-600">
         {placeholder}
         <input
           type="text"
-          className="w-full bg-gray-100 rounded border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-red-200 focus:bg-transparent focus:border-red-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-red-500 focus:bg-transparent focus:ring-2 focus:ring-red-200"
         />
       </label>
     </div>

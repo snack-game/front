@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 interface MainPageProps {
   children?: any;
@@ -7,7 +7,7 @@ interface MainPageProps {
 const MainPage: FC<MainPageProps> = () => {
   return (
     <div>
-      <div className='text-red-500'>Hello</div>
+      <div className="text-red-500">Hello</div>
     </div>
   );
 };

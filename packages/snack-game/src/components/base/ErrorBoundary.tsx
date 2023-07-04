@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { ErrorBoundary as RErrorBoundary } from "react-error-boundary";
-import { Helmet } from "react-helmet-async";
+import { FC } from 'react';
+import { ErrorBoundary as RErrorBoundary } from 'react-error-boundary';
+import { Helmet } from 'react-helmet-async';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode;
