@@ -6,8 +6,6 @@ import AppleImage from '@assets/images/apple.png';
 import PageContainer from '@components/base/PageContainer';
 import SnackRainContainer from '@components/base/SnackRainContainer';
 import Button from '@components/common/Button';
-import Footer from '@components/layout/Footer';
-import Header from '@components/layout/Header';
 import TeamInfo from '@components/TeamInfo';
 
 interface MainPageProps {
@@ -18,10 +16,9 @@ const MainPage: FC<MainPageProps> = () => {
   return (
     <>
       <Helmet>
-        <title>Snack Game || Auth</title>
+        <title>Snack Game || Main</title>
       </Helmet>
       <SnackRainContainer />
-      <Header />
       <PageContainer>
         <div className="container mx-auto flex flex-col items-center justify-around px-5 py-12">
           <img
@@ -71,7 +68,6 @@ const MainPage: FC<MainPageProps> = () => {
         </div>
         <TeamInfo></TeamInfo>
       </PageContainer>
-      <Footer></Footer>
     </>
   );
 };

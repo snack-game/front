@@ -2,6 +2,9 @@ import React, { FC, ReactNode } from 'react';
 
 import tw from 'tailwind-styled-components';
 
+import Footer from '@components/layout/Footer';
+import Header from '@components/layout/Header';
+
 interface PageContainerProps {
   children: ReactNode;
   className?: string;
@@ -20,11 +23,13 @@ px-1 md:px-4
 const PageContainer: FC<PageContainerProps> = ({ children, className }) => {
   return (
     <>
+      <Header />
       <PageContainerWrapper>
         <PageContainerInner className={className}>
           {children}
         </PageContainerInner>
       </PageContainerWrapper>
+      <Footer />
     </>
   );
 };

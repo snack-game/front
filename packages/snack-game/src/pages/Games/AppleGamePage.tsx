@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async';
 
 import AppleGameContainer from '@components/base/AppleGameContainer';
 import PageContainer from '@components/base/PageContainer';
-import Footer from '@components/layout/Footer';
-import Header from '@components/layout/Header';
 
 interface AppleGamePageProps {
   children?: never;
@@ -16,11 +14,9 @@ const AppleGamePage: FC<AppleGamePageProps> = () => {
       <Helmet>
         <title>Snack Game || Apple Game</title>
       </Helmet>
-      <Header />
       <PageContainer>
         <AppleGameContainer />
       </PageContainer>
-      <Footer></Footer>
     </>
   );
 };
