@@ -23,14 +23,12 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
   const drag: Drag = new Drag();
   const appleGameManager: AppleGameManager = new AppleGameManager();
 
-  const fillBackground = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = '#ffedd5';
-    ctx.fillRect(0, 0, clientWidth, clientHeight);
-  };
-
   const animate = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, clientWidth, clientHeight);
-    fillBackground(ctx);
+
+    ctx.fillStyle = '#ffedd5';
+    ctx.fillRect(0, 0, clientWidth, clientHeight);
+
     drag.drawDragArea(ctx);
 
     if (rect) {
@@ -63,33 +61,39 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
     }
   }, [canvasRef.current]);
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (rect) {
-      drag.onMouseDown(event, rect);
+      switch (event.type) {
+        case 'mousedown': {
+          drag.onMouseDown(event, rect);
+          break;
+        }
+
+        case 'mouseup': {
+          drag.onMouseUp();
+
+          const { newApples, removedApples, isGolden } =
+            appleGameManager.checkApplesInDragArea(
+              apples,
+              drag.startX,
+              drag.startY,
+              drag.currentX,
+              drag.currentY,
+            );
+
+          setApples(newApples);
+          setRemovedApples(removedApples);
+
+          if (isGolden) setApples(appleGameManager.generateApples(rect));
+          break;
+        }
+
+        case 'mousemove': {
+          drag.onMouseMove(event, rect);
+          break;
+        }
+      }
     }
-  };
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (rect) {
-      drag.onMouseMove(event, rect);
-    }
-  };
-
-  const handleMouseUp = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    drag.onMouseUp();
-    const { newApples, removedApples, isGolden } =
-      appleGameManager.checkApplesInDragArea(
-        apples,
-        drag.startX,
-        drag.startY,
-        drag.currentX,
-        drag.currentY,
-      );
-
-    setApples(newApples);
-    setRemovedApples(removedApples);
-
-    if (rect && isGolden) setApples(appleGameManager.generateApples(rect));
   };
 
   const handleStartButton = () => {
@@ -103,9 +107,9 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
     <>
       <canvas
         ref={canvasRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        onMouseDown={handleMouseEvent}
+        onMouseMove={handleMouseEvent}
+        onMouseUp={handleMouseEvent}
       ></canvas>
       <Button
         content={'시작!'}

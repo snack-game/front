@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading';
 
-const AuthPage = lazy(() => import('@pages/OnBoardPage'));
 const MainPage = lazy(() => import('@pages/MainPage'));
 
 const AppleGamePage = lazy(() => import('@pages/Games/AppleGamePage'));
@@ -19,8 +18,7 @@ const App: FC<AppProps> = () => {
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<AuthPage />} />
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/game/apple-game" element={<AppleGamePage />} />
           </Routes>
         </Suspense>

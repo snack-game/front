@@ -1,24 +1,23 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import AppleGameContainer from '@components/base/AppleGameContainer';
 import PageContainer from '@components/base/PageContainer';
 
-interface AppleGamePageProps {
+interface AuthPageProps {
   children?: never;
 }
 
-const AppleGamePage: FC<AppleGamePageProps> = () => {
+const AuthPage: FC<AuthPageProps> = () => {
   return (
     <>
       <Helmet>
-        <title>Snack Game || Apple Game</title>
+        <title>Snack Game || Auth</title>
       </Helmet>
       <PageContainer>
-        <AppleGameContainer />
+        <div></div>
       </PageContainer>
     </>
   );
 };
 
-export default AppleGamePage;
+export default AuthPage;

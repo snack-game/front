@@ -1,9 +1,9 @@
-import "./App.css";
-import { FC } from "react";
+import './App.css';
+import { FC } from 'react';
 
-import MainPage from "@pages/MainPage";
+import MainPage from '@pages/MainPage';
 
-import ErrorBoundary from "./components/bases/ErrorBoundary";
+import ErrorBoundary from './components/bases/ErrorBoundary';
 
 interface AppProps {
   children?: never;
