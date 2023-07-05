@@ -6,7 +6,6 @@ const COLUMNS = 10;
 
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
-  public droppedApples: Apple[] = [];
 
   generateApples(rect: DOMRect): Apple[] {
     const units = [];
@@ -94,8 +93,6 @@ export class AppleGameManager {
         (apple) => !this.applesInDragArea.includes(apple),
       );
     }
-
-    console.log(this.applesInDragArea);
 
     return { newApples, removedApples, isGolden };
   }

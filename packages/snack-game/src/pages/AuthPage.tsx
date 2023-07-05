@@ -11,7 +11,7 @@ const AuthPage: FC<AuthPageProps> = () => {
   return (
     <>
       <Helmet>
-        <title>Snack Game || Main</title>
+        <title>Snack Game || Auth</title>
       </Helmet>
       <PageContainer>
         <div></div>
