@@ -18,6 +18,7 @@ const PageContainerInner = tw.div`
 h-auto
 pb-8 md:pb-10
 px-1 md:px-4
+font-dove
 `;
 
 const PageContainer: FC<PageContainerProps> = ({ children, className }) => {

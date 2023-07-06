@@ -23,7 +23,7 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
   const drag: Drag = new Drag();
   const appleGameManager: AppleGameManager = new AppleGameManager();
 
-  const animate = (ctx: CanvasRenderingContext2D) => {
+  const animation = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, clientWidth, clientHeight);
 
     ctx.fillStyle = '#ffedd5';
@@ -53,7 +53,7 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
     }
   };
 
-  const canvasRef = useCanvas(clientWidth, clientHeight, animate);
+  const canvasRef = useCanvas(clientWidth, clientHeight, animation);
 
   useEffect(() => {
     if (canvasRef.current) {

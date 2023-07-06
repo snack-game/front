@@ -20,7 +20,6 @@ export default {
       },
       fontFamily: {
         dove: 'Dovemayo_gothic',
-        kcc: 'KCC-Ganpan',
       },
     },
   },

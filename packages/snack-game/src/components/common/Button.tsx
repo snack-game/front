@@ -10,15 +10,15 @@ interface ButtonProps {
 }
 
 const StyledButton = tw.button`
-inline-flex text-white bg-rose-500 border-0 py-2 px-6 rounded text-lg
-hover:bg-rose-400
+inline-flex text-white bg-orange-400 border-0 py-2 px-6 rounded text-lg
+hover:bg-orange-600
 focus:outline-none 
 `;
 
 const Button: FC<ButtonProps> = ({ content, className, onClick }) => {
   return (
     <StyledButton className={className} onClick={onClick}>
-      {content}
+      <p className={'mx-auto'}>{content}</p>
     </StyledButton>
   );
 };
