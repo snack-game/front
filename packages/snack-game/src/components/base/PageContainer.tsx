@@ -1,33 +1,42 @@
 import React, { FC, ReactNode } from 'react';
 
-import tw from 'tailwind-styled-components';
+import styled from '@emotion/styled';
 
 import Footer from '@components/layout/Footer';
 import Header from '@components/layout/Header';
 
 interface PageContainerProps {
   children: ReactNode;
-  className?: string;
 }
 
-const PageContainerWrapper = tw.div`
-mx-auto mx-auto md:max-w-screen-xl max-md:min-w-sm
+const PageContainerWrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 768px) {
+    max-width: 1280px;
+  }
 `;
 
-const PageContainerInner = tw.div`
-h-auto
-pb-8 md:pb-10
-px-1 md:px-4
+const PageContainerInner = styled.div`
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  padding-bottom: 2rem;
+  height: auto;
+
+  @media (min-width: 768px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 2.5rem;
+  }
 `;
 
-const PageContainer: FC<PageContainerProps> = ({ children, className }) => {
+const PageContainer: FC<PageContainerProps> = ({ children }) => {
   return (
     <>
       <Header />
       <PageContainerWrapper>
-        <PageContainerInner className={className}>
-          {children}
-        </PageContainerInner>
+        <PageContainerInner>{children}</PageContainerInner>
       </PageContainerWrapper>
       <Footer />
     </>

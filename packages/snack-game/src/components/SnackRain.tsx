@@ -1,6 +1,8 @@
 import { FC } from 'react';
 
-import { SnackRainManager } from '@modules/snack_rain_manager';
+import styled from '@emotion/styled';
+
+import { SnackRainManager } from '@modules/snackRainManager';
 
 import useCanvas from '@hooks/useCanvas';
 
@@ -9,6 +11,12 @@ interface DropApplesProps {
   clientWidth: number;
   clientHeight: number;
 }
+
+const StyledCanvas = styled.canvas`
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+`;
 
 const SnackRain: FC<DropApplesProps> = ({ clientWidth, clientHeight }) => {
   const snackRain = new SnackRainManager();
@@ -20,9 +28,7 @@ const SnackRain: FC<DropApplesProps> = ({ clientWidth, clientHeight }) => {
 
   const canvasRef = useCanvas(clientWidth, clientHeight, animate);
 
-  return (
-    <canvas ref={canvasRef} className={'w-screen h-full -z-10 fixed'}></canvas>
-  );
+  return <StyledCanvas ref={canvasRef}></StyledCanvas>;
 };
 
 export default SnackRain;

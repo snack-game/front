@@ -59,7 +59,7 @@ export class Apple {
 
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
-    ctx.font = `${this.radius}px KCC-Ganpan`;
+    ctx.font = `${this.radius}px Dovemayo_gothic`;
     ctx.fillStyle = '#f1f5f9';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';

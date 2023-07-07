@@ -1,25 +1,52 @@
 import React, { FC } from 'react';
 
-import tw from 'tailwind-styled-components';
+import { SerializedStyles } from '@emotion/react';
+import styled from '@emotion/styled';
 
 interface ButtonProps {
   children?: never;
   className?: string;
   content: string;
-  onClick: any;
+  onClick?: () => void;
+  show?: boolean;
+  wrapper?: SerializedStyles;
 }
 
-const StyledButton = tw.button`
-inline-flex text-white bg-rose-500 border-0 py-2 px-6 rounded text-lg
-hover:bg-rose-400
-focus:outline-none 
+type StyledButtonProps = {
+  show?: boolean;
+};
+
+const StyledButton = styled.button<StyledButtonProps>`
+  padding: 0.5rem 1.5rem;
+  color: #ffffff;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  border-radius: 0.25rem;
+  border-width: 0;
+  background-color: #fb923c;
+  display: ${(props) => (props.show ? 'inline-flex' : 'none')};
+
+  &:hover {
+    background-color: #f97316;
+  }
 `;
 
-const Button: FC<ButtonProps> = ({ content, className, onClick }) => {
+const StyledWrapper = styled.div`
+  width: fit-content;
+`;
+
+const Button: FC<ButtonProps> = ({
+  show = true,
+  content,
+  onClick,
+  wrapper,
+}) => {
   return (
-    <StyledButton className={className} onClick={onClick}>
-      {content}
-    </StyledButton>
+    <StyledWrapper css={wrapper}>
+      <StyledButton onClick={onClick} show={show}>
+        {content}
+      </StyledButton>
+    </StyledWrapper>
   );
 };
 
