@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 
+import { css } from '@emotion/react';
+
 import Button from '@components/common/Button';
 import { Apple } from '@modules/game/apple';
-import { AppleGameManager } from '@modules/game/apple_game_manager';
+import { AppleGameManager } from '@modules/game/appleGameManager';
 import { Drag } from '@modules/game/drag';
 
 import useCanvas from '@hooks/useCanvas';
@@ -114,9 +116,16 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
       <Button
         content={'시작!'}
         onClick={handleStartButton}
-        className={`absolute top-1/2 mx-auto left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${
-          start ? 'hidden' : ''
-        }`}
+        show={!start}
+        wrapper={css`
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-left: auto;
+          margin-right: auto;
+          --transform-translate-x: -50%;
+          --transform-translate-y: -50%;
+        `}
       />
     </>
   );

@@ -19,6 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "paths": {
       "@assets/*": [
         "./src/assets/*"
@@ -53,5 +54,5 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
 }
