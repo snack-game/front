@@ -1,31 +1,6 @@
 import styled from '@emotion/styled';
 
 export const Wrapper = styled.div`
-  padding: 6rem 1.25rem 3rem;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-export const Title = styled.div`
-  display: flex;
-  margin-bottom: 2.5rem;
-  text-align: center;
-  flex-direction: column;
-  width: 100%;
-  color: #111827;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-weight: 500;
-`;
-
-export const TeamInfoWrapper = styled.div`
-  display: flex;
-  margin: -1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
-export const TeamInfoInner = styled.div`
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -42,7 +17,7 @@ export const TeamInfoInner = styled.div`
   }
 `;
 
-export const TeamInfoThumbnail = styled.img`
+export const Thumbnail = styled.img`
   object-fit: cover;
   object-position: center;
   margin-bottom: 1rem;
@@ -52,7 +27,7 @@ export const TeamInfoThumbnail = styled.img`
   border-radius: 0.5rem;
 `;
 
-export const TeamInfo = styled.div`
+export const Contents = styled.div`
   width: 100%;
 `;
 
@@ -69,7 +44,7 @@ export const Position = styled.h3`
 `;
 
 export const Intro = styled.span`
-  display: inline-flex;
+  display: block;
   color: #6b7280;
   white-space: pre-line;
 `;

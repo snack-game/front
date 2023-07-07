@@ -27,17 +27,17 @@ const StyledInput = styled.input`
   padding: 0.25rem 0.75rem;
   background-color: #f3f4f6;
   --bg-opacity: 0.5;
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   color: #374151;
   font-size: 1rem;
   line-height: 2rem;
   width: 100%;
+  border: 1px solid #d1d5db;
   border-radius: 0.25rem;
-  border-width: 1px;
-  border-color: #d1d5db;
   outline: 0;
+
+  &:focus {
+    border-color: #2563eb;
+  }
 `;
 
 const Input: FC<InputProps> = ({ placeholder }) => {

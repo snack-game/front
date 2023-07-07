@@ -2,8 +2,8 @@ import React, { FC, ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
-import Footer from '@components/layout/Footer';
-import Header from '@components/layout/Header';
+import Footer from '@components/ui/Footer';
+import Header from '@components/ui/Header';
 
 interface PageContainerProps {
   children: ReactNode;

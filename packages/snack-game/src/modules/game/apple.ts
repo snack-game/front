@@ -66,7 +66,7 @@ export class Apple {
     ctx.fillText(
       this.number.toString(),
       this.position.x + this.radius,
-      this.position.y + this.radius,
+      this.position.y + this.radius + this.radius / 3,
     );
   }
 

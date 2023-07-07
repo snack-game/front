@@ -11,7 +11,7 @@ import PageContainer from '@components/base/PageContainer';
 import SnackRainContainer from '@components/base/SnackRainContainer';
 import Button from '@components/common/Button';
 import ThumbnailCard from '@components/common/ThumbnailCard/ThumbnailCard';
-import TeamInfo from '@components/TeamInfo/TeamInfo';
+import TeamInfo from '@components/ui/TeamInfo';
 
 interface MainPageProps {
   children?: never;
