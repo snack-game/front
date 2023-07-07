@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 interface InputProps {
   children?: never;
   type?: string;
-  className?: string;
   placeholder?: string;
 }
 
@@ -33,7 +32,6 @@ const StyledInput = styled.input`
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   color: #374151;
   font-size: 1rem;
-  line-height: 1.5rem;
   line-height: 2rem;
   width: 100%;
   border-radius: 0.25rem;

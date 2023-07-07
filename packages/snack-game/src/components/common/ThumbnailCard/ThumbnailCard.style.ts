@@ -12,9 +12,8 @@ export const Inner = styled.div`
   padding: 1rem;
   height: 100%;
   width: 70%;
+  border: 2px solid #e5e7eb;
   border-radius: 0.5rem;
-  border-width: 2px;
-  border-color: #e5e7eb;
 `;
 
 export const Thumbnail = styled.img`

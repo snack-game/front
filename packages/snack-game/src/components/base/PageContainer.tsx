@@ -7,7 +7,6 @@ import Header from '@components/layout/Header';
 
 interface PageContainerProps {
   children: ReactNode;
-  className?: string;
 }
 
 const PageContainerWrapper = styled.div`
@@ -32,14 +31,12 @@ const PageContainerInner = styled.div`
   }
 `;
 
-const PageContainer: FC<PageContainerProps> = ({ children, className }) => {
+const PageContainer: FC<PageContainerProps> = ({ children }) => {
   return (
     <>
       <Header />
       <PageContainerWrapper>
-        <PageContainerInner className={className}>
-          {children}
-        </PageContainerInner>
+        <PageContainerInner>{children}</PageContainerInner>
       </PageContainerWrapper>
       <Footer />
     </>

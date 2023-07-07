@@ -121,10 +121,6 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
           position: absolute;
           top: 50%;
           left: 50%;
-          margin-left: auto;
-          margin-right: auto;
-          --transform-translate-x: -50%;
-          --transform-translate-y: -50%;
         `}
       />
     </>
