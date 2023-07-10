@@ -1,12 +1,34 @@
-import { FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 
 import styled from '@emotion/styled';
 
 interface InputProps {
-  children?: never;
   type?: string;
   placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  valid?: boolean;
+  errorMessage?: string;
+  required?: boolean;
 }
+
+const Input: FC<InputProps> = ({
+  placeholder,
+  onChange,
+  type = 'text',
+  valid,
+  errorMessage,
+  required,
+}) => {
+  return (
+    <StyledInputWrapper>
+      <StyledLabel>{placeholder}</StyledLabel>
+      <StyledInput type={type} onChange={onChange} required={required} />
+      {valid && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
+    </StyledInputWrapper>
+  );
+};
+
+export default Input;
 
 const StyledInputWrapper = styled.div`
   margin-right: 1rem;
@@ -36,19 +58,8 @@ const StyledInput = styled.input`
   outline: 0;
 
   &:focus {
-    border-color: #2563eb;
+    border-color: #fb923c;
   }
 `;
 
-const Input: FC<InputProps> = ({ placeholder }) => {
-  return (
-    <StyledInputWrapper>
-      <StyledLabel>
-        {placeholder}
-        <StyledInput type="text" />
-      </StyledLabel>
-    </StyledInputWrapper>
-  );
-};
-
-export default Input;
+const StyledErrorMessage = styled.div``;
