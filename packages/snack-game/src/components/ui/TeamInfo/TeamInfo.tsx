@@ -4,36 +4,11 @@ import styled from '@emotion/styled';
 
 import ChilImage from '@assets/images/0chil.jpg';
 import DongSuImage from '@assets/images/dongsu.webp';
-import TeamCard from '@components/common/TeamCard/TeamCard';
+import TeamCard from '@components/ui/TeamInfo/TeamCard/TeamCard';
 
 interface TeamInfoProps {
   children?: never;
 }
-
-export const Wrapper = styled.div`
-  padding: 6rem 1.25rem 3rem;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-export const Title = styled.div`
-  display: flex;
-  margin-bottom: 2.5rem;
-  text-align: center;
-  flex-direction: column;
-  width: 100%;
-  color: #111827;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-weight: 500;
-`;
-
-export const TeamCardsWrapper = styled.div`
-  display: flex;
-  margin: -1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
 
 const TeamInfo: FC<TeamInfoProps> = () => {
   const teamInfoList = [
@@ -67,3 +42,28 @@ const TeamInfo: FC<TeamInfoProps> = () => {
 };
 
 export default TeamInfo;
+
+export const Wrapper = styled.div`
+  padding: 6rem 1.25rem 3rem;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+export const Title = styled.div`
+  display: flex;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  flex-direction: column;
+  width: 100%;
+  color: #111827;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 500;
+`;
+
+export const TeamCardsWrapper = styled.div`
+  display: flex;
+  margin: -1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+`;

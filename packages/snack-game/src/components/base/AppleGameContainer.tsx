@@ -20,7 +20,7 @@ const AppleGameWrapper = styled.div`
 const AppleGameContainer: FC<CanvasBaseProps> = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  const { width, height } = useClientRect(canvasBaseRef);
+  const { width, height } = useClientRect({ canvasBaseRef });
 
   return (
     <AppleGameWrapper ref={canvasBaseRef}>

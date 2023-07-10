@@ -1,12 +1,6 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 
-interface FooterProps {
-  children?: never;
-}
-
-const StyledFooterWrapper = styled.div`
+export const FooterWrapper = styled.div`
   width: 100%;
   display: flex;
   padding: 2rem 1.25rem;
@@ -20,7 +14,7 @@ const StyledFooterWrapper = styled.div`
   }
 `;
 
-const StyledTitle = styled.a`
+export const Title = styled.a`
   display: flex;
   color: #111827;
   font-weight: 500;
@@ -38,7 +32,7 @@ const StyledTitle = styled.a`
   }
 `;
 
-const StyledCopyRight = styled.p`
+export const CopyRight = styled.p`
   margin-top: 1rem;
   color: #6b7280;
   font-size: 0.875rem;
@@ -60,7 +54,7 @@ const StyledCopyRight = styled.p`
   }
 `;
 
-const StyledIconProvider = styled.span`
+export const IconProvider = styled.span`
   display: inline-flex;
   margin-top: 1rem;
   color: #6b7280;
@@ -74,26 +68,3 @@ const StyledIconProvider = styled.span`
     justify-content: flex-start;
   }
 `;
-
-const Footer: FC<FooterProps> = () => {
-  return (
-    <StyledFooterWrapper>
-      <StyledTitle>
-        <span>SnackGame</span>
-      </StyledTitle>
-      <StyledCopyRight>
-        © 2023 SnackGame —
-        <a rel="noopener noreferrer" target="_blank">
-          @dev-dong-su, @0chil
-        </a>
-      </StyledCopyRight>
-      <StyledIconProvider>
-        <a href="https://www.flaticon.com/kr/free-icons/" title="아이콘">
-          아이콘 제작자: Freepik - Flaticon
-        </a>
-      </StyledIconProvider>
-    </StyledFooterWrapper>
-  );
-};
-
-export default Footer;

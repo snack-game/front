@@ -2,12 +2,26 @@ import React, { FC, ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
-import Footer from '@components/ui/Footer';
-import Header from '@components/ui/Header';
+import Footer from '@components/ui/Footer/Footer';
+import Header from '@components/ui/Header/Header';
 
 interface PageContainerProps {
   children: ReactNode;
 }
+
+const PageContainer: FC<PageContainerProps> = ({ children }) => {
+  return (
+    <>
+      <Header />
+      <PageContainerWrapper>
+        <PageContainerInner>{children}</PageContainerInner>
+      </PageContainerWrapper>
+      <Footer />
+    </>
+  );
+};
+
+export default PageContainer;
 
 const PageContainerWrapper = styled.div`
   margin-left: auto;
@@ -30,17 +44,3 @@ const PageContainerInner = styled.div`
     padding-bottom: 2.5rem;
   }
 `;
-
-const PageContainer: FC<PageContainerProps> = ({ children }) => {
-  return (
-    <>
-      <Header />
-      <PageContainerWrapper>
-        <PageContainerInner>{children}</PageContainerInner>
-      </PageContainerWrapper>
-      <Footer />
-    </>
-  );
-};
-
-export default PageContainer;

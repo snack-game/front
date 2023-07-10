@@ -2,7 +2,7 @@ import React, { FC, RefObject, useRef } from 'react';
 
 import styled from '@emotion/styled';
 
-import SnackRain from '@components/ui/SnackRain';
+import SnackRain from '@components/common/SnackRain';
 
 import { useClientRect } from '@hooks/useClientRect';
 
@@ -20,7 +20,7 @@ const SnackRainWrapper = styled.div`
 const SnackRainContainer: FC<SnackRainBaseProps> = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  const { width, height } = useClientRect(canvasBaseRef);
+  const { width, height } = useClientRect({ canvasBaseRef });
 
   return (
     <SnackRainWrapper ref={canvasBaseRef}>

@@ -55,7 +55,7 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
     }
   };
 
-  const canvasRef = useCanvas(clientWidth, clientHeight, animation);
+  const canvasRef = useCanvas({ clientWidth, clientHeight, animation });
 
   useEffect(() => {
     if (canvasRef.current) {

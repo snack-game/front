@@ -12,23 +12,23 @@ interface DropApplesProps {
   clientHeight: number;
 }
 
-const StyledCanvas = styled.canvas`
-  position: fixed;
-  width: 100vw;
-  height: 100%;
-`;
-
 const SnackRain: FC<DropApplesProps> = ({ clientWidth, clientHeight }) => {
   const snackRain = new SnackRainManager();
 
-  const animate = (ctx: CanvasRenderingContext2D) => {
+  const animation = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, clientWidth, clientHeight);
     snackRain.drawSnackRain(ctx, clientWidth, clientHeight);
   };
 
-  const canvasRef = useCanvas(clientWidth, clientHeight, animate);
+  const canvasRef = useCanvas({ clientWidth, clientHeight, animation });
 
   return <StyledCanvas ref={canvasRef}></StyledCanvas>;
 };
 
 export default SnackRain;
+
+const StyledCanvas = styled.canvas`
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+`;

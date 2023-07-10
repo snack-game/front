@@ -1,14 +1,18 @@
 import { RefObject, useEffect, useState } from 'react';
 
-export const useClientRect = (ref: RefObject<HTMLElement>) => {
+interface useClientRectProps {
+  canvasBaseRef: RefObject<HTMLElement>;
+}
+
+export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
     const setClientRect = () => {
-      if (ref.current) {
-        setWidth(ref.current.clientWidth);
-        setHeight(ref.current.clientHeight);
+      if (canvasBaseRef.current) {
+        setWidth(canvasBaseRef.current.clientWidth);
+        setHeight(canvasBaseRef.current.clientHeight);
       }
     };
 

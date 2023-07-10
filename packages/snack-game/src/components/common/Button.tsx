@@ -12,9 +12,26 @@ interface ButtonProps {
   wrapper?: SerializedStyles;
 }
 
-type StyledButtonProps = {
+interface StyledButtonProps {
   show?: boolean;
+}
+
+const Button: FC<ButtonProps> = ({
+  show = true,
+  content,
+  onClick,
+  wrapper,
+}) => {
+  return (
+    <StyledWrapper css={wrapper}>
+      <StyledButton onClick={onClick} show={show}>
+        {content}
+      </StyledButton>
+    </StyledWrapper>
+  );
 };
+
+export default Button;
 
 const StyledButton = styled.button<StyledButtonProps>`
   padding: 0.5rem 1.5rem;
@@ -34,20 +51,3 @@ const StyledButton = styled.button<StyledButtonProps>`
 const StyledWrapper = styled.div`
   width: fit-content;
 `;
-
-const Button: FC<ButtonProps> = ({
-  show = true,
-  content,
-  onClick,
-  wrapper,
-}) => {
-  return (
-    <StyledWrapper css={wrapper}>
-      <StyledButton onClick={onClick} show={show}>
-        {content}
-      </StyledButton>
-    </StyledWrapper>
-  );
-};
-
-export default Button;
