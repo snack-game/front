@@ -8,6 +8,16 @@ interface LoadingProps {
   children?: never;
 }
 
+const Loading: FC<LoadingProps> = () => {
+  return (
+    <LoadingWrapper>
+      <Image src={LoadingImage} alt={'loading image'} />
+    </LoadingWrapper>
+  );
+};
+
+export default Loading;
+
 const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -30,13 +40,3 @@ const Image = styled.img`
   width: 2.5rem;
   height: 2.5rem;
 `;
-
-const Loading: FC<LoadingProps> = () => {
-  return (
-    <LoadingWrapper>
-      <Image src={LoadingImage} alt={'loading image'} />
-    </LoadingWrapper>
-  );
-};
-
-export default Loading;

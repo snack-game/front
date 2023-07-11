@@ -1,14 +1,6 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 
-import LogoImage from '@assets/images/logo.png';
-
-interface HeaderProps {
-  children?: never;
-}
-
-const StyledHeaderWrapper = styled.div`
+export const HeaderWrapper = styled.div`
   width: 100%;
   display: flex;
   padding: 1.25rem;
@@ -23,7 +15,7 @@ const StyledHeaderWrapper = styled.div`
   }
 `;
 
-const StyledTitle = styled.a`
+export const Title = styled.a`
   display: flex;
   margin-bottom: 1rem;
   color: #111827;
@@ -46,7 +38,7 @@ const StyledTitle = styled.a`
   }
 `;
 
-const StyledNav = styled.nav`
+export const Nav = styled.nav`
   display: flex;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -66,19 +58,3 @@ const StyledNav = styled.nav`
     }
   }
 `;
-
-const Header: FC<HeaderProps> = () => {
-  return (
-    <StyledHeaderWrapper>
-      <StyledTitle href={'/'}>
-        <img src={LogoImage} alt={'로고 이미지'} />
-        <span>Snack Game</span>
-      </StyledTitle>
-      <StyledNav>
-        <StyledNav>로그인</StyledNav>
-      </StyledNav>
-    </StyledHeaderWrapper>
-  );
-};
-
-export default Header;
