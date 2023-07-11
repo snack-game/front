@@ -30,7 +30,7 @@ const useForm = <T>({ initialValues }: UseFormProps<T>) => {
     };
 
   const resetForm = () => {
-    setValues(initialVa가lues);
+    setValues(initialValues);
   };
 
   return {
