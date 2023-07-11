@@ -2,7 +2,7 @@ import React, { FC, RefObject, useRef } from 'react';
 
 import styled from '@emotion/styled';
 
-import SnackRain from '@components/common/SnackRain';
+import SnackRain from '@components/ui/SnackRain/SnackRain';
 
 import { useClientRect } from '@hooks/useClientRect';
 

@@ -2,14 +2,13 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import AppleGameImage from '@assets/images/apple-game.jpg';
 import AppleImage from '@assets/images/apple.png';
 import PageContainer from '@components/base/PageContainer';
-import SnackRainContainer from '@components/base/SnackRainContainer';
 import Button from '@components/common/Button';
+import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import TeamInfo from '@components/ui/TeamInfo/TeamInfo';
 import ThumbnailCard from '@components/ui/ThumbnailCard/ThumbnailCard';
 
@@ -43,12 +42,7 @@ const MainPage: FC<MainPageProps> = () => {
             }
           >
             <Link to={'/game/apple-game'}>
-              <Button
-                content={'입장'}
-                wrapper={css`
-                  margin: auto;
-                `}
-              ></Button>
+              <Button content={'입장'}></Button>
             </Link>
           </ThumbnailCard>
         </CardsWrapper>
