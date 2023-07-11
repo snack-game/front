@@ -10,6 +10,7 @@ interface ButtonProps {
   onClick?: () => void;
   show?: boolean;
   wrapper?: SerializedStyles;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 interface StyledButtonProps {
@@ -21,10 +22,11 @@ const Button: FC<ButtonProps> = ({
   content,
   onClick,
   wrapper,
+  type = 'button',
 }) => {
   return (
     <StyledWrapper css={wrapper}>
-      <StyledButton onClick={onClick} show={show}>
+      <StyledButton onClick={onClick} show={show} type={type}>
         {content}
       </StyledButton>
     </StyledWrapper>
@@ -50,4 +52,5 @@ const StyledButton = styled.button<StyledButtonProps>`
 
 const StyledWrapper = styled.div`
   width: fit-content;
+  margin: auto;
 `;
