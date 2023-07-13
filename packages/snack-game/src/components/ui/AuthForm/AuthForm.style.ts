@@ -7,7 +7,8 @@ export const Form = styled.form`
   flex-direction: column;
   border-radius: 0.5rem;
   width: 100%;
-  background-color: #f3f4f6;
+  background-color: white;
+  border: 1px solid #d1d5db;
 
   @media (min-width: 768px) {
     margin-top: 0;

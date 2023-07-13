@@ -1,12 +1,6 @@
-import { FC } from 'react';
-
 import * as Styled from '@components/ui/Footer/Footer.style';
 
-interface FooterProps {
-  children?: never;
-}
-
-const Footer: FC<FooterProps> = () => {
+const Footer = () => {
   return (
     <Styled.FooterWrapper>
       <Styled.Title>

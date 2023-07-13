@@ -1,13 +1,7 @@
-import { FC } from 'react';
-
 import LogoImage from '@assets/images/logo.png';
 import * as Styled from '@components/ui/Header/Header.style';
 
-interface HeaderProps {
-  children?: never;
-}
-
-const Header: FC<HeaderProps> = () => {
+const Header = () => {
   return (
     <Styled.HeaderWrapper>
       <Styled.Title href={'/'}>

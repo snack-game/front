@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
@@ -12,11 +11,7 @@ import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import TeamInfo from '@components/ui/TeamInfo/TeamInfo';
 import ThumbnailCard from '@components/ui/ThumbnailCard/ThumbnailCard';
 
-interface MainPageProps {
-  children?: never;
-}
-
-const MainPage: FC<MainPageProps> = () => {
+const MainPage = () => {
   return (
     <>
       <Helmet>

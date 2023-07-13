@@ -1,14 +1,8 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 
 import LoadingImage from '@assets/images/logo.png';
 
-interface LoadingProps {
-  children?: never;
-}
-
-const Loading: FC<LoadingProps> = () => {
+const Loading = () => {
   return (
     <LoadingWrapper>
       <Image src={LoadingImage} alt={'loading image'} />

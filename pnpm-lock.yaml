@@ -143,6 +143,9 @@ importers:
       '@emotion/eslint-plugin':
         specifier: ^11.11.0
         version: 11.11.0(eslint@8.42.0)
+      '@tanstack/eslint-plugin-query':
+        specifier: ^4.29.9
+        version: 4.29.9
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.16.5
@@ -1331,6 +1334,10 @@ packages:
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
     dependencies:
       '@sinonjs/commons': 3.0.0
+    dev: true
+
+  /@tanstack/eslint-plugin-query@4.29.9:
+    resolution: {integrity: sha512-JlIZcs+zhl/ihta49iIbMCf3E8tSvGDqMIH+oItnYLOzWI7oiujXu7FYgna2E1V79KhR0PaxkPX6jHZLpvacgw==}
     dev: true
 
   /@testing-library/dom@9.3.1:

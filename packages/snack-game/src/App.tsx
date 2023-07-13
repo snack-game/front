@@ -1,4 +1,5 @@
 import { FC, lazy, Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global } from '@emotion/react';
@@ -13,6 +14,8 @@ const AuthPage = lazy(() => import('@pages/AuthPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
+const queryClient = new QueryClient();
+
 interface AppProps {
   children?: never;
 }
@@ -20,18 +23,20 @@ interface AppProps {
 const App: FC<AppProps> = () => {
   return (
     <>
-      <ErrorBoundary>
-        <Global styles={globalStyles} />
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/auth" element={<AuthPage />} />
+      <QueryClientProvider client={queryClient}>
+        <ErrorBoundary>
+          <Global styles={globalStyles} />
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/auth" element={<AuthPage />} />
 
-            {/*Game*/}
-            <Route path="/game/apple-game" element={<AppleGamePage />} />
-          </Routes>
-        </Suspense>
-      </ErrorBoundary>
+              {/*Game*/}
+              <Route path="/game/apple-game" element={<AppleGamePage />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
+      </QueryClientProvider>
     </>
   );
 };

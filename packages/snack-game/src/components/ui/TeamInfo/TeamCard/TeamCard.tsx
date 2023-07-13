@@ -3,7 +3,6 @@ import { FC } from 'react';
 import * as Styled from './TeamCard.style';
 
 interface TeamCardProps {
-  children?: never;
   name: string;
   imgSrc: string;
   position: string;
