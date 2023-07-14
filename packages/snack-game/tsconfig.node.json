@@ -11,8 +11,8 @@
       "@components/*": [
         "./src/components/*"
       ],
-      "@lib/*": [
-        "./src/lib/*"
+      "@api/*": [
+        "./src/api/*"
       ],
       "@modules/*": [
         "./src/modules/*"
@@ -25,6 +25,9 @@
       ],
       "@hooks/*": [
         "./src/hooks/*"
+      ],
+      "@constants/*": [
+        "./src/constants/*"
       ]
     }
   },

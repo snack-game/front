@@ -64,7 +64,7 @@
             "position": "before"
           },
           {
-            "pattern": "{@assets/**,@components/**,@lib/**,@modules/**,@pages/**,@utils/**}",
+            "pattern": "{@assets/**,@components/**,@api/**,@modules/**,@pages/**,@utils/**,@constans/**}",
             "group": "internal",
             "position": "before"
           }
