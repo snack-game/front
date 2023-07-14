@@ -19,24 +19,32 @@ const useForm = <T>({ initialValues }: UseFormProps<T>) => {
     (event: ChangeEvent<HTMLInputElement>): void => {
       const eventValue = event.target.value as unknown as T;
 
+      setFieldValue(field)(eventValue);
+    };
+
+  const setFieldValue =
+    (field: string) =>
+    (value: T): void => {
       setValues((prevValues) => ({
         ...prevValues,
         [field]: {
           ...prevValues[field],
-          value: eventValue,
-          valid: prevValues[field].isInvalid?.(eventValue),
+          value: value,
+          valid: prevValues[field].isInvalid?.(value),
         },
       }));
     };
 
-  const resetForm = () => {
-    setValues(initialValues);
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(values);
   };
 
   return {
     values,
     handleChangeValue,
-    resetForm,
+    handleOnSubmit,
+    setFieldValue,
   };
 };
 

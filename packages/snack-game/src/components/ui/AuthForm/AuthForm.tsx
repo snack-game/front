@@ -1,27 +1,31 @@
-import { FC } from 'react';
-
 import Button from '@components/common/Button';
 import Input from '@components/common/Input';
+import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
+import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp';
 import useForm from '@hooks/useForm';
 
 import * as Styled from './AuthForm.style';
-import { MORE_2CHAR_REGEX } from '../../../constants/regex';
 
-interface AuthFormProps {
-  children?: never;
-}
-
-const AuthForm: FC<AuthFormProps> = () => {
-  const { values, handleChangeValue } = useForm<string>({
-    initialValues: {
-      name: { value: '', isInvalid: (value) => MORE_2CHAR_REGEX.test(value) },
-      group: { value: '', isInvalid: (value) => MORE_2CHAR_REGEX.test(value) },
-    },
-  });
+const AuthForm = () => {
+  const { values, handleChangeValue, handleOnSubmit, setFieldValue } =
+    useForm<string>({
+      initialValues: {
+        name: {
+          value: '',
+          isInvalid: (value) => NAME_REGEXP.test(value),
+          valid: false,
+        },
+        group: {
+          value: '',
+          isInvalid: (value) => GROUP_REGEXP.test(value),
+          valid: true,
+        },
+      },
+    });
 
   return (
-    <Styled.Form>
+    <Styled.Form onSubmit={handleOnSubmit}>
       <Styled.Title>로그인 / 등록</Styled.Title>
       <Styled.InputWrapper>
         <Input
@@ -42,6 +46,11 @@ const AuthForm: FC<AuthFormProps> = () => {
           onChange={handleChangeValue('group')}
           errorMessage={'소속은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
           valid={values.group.valid}
+          value={values.group.value}
+        />
+        <SearchResultList
+          value={values.group.value}
+          onClick={setFieldValue('group')}
         />
       </Styled.InputWrapper>
       <Button content={'확인'} type={'submit'} />

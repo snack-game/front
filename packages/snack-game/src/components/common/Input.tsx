@@ -10,6 +10,7 @@ interface InputProps {
   errorMessage?: string;
   required?: boolean;
   id?: string;
+  value?: string;
 }
 
 interface StyledInputProps {
@@ -24,6 +25,7 @@ const Input: FC<InputProps> = ({
   errorMessage,
   required,
   id,
+  value,
 }) => {
   return (
     <StyledInputWrapper>
@@ -34,6 +36,8 @@ const Input: FC<InputProps> = ({
         onChange={onChange}
         required={required}
         valid={valid}
+        value={value}
+        autoComplete={'off'}
       />
       {!valid && valid !== undefined && (
         <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
@@ -57,7 +61,7 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input<StyledInputProps>`
   padding: 0.25rem 0.75rem;
-  background-color: #f3f4f6;
+  background-color: #ffffff;
   --bg-opacity: 0.5;
   color: #374151;
   font-size: 1rem;
@@ -69,7 +73,7 @@ const StyledInput = styled.input<StyledInputProps>`
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &:focus {
-    border-color: ${(props) => (props.valid ? '#A2FF86' : '#EF6262')};
+    border-color: ${(props) => (props.valid ? '#22c55e' : '#EF6262')};
   }
 `;
 

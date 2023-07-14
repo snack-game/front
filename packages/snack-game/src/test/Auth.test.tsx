@@ -17,8 +17,8 @@ describe('Auth(login, register) 관련 기능을 테스트.', () => {
   test('이름과 소속에 대한 validation과 변경을 잘 수행하는가?', async () => {
     render(<AuthForm />);
 
-    const name = screen.getByLabelText<HTMLInputElement>(`이름`);
-    const group = screen.getByLabelText<HTMLInputElement>(`소속`);
+    const name = await screen.getByLabelText<HTMLInputElement>(`이름`);
+    const group = await screen.getByLabelText<HTMLInputElement>(`소속`);
 
     fireEvent.change(name, {
       target: { value: `김` },
@@ -26,7 +26,9 @@ describe('Auth(login, register) 관련 기능을 테스트.', () => {
 
     expect(name.value).toBe(`김`);
     expect(
-      screen.getByText(`이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.`),
+      await screen.getByText(
+        `이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.`,
+      ),
     );
 
     fireEvent.change(name, {
@@ -40,7 +42,9 @@ describe('Auth(login, register) 관련 기능을 테스트.', () => {
 
     expect(group.value).toBe(`홍`);
     expect(
-      screen.getByText(`소속은 2글자 이상, 특수문자를 포함하지 않아야 해요.`),
+      await screen.getByText(
+        `소속은 2글자 이상, 특수문자를 포함하지 않아야 해요.`,
+      ),
     );
 
     fireEvent.change(group, {

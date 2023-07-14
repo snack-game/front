@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import styled from '@emotion/styled';
@@ -6,11 +5,7 @@ import styled from '@emotion/styled';
 import PageContainer from '@components/base/PageContainer';
 import AuthForm from '@components/ui/AuthForm/AuthForm';
 
-interface AuthPageProps {
-  children?: never;
-}
-
-const AuthPage: FC<AuthPageProps> = () => {
+const AuthPage = () => {
   return (
     <>
       <Helmet>
@@ -19,10 +14,8 @@ const AuthPage: FC<AuthPageProps> = () => {
       <PageContainer>
         <Wrapper>
           <TextWrapper>
-            <Title>로그인 / 등록</Title>
+            <Title>이름과 소속을 입력하고 랭킹을 경쟁해 보아요!</Title>
             <Description>
-              이름과 소속을 입력하고 랭킹을 경쟁해 보아요!
-              <br />
               이미 만든적이 있다면 이름만으로 로그인할 수 있어요!
             </Description>
           </TextWrapper>

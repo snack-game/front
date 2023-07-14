@@ -4,13 +4,13 @@ import { SerializedStyles } from '@emotion/react';
 import styled from '@emotion/styled';
 
 interface ButtonProps {
-  children?: never;
   className?: string;
   content: string;
   onClick?: () => void;
   show?: boolean;
   wrapper?: SerializedStyles;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
 interface StyledButtonProps {
@@ -23,10 +23,16 @@ const Button: FC<ButtonProps> = ({
   onClick,
   wrapper,
   type = 'button',
+  disabled,
 }) => {
   return (
     <StyledWrapper css={wrapper}>
-      <StyledButton onClick={onClick} show={show} type={type}>
+      <StyledButton
+        onClick={onClick}
+        show={show}
+        type={type}
+        disabled={disabled}
+      >
         {content}
       </StyledButton>
     </StyledWrapper>

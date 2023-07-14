@@ -1,16 +1,10 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 
 import ChilImage from '@assets/images/0chil.jpg';
 import DongSuImage from '@assets/images/dongsu.webp';
 import TeamCard from '@components/ui/TeamInfo/TeamCard/TeamCard';
 
-interface TeamInfoProps {
-  children?: never;
-}
-
-const TeamInfo: FC<TeamInfoProps> = () => {
+const TeamInfo = () => {
   const teamInfoList = [
     {
       imgSrc: DongSuImage,

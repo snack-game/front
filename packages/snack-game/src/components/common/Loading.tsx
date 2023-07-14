@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import LoadingImage from '@assets/images/logo.png';
 
 interface LoadingProps {
-  children?: never;
+  type?: 'page' | 'component';
 }
 
 const Loading: FC<LoadingProps> = () => {
@@ -18,12 +18,12 @@ const Loading: FC<LoadingProps> = () => {
 
 export default Loading;
 
-const LoadingWrapper = styled.div`
+const LoadingWrapper = styled.div<LoadingProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: ${(props) => (props.type === 'page' ? '100vw' : '100%')};
+  height: ${(props) => (props.type === 'page' ? '100vh' : '100%')};
 `;
 
 const Image = styled.img`
