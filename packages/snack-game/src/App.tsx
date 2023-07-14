@@ -26,7 +26,7 @@ const App: FC<AppProps> = () => {
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary>
           <Global styles={globalStyles} />
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<Loading type={'page'} />}>
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/auth" element={<AuthPage />} />

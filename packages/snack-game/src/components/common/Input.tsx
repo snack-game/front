@@ -61,7 +61,7 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input<StyledInputProps>`
   padding: 0.25rem 0.75rem;
-  background-color: #f3f4f6;
+  background-color: #ffffff;
   --bg-opacity: 0.5;
   color: #374151;
   font-size: 1rem;

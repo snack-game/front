@@ -1,51 +1,53 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
-import styled from '@emotion/styled';
+import Loading from '@components/common/Loading';
 
+import { useGetGroupsNames } from '@hooks/queries/groups.query';
 import useDebounce from '@hooks/useDebounce';
+
+import * as Styled from './SearchResultList.style';
 
 interface SearchResultListProps {
   value: string;
-  onSelect: (value: string) => void;
+  onClick: (value: string) => void;
 }
 
-const test = (): Promise<string[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(['홍천', '홍천고등학교', '홍천중학교']);
-    }, 500);
+const SearchResultList: FC<SearchResultListProps> = ({ value, onClick }) => {
+  const debouncedValue = useDebounce({ target: value, delay: 500 });
+  const { isLoading, data } = useGetGroupsNames({
+    startWidth: debouncedValue,
+    enabled: !!debouncedValue,
   });
-};
 
-const SearchResultList: FC<SearchResultListProps> = ({ value, onSelect }) => {
-  const [groupList, setGroupList] = useState<string[]>([]);
-  const debouncedValue = useDebounce({ target: value, delay: 200 });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (value !== '') {
-        const result = await test();
-        setGroupList(result);
-      }
-    };
-
-    fetchData();
-  }, [debouncedValue]);
+  const groupList = data?.data ?? [];
 
   return (
-    <div>
-      <ul>
-        {value &&
-          groupList.map((item) => (
-            <li key={item} onClick={() => onSelect(item)}>
-              {item}
-            </li>
-          ))}
-      </ul>
-    </div>
+    <>
+      {debouncedValue.length !== 0 && (
+        <Styled.Ul>
+          {isLoading ? (
+            <Loading type={'component'}></Loading>
+          ) : (
+            <>
+              {groupList.length === 0 ? (
+                <Styled.Li>
+                  일치하는 그룹이 없어요!
+                  <br />
+                  새로운 그룹으로 생성할게요!
+                </Styled.Li>
+              ) : (
+                groupList.map((item) => (
+                  <Styled.Li key={item} onClick={() => onClick(item)}>
+                    {item}
+                  </Styled.Li>
+                ))
+              )}
+            </>
+          )}
+        </Styled.Ul>
+      )}
+    </>
   );
 };
 
 export default SearchResultList;
-
-const Wrapper = styled.div``;

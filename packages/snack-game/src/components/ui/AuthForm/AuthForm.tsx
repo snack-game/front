@@ -2,16 +2,20 @@ import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
+import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp';
 import useForm from '@hooks/useForm';
 
 import * as Styled from './AuthForm.style';
-import { GROUP_REGEXP, NAME_REGEXP } from '../../../constants/regex';
 
 const AuthForm = () => {
   const { values, handleChangeValue, handleOnSubmit, setFieldValue } =
     useForm<string>({
       initialValues: {
-        name: { value: '', isInvalid: (value) => NAME_REGEXP.test(value) },
+        name: {
+          value: '',
+          isInvalid: (value) => NAME_REGEXP.test(value),
+          valid: false,
+        },
         group: {
           value: '',
           isInvalid: (value) => GROUP_REGEXP.test(value),
@@ -46,7 +50,7 @@ const AuthForm = () => {
         />
         <SearchResultList
           value={values.group.value}
-          onSelect={setFieldValue('group')}
+          onClick={setFieldValue('group')}
         />
       </Styled.InputWrapper>
       <Button content={'확인'} type={'submit'} />
