@@ -8,9 +8,9 @@ interface LoadingProps {
   type?: 'page' | 'component';
 }
 
-const Loading: FC<LoadingProps> = () => {
+const Loading: FC<LoadingProps> = ({ type }) => {
   return (
-    <LoadingWrapper>
+    <LoadingWrapper type={type}>
       <Image src={LoadingImage} alt={'loading image'} />
     </LoadingWrapper>
   );

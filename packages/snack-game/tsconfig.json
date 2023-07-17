@@ -39,8 +39,8 @@
       "@pages/*": [
         "./src/pages/*"
       ],
-      "@shared/*": [
-        "../shared/src/*"
+      "@types/*": [
+        "./src/types/*"
       ],
       "@hooks/*": [
         "./src/hooks/*"

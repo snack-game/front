@@ -54,6 +54,10 @@ const StyledButton = styled.button<StyledButtonProps>`
   &:hover {
     background-color: #f97316;
   }
+
+  &:disabled {
+    background-color: rgba(249, 115, 22, 0.5);
+  }
 `;
 
 const StyledWrapper = styled.div`

@@ -8,21 +8,25 @@ import useForm from '@hooks/useForm';
 import * as Styled from './AuthForm.style';
 
 const AuthForm = () => {
-  const { values, handleChangeValue, handleOnSubmit, setFieldValue } =
-    useForm<string>({
-      initialValues: {
-        name: {
-          value: '',
-          isInvalid: (value) => NAME_REGEXP.test(value),
-          valid: false,
-        },
-        group: {
-          value: '',
-          isInvalid: (value) => GROUP_REGEXP.test(value),
-          valid: true,
-        },
+  const { values, handleChangeValue, setFieldValue } = useForm<string>({
+    initialValues: {
+      name: {
+        value: '',
+        isInvalid: (value) => NAME_REGEXP.test(value),
+        valid: false,
       },
-    });
+      group: {
+        value: '',
+        isInvalid: (value) => GROUP_REGEXP.test(value),
+        valid: true,
+      },
+    },
+  });
+
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(values);
+  };
 
   return (
     <Styled.Form onSubmit={handleOnSubmit}>
@@ -53,8 +57,16 @@ const AuthForm = () => {
           onClick={setFieldValue('group')}
         />
       </Styled.InputWrapper>
-      <Button content={'확인'} type={'submit'} />
-      <Styled.Description>소속은 나중에 설정해도 괜찮아요!</Styled.Description>
+      <Button
+        content={'확인'}
+        type={'submit'}
+        disabled={!values.name.valid || !values.group.valid}
+      />
+      <Styled.Description>
+        {
+          '소속은 나중에 설정해도 괜찮아요!\n존재하지 않는 소속이면 새로 만들어져요!'
+        }
+      </Styled.Description>
     </Styled.Form>
   );
 };

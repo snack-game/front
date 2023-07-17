@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import LogoImage from '@assets/images/logo.png';
 import * as Styled from '@components/ui/Header/Header.style';
 
@@ -9,7 +11,7 @@ const Header = () => {
         <span>Snack Game</span>
       </Styled.Title>
       <Styled.Nav>
-        <Styled.Nav>로그인</Styled.Nav>
+        <Link to={'/auth'}>로그인 </Link>
       </Styled.Nav>
     </Styled.HeaderWrapper>
   );

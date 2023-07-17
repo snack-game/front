@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 interface FormField<T> {
   value: T;
   isInvalid?: (value: T) => boolean;
-  valid?: boolean;
+  valid?: boolean; // 해당 필드의 valid 초기값을 설정시 필요
 }
 
 interface UseFormProps<T> {
@@ -35,15 +35,9 @@ const useForm = <T>({ initialValues }: UseFormProps<T>) => {
       }));
     };
 
-  const handleOnSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(values);
-  };
-
   return {
     values,
     handleChangeValue,
-    handleOnSubmit,
     setFieldValue,
   };
 };

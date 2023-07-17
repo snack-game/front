@@ -36,5 +36,6 @@ export const Description = styled.p`
   margin-top: 0.75rem;
   font-size: 0.75rem;
   line-height: 1rem;
+  white-space: pre-line;
   color: #6b7280;
 `;

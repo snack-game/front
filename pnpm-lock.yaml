@@ -127,6 +127,9 @@ importers:
       react-helmet-async:
         specifier: ^1.3.0
         version: 1.3.0(react-dom@18.2.0)(react@18.2.0)
+      react-hooks-testing-library:
+        specifier: ^0.6.0
+        version: 0.6.0(react-test-renderer@16.14.0)(react@18.2.0)
       react-hot-toast:
         specifier: ^2.4.1
         version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
@@ -1371,6 +1374,19 @@ packages:
       redent: 3.0.0
     dev: true
 
+  /@testing-library/react-hooks@1.0.4(react-test-renderer@16.14.0)(react@18.2.0):
+    resolution: {integrity: sha512-yFulIcOY7oTtkUHRzmWb0nPWpt0mA/WMm6BWCzoZopLptlSk6LrGC3P53bdN7UTcYqyExszSwMz3o8PYYQeeEA==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-test-renderer: '>=16.8.0'
+    dependencies:
+      '@babel/runtime': 7.22.6
+      '@types/react': 16.14.43
+      '@types/react-test-renderer': 16.9.5
+      react: 18.2.0
+      react-test-renderer: 16.14.0(react@18.2.0)
+    dev: false
+
   /@testing-library/react@14.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==}
     engines: {node: '>=14'}
@@ -1526,6 +1542,20 @@ packages:
     dependencies:
       '@types/react': 18.0.37
     dev: true
+
+  /@types/react-test-renderer@16.9.5:
+    resolution: {integrity: sha512-C4cN7C2uSSGOYelp2XfdtJb5TsCP+QiZ+0Bm4U3ZfUswN8oN9O/l86XO/OvBSFCmWY7w75fzsQvZ50eGkFN34A==}
+    dependencies:
+      '@types/react': 16.14.43
+    dev: false
+
+  /@types/react@16.14.43:
+    resolution: {integrity: sha512-7zdjv7jvoLLQg1tTvpQsm+hyNUMT2mPlNV1+d0I8fbGhkJl82spopMyBlu4wb1dviZAxpGdk5eHu/muacknnfw==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.3
+      csstype: 3.1.2
+    dev: false
 
   /@types/react@18.0.37:
     resolution: {integrity: sha512-4yaZZtkRN3ZIQD3KSEwkfcik8s0SWV+82dlJot1AbGYHCzJkWP3ENBY6wYeDRmKZ6HkrgoGAmR2HqdwYGp6OEw==}
@@ -5092,6 +5122,17 @@ packages:
       react-side-effect: 2.1.2(react@18.2.0)
     dev: false
 
+  /react-hooks-testing-library@0.6.0(react-test-renderer@16.14.0)(react@18.2.0):
+    resolution: {integrity: sha512-VzOF4ZYMWR2B0RQgRXmxolmSMy7uvUPgmVm/CqSeyTRiITMQXiTywK65sjoIHzsQ6tW1R8hbljSYU02PgGdvCA==}
+    peerDependencies:
+      react: ^16.8.0
+      react-test-renderer: ^16.8.0
+    dependencies:
+      '@testing-library/react-hooks': 1.0.4(react-test-renderer@16.14.0)(react@18.2.0)
+      react: 18.2.0
+      react-test-renderer: 16.14.0(react@18.2.0)
+    dev: false
+
   /react-hot-toast@2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-j8z+cQbWIM5LY37pR6uZR6D4LfseplqnuAO4co4u8917hBUvXlEqyP1ZzqVLcqoyUesZZv/ImreoCeHVDpE5pQ==}
     engines: {node: '>=10'}
@@ -5169,6 +5210,18 @@ packages:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /react-test-renderer@16.14.0(react@18.2.0):
+    resolution: {integrity: sha512-L8yPjqPE5CZO6rKsKXRO/rVPiaCOy0tQQJbC+UjPNlobl5mad59lvPjwFsQHTvL03caVDIVr9x9/OSgDe6I5Eg==}
+    peerDependencies:
+      react: ^16.14.0
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-is: 16.13.1
+      scheduler: 0.19.1
     dev: false
 
   /react@18.2.0:
@@ -5329,6 +5382,13 @@ packages:
     dependencies:
       xmlchars: 2.2.0
     dev: true
+
+  /scheduler@0.19.1:
+    resolution: {integrity: sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
 
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
