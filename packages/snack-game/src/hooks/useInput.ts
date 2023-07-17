@@ -10,7 +10,7 @@ const useInput = <T>({ initialValue, isInvalid }: useInputProps<T>) => {
   const [value, setValue] = useState(initialValue);
 
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>): void => {
-    const eventValue = event.target.value as unknown as T;
+    const eventValue = event.target.value as T;
 
     if (isInvalid) {
       setValid(isInvalid(eventValue));

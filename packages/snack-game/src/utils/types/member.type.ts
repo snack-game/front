@@ -5,5 +5,6 @@ interface MemberRoleType {
 export interface MemberType {
   name: string;
   group: string;
+  bestScore?: number;
   role?: MemberRoleType;
 }

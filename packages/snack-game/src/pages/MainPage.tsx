@@ -36,7 +36,7 @@ const MainPage = () => {
               '드래그 영역의 사과 숫자합이 10이되면 점수를 얻습니다!\n 황금 사과를 제거해 판을 새로고치고 높은 점수를 받아보아요!'
             }
           >
-            <Link to={'/game/apple-game'}>
+            <Link to={'/apple-game/apple-apple-game'}>
               <Button content={'입장'}></Button>
             </Link>
           </ThumbnailCard>
