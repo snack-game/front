@@ -1,4 +1,4 @@
-import { Apple } from '@modules/game/apple';
+import { Apple } from '@modules/apple-game/apple';
 
 const BORDER_OFFSET = 30;
 const ROWS = 10;

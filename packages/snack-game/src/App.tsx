@@ -3,14 +3,21 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global } from '@emotion/react';
+import { RecoilRoot } from 'recoil';
+import RecoilizeDebugger from 'recoilize';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
+import Toast from '@components/base/Toast';
 import Loading from '@components/common/Loading';
+
+import PATH from '@constants/path.constant';
 
 import { globalStyles } from './App.style';
 
 const MainPage = lazy(() => import('@pages/MainPage'));
-const AuthPage = lazy(() => import('@pages/AuthPage'));
+
+const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
+const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
@@ -24,18 +31,25 @@ const App: FC<AppProps> = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundary>
-          <Global styles={globalStyles} />
-          <Suspense fallback={<Loading type={'page'} />}>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/auth" element={<AuthPage />} />
+        <RecoilRoot>
+          <RecoilizeDebugger />
+          <ErrorBoundary>
+            <Global styles={globalStyles} />
+            <Suspense fallback={<Loading type={'page'} />}>
+              <Routes>
+                <Route path={PATH.HOME} element={<MainPage />} />
 
-              {/*Game*/}
-              <Route path="/game/apple-game" element={<AppleGamePage />} />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
+                {/*Auth*/}
+                <Route path={PATH.LOGIN} element={<LoginPage />} />
+                <Route path={PATH.REGISTER} element={<RegisterPage />} />
+
+                {/*Game*/}
+                <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+          <Toast />
+        </RecoilRoot>
       </QueryClientProvider>
     </>
   );

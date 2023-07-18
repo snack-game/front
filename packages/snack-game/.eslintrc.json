@@ -26,7 +26,9 @@
       "version": "detect"
     },
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "directory": "./src"
+      }
     },
     "import/parsers": {
       "@typescript-eslint/parser": [
@@ -64,7 +66,7 @@
             "position": "before"
           },
           {
-            "pattern": "{@assets/**,@components/**,@api/**,@modules/**,@pages/**,@utils/**,@constans/**}",
+            "pattern": "{@assets/**,@components/**,@api/**,@modules/**,@types/**,@pages/**,@utils/**,@constans/**}",
             "group": "internal",
             "position": "before"
           }

@@ -26,15 +26,11 @@ const SearchResultList: FC<SearchResultListProps> = ({ value, onClick }) => {
       {debouncedValue.length !== 0 && (
         <Styled.Ul>
           {isLoading ? (
-            <Loading type={'component'}></Loading>
+            <Loading type={'component'} />
           ) : (
             <>
               {groupList.length === 0 ? (
-                <Styled.Li>
-                  일치하는 그룹이 없어요!
-                  <br />
-                  새로운 그룹으로 생성할게요!
-                </Styled.Li>
+                <Styled.Li>일치하는 결과가 없어요!</Styled.Li>
               ) : (
                 groupList.map((item) => (
                   <Styled.Li key={item} onClick={() => onClick(item)}>
