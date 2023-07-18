@@ -3,14 +3,13 @@ import Input from '@components/common/Input';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
 import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
-import { TOAST_MESSAGE } from '@constants/toast.constant';
+import { useMemberRegister } from '@hooks/queries/members.query';
 import useForm from '@hooks/useForm';
-import useToast from '@hooks/useToast';
 
-import * as Styled from './AuthForm.style';
+import * as Styled from './Form.style';
 
-const AuthForm = () => {
-  const { openToast } = useToast();
+const RegisterForm = () => {
+  const { registerMutate } = useMemberRegister();
 
   const { values, handleChangeValue, setFieldValue } = useForm<string>({
     initialValues: {
@@ -29,7 +28,7 @@ const AuthForm = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    openToast(TOAST_MESSAGE.ERROR_UNAUTHORIZED, 'error');
+    registerMutate({ name: values.name.value, group: values.group.value });
   };
 
   return (
@@ -75,4 +74,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default RegisterForm;

@@ -11,7 +11,8 @@ const Header = () => {
         <span>Snack Game</span>
       </Styled.Title>
       <Styled.Nav>
-        <Link to={'/auth'}>로그인 </Link>
+        <Link to={'/login'}>로그인 </Link>
+        <Link to={'/register'}>회원가입 </Link>
       </Styled.Nav>
     </Styled.HeaderWrapper>
   );

@@ -6,11 +6,11 @@ interface FormField<T> {
   valid?: boolean; // 해당 필드의 valid 초기값을 설정시 필요
 }
 
-interface UseFormProps<T> {
+interface useFormProps<T> {
   initialValues: Record<string, FormField<T>>;
 }
 
-const useForm = <T>({ initialValues }: UseFormProps<T>) => {
+const useForm = <T>({ initialValues }: useFormProps<T>) => {
   const [values, setValues] =
     useState<Record<string, FormField<T>>>(initialValues);
 

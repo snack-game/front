@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import styled from '@emotion/styled';
 
 import PageContainer from '@components/base/PageContainer';
-import AuthForm from '@components/ui/AuthForm/AuthForm';
+import RegisterForm from '@components/ui/AuthForm/RegisterForm';
 
-const AuthPage = () => {
+const RegisterPage = () => {
   return (
     <>
       <Helmet>
@@ -19,14 +19,14 @@ const AuthPage = () => {
               이미 만든적이 있다면 이름만으로 로그인할 수 있어요!
             </Description>
           </TextWrapper>
-          <AuthForm />
+          <RegisterForm />
         </Wrapper>
       </PageContainer>
     </>
   );
 };
 
-export default AuthPage;
+export default RegisterPage;
 
 const Wrapper = styled.div`
   display: flex;

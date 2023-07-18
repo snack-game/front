@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-interface debounceProps<T> {
+interface useDebounceProps<T> {
   target: T;
   delay: number;
 }
 
-const useDebounce = <T>({ target, delay }: debounceProps<T>): T => {
+const useDebounce = <T>({ target, delay }: useDebounceProps<T>): T => {
   const [debouncedValue, setDebouncedValue] = useState(target);
 
   useEffect(() => {

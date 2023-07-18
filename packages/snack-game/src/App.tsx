@@ -13,7 +13,8 @@ import Loading from '@components/common/Loading';
 import { globalStyles } from './App.style';
 
 const MainPage = lazy(() => import('@pages/MainPage'));
-const AuthPage = lazy(() => import('@pages/AuthPage'));
+
+const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
@@ -34,7 +35,9 @@ const App: FC<AppProps> = () => {
             <Suspense fallback={<Loading type={'page'} />}>
               <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/auth" element={<AuthPage />} />
+
+                {/*Auth*/}
+                <Route path="/register" element={<RegisterPage />} />
 
                 {/*Game*/}
                 <Route path="/game/apple-game" element={<AppleGamePage />} />
