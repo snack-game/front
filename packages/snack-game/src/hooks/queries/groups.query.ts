@@ -4,7 +4,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 import groupsApi from '@api/groups';
 
-import { QUERY_KEY } from '@constants/api';
+import { QUERY_KEY } from '@constants/api.constant';
 
 interface useGetGroupsNamesProps {
   startWidth: string;

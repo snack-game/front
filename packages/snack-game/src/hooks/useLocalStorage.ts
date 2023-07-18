@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-const useLocalStorage = <T>(key: string, initialValue?: T) => {
+interface useLocalStorageProps<T> {
+  key: string;
+  initialValue?: T;
+}
+
+const useLocalStorage = <T>({ key, initialValue }: useLocalStorageProps<T>) => {
   const [storageValue, setStorage] = useState<T>(() => {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : initialValue;

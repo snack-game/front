@@ -2,12 +2,16 @@ import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
-import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp';
+import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
+import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useForm from '@hooks/useForm';
+import useToast from '@hooks/useToast';
 
 import * as Styled from './AuthForm.style';
 
 const AuthForm = () => {
+  const { openToast } = useToast();
+
   const { values, handleChangeValue, setFieldValue } = useForm<string>({
     initialValues: {
       name: {
@@ -25,7 +29,7 @@ const AuthForm = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(values);
+    openToast(TOAST_MESSAGE.ERROR_UNAUTHORIZED, 'error');
   };
 
   return (
