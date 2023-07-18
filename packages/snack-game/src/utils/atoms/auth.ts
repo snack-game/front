@@ -2,10 +2,10 @@ import { atom } from 'recoil';
 
 import { MemberType } from '@utils/types/member.type';
 
-import { USER_KEY } from '@constants/atom.constant';
+import { ATOM_KEY } from '@constants/atom.constant';
 
 export const userState = atom<MemberType>({
-  key: USER_KEY,
+  key: ATOM_KEY.USER,
   default: {
     name: '',
     group: '',

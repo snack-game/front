@@ -32,12 +32,12 @@ const Toast = () => {
         }
       }
     },
-    delay: 500,
+    delay: 300,
   });
 
   return (
     <Toaster
-      position="bottom-center"
+      position="top-center"
       toastOptions={{
         duration: 2500,
       }}

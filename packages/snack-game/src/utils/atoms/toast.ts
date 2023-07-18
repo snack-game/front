@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 import { ToastType } from '@utils/types/toast.type';
 
-import { TOAST_KEY } from '@constants/atom.constant';
+import { ATOM_KEY } from '@constants/atom.constant';
 import { TOAST_ID } from '@constants/toast.constant';
 
 interface toastStateType {
@@ -12,7 +12,7 @@ interface toastStateType {
 }
 
 export const toastState = atom<toastStateType>({
-  key: TOAST_KEY,
+  key: ATOM_KEY.TOAST,
   default: {
     id: TOAST_ID,
     message: '',

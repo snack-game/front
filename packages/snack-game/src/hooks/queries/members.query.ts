@@ -26,7 +26,7 @@ export const useMemberRegister = () => {
   });
 
   const { mutate } = useMutation<string, AxiosError<ServerError>, MemberType>(
-    (member: MemberType) => membersApi.authUser(member),
+    (member: MemberType) => membersApi.register(member),
     {
       retry: 0,
       onError: (error: AxiosError<ServerError>) => {
@@ -49,5 +49,41 @@ export const useMemberRegister = () => {
 
   return {
     registerMutate: mutate,
+  };
+};
+
+export const useMemberLogin = () => {
+  const { openToast } = useToast();
+  const errorPopup = useError();
+  const navigate = useNavigate();
+  const setUserState = useSetRecoilState(userState);
+  const { setStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE.ACCESS_TOKEN,
+  });
+
+  const { mutate } = useMutation<string, AxiosError<ServerError>, MemberType>(
+    (member: MemberType) => membersApi.login(member),
+    {
+      retry: 0,
+      onError: (error: AxiosError<ServerError>) => {
+        if (error.response) {
+          errorPopup(error.response?.status, error.response.data.messages);
+        }
+      },
+      onSuccess: (accessToken: string, context: MemberType) => {
+        setStorageValue(accessToken);
+        setUserState(() => ({
+          name: context.name,
+          group: context.group,
+          accessToken,
+        }));
+        openToast(TOAST_MESSAGE.AUTH_LOGIN, 'success');
+        navigate(Path.HOME);
+      },
+    },
+  );
+
+  return {
+    loginMutate: mutate,
   };
 };

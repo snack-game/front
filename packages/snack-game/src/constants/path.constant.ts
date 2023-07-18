@@ -1,6 +1,8 @@
 const PATH = {
   HOME: '/',
-  AUTH: '/auth',
+
+  LOGIN: '/login',
+  REGISTER: '/register',
 
   APPLE_GAME: '/game/apple-game',
 };

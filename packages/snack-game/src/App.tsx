@@ -10,10 +10,13 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Toast from '@components/base/Toast';
 import Loading from '@components/common/Loading';
 
+import PATH from '@constants/path.constant';
+
 import { globalStyles } from './App.style';
 
 const MainPage = lazy(() => import('@pages/MainPage'));
 
+const LoginPage = lazy(() => import('@pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('@pages/auth/RegisterPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
@@ -34,13 +37,14 @@ const App: FC<AppProps> = () => {
             <Global styles={globalStyles} />
             <Suspense fallback={<Loading type={'page'} />}>
               <Routes>
-                <Route path="/" element={<MainPage />} />
+                <Route path={PATH.HOME} element={<MainPage />} />
 
                 {/*Auth*/}
-                <Route path="/register" element={<RegisterPage />} />
+                <Route path={PATH.LOGIN} element={<LoginPage />} />
+                <Route path={PATH.REGISTER} element={<RegisterPage />} />
 
                 {/*Game*/}
-                <Route path="/game/apple-game" element={<AppleGamePage />} />
+                <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>

@@ -1,3 +1,4 @@
-export const TOAST_KEY = 'toastState';
-
-export const USER_KEY = 'userState';
+export const ATOM_KEY = {
+  TOAST: 'toastState',
+  USER: 'userState',
+};
