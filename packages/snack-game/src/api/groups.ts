@@ -4,7 +4,7 @@ type GroupsNamesType = string[];
 
 const groupsApi = {
   endPoint: {
-    groupsNames: '/groups/names',
+    names: '/groups/names',
   },
   headers: {
     'Content-Type': 'application/json',
@@ -12,17 +12,12 @@ const groupsApi = {
   },
 
   getGroupsNames: async (startWith: string) => {
-    const response = await api.get<GroupsNamesType>(
-      groupsApi.endPoint.groupsNames,
-      {
-        headers: groupsApi.headers,
-        params: {
-          startWith: startWith,
-        },
+    return await api.get<GroupsNamesType>(groupsApi.endPoint.names, {
+      headers: groupsApi.headers,
+      params: {
+        startWith: startWith,
       },
-    );
-
-    return response;
+    });
   },
 };
 

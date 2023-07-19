@@ -30,4 +30,5 @@ export const Title = styled.h1`
 export const Description = styled.p`
   margin-top: 1rem;
   line-height: 1.625;
+  color: #6b7280;
 `;
