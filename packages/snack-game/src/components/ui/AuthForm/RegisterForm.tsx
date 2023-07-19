@@ -9,7 +9,7 @@ import useForm from '@hooks/useForm';
 import * as Styled from './Form.style';
 
 const RegisterForm = () => {
-  const { registerMutate } = useMemberRegister();
+  const { authMutate: registerMutate } = useMemberRegister();
 
   const { values, handleChangeValue, setFieldValue } = useForm<string>({
     initialValues: {

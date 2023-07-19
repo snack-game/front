@@ -8,7 +8,7 @@ import useForm from '@hooks/useForm';
 import * as Styled from './Form.style';
 
 const LoginForm = () => {
-  const { loginMutate } = useMemberLogin();
+  const { authMutate: loginMutate } = useMemberLogin();
 
   const { values, handleChangeValue } = useForm<string>({
     initialValues: {
