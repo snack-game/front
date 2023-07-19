@@ -10,7 +10,7 @@ import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import LOCAL_STORAGE from '@constants/localstorage.constant';
-import Path from '@constants/path.constant';
+import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useError from '@hooks/useError';
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -33,7 +33,7 @@ export const useMemberAuth = (
       retry: 0,
       onError: (error: AxiosError<ServerError>) => {
         if (error.response) {
-          errorPopup(error.response?.status, error.response.data.messages);
+          errorPopup(error.response.status, error.response.data.messages);
         }
       },
       onSuccess: (accessToken: string, context: MemberType) => {
@@ -44,7 +44,7 @@ export const useMemberAuth = (
           accessToken,
         }));
         openToast(TOAST_MESSAGE.AUTH_LOGIN, 'success');
-        navigate(Path.HOME);
+        navigate(PATH.HOME);
       },
     },
   );

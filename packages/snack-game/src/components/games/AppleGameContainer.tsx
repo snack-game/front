@@ -14,7 +14,7 @@ const AppleGameWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-  height: 800px;
+  height: 720px;
 `;
 
 const AppleGameContainer: FC<CanvasBaseProps> = () => {

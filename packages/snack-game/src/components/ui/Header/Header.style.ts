@@ -40,7 +40,6 @@ export const Title = styled.a`
 
 export const Nav = styled.nav`
   display: flex;
-  font-size: 1rem;
   line-height: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
@@ -51,10 +50,11 @@ export const Nav = styled.nav`
   }
 
   & > a {
-    margin-right: 1.25rem;
+    margin-right: 2rem;
+    font-size: 1rem;
 
     :hover {
-      color: #111827;
+      color: #f97316;
     }
   }
 `;
