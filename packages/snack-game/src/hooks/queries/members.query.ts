@@ -10,13 +10,15 @@ import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import LOCAL_STORAGE from '@constants/localstorage.constant';
-import Path from '@constants/path.constant';
+import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useError from '@hooks/useError';
 import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
-export const useMemberRegister = () => {
+export const useMemberAuth = (
+  apiMethod: (member: MemberType) => Promise<string>,
+) => {
   const { openToast } = useToast();
   const errorPopup = useError();
   const navigate = useNavigate();
@@ -26,12 +28,12 @@ export const useMemberRegister = () => {
   });
 
   const { mutate } = useMutation<string, AxiosError<ServerError>, MemberType>(
-    (member: MemberType) => membersApi.register(member),
+    apiMethod,
     {
       retry: 0,
       onError: (error: AxiosError<ServerError>) => {
         if (error.response) {
-          errorPopup(error.response?.status, error.response.data.messages);
+          errorPopup(error.response.status, error.response.data.messages);
         }
       },
       onSuccess: (accessToken: string, context: MemberType) => {
@@ -42,48 +44,15 @@ export const useMemberRegister = () => {
           accessToken,
         }));
         openToast(TOAST_MESSAGE.AUTH_LOGIN, 'success');
-        navigate(Path.HOME);
+        navigate(PATH.HOME);
       },
     },
   );
 
   return {
-    registerMutate: mutate,
+    authMutate: mutate,
   };
 };
 
-export const useMemberLogin = () => {
-  const { openToast } = useToast();
-  const errorPopup = useError();
-  const navigate = useNavigate();
-  const setUserState = useSetRecoilState(userState);
-  const { setStorageValue } = useLocalStorage({
-    key: LOCAL_STORAGE.ACCESS_TOKEN,
-  });
-
-  const { mutate } = useMutation<string, AxiosError<ServerError>, MemberType>(
-    (member: MemberType) => membersApi.login(member),
-    {
-      retry: 0,
-      onError: (error: AxiosError<ServerError>) => {
-        if (error.response) {
-          errorPopup(error.response?.status, error.response.data.messages);
-        }
-      },
-      onSuccess: (accessToken: string, context: MemberType) => {
-        setStorageValue(accessToken);
-        setUserState(() => ({
-          name: context.name,
-          group: context.group,
-          accessToken,
-        }));
-        openToast(TOAST_MESSAGE.AUTH_LOGIN, 'success');
-        navigate(Path.HOME);
-      },
-    },
-  );
-
-  return {
-    loginMutate: mutate,
-  };
-};
+export const useMemberRegister = () => useMemberAuth(membersApi.register);
+export const useMemberLogin = () => useMemberAuth(membersApi.login);

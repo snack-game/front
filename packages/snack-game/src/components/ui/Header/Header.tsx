@@ -7,6 +7,7 @@ import * as Styled from '@components/ui/Header/Header.style';
 import { userState } from '@utils/atoms/auth';
 
 import PATH from '@constants/path.constant';
+import Button from '@components/common/Button';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
@@ -17,14 +18,33 @@ const Header = () => {
         <img src={LogoImage} alt={'로고 이미지'} />
         <span>Snack Game</span>
       </Styled.Title>
-      {userInfo.accessToken ? (
-        <Styled.Nav>{userInfo.name} 님</Styled.Nav>
-      ) : (
-        <Styled.Nav>
-          <Link to={PATH.LOGIN}>로그인 </Link>
-          <Link to={PATH.REGISTER}>회원가입 </Link>
-        </Styled.Nav>
-      )}
+      <Styled.Nav>
+        <Link to={PATH.BOARD}>
+          <Button content={'리더보드'} size={'small'} />
+        </Link>
+        {userInfo.accessToken ? (
+          <>{userInfo.name} 님</>
+        ) : (
+          <>
+            <Link to={PATH.LOGIN}>
+              <Button
+                content={'로그인'}
+                size={'small'}
+                color={'#656565'}
+                text={'white'}
+              />
+            </Link>
+            <Link to={PATH.REGISTER}>
+              <Button
+                content={'회원가입'}
+                size={'small'}
+                color={'#dedddd'}
+                text={'black'}
+              />
+            </Link>
+          </>
+        )}
+      </Styled.Nav>
     </Styled.HeaderWrapper>
   );
 };

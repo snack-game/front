@@ -115,6 +115,9 @@ importers:
       msw:
         specifier: ^1.2.2
         version: 1.2.2(typescript@5.0.2)
+      polished:
+        specifier: ^4.2.2
+        version: 4.2.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -5224,6 +5227,13 @@ packages:
     dependencies:
       find-up: 4.1.0
     dev: true
+
+  /polished@4.2.2:
+    resolution: {integrity: sha512-Sz2Lkdxz6F2Pgnpi9U5Ng/WdWAUZxmHrNPoVlm3aAemxoy2Qy7LGjQg4uf8qKelDAUW94F4np3iH2YPf2qefcQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      '@babel/runtime': 7.22.6
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.24):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

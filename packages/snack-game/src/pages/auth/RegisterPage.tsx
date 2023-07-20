@@ -18,6 +18,8 @@ const RegisterPage = () => {
             </Styled.Title>
             <Styled.Description>
               이미 만든적이 있다면 이름만으로 로그인할 수 있어요!
+              <br />
+              새로운 소을 만들고 싶다면 중복되지 않는 소속이름을 적어주세요!
             </Styled.Description>
           </Styled.TextWrapper>
           <RegisterForm />

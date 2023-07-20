@@ -7,8 +7,8 @@ import { RecoilRoot } from 'recoil';
 import RecoilizeDebugger from 'recoilize';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
-import Toast from '@components/base/Toast';
 import Loading from '@components/common/Loading';
+import Toast from '@components/common/Toast';
 
 import PATH from '@constants/path.constant';
 
