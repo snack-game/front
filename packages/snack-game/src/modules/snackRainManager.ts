@@ -167,7 +167,7 @@ export class SnackRainManager {
 
       ctx.save();
       ctx.beginPath();
-      ctx.arc(unit.x, height - unit.y, size, 0, 2 * Math.PI, false);
+      ctx.arc(unit.x, height - unit.y, size + 5, 0, 2 * Math.PI, false);
       ctx.closePath();
       ctx.clip();
       ctx.drawImage(

@@ -148,6 +148,9 @@ importers:
       recoil:
         specifier: ^0.7.7
         version: 0.7.7(react-dom@18.2.0)(react@18.2.0)
+      recoil-persist:
+        specifier: ^5.1.0
+        version: 5.1.0(recoil@0.7.7)
       recoilize:
         specifier: ^3.2.0
         version: 3.2.0(react-dom@18.2.0)(react@18.2.0)(recoil@0.7.7)
@@ -5563,6 +5566,14 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+    dev: false
+
+  /recoil-persist@5.1.0(recoil@0.7.7):
+    resolution: {integrity: sha512-sew4k3uBVJjRWKCSFuBw07Y1p1pBOb0UxLJPxn4G2bX/9xNj+r2xlqYy/BRfyofR/ANfqBU04MIvulppU4ZC0w==}
+    peerDependencies:
+      recoil: ^0.7.2
+    dependencies:
+      recoil: 0.7.7(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /recoil@0.7.7(react-dom@18.2.0)(react@18.2.0):

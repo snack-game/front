@@ -1,7 +1,5 @@
 import api from './index';
 
-type GroupsNamesType = string[];
-
 const groupsApi = {
   endPoint: {
     names: '/groups/names',
@@ -12,12 +10,13 @@ const groupsApi = {
   },
 
   getGroupsNames: async (startWith: string) => {
-    return await api.get<GroupsNamesType>(groupsApi.endPoint.names, {
+    const { data } = await api.get(groupsApi.endPoint.names, {
       headers: groupsApi.headers,
       params: {
         startWith: startWith,
       },
     });
+    return data;
   },
 };
 

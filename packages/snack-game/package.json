@@ -29,6 +29,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.11.2",
     "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
     "recoilize": "^3.2.0"
   },
   "devDependencies": {

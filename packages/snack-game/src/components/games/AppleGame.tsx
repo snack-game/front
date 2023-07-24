@@ -7,6 +7,7 @@ import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 
+import { useGameStart } from '@hooks/queries/appleGame.query';
 import useCanvas from '@hooks/useCanvas';
 
 interface AppleGameProps {
@@ -21,6 +22,7 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
   const [score, setScore] = useState<number>(0);
   const [start, setStart] = useState<boolean>(false);
   const [rect, setRect] = useState<DOMRect>();
+  const { gameStartMutate } = useGameStart();
 
   const drag: Drag = new Drag();
   const appleGameManager: AppleGameManager = new AppleGameManager();
@@ -102,6 +104,7 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
     if (rect) {
       setApples(appleGameManager.generateApples(rect));
       setStart(true);
+      gameStartMutate();
     }
   };
 
