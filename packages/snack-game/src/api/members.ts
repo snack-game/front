@@ -24,7 +24,7 @@ const membersApi = {
   register: async ({ name, group }: MemberType) => {
     const { data } = await api.post(membersApi.endPoint.register, {
       name,
-      group,
+      group: group?.name?.length == 0 ? null : group?.name,
     });
 
     return data.accessToken;

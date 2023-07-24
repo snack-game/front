@@ -2,7 +2,7 @@ import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useToast from '@hooks/useToast';
 
 const useError = () => {
-  const { openToast } = useToast();
+  const openToast = useToast();
 
   return (errorType?: number, message?: string) => {
     switch (errorType) {

@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import LogoImage from '@assets/images/logo.png';
+import Button from '@components/common/Button';
 import * as Styled from '@components/ui/Header/Header.style';
-import { userState } from '@utils/atoms/auth';
+import { resetUserState, userState } from '@utils/atoms/auth';
 
 import PATH from '@constants/path.constant';
-import Button from '@components/common/Button';
+import { TOAST_MESSAGE } from '@constants/toast.constant';
+import useToast from '@hooks/useToast';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
+  const resetUser = useResetRecoilState(resetUserState);
+  const openToast = useToast();
 
   return (
     <Styled.HeaderWrapper>
@@ -23,7 +27,17 @@ const Header = () => {
           <Button content={'리더보드'} size={'small'} />
         </Link>
         {userInfo.accessToken ? (
-          <>{userInfo.name} 님</>
+          <>
+            {userInfo.name} 님{' '}
+            <Button
+              content={'로그아웃'}
+              size={'small'}
+              onClick={() => {
+                resetUser();
+                openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
+              }}
+            />
+          </>
         ) : (
           <>
             <Link to={PATH.LOGIN}>

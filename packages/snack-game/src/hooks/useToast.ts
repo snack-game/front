@@ -14,7 +14,7 @@ const useToast = () => {
     }));
   };
 
-  return { openToast };
+  return openToast;
 };
 
 export default useToast;

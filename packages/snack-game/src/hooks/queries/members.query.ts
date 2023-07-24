@@ -19,7 +19,7 @@ import useToast from '@hooks/useToast';
 export const useMemberAuth = (
   apiMethod: (member: MemberType) => Promise<string>,
 ) => {
-  const { openToast } = useToast();
+  const openToast = useToast();
   const errorPopup = useError();
   const navigate = useNavigate();
   const setUserState = useSetRecoilState(userState);
@@ -39,6 +39,7 @@ export const useMemberAuth = (
       onSuccess: (accessToken: string, context: MemberType) => {
         setStorageValue(accessToken);
         setUserState(() => ({
+          id: context.id,
           name: context.name,
           group: context.group,
           accessToken,

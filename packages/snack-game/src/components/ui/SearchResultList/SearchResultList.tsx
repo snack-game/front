@@ -19,7 +19,7 @@ const SearchResultList: FC<SearchResultListProps> = ({ value, onClick }) => {
     enabled: !!debouncedValue,
   });
 
-  const groupList = data?.data ?? [];
+  const groupList = data ?? [];
 
   return (
     <>

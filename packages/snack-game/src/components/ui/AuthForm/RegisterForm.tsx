@@ -28,7 +28,10 @@ const RegisterForm = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    registerMutate({ name: values.name.value, group: values.group.value });
+    registerMutate({
+      name: values.name.value,
+      group: { name: values.group.value },
+    });
   };
 
   return (
