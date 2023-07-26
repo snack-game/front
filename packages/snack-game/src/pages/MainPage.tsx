@@ -10,6 +10,7 @@ import Button from '@components/common/Button';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import TeamInfo from '@components/ui/TeamInfo/TeamInfo';
 import ThumbnailCard from '@components/ui/ThumbnailCard/ThumbnailCard';
+import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 
@@ -104,7 +105,7 @@ const CardsWrapper = styled.div`
 
   & > h1 {
     margin-bottom: 1rem;
-    color: #111827;
+    color: ${theme.colors.titleText};
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: 500;

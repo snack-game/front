@@ -18,7 +18,6 @@ export class AppleGameManager {
     const randomNum = Math.floor(Math.random() * 100);
 
     let cnt = 0;
-    console.log(randomNum);
 
     for (let i = 0; i < ROWS; i++) {
       for (let j = 0; j < COLUMNS; j++) {

@@ -4,6 +4,8 @@ import { SerializedStyles } from '@emotion/react';
 import styled from '@emotion/styled';
 import { darken, transparentize } from 'polished';
 
+import theme from '@utils/theme';
+
 interface ButtonProps {
   className?: string;
   content: string;
@@ -28,7 +30,7 @@ const Button: FC<ButtonProps & StyledButtonProps> = ({
   disabled,
   size = 'medium',
   show = true,
-  color = '#fb923c',
+  color,
   text = 'white',
 }) => {
   return (
@@ -75,12 +77,13 @@ const StyledButton = styled.button<StyledButtonProps>`
   border-radius: 0.25rem;
   border-width: 0;
   display: ${(props) => (props.show ? 'inline-flex' : 'none')};
-  color: ${(props) => (props.text == 'white' ? '#ffffff' : '#505050')};
-  background-color: ${(props) => props.color || '#fb923c'};
+  color: ${(props) =>
+    props.text == 'white' ? theme.colors.background : theme.colors.description};
+  background-color: ${(props) => props.color || theme.colors.primaryButton};
 
   &:hover {
     background-color: ${(props) =>
-      props.color ? darken(0.1, props.color) : '#f97316'};
+      props.color ? darken(0.1, props.color) : theme.colors.primaryButtonHover};
   }
 
   &:disabled {

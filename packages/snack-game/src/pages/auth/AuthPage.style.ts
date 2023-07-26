@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 
+import theme from '@utils/theme';
+
 export const Wrapper = styled.div`
   display: flex;
-  padding: 6rem 1.25rem;
+  padding: 3rem 1.25rem;
   flex-wrap: wrap;
   align-items: center;
 `;
@@ -24,11 +26,15 @@ export const Title = styled.h1`
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 500;
-  color: #111827;
+  color: ${theme.colors.titleText};
 `;
 
 export const Description = styled.p`
   margin-top: 1rem;
   line-height: 1.625;
-  color: #6b7280;
+  color: ${theme.colors.description};
+`;
+
+export const AuthTypeWrapper = styled.div`
+  margin-top: 6rem;
 `;

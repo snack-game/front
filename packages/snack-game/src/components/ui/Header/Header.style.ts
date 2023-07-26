@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import theme from '@utils/theme';
+
 export const HeaderWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -18,7 +20,7 @@ export const HeaderWrapper = styled.div`
 export const Title = styled.a`
   display: flex;
   margin-bottom: 1rem;
-  color: #111827;
+  color: ${theme.colors.titleText};
   font-weight: 500;
   align-items: center;
 
@@ -51,10 +53,5 @@ export const Nav = styled.nav`
 
   & > a {
     margin-right: 2rem;
-    font-size: 1rem;
-
-    :hover {
-      color: #f97316;
-    }
   }
 `;

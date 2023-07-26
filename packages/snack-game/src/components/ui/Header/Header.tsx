@@ -40,20 +40,12 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link to={PATH.LOGIN}>
+            <Link to={PATH.AUTH}>
               <Button
-                content={'로그인'}
+                content={'랭킹 등록하기!'}
                 size={'small'}
                 color={'#656565'}
                 text={'white'}
-              />
-            </Link>
-            <Link to={PATH.REGISTER}>
-              <Button
-                content={'회원가입'}
-                size={'small'}
-                color={'#dedddd'}
-                text={'black'}
               />
             </Link>
           </>
