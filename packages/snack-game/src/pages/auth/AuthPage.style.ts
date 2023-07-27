@@ -36,5 +36,7 @@ export const Description = styled.p`
 `;
 
 export const AuthTypeWrapper = styled.div`
-  margin-top: 6rem;
+  display: flex;
+  width: 55%;
+  margin: 6rem auto 0 auto;
 `;

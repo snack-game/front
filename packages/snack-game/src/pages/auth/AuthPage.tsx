@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
-import Button from '@components/common/Button';
 import LoginForm from '@components/ui/AuthForm/LoginForm';
 import RegisterForm from '@components/ui/AuthForm/RegisterForm';
 import * as Styled from '@pages/auth/AuthPage.style';
@@ -16,13 +15,6 @@ const AuthPage = () => {
         <title>Snack Game || Register</title>
       </Helmet>
       <PageContainer>
-        <Styled.AuthTypeWrapper>
-          <Button
-            content={authType}
-            onClick={() => setAuthType(authType == '등록' ? '로그인' : '등록')}
-            size={'medium'}
-          />
-        </Styled.AuthTypeWrapper>
         <Styled.Wrapper>
           {authType === '등록' ? (
             <>

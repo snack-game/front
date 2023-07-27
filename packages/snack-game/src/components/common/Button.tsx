@@ -20,6 +20,7 @@ interface StyledButtonProps {
   size?: 'small' | 'medium' | 'large';
   color?: string;
   text?: 'black' | 'white';
+  border?: boolean;
 }
 
 const Button: FC<ButtonProps & StyledButtonProps> = ({
@@ -32,6 +33,7 @@ const Button: FC<ButtonProps & StyledButtonProps> = ({
   show = true,
   color,
   text = 'white',
+  border = false,
 }) => {
   return (
     <StyledWrapper css={wrapper}>
@@ -43,6 +45,7 @@ const Button: FC<ButtonProps & StyledButtonProps> = ({
         size={size}
         text={text}
         color={color}
+        border={border}
       >
         {content}
       </StyledButton>
@@ -63,6 +66,7 @@ const StyledButton = styled.button<StyledButtonProps>`
         return '0.5rem 1.5rem';
     }
   }};
+
   font-size: ${(props) => {
     switch (props.size) {
       case 'small':
@@ -73,13 +77,16 @@ const StyledButton = styled.button<StyledButtonProps>`
         return '1.125rem';
     }
   }};
-  line-height: 1.75rem;
-  border-radius: 0.25rem;
-  border-width: 0;
+
   display: ${(props) => (props.show ? 'inline-flex' : 'none')};
   color: ${(props) =>
     props.text == 'white' ? theme.colors.background : theme.colors.description};
   background-color: ${(props) => props.color || theme.colors.primaryButton};
+  border: ${(props) =>
+    props.border ? `1px solid ${theme.colors.boxBorder}` : 'none'};
+
+  line-height: 1.75rem;
+  border-radius: 0.25rem;
 
   &:hover {
     background-color: ${(props) =>

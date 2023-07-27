@@ -6,6 +6,7 @@ import LogoImage from '@assets/images/logo.png';
 import Button from '@components/common/Button';
 import * as Styled from '@components/ui/Header/Header.style';
 import { resetUserState, userState } from '@utils/atoms/auth';
+import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
@@ -44,8 +45,9 @@ const Header = () => {
               <Button
                 content={'랭킹 등록하기!'}
                 size={'small'}
-                color={'#656565'}
-                text={'white'}
+                color={theme.colors.background}
+                text={'black'}
+                border={true}
               />
             </Link>
           </>

@@ -36,7 +36,7 @@ const RegisterForm = () => {
 
   return (
     <Styled.Form onSubmit={handleOnSubmit}>
-      <Styled.Title>회원가입</Styled.Title>
+      <Styled.Title>등록</Styled.Title>
       <Styled.InputWrapper>
         <Input
           placeholder={'이름'}
