@@ -17,7 +17,7 @@ const useForm = <T>({ initialValues }: useFormProps<T>) => {
   const handleChangeValue =
     (field: string) =>
     (event: ChangeEvent<HTMLInputElement>): void => {
-      const eventValue = event.target.value as unknown as T;
+      const eventValue = event.target.value as T;
 
       setFieldValue(field)(eventValue);
     };

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { css } from '@emotion/react';
 
-import Button from '@components/common/Button';
+import Button from '@components/common/Button/Button';
 import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
@@ -28,6 +28,7 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
   const appleGameManager: AppleGameManager = new AppleGameManager();
 
   const animation = (ctx: CanvasRenderingContext2D) => {
+    // background
     ctx.clearRect(0, 0, clientWidth, clientHeight);
 
     ctx.fillStyle = '#ffedd5';
@@ -35,9 +36,10 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
 
     drag.drawDragArea(ctx);
 
+    // render game
     if (rect) {
       apples.forEach((apple: Apple) => {
-        apple.handleAppleRendering(
+        appleGameManager.handleAppleRendering(
           ctx,
           rect.height,
           drag.startX,
@@ -45,11 +47,12 @@ const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
           drag.currentX,
           drag.currentY,
           drag.isDrawing,
+          apple,
         );
       });
 
       removedApples.forEach((apple: Apple) => {
-        apple.updateFallingPosition(ctx, rect.height);
+        appleGameManager.updateFallingPosition(ctx, rect.height, apple);
         if (apple.remove) {
           setRemovedApples([]);
         }

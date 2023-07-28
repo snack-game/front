@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
-export const Wrapper = styled.div`
+import theme from '@utils/theme';
+
+export const Container = styled.div`
   display: flex;
   margin: -1rem;
   flex-wrap: wrap;
@@ -12,7 +14,7 @@ export const Inner = styled.div`
   padding: 1rem;
   height: 100%;
   width: 70%;
-  border: 2px solid #e5e7eb;
+  border: 2px solid ${theme.colors.boxBorder};
   border-radius: 0.5rem;
 `;
 
@@ -27,13 +29,13 @@ export const Thumbnail = styled.img`
 `;
 
 export const Contents = styled.div`
-  background-color: #ffffff;
+  background-color: ${theme.colors.background};
   padding: 1.5rem;
 `;
 
 export const Title = styled.h1`
   margin-bottom: 0.75rem;
-  color: #111827;
+  color: ${theme.colors.titleText};
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;

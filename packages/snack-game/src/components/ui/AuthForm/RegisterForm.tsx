@@ -1,5 +1,5 @@
-import Button from '@components/common/Button';
-import Input from '@components/common/Input';
+import Button from '@components/common/Button/Button';
+import Input from '@components/common/Input/Input';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
 import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
@@ -36,8 +36,8 @@ const RegisterForm = () => {
 
   return (
     <Styled.Form onSubmit={handleOnSubmit}>
-      <Styled.Title>회원가입</Styled.Title>
-      <Styled.InputWrapper>
+      <Styled.Title>등록</Styled.Title>
+      <Styled.InputContainer>
         <Input
           placeholder={'이름'}
           type={'text'}
@@ -47,8 +47,8 @@ const RegisterForm = () => {
           required={true}
           valid={values.name.valid}
         />
-      </Styled.InputWrapper>
-      <Styled.InputWrapper>
+      </Styled.InputContainer>
+      <Styled.InputContainer>
         <Input
           placeholder={'소속'}
           type={'text'}
@@ -62,7 +62,7 @@ const RegisterForm = () => {
           value={values.group.value}
           onClick={setFieldValue('group')}
         />
-      </Styled.InputWrapper>
+      </Styled.InputContainer>
       <Button
         content={'확인'}
         type={'submit'}

@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import theme from '@utils/theme';
+
 export const Form = styled.form`
   display: flex;
   padding: 2rem;
@@ -7,8 +9,8 @@ export const Form = styled.form`
   flex-direction: column;
   border-radius: 0.5rem;
   width: 100%;
-  background-color: white;
-  border: 1px solid #d1d5db;
+  background-color: ${theme.colors.background};
+  border: 1px solid ${theme.colors.boxBorder};
 
   @media (min-width: 768px) {
     margin-top: 0;
@@ -24,10 +26,10 @@ export const Title = styled.h2`
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: #111827;
+  color: ${theme.colors.titleText};
 `;
 
-export const InputWrapper = styled.div`
+export const InputContainer = styled.div`
   position: relative;
   margin-bottom: 1rem;
 `;
@@ -37,5 +39,5 @@ export const Description = styled.p`
   font-size: 0.75rem;
   line-height: 1rem;
   white-space: pre-line;
-  color: #6b7280;
+  color: ${theme.colors.description};
 `;

@@ -2,7 +2,7 @@ import * as Styled from '@components/ui/Footer/Footer.style';
 
 const Footer = () => {
   return (
-    <Styled.FooterWrapper>
+    <Styled.FooterContainer>
       <Styled.Title>
         <span>SnackGame</span>
       </Styled.Title>
@@ -17,7 +17,7 @@ const Footer = () => {
           아이콘 제작자: Freepik - Flaticon
         </a>
       </Styled.IconProvider>
-    </Styled.FooterWrapper>
+    </Styled.FooterContainer>
   );
 };
 

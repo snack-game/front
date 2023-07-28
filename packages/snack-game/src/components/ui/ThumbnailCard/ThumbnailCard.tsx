@@ -16,7 +16,7 @@ const ThumbnailCard: FC<ThumbnailCardProps> = ({
   children,
 }) => {
   return (
-    <Styled.Wrapper>
+    <Styled.Container>
       <Styled.Inner>
         <Styled.Thumbnail src={thumbNail} alt="apple game" />
         <Styled.Contents>
@@ -25,7 +25,7 @@ const ThumbnailCard: FC<ThumbnailCardProps> = ({
           {children}
         </Styled.Contents>
       </Styled.Inner>
-    </Styled.Wrapper>
+    </Styled.Container>
   );
 };
 

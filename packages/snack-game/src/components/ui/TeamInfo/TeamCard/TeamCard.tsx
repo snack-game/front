@@ -18,7 +18,7 @@ const TeamCard: FC<TeamCardProps> = ({
   githubUrl,
 }) => {
   return (
-    <Styled.Wrapper>
+    <Styled.Container>
       <Styled.Thumbnail alt={name} src={imgSrc} loading="lazy" />
       <Styled.Contents>
         <Styled.Name>{name}</Styled.Name>
@@ -30,7 +30,7 @@ const TeamCard: FC<TeamCardProps> = ({
           </Styled.GithubIcon>
         </a>
       </Styled.Contents>
-    </Styled.Wrapper>
+    </Styled.Container>
   );
 };
 
