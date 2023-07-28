@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 
 import theme from '@utils/theme';
 
-export const Wrapper = styled.div`
+export const Container = styled.div`
   display: flex;
   padding: 3rem 1.25rem;
   flex-wrap: wrap;
   align-items: center;
 `;
 
-export const TextWrapper = styled.div`
+export const TextContainer = styled.div`
   padding-right: 0;
 
   @media (min-width: 768px) {
@@ -35,8 +35,7 @@ export const Description = styled.p`
   color: ${theme.colors.description};
 `;
 
-export const AuthTypeWrapper = styled.div`
-  display: flex;
-  width: 55%;
+export const AuthTypeContainer = styled.div`
+  width: fit-content;
   margin: 6rem auto 0 auto;
 `;

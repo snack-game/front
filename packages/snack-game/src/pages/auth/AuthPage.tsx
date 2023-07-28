@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
+import ToggleSwitch from '@components/common/Toggle/ToggleSwitch';
 import LoginForm from '@components/ui/AuthForm/LoginForm';
 import RegisterForm from '@components/ui/AuthForm/RegisterForm';
 import * as Styled from '@pages/auth/AuthPage.style';
 
 const AuthPage = () => {
-  const [authType, setAuthType] = useState('등록');
+  const [authToggle, setAuthToggle] = useState(false);
 
   return (
     <>
@@ -15,10 +16,18 @@ const AuthPage = () => {
         <title>Snack Game || Register</title>
       </Helmet>
       <PageContainer>
-        <Styled.Wrapper>
-          {authType === '등록' ? (
+        <Styled.AuthTypeContainer>
+          <ToggleSwitch
+            toggle={authToggle}
+            left={'로그인'}
+            right={'등록'}
+            onClick={() => setAuthToggle(!authToggle)}
+          />
+        </Styled.AuthTypeContainer>
+        <Styled.Container>
+          {authToggle ? (
             <>
-              <Styled.TextWrapper>
+              <Styled.TextContainer>
                 <Styled.Title>
                   이름과 소속을 입력하고 랭킹을 경쟁해 보아요!
                 </Styled.Title>
@@ -27,20 +36,20 @@ const AuthPage = () => {
                   <br />
                   새로운 소을 만들고 싶다면 중복되지 않는 소속이름을 적어주세요!
                 </Styled.Description>
-              </Styled.TextWrapper>
+              </Styled.TextContainer>
               <RegisterForm />
             </>
           ) : (
             <>
-              <Styled.TextWrapper>
+              <Styled.TextContainer>
                 <Styled.Title>
                   이름을 입력하고 랭킹을 경쟁해 보아요!
                 </Styled.Title>
-              </Styled.TextWrapper>
+              </Styled.TextContainer>
               <LoginForm />
             </>
           )}
-        </Styled.Wrapper>
+        </Styled.Container>
       </PageContainer>
     </>
   );

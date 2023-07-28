@@ -1,11 +1,27 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
+
+import * as Styled from './ToggleSwitch.style';
 
 interface ToggleSwitchProps {
-  children?: never;
+  toggle: boolean;
+  left: string;
+  right: string;
+  onClick: () => void;
 }
 
-const ToggleSwitch: FC<ToggleSwitchProps> = () => {
-  return <div></div>;
+const ToggleSwitch: FC<ToggleSwitchProps> = ({
+  toggle,
+  left,
+  right,
+  onClick,
+}) => {
+  return (
+    <Styled.ToggleContainer onClick={onClick}>
+      <Styled.ToggleLeft toggle={toggle}>{left}</Styled.ToggleLeft>
+      <Styled.ToggleRight toggle={toggle}>{right}</Styled.ToggleRight>
+      <Styled.Highlight toggle={toggle} />
+    </Styled.ToggleContainer>
+  );
 };
 
 export default ToggleSwitch;
