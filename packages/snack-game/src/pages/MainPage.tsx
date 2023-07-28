@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import AppleGameImage from '@assets/images/apple-game.jpg';
 import AppleImage from '@assets/images/apple.png';
 import PageContainer from '@components/base/PageContainer';
-import Button from '@components/common/Button';
+import Button from '@components/common/Button/Button';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import TeamInfo from '@components/ui/TeamInfo/TeamInfo';
 import ThumbnailCard from '@components/ui/ThumbnailCard/ThumbnailCard';
@@ -22,7 +22,7 @@ const MainPage = () => {
       </Helmet>
       <SnackRainContainer />
       <PageContainer>
-        <BannerWrapper>
+        <BannerContainer>
           <img alt="로고 이미지" src={AppleImage} />
           <BannerInner>
             <h1>Snack Game</h1>
@@ -30,8 +30,8 @@ const MainPage = () => {
               {`\n재미있는 시간을 보내고 싶으신가요?\n사과게임과 함께 여러분을 즐겁게 할\n 다양한 게임들을 준비하고 있습니다!\n`}
             </p>
           </BannerInner>
-        </BannerWrapper>
-        <CardsWrapper>
+        </BannerContainer>
+        <CardsContainer>
           <ThumbnailCard
             thumbNail={AppleGameImage}
             title={'사과 떨구기'}
@@ -43,7 +43,7 @@ const MainPage = () => {
               <Button content={'입장'}></Button>
             </Link>
           </ThumbnailCard>
-        </CardsWrapper>
+        </CardsContainer>
         <TeamInfo />
       </PageContainer>
     </>
@@ -52,7 +52,7 @@ const MainPage = () => {
 
 export default MainPage;
 
-const BannerWrapper = styled.div`
+const BannerContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 3rem 1.25rem;
@@ -97,7 +97,7 @@ const BannerInner = styled.div`
   }
 `;
 
-const CardsWrapper = styled.div`
+const CardsContainer = styled.div`
   display: flex;
   margin-top: 3rem;
   flex-wrap: wrap;

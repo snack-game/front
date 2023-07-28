@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import theme from '@utils/theme';
 
-export const HeaderWrapper = styled.div`
+export const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 1.25rem;

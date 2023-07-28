@@ -10,15 +10,15 @@ interface LoadingProps {
 
 const Loading: FC<LoadingProps> = ({ type }) => {
   return (
-    <LoadingWrapper type={type}>
+    <LoadingContainer type={type}>
       <Image src={LoadingImage} alt={'loading image'} />
-    </LoadingWrapper>
+    </LoadingContainer>
   );
 };
 
 export default Loading;
 
-const LoadingWrapper = styled.div<LoadingProps>`
+const LoadingContainer = styled.div<LoadingProps>`
   display: flex;
   justify-content: center;
   align-items: center;

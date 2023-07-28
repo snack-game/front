@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import LogoImage from '@assets/images/logo.png';
-import Button from '@components/common/Button';
+import Button from '@components/common/Button/Button';
 import * as Styled from '@components/ui/Header/Header.style';
 import { resetUserState, userState } from '@utils/atoms/auth';
 import theme from '@utils/theme';
@@ -18,7 +18,7 @@ const Header = () => {
   const openToast = useToast();
 
   return (
-    <Styled.HeaderWrapper>
+    <Styled.HeaderContainer>
       <Styled.Title href={PATH.HOME}>
         <img src={LogoImage} alt={'로고 이미지'} />
         <span>Snack Game</span>
@@ -53,7 +53,7 @@ const Header = () => {
           </>
         )}
       </Styled.Nav>
-    </Styled.HeaderWrapper>
+    </Styled.HeaderContainer>
   );
 };
 

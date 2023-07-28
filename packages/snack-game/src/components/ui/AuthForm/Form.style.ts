@@ -29,7 +29,7 @@ export const Title = styled.h2`
   color: ${theme.colors.titleText};
 `;
 
-export const InputWrapper = styled.div`
+export const InputContainer = styled.div`
   position: relative;
   margin-bottom: 1rem;
 `;

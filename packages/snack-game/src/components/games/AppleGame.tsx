@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { css } from '@emotion/react';
 
-import Button from '@components/common/Button';
+import Button from '@components/common/Button/Button';
 import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';

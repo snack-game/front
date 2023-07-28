@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import theme from '@utils/theme';
 
-export const FooterWrapper = styled.div`
+export const FooterContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 2rem 1.25rem;

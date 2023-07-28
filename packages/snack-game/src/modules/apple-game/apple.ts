@@ -12,8 +12,6 @@ export class Apple {
   public readonly gravity: number;
   public readonly radius: number;
 
-  private mass: number;
-
   constructor(
     x: number,
     y: number,
@@ -28,7 +26,6 @@ export class Apple {
     this.image = new Image();
     this.image.src = style ? AppleImage : GoldenApple;
     this.radius = radius;
-    this.mass = mass;
     this.gravity = gravity;
     this.velocity = velocity;
     this.isGolden = isGolden;

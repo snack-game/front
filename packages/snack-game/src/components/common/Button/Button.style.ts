@@ -1,21 +1,9 @@
-import React, { FC } from 'react';
-
-import { SerializedStyles } from '@emotion/react';
 import styled from '@emotion/styled';
 import { darken, transparentize } from 'polished';
 
 import theme from '@utils/theme';
 
-interface ButtonProps {
-  className?: string;
-  content: string;
-  onClick?: () => void;
-  wrapper?: SerializedStyles;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-}
-
-interface StyledButtonProps {
+export interface StyledButtonProps {
   show?: boolean;
   size?: 'small' | 'medium' | 'large';
   color?: string;
@@ -23,39 +11,7 @@ interface StyledButtonProps {
   border?: boolean;
 }
 
-const Button: FC<ButtonProps & StyledButtonProps> = ({
-  content,
-  onClick,
-  wrapper,
-  type = 'button',
-  disabled,
-  size = 'medium',
-  show = true,
-  color,
-  text = 'white',
-  border = false,
-}) => {
-  return (
-    <StyledWrapper css={wrapper}>
-      <StyledButton
-        onClick={onClick}
-        type={type}
-        disabled={disabled}
-        show={show}
-        size={size}
-        text={text}
-        color={color}
-        border={border}
-      >
-        {content}
-      </StyledButton>
-    </StyledWrapper>
-  );
-};
-
-export default Button;
-
-const StyledButton = styled.button<StyledButtonProps>`
+export const Button = styled.button<StyledButtonProps>`
   padding: ${(props) => {
     switch (props.size) {
       case 'small':
@@ -101,7 +57,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-const StyledWrapper = styled.div`
+export const ButtonContainer = styled.div`
   width: fit-content;
   margin: auto;
 `;

@@ -1,5 +1,5 @@
-import Button from '@components/common/Button';
-import Input from '@components/common/Input';
+import Button from '@components/common/Button/Button';
+import Input from '@components/common/Input/Input';
 
 import { NAME_REGEXP } from '@constants/regexp.constant';
 import { useMemberLogin } from '@hooks/queries/members.query';
@@ -28,7 +28,7 @@ const LoginForm = () => {
   return (
     <Styled.Form onSubmit={handleOnSubmit}>
       <Styled.Title>로그인</Styled.Title>
-      <Styled.InputWrapper>
+      <Styled.InputContainer>
         <Input
           placeholder={'이름'}
           type={'text'}
@@ -38,7 +38,7 @@ const LoginForm = () => {
           required={true}
           valid={values.name.valid}
         />
-      </Styled.InputWrapper>
+      </Styled.InputContainer>
       <Button content={'확인'} type={'submit'} disabled={!values.name.valid} />
     </Styled.Form>
   );

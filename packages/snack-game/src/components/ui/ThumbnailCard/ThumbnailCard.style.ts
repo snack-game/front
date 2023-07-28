@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import theme from '@utils/theme';
 
-export const Wrapper = styled.div`
+export const Container = styled.div`
   display: flex;
   margin: -1rem;
   flex-wrap: wrap;
