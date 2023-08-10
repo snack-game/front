@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent } from 'react';
 
 import * as Styled from './Input.style';
 
@@ -13,7 +13,7 @@ interface InputProps {
   value?: string;
 }
 
-const Input: FC<InputProps> = ({
+const Input = ({
   placeholder,
   onChange,
   type = 'text',
@@ -22,7 +22,7 @@ const Input: FC<InputProps> = ({
   required,
   id,
   value,
-}) => {
+}: InputProps) => {
   return (
     <Styled.InputContainer>
       <Styled.Label htmlFor={id}>{placeholder}</Styled.Label>

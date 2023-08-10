@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import Loading from '@components/common/Loading';
 
 import { useGetGroupsNames } from '@hooks/queries/groups.query';
@@ -12,7 +10,7 @@ interface SearchResultListProps {
   onClick: (value: string) => void;
 }
 
-const SearchResultList: FC<SearchResultListProps> = ({ value, onClick }) => {
+const SearchResultList = ({ value, onClick }: SearchResultListProps) => {
   const debouncedValue = useDebounce({ target: value, delay: 500 });
   const { isLoading, data } = useGetGroupsNames({
     startWidth: debouncedValue,

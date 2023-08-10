@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import * as Styled from './ToggleSwitch.style';
 
@@ -9,12 +9,7 @@ interface ToggleSwitchProps {
   onClick: () => void;
 }
 
-const ToggleSwitch: FC<ToggleSwitchProps> = ({
-  toggle,
-  left,
-  right,
-  onClick,
-}) => {
+const ToggleSwitch = ({ toggle, left, right, onClick }: ToggleSwitchProps) => {
   return (
     <Styled.ToggleContainer onClick={onClick}>
       <Styled.ToggleLeft toggle={toggle}>{left}</Styled.ToggleLeft>

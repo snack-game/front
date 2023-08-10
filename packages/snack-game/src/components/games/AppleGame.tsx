@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { css } from '@emotion/react';
 
@@ -16,7 +16,7 @@ interface AppleGameProps {
   clientHeight: number;
 }
 
-const AppleGame: FC<AppleGameProps> = ({ clientWidth, clientHeight }) => {
+const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
   const [score, setScore] = useState<number>(0);

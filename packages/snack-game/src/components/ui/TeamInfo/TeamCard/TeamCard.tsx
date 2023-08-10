@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import * as Styled from './TeamCard.style';
 
 interface TeamCardProps {
@@ -10,13 +8,13 @@ interface TeamCardProps {
   githubUrl: string;
 }
 
-const TeamCard: FC<TeamCardProps> = ({
+const TeamCard = ({
   name,
   imgSrc,
   position,
   intro,
   githubUrl,
-}) => {
+}: TeamCardProps) => {
   return (
     <Styled.Container>
       <Styled.Thumbnail alt={name} src={imgSrc} loading="lazy" />

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import { SerializedStyles } from '@emotion/react';
 
@@ -13,7 +13,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const Button: FC<ButtonProps & Styled.StyledButtonProps> = ({
+const Button = ({
   content,
   onClick,
   wrapper,
@@ -24,7 +24,7 @@ const Button: FC<ButtonProps & Styled.StyledButtonProps> = ({
   color,
   text = 'white',
   border = false,
-}) => {
+}: ButtonProps & Styled.StyledButtonProps) => {
   return (
     <Styled.ButtonContainer css={wrapper}>
       <Styled.Button

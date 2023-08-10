@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -9,7 +9,7 @@ interface PageContainerProps {
   children: ReactNode;
 }
 
-const PageContainer: FC<PageContainerProps> = ({ children }) => {
+const PageContainer = ({ children }: PageContainerProps) => {
   return (
     <>
       <Header />

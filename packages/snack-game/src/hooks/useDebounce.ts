@@ -5,7 +5,7 @@ interface useDebounceProps<T> {
   delay: number;
 }
 
-const useDebounce = <T>({ target, delay }: useDebounceProps<T>): T => {
+const useDebounce = <T>({ target, delay }: useDebounceProps<T>) => {
   const [debouncedValue, setDebouncedValue] = useState(target);
 
   useEffect(() => {
