@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route, Routes } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import RecoilizeDebugger from 'recoilize';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading';
 import Toast from '@components/common/Toast';
+import errorPage from '@pages/error/ErrorPage';
 import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
@@ -23,18 +24,14 @@ const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
 const queryClient = new QueryClient();
 
-interface AppProps {
-  children?: never;
-}
-
-const App: FC<AppProps> = () => {
+const App = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <RecoilizeDebugger />
           <ThemeProvider theme={theme}>
-            <ErrorBoundary>
+            <ErrorBoundary fallback={errorPage}>
               <Global styles={globalStyles} />
               <Suspense fallback={<Loading type={'page'} />}>
                 <Routes>

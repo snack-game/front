@@ -1,14 +1,10 @@
-import React, { FC, RefObject, useRef } from 'react';
+import React, { RefObject, useRef } from 'react';
 
 import styled from '@emotion/styled';
 
 import AppleGame from '@components/games/AppleGame';
 
 import { useClientRect } from '@hooks/useClientRect';
-
-interface CanvasBaseProps {
-  children?: never;
-}
 
 const AppleGameWrapper = styled.div`
   margin-left: auto;
@@ -17,7 +13,7 @@ const AppleGameWrapper = styled.div`
   height: 720px;
 `;
 
-const AppleGameContainer: FC<CanvasBaseProps> = () => {
+const AppleGameContainer = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const { width, height } = useClientRect({ canvasBaseRef });

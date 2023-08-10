@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 
 import LoadingImage from '@assets/images/logo.png';
@@ -8,7 +6,7 @@ interface LoadingProps {
   type?: 'page' | 'component';
 }
 
-const Loading: FC<LoadingProps> = ({ type }) => {
+const Loading = ({ type }: LoadingProps) => {
   return (
     <LoadingContainer type={type}>
       <Image src={LoadingImage} alt={'loading image'} />

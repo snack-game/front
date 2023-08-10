@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import * as Styled from './ThumbnailCard.style';
 
@@ -9,12 +9,12 @@ interface ThumbnailCardProps {
   children?: ReactNode;
 }
 
-const ThumbnailCard: FC<ThumbnailCardProps> = ({
+const ThumbnailCard = ({
   thumbNail,
   title,
   description,
   children,
-}) => {
+}: ThumbnailCardProps) => {
   return (
     <Styled.Container>
       <Styled.Inner>
