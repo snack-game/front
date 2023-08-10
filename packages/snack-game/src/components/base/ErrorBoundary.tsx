@@ -1,23 +1,58 @@
-import { FC } from 'react';
-import { ErrorBoundary as RErrorBoundary } from 'react-error-boundary';
-import { Helmet } from 'react-helmet-async';
+import { Component, ComponentType, PropsWithChildren } from 'react';
 
-type ErrorBoundaryProps = {
-  children: React.ReactNode;
+export interface FallbackProps {
+  error: Error;
+  resetErrorBoundary: () => void;
+  message?: string;
+}
+
+interface ErrorBoundaryProps {
+  fallback: ComponentType<FallbackProps>;
+  onReset?: () => void;
+  message?: string;
+}
+
+interface ErrorBoundaryState {
+  error: Error | null;
+  message?: string;
+}
+
+const initialState: ErrorBoundaryState = {
+  error: null,
 };
 
-const ErrorPage: FC = () => {
-  return (
-    <>
-      <Helmet>
-        <title>Snack Game || Error</title>
-      </Helmet>
-      <div>Error</div>
-    </>
-  );
-};
+class ErrorBoundary extends Component<
+  PropsWithChildren<ErrorBoundaryProps>,
+  ErrorBoundaryState
+> {
+  state: ErrorBoundaryState = {
+    error: null,
+  };
 
-const ErrorBoundary: FC<ErrorBoundaryProps> = ({ children }) => {
-  return <RErrorBoundary fallback={<ErrorPage />}>{children}</RErrorBoundary>;
-};
+  resetErrorBoundary = () => {
+    this.props.onReset?.();
+    this.setState(initialState);
+  };
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { error };
+  }
+
+  render() {
+    const { fallback: FallbackComponent } = this.props;
+
+    if (this.state.error) {
+      return (
+        <FallbackComponent
+          error={this.state.error}
+          resetErrorBoundary={this.resetErrorBoundary}
+          message={this.props.message}
+        />
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export default ErrorBoundary;
