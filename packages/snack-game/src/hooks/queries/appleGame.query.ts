@@ -23,7 +23,6 @@ export const useGameStart = () => {
     {
       retry: 0,
       onError: (error: AxiosError<ServerError>) => {
-        console.log(error.response);
         if (error.response) {
           errorPopup(error.response.status, error.response.data.messages);
         }

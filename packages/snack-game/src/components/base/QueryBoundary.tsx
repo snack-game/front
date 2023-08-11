@@ -19,7 +19,7 @@ const QueryBoundary = ({
   const { reset } = useQueryErrorResetBoundary();
   return (
     <ErrorBoundary fallback={errorFallback} onReset={reset} message={message}>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      <Suspense fallback={<Loading type={'component'} />}>{children}</Suspense>
     </ErrorBoundary>
   );
 };

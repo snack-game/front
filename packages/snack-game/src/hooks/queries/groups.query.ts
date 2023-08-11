@@ -19,6 +19,7 @@ export const useGetGroupsNames = ({
     [QUERY_KEY.GROUPS_NAMES, startWidth],
     () => groupsApi.getGroupsNames(startWidth),
     {
+      useErrorBoundary: true,
       enabled,
     },
   );

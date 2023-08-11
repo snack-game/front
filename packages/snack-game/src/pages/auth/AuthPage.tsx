@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
+import QueryBoundary from '@components/base/QueryBoundary';
+import RetryError from '@components/common/RetryError';
 import ToggleSwitch from '@components/common/Toggle/ToggleSwitch';
 import LoginForm from '@components/ui/AuthForm/LoginForm';
 import RegisterForm from '@components/ui/AuthForm/RegisterForm';
@@ -37,7 +39,9 @@ const AuthPage = () => {
                   새로운 소을 만들고 싶다면 중복되지 않는 소속이름을 적어주세요!
                 </Styled.Description>
               </Styled.TextContainer>
-              <RegisterForm />
+              <QueryBoundary errorFallback={RetryError}>
+                <RegisterForm />
+              </QueryBoundary>
             </>
           ) : (
             <>
@@ -46,7 +50,9 @@ const AuthPage = () => {
                   이름을 입력하고 랭킹을 경쟁해 보아요!
                 </Styled.Title>
               </Styled.TextContainer>
-              <LoginForm />
+              <QueryBoundary errorFallback={RetryError}>
+                <LoginForm />
+              </QueryBoundary>
             </>
           )}
         </Styled.Container>

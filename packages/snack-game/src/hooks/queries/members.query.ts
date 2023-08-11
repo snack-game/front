@@ -33,6 +33,10 @@ export const useMemberAuth = (
       retry: 0,
       onError: (error: AxiosError<ServerError>) => {
         if (error.response) {
+          if (error.response.status >= 500) {
+            throw error;
+          }
+
           errorPopup(error.response.status, error.response.data.messages);
         }
       },
