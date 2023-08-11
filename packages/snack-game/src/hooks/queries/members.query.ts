@@ -1,5 +1,4 @@
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 
 import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
@@ -13,6 +12,7 @@ import LOCAL_STORAGE from '@constants/localstorage.constant';
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useError from '@hooks/useError';
+import { useInternalRouter } from '@hooks/useInternalRouter';
 import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
@@ -21,8 +21,8 @@ export const useMemberAuth = (
 ) => {
   const openToast = useToast();
   const errorPopup = useError();
-  const navigate = useNavigate();
   const setUserState = useSetRecoilState(userState);
+  const router = useInternalRouter();
   const { setStorageValue } = useLocalStorage({
     key: LOCAL_STORAGE.ACCESS_TOKEN,
   });
@@ -49,7 +49,7 @@ export const useMemberAuth = (
           accessToken,
         }));
         openToast(TOAST_MESSAGE.AUTH_LOGIN, 'success');
-        navigate(PATH.HOME);
+        router.push(PATH.HOME);
       },
     },
   );
