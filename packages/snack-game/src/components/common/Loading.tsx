@@ -8,7 +8,7 @@ interface LoadingProps {
 
 const Loading = ({ type }: LoadingProps) => {
   return (
-    <LoadingContainer type={type}>
+    <LoadingContainer type={type || 'component'}>
       <Image src={LoadingImage} alt={'loading image'} />
     </LoadingContainer>
   );
