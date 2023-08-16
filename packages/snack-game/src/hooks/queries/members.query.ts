@@ -21,7 +21,7 @@ interface useMemberAuthProps {
   message: string;
 }
 
-const useMemberMutation = <T = void>(
+const useMemberMutation = <T>(
   apiMethod: (args: T) => Promise<AuthType>,
   onSuccess: (data: AuthType) => void,
 ) => {
@@ -63,13 +63,13 @@ const useMemberOnSuccess = (message: string, redirect?: string) => {
 
 export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
   const onSuccess = useMemberOnSuccess(message, PATH.HOME);
-  const { mutate } = useMemberMutation(apiMethod, onSuccess);
+  const { mutate } = useMemberMutation<MemberType>(apiMethod, onSuccess);
   return { authMutate: mutate };
 };
 
 export const useMemberGuest = () => {
   const onSuccess = useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST);
-  const { mutate } = useMemberMutation(membersApi.guest, onSuccess);
+  const { mutate } = useMemberMutation<void>(membersApi.guest, onSuccess);
   return { guestMutate: mutate };
 };
 
