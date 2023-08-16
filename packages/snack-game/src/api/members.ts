@@ -5,7 +5,7 @@ const membersApi = {
   endPoint: {
     login: '/members/token',
     register: '/members',
-    guest: 'members/guests',
+    guest: 'members/guest',
 
     names: '/members/names',
   },
@@ -18,16 +18,22 @@ const membersApi = {
     const { data } = await api.post(membersApi.endPoint.login, {
       name,
     });
-    return data.accessToken;
+    return { accessToken: data.accessToken, member: data.member };
   },
 
   register: async ({ name, group }: MemberType) => {
     const { data } = await api.post(membersApi.endPoint.register, {
       name,
-      group: group?.name?.length == 0 ? null : group?.name,
+      group: group?.name ?? null,
     });
 
-    return data.accessToken;
+    return { accessToken: data.accessToken, member: data.member };
+  },
+
+  guest: async () => {
+    const { data } = await api.post(membersApi.endPoint.guest);
+
+    return { accessToken: data.accessToken, member: data.member };
   },
 };
 

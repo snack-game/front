@@ -8,6 +8,8 @@ export const TOAST_MESSAGE = {
 
   // AUTH
   AUTH_LOGIN: '로그인 되었습니다!',
+  AUTH_REGISTER: '회원가입 완료!',
+  AUTH_GUEST: '게스트로 로그인 되었습니다!',
   AUTH_LOGOUT: '로그아웃 되었습니다!',
   AUTH_ERROR: '로그인에 실패하였습니다!',
   AUTH_ERROR_NOT_FOUND: '존재하지 않는 사용자입니다!',

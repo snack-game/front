@@ -1,13 +1,15 @@
-type MemberRoleType = 'admin' | 'user' | 'guest';
-
 export interface MemberType {
   id?: number;
-  name: string;
+  name?: string;
   group?: {
     id?: number;
     name: string | null;
   };
   accessToken?: string;
   bestScore?: number;
-  role?: MemberRoleType;
+}
+
+export interface AuthType {
+  member: MemberType;
+  accessToken: string;
 }
