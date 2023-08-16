@@ -6,6 +6,16 @@ import CookieImage from '@assets/images/cookie.png';
 import JellyImage from '@assets/images/jelly.png';
 import OrangeImage from '@assets/images/orange.png';
 
+const imageSet = [
+  CandyImage,
+  CandyCaneImage,
+  AppleImage,
+  OrangeImage,
+  JellyImage,
+  CookieImage,
+  ChocolateImage,
+];
+
 interface Unit {
   x: number;
   y: number;
@@ -32,15 +42,6 @@ interface Settings {
 export class SnackRainManager {
   private readonly units: Unit[];
   private settings: Settings;
-  private images = [
-    CandyImage,
-    CandyCaneImage,
-    AppleImage,
-    OrangeImage,
-    JellyImage,
-    CookieImage,
-    ChocolateImage,
-  ];
 
   constructor() {
     this.units = [];
@@ -74,8 +75,7 @@ export class SnackRainManager {
       image: new Image(),
     };
 
-    unit.image.src =
-      this.images[Math.floor(Math.random() * this.images.length)];
+    unit.image.src = imageSet[Math.floor(Math.random() * imageSet.length)];
 
     this.units.push(unit);
   }
@@ -96,8 +96,6 @@ export class SnackRainManager {
     });
 
     for (const idx in this.units) {
-      let collapsed = false;
-
       const unit = this.units[idx];
       const afterUnitPosition = {
         x: unit.x + unit.velocity.x,
@@ -123,8 +121,6 @@ export class SnackRainManager {
           const sumRadius = item.radius + unit.radius;
 
           if (distanceUnits < sumRadius) {
-            collapsed = true;
-
             const afterVelocity1 = this.getVelocity(unit, item);
             const afterVelocity2 = this.getVelocity(item, unit);
 

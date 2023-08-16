@@ -20,7 +20,6 @@ export const userState = atom<MemberType>({
     },
     accessToken: '',
     bestScore: 0,
-    role: undefined,
   },
   effects_UNSTABLE: [presistAtomUser],
 });

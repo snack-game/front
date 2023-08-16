@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { css } from '@emotion/react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import LogoImage from '@assets/images/logo.png';
@@ -10,12 +11,20 @@ import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
+import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
   const resetUser = useResetRecoilState(resetUserState);
+  const { deleteStorageValue } = useLocalStorage({ key: 'accessToken' });
   const openToast = useToast();
+
+  const handleLogout = () => {
+    resetUser();
+    deleteStorageValue();
+    openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
+  };
 
   return (
     <Styled.HeaderContainer>
@@ -29,14 +38,12 @@ const Header = () => {
         </Link>
         {userInfo.accessToken ? (
           <>
-            {userInfo.name} 님{' '}
+            {userInfo.name} 님
             <Button
+              wrapper={css({ marginLeft: '0.5rem' })}
               content={'로그아웃'}
               size={'small'}
-              onClick={() => {
-                resetUser();
-                openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
-              }}
+              onClick={handleLogout}
             />
           </>
         ) : (

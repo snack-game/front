@@ -19,10 +19,9 @@ interface AppleGameProps {
 const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-  const [score, setScore] = useState<number>(0);
   const [start, setStart] = useState<boolean>(false);
   const [rect, setRect] = useState<DOMRect>();
-  const { gameStartMutate } = useGameStart();
+  const { gameStart, error } = useGameStart();
 
   const drag: Drag = new Drag();
   const appleGameManager: AppleGameManager = new AppleGameManager();
@@ -105,9 +104,11 @@ const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
 
   const handleStartButton = () => {
     if (rect) {
-      setApples(appleGameManager.generateApples(rect));
-      setStart(true);
-      gameStartMutate();
+      gameStart();
+      if (!error) {
+        setApples(appleGameManager.generateApples(rect));
+        setStart(true);
+      }
     }
   };
 
