@@ -21,7 +21,7 @@ interface useMemberAuthProps {
   message: string;
 }
 
-const useMemberMutation = <T>(
+const useMemberMutation = <T = void>(
   apiMethod: (args: T) => Promise<AuthType>,
   onSuccess: (data: AuthType) => void,
 ) => {
