@@ -1,3 +1,5 @@
+import { appleGameStateType } from '@utils/types/game.type';
+
 import api from './index';
 
 const appleGameApi = {
@@ -9,7 +11,7 @@ const appleGameApi = {
     Accept: 'application/json',
   },
 
-  gameStart: async (accessToken: string) => {
+  gameStart: async (accessToken: string): Promise<appleGameStateType> => {
     const { data } = await api.post(appleGameApi.endPoint.game, null, {
       headers: {
         ...appleGameApi.headers,
@@ -17,7 +19,11 @@ const appleGameApi = {
       },
     });
 
-    return data.data;
+    return {
+      apples: data.apples,
+      sessionId: data.sessionId,
+      score: data.score,
+    };
   },
 };
 

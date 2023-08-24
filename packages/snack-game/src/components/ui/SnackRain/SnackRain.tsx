@@ -20,7 +20,7 @@ const SnackRain: FC<DropApplesProps> = ({ clientWidth, clientHeight }) => {
     snackRain.drawSnackRain(ctx, clientWidth, clientHeight);
   };
 
-  const canvasRef = useCanvas({ clientWidth, clientHeight, animation });
+  const { canvasRef } = useCanvas({ clientWidth, clientHeight, animation });
 
   return <StyledCanvas ref={canvasRef}></StyledCanvas>;
 };

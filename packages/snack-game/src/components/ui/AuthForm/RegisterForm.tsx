@@ -32,7 +32,9 @@ const RegisterForm = () => {
     e.preventDefault();
     registerMutate({
       name: values.name.value,
-      group: { name: values.group.value },
+      group: {
+        name: values.group.value === '' ? null : values.group.value,
+      },
     });
   };
 

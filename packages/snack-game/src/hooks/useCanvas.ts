@@ -13,6 +13,7 @@ const useCanvas = ({
 }: useCanvasProps) => {
   const canvasRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
+  const rect: DOMRect | undefined = canvasRef.current?.getBoundingClientRect();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -48,9 +49,9 @@ const useCanvas = ({
     return () => {
       window.cancelAnimationFrame(requestId);
     };
-  }, [clientWidth, clientHeight, animation]);
+  }, [clientWidth, clientHeight, animation, canvasRef.current]);
 
-  return canvasRef;
+  return { canvasRef, rect };
 };
 
 export default useCanvas;

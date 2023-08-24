@@ -7,7 +7,7 @@ const COLUMNS = 10;
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
 
-  generateApples(rect: DOMRect): Apple[] {
+  generateApples(rect: DOMRect, apples: number[][]): Apple[] {
     const units = [];
 
     const availableWidth = (rect.width - BORDER_OFFSET * 2) / COLUMNS;
@@ -33,9 +33,9 @@ export class AppleGameManager {
         const apple = new Apple(
           x,
           y,
+          apples[i][j],
           appleRadius,
           cnt == randomNum ? 0 : 1,
-          0.4,
           0.5,
           {
             x: Math.random() * 4 - 2,

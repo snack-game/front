@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { css } from '@emotion/react';
+import { useRecoilState } from 'recoil';
 
 import Button from '@components/common/Button/Button';
 import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
+import { appleState, removedAppleState } from '@utils/atoms/game';
 
-import { useGameStart } from '@hooks/queries/appleGame.query';
+import { useAppleGameStart } from '@hooks/queries/appleGame.query';
 import useCanvas from '@hooks/useCanvas';
 
 interface AppleGameProps {
@@ -17,14 +19,13 @@ interface AppleGameProps {
 }
 
 const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
-  const [apples, setApples] = useState<Apple[]>([]);
-  const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-  const [start, setStart] = useState<boolean>(false);
-  const [rect, setRect] = useState<DOMRect>();
-  const { gameStart, error } = useGameStart();
-
   const drag: Drag = new Drag();
   const appleGameManager: AppleGameManager = new AppleGameManager();
+
+  const [apples, setApples] = useRecoilState(appleState);
+  const [removedApples, setRemovedApples] = useRecoilState(removedAppleState);
+  const [start, setStart] = useState<boolean>(false);
+  const { gameStart } = useAppleGameStart();
 
   const animation = (ctx: CanvasRenderingContext2D) => {
     // background
@@ -59,13 +60,11 @@ const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
     }
   };
 
-  const canvasRef = useCanvas({ clientWidth, clientHeight, animation });
-
-  useEffect(() => {
-    if (canvasRef.current) {
-      setRect(canvasRef.current.getBoundingClientRect());
-    }
-  }, [canvasRef.current]);
+  const { canvasRef, rect } = useCanvas({
+    clientWidth,
+    clientHeight,
+    animation,
+  });
 
   const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (rect) {
@@ -90,7 +89,7 @@ const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
           setApples(newApples);
           setRemovedApples(removedApples);
 
-          if (isGolden) setApples(appleGameManager.generateApples(rect));
+          // if (isGolden) setApples(appleGameManager.generateApples(rect));
           break;
         }
 
@@ -103,13 +102,7 @@ const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
   };
 
   const handleStartButton = () => {
-    if (rect) {
-      gameStart();
-      if (!error) {
-        setApples(appleGameManager.generateApples(rect));
-        setStart(true);
-      }
-    }
+    setStart(true);
   };
 
   return (
