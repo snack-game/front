@@ -1,38 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { css } from '@emotion/react';
-import { useRecoilState } from 'recoil';
-
-import Button from '@components/common/Button/Button';
 import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
-import { appleState, removedAppleState } from '@utils/atoms/game';
+import { appleGameStateType } from '@utils/types/game.type';
 
-import { useAppleGameStart } from '@hooks/queries/appleGame.query';
 import useCanvas from '@hooks/useCanvas';
 
 interface AppleGameProps {
-  children?: never;
   clientWidth: number;
   clientHeight: number;
+  appleGameState?: appleGameStateType;
 }
 
-const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
+const AppleGame = ({
+  clientWidth,
+  clientHeight,
+  appleGameState,
+}: AppleGameProps) => {
   const drag: Drag = new Drag();
   const appleGameManager: AppleGameManager = new AppleGameManager();
 
-  const [apples, setApples] = useRecoilState(appleState);
-  const [removedApples, setRemovedApples] = useRecoilState(removedAppleState);
-  const [start, setStart] = useState<boolean>(false);
-  const { gameStart } = useAppleGameStart();
+  const [rect, setRect] = useState<DOMRect>();
+  const [apples, setApples] = useState<Apple[]>([]);
+  const [removedApples, setRemovedApples] = useState<Apple[]>([]);
 
   const animation = (ctx: CanvasRenderingContext2D) => {
     // background
     ctx.clearRect(0, 0, clientWidth, clientHeight);
 
-    ctx.fillStyle = '#ffedd5';
-    ctx.fillRect(0, 0, clientWidth, clientHeight);
+    // ctx.fillStyle = '#ffedd5';
+    // ctx.fillRect(0, 0, clientWidth, clientHeight);
 
     drag.drawDragArea(ctx);
 
@@ -60,11 +58,19 @@ const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
     }
   };
 
-  const { canvasRef, rect } = useCanvas({
+  const canvasRef = useCanvas({
     clientWidth,
     clientHeight,
     animation,
   });
+
+  useEffect(() => {
+    setRect(canvasRef.current?.getBoundingClientRect());
+
+    if (rect && appleGameState) {
+      setApples(appleGameManager.generateApples(rect, appleGameState.apples));
+    }
+  }, [canvasRef.current]);
 
   const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (rect) {
@@ -101,30 +107,13 @@ const AppleGame = ({ clientWidth, clientHeight }: AppleGameProps) => {
     }
   };
 
-  const handleStartButton = () => {
-    setStart(true);
-  };
-
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        onMouseDown={handleMouseEvent}
-        onMouseMove={handleMouseEvent}
-        onMouseUp={handleMouseEvent}
-      ></canvas>
-      <Button
-        content={'시작!'}
-        onClick={handleStartButton}
-        show={!start}
-        wrapper={css`
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        `}
-      />
-    </>
+    <canvas
+      ref={canvasRef}
+      onMouseDown={handleMouseEvent}
+      onMouseMove={handleMouseEvent}
+      onMouseUp={handleMouseEvent}
+    ></canvas>
   );
 };
 

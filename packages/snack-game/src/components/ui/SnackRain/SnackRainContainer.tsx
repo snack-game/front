@@ -1,14 +1,10 @@
-import React, { FC, RefObject, useRef } from 'react';
+import React, { RefObject, useRef } from 'react';
 
 import styled from '@emotion/styled';
 
 import SnackRain from '@components/ui/SnackRain/SnackRain';
 
 import { useClientRect } from '@hooks/useClientRect';
-
-interface SnackRainBaseProps {
-  children?: never;
-}
 
 const SnackRainWrapper = styled.div`
   position: fixed;
@@ -17,7 +13,7 @@ const SnackRainWrapper = styled.div`
   z-index: -50;
 `;
 
-const SnackRainContainer: FC<SnackRainBaseProps> = () => {
+const SnackRainContainer = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const { width, height } = useClientRect({ canvasBaseRef });

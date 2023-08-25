@@ -15,7 +15,7 @@ export class Apple {
   constructor(
     x: number,
     y: number,
-    number: number | null,
+    number: number,
     radius: number,
     style: number,
     gravity: number,
@@ -24,6 +24,7 @@ export class Apple {
   ) {
     this.number = 0;
     this.position = { x, y };
+    this.number = number;
     this.image = new Image();
     this.image.src = style ? AppleImage : GoldenApple;
     this.radius = radius;

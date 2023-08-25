@@ -13,7 +13,6 @@ const useCanvas = ({
 }: useCanvasProps) => {
   const canvasRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
-  const rect: DOMRect | undefined = canvasRef.current?.getBoundingClientRect();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,7 +50,7 @@ const useCanvas = ({
     };
   }, [clientWidth, clientHeight, animation, canvasRef.current]);
 
-  return { canvasRef, rect };
+  return canvasRef;
 };
 
 export default useCanvas;

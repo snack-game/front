@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import styled from '@emotion/styled';
 
 import { SnackRainManager } from '@modules/snackRainManager';
@@ -7,12 +5,11 @@ import { SnackRainManager } from '@modules/snackRainManager';
 import useCanvas from '@hooks/useCanvas';
 
 interface DropApplesProps {
-  children?: never;
   clientWidth: number;
   clientHeight: number;
 }
 
-const SnackRain: FC<DropApplesProps> = ({ clientWidth, clientHeight }) => {
+const SnackRain = ({ clientWidth, clientHeight }: DropApplesProps) => {
   const snackRain = new SnackRainManager();
 
   const animation = (ctx: CanvasRenderingContext2D) => {
@@ -20,7 +17,7 @@ const SnackRain: FC<DropApplesProps> = ({ clientWidth, clientHeight }) => {
     snackRain.drawSnackRain(ctx, clientWidth, clientHeight);
   };
 
-  const { canvasRef } = useCanvas({ clientWidth, clientHeight, animation });
+  const canvasRef = useCanvas({ clientWidth, clientHeight, animation });
 
   return <StyledCanvas ref={canvasRef}></StyledCanvas>;
 };
