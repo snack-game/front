@@ -16,11 +16,11 @@ const SnackRainWrapper = styled.div`
 const SnackRainContainer = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  const { width, height } = useClientRect({ canvasBaseRef });
+  const { clientWidth, clientHeight } = useClientRect({ canvasBaseRef });
 
   return (
     <SnackRainWrapper ref={canvasBaseRef}>
-      <SnackRain clientWidth={width} clientHeight={height} />
+      <SnackRain clientWidth={clientWidth} clientHeight={clientHeight} />
     </SnackRainWrapper>
   );
 };

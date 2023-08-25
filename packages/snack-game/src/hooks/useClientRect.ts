@@ -5,14 +5,19 @@ interface useClientRectProps {
 }
 
 export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
-  const [width, setWidth] = useState<number>(0);
-  const [height, setHeight] = useState<number>(0);
+  const [clientWidth, setClientWidth] = useState<number>(0);
+  const [clientHeight, setClientHeight] = useState<number>(0);
+  const [clientLeft, setClientLeft] = useState<number>(0);
+  const [clientTop, setClientTop] = useState<number>(0);
 
   useEffect(() => {
     const setClientRect = () => {
       if (canvasBaseRef.current) {
-        setWidth(canvasBaseRef.current.clientWidth);
-        setHeight(canvasBaseRef.current.clientHeight);
+        const rect = canvasBaseRef.current.getBoundingClientRect();
+        setClientWidth(rect.width);
+        setClientHeight(rect.height);
+        setClientLeft(rect.left);
+        setClientTop(rect.top);
       }
     };
 
@@ -25,5 +30,5 @@ export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
     };
   }, []);
 
-  return { width, height };
+  return { clientWidth, clientHeight, clientLeft, clientTop };
 };

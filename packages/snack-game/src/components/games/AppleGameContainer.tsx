@@ -14,15 +14,17 @@ const AppleGameWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   background-color: #ffedd5;
-  width: 90%;
-  height: 720px;
+  width: 80%;
+  height: 80vh;
 `;
 
 const AppleGameContainer = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const [start, setStart] = useState<boolean>(false);
-  const { width, height } = useClientRect({ canvasBaseRef });
+  const { clientWidth, clientHeight, clientLeft, clientTop } = useClientRect({
+    canvasBaseRef,
+  });
   const { gameStart, data, isLoading } = useAppleGameStart();
 
   const handleStartButton = () => {
@@ -31,7 +33,9 @@ const AppleGameContainer = () => {
   };
 
   useEffect(() => {
-    setStart(false);
+    return () => {
+      setStart(false);
+    };
   }, []);
 
   return (
@@ -40,8 +44,10 @@ const AppleGameContainer = () => {
         <Loading />
       ) : (
         <AppleGame
-          clientWidth={width}
-          clientHeight={height}
+          clientWidth={clientWidth}
+          clientHeight={clientHeight}
+          clientLeft={clientLeft}
+          clientTop={clientTop}
           appleGameState={data}
         />
       )}
