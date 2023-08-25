@@ -48,7 +48,7 @@ const useCanvas = ({
     return () => {
       window.cancelAnimationFrame(requestId);
     };
-  }, [clientWidth, clientHeight, animation]);
+  }, [clientWidth, clientHeight, animation, canvasRef.current]);
 
   return canvasRef;
 };

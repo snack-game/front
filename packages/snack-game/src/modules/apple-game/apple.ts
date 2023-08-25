@@ -3,7 +3,7 @@ import GoldenApple from '@assets/images/golden-apple.png';
 
 export class Apple {
   public position: { x: number; y: number };
-  public number: number = Math.floor(Math.random() * 9) + 1;
+  public number: number;
   public inDragArea = false;
   public remove = false;
   public isGolden;
@@ -15,14 +15,16 @@ export class Apple {
   constructor(
     x: number,
     y: number,
+    number: number,
     radius: number,
     style: number,
-    mass: number,
     gravity: number,
     velocity: { x: number; y: number },
     isGolden: boolean,
   ) {
+    this.number = 0;
     this.position = { x, y };
+    this.number = number;
     this.image = new Image();
     this.image.src = style ? AppleImage : GoldenApple;
     this.radius = radius;

@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
@@ -48,6 +49,7 @@ const App = () => {
             <Toast />
           </ThemeProvider>
         </RecoilRoot>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );

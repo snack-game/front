@@ -1,8 +1,11 @@
 import { useMutation } from 'react-query';
 
 import { AxiosError } from 'axios';
+import { useSetRecoilState } from 'recoil';
 
 import appleGameApi from '@api/appleGame';
+import { appleGameState } from '@utils/atoms/game';
+import { appleGameStateType } from '@utils/types/game.type';
 
 import { ServerError } from '@constants/api.constant';
 import LOCAL_STORAGE from '@constants/localstorage.constant';
@@ -12,16 +15,17 @@ import useError from '@hooks/useError';
 import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
-export const useGameStart = () => {
-  const openToast = useToast();
+export const useAppleGameStart = () => {
   const errorPopup = useError();
+  const openToast = useToast();
+  const setAppleGameState = useSetRecoilState(appleGameState);
   const { guestMutate } = useMemberGuest();
   const { storageValue: accessToken } = useLocalStorage<string>({
     key: LOCAL_STORAGE.ACCESS_TOKEN,
   });
 
-  const { mutate, error } = useMutation<
-    string,
+  const { mutate, data, isLoading } = useMutation<
+    appleGameStateType,
     AxiosError<ServerError>,
     string
   >(appleGameApi.gameStart, {
@@ -35,22 +39,15 @@ export const useGameStart = () => {
         errorPopup(error.response.status, error.response.data.messages);
       }
     },
-    onSuccess: () => {
+    onSuccess: (data: appleGameStateType) => {
+      setAppleGameState(data);
       openToast(TOAST_MESSAGE.GAME_START, 'success');
     },
   });
 
   const gameStart = () => {
-    if (!accessToken) {
-      guestMutate();
-      return;
-    }
-
     mutate(accessToken);
   };
 
-  return {
-    gameStart,
-    error,
-  };
+  return { gameStart, data, isLoading };
 };
