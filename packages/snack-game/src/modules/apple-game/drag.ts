@@ -23,8 +23,8 @@ export class Drag {
     this.isDrawing = true;
     const clientX = event.clientX;
     const clientY = event.clientY;
-    this.startX = clientX - clientLeft;
-    this.startY = clientY - clientTop;
+    this.startX = clientX - (clientLeft - window.scrollX);
+    this.startY = clientY - (clientTop - window.scrollY);
 
     this.currentX = this.startX;
     this.currentY = this.startY;
@@ -38,8 +38,8 @@ export class Drag {
     const clientX = event.clientX;
     const clientY = event.clientY;
 
-    this.currentX = clientX - clientLeft;
-    this.currentY = clientY - clientTop;
+    this.currentX = clientX - (clientLeft - window.scrollX);
+    this.currentY = clientY - (clientTop - window.scrollY);
   }
 
   onMouseUp(): void {

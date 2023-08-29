@@ -14,9 +14,6 @@ export class AppleGameManager {
   ): Apple[] {
     const units = [];
 
-    // const availableWidth = (rect.width - BORDER_OFFSET * 2) / COLUMNS;
-    // const availableHeight = (rect.height - BORDER_OFFSET * 2) / ROWS;
-
     const availableWidth = (clientWidth - BORDER_OFFSET * 2) / COLUMNS;
     const availableHeight = (clientHeight - BORDER_OFFSET * 2) / ROWS;
 
@@ -26,21 +23,25 @@ export class AppleGameManager {
 
     let cnt = 0;
 
-    for (let i = 0; i < ROWS; i++) {
-      for (let j = 0; j < COLUMNS; j++) {
+    for (let row = 0; row < ROWS; row++) {
+      for (let column = 0; column < COLUMNS; column++) {
         cnt++;
-
         const x =
-          j * availableWidth + availableWidth / 2 - appleRadius + BORDER_OFFSET;
+          column * availableWidth +
+          availableWidth / 2 -
+          appleRadius +
+          BORDER_OFFSET;
         const y =
-          i * availableHeight +
+          row * availableHeight +
           availableHeight / 2 -
           appleRadius +
           BORDER_OFFSET;
         const apple = new Apple(
+          column,
+          row,
           x,
           y,
-          apples[i][j],
+          apples[row][column],
           appleRadius,
           cnt == randomNum ? 0 : 1,
           0.5,
@@ -179,6 +180,33 @@ export class AppleGameManager {
         ctx.stroke();
       }
     }
+  }
+
+  updateApplePosition(
+    clientWidth: number,
+    clientHeight: number,
+    apples: Apple[],
+  ) {
+    const availableWidth = (clientWidth - BORDER_OFFSET * 2) / COLUMNS;
+    const availableHeight = (clientHeight - BORDER_OFFSET * 2) / ROWS;
+
+    const appleRadius = Math.min(availableWidth, availableHeight) * 0.4;
+
+    return apples.map((apple) => {
+      apple.position.x =
+        apple.row * availableWidth +
+        availableWidth / 2 -
+        appleRadius +
+        BORDER_OFFSET;
+      apple.position.y =
+        apple.column * availableHeight +
+        availableHeight / 2 -
+        appleRadius +
+        BORDER_OFFSET;
+      apple.radius = appleRadius;
+
+      return apple;
+    });
   }
 
   updateFallingPosition(

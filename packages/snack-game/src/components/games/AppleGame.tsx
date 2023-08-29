@@ -62,8 +62,10 @@ const AppleGame = ({
   });
 
   useEffect(() => {
-    // setRect(canvasRef.current?.getBoundingClientRect());
+    appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
+  }, [canvasRef.current, clientWidth, clientHeight]);
 
+  useEffect(() => {
     if (appleGameState) {
       setApples(
         appleGameManager.generateApples(
@@ -73,7 +75,7 @@ const AppleGame = ({
         ),
       );
     }
-  }, [canvasRef.current, clientWidth, clientHeight]);
+  }, []);
 
   const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
     switch (event.type) {

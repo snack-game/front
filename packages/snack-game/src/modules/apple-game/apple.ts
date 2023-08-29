@@ -2,17 +2,21 @@ import AppleImage from '@assets/images/apple.png';
 import GoldenApple from '@assets/images/golden-apple.png';
 
 export class Apple {
+  public row: number;
+  public column: number;
   public position: { x: number; y: number };
   public number: number;
   public inDragArea = false;
   public remove = false;
   public isGolden;
   public velocity: { x: number; y: number };
+  public radius: number;
   public readonly image: HTMLImageElement;
   public readonly gravity: number;
-  public readonly radius: number;
 
   constructor(
+    row: number,
+    column: number,
     x: number,
     y: number,
     number: number,
@@ -22,6 +26,8 @@ export class Apple {
     velocity: { x: number; y: number },
     isGolden: boolean,
   ) {
+    this.row = row;
+    this.column = column;
     this.number = 0;
     this.position = { x, y };
     this.number = number;
