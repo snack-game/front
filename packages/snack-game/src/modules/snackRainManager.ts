@@ -6,7 +6,7 @@ import CookieImage from '@assets/images/cookie.png';
 import JellyImage from '@assets/images/jelly.png';
 import OrangeImage from '@assets/images/orange.png';
 
-const imageSet = [
+const loadedImages = [
   CandyImage,
   CandyCaneImage,
   AppleImage,
@@ -14,7 +14,11 @@ const imageSet = [
   JellyImage,
   CookieImage,
   ChocolateImage,
-];
+].map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
 
 interface Unit {
   x: number;
@@ -75,7 +79,7 @@ export class SnackRainManager {
       image: new Image(),
     };
 
-    unit.image.src = imageSet[Math.floor(Math.random() * imageSet.length)];
+    unit.image = loadedImages[Math.floor(Math.random() * loadedImages.length)];
 
     this.units.push(unit);
   }
