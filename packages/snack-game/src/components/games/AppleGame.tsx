@@ -10,18 +10,22 @@ import useCanvas from '@hooks/useCanvas';
 interface AppleGameProps {
   clientWidth: number;
   clientHeight: number;
+  clientLeft: number;
+  clientTop: number;
   appleGameState?: appleGameStateType;
+  drag: Drag;
+  appleGameManager: AppleGameManager;
 }
 
 const AppleGame = ({
   clientWidth,
   clientHeight,
+  clientLeft,
+  clientTop,
   appleGameState,
+  drag,
+  appleGameManager,
 }: AppleGameProps) => {
-  const drag: Drag = new Drag();
-  const appleGameManager: AppleGameManager = new AppleGameManager();
-
-  const [rect, setRect] = useState<DOMRect>();
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
 
@@ -29,33 +33,27 @@ const AppleGame = ({
     // background
     ctx.clearRect(0, 0, clientWidth, clientHeight);
 
-    // ctx.fillStyle = '#ffedd5';
-    // ctx.fillRect(0, 0, clientWidth, clientHeight);
-
     drag.drawDragArea(ctx);
 
     // render game
-    if (rect) {
-      apples.forEach((apple: Apple) => {
-        appleGameManager.handleAppleRendering(
-          ctx,
-          rect.height,
-          drag.startX,
-          drag.startY,
-          drag.currentX,
-          drag.currentY,
-          drag.isDrawing,
-          apple,
-        );
-      });
+    apples.forEach((apple: Apple) => {
+      appleGameManager.handleAppleRendering(
+        ctx,
+        drag.startX,
+        drag.startY,
+        drag.currentX,
+        drag.currentY,
+        drag.isDrawing,
+        apple,
+      );
+    });
 
-      removedApples.forEach((apple: Apple) => {
-        appleGameManager.updateFallingPosition(ctx, rect.height, apple);
-        if (apple.remove) {
-          setRemovedApples([]);
-        }
-      });
-    }
+    removedApples.forEach((removedApple: Apple) => {
+      appleGameManager.updateFallingPosition(ctx, clientHeight, removedApple);
+      if (removedApple.remove) {
+        setRemovedApples([]);
+      }
+    });
   };
 
   const canvasRef = useCanvas({
@@ -65,44 +63,50 @@ const AppleGame = ({
   });
 
   useEffect(() => {
-    setRect(canvasRef.current?.getBoundingClientRect());
+    appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
+  }, [canvasRef.current, clientWidth, clientHeight]);
 
-    if (rect && appleGameState) {
-      setApples(appleGameManager.generateApples(rect, appleGameState.apples));
+  useEffect(() => {
+    if (appleGameState) {
+      setApples(
+        appleGameManager.generateApples(
+          clientWidth,
+          clientHeight,
+          appleGameState.apples,
+        ),
+      );
     }
-  }, [canvasRef.current]);
+  }, []);
 
   const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (rect) {
-      switch (event.type) {
-        case 'mousedown': {
-          drag.onMouseDown(event, rect);
-          break;
-        }
+    switch (event.type) {
+      case 'mousedown': {
+        drag.onMouseDown(event, clientLeft, clientTop);
+        break;
+      }
 
-        case 'mouseup': {
-          drag.onMouseUp();
+      case 'mouseup': {
+        drag.onMouseUp();
 
-          const { newApples, removedApples, isGolden } =
-            appleGameManager.checkApplesInDragArea(
-              apples,
-              drag.startX,
-              drag.startY,
-              drag.currentX,
-              drag.currentY,
-            );
+        const { newApples, removedApples, isGolden } =
+          appleGameManager.checkApplesInDragArea(
+            apples,
+            drag.startX,
+            drag.startY,
+            drag.currentX,
+            drag.currentY,
+          );
 
-          setApples(newApples);
-          setRemovedApples(removedApples);
+        setApples(newApples);
+        setRemovedApples(removedApples);
 
-          // if (isGolden) setApples(appleGameManager.generateApples(rect));
-          break;
-        }
+        // if (isGolden) setApples(appleGameManager.generateApples(rect));
+        break;
+      }
 
-        case 'mousemove': {
-          drag.onMouseMove(event, rect);
-          break;
-        }
+      case 'mousemove': {
+        drag.onMouseMove(event, clientLeft, clientTop);
+        break;
       }
     }
   };

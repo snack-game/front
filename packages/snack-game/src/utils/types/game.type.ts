@@ -4,3 +4,5 @@ export interface appleGameStateType {
   score: number;
   proceed?: [];
 }
+
+export type appleGameMoveType = { x: number; y: number };

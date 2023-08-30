@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
-import RetryError from '@components/common/RetryError';
+import RetryError from '@components/common/Error/RetryError';
 import AppleGameContainer from '@components/games/AppleGameContainer';
 
 const AppleGamePage = () => {

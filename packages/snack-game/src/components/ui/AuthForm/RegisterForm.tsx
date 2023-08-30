@@ -1,7 +1,7 @@
 import QueryBoundary from '@components/base/QueryBoundary';
 import Button from '@components/common/Button/Button';
+import RetryError from '@components/common/Error/RetryError';
 import Input from '@components/common/Input/Input';
-import RetryError from '@components/common/RetryError';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
 import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';

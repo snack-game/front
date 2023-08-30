@@ -15,23 +15,32 @@ export class Drag {
     this.isDrawing = false;
   }
 
-  onMouseDown(event: React.MouseEvent<HTMLCanvasElement>, rect: DOMRect): void {
+  onMouseDown(
+    event: React.MouseEvent<HTMLCanvasElement>,
+    clientLeft: number,
+    clientTop: number,
+  ): void {
     this.isDrawing = true;
     const clientX = event.clientX;
     const clientY = event.clientY;
-    this.startX = clientX - rect.left;
-    this.startY = clientY - rect.top;
+
+    this.startX = clientX - (clientLeft - window.scrollX);
+    this.startY = clientY - (clientTop - window.scrollY);
 
     this.currentX = this.startX;
     this.currentY = this.startY;
   }
 
-  onMouseMove(event: React.MouseEvent<HTMLCanvasElement>, rect: DOMRect): void {
+  onMouseMove(
+    event: React.MouseEvent<HTMLCanvasElement>,
+    clientLeft: number,
+    clientTop: number,
+  ): void {
     const clientX = event.clientX;
     const clientY = event.clientY;
 
-    this.currentX = clientX - rect.left;
-    this.currentY = clientY - rect.top;
+    this.currentX = clientX - (clientLeft - window.scrollX);
+    this.currentY = clientY - (clientTop - window.scrollY);
   }
 
   onMouseUp(): void {
