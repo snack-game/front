@@ -24,7 +24,7 @@ export const useAppleGameStart = () => {
     key: LOCAL_STORAGE.ACCESS_TOKEN,
   });
 
-  const { mutate, data, isLoading } = useMutation<
+  const { mutateAsync, data, isLoading } = useMutation<
     appleGameStateType,
     AxiosError<ServerError>,
     string
@@ -45,8 +45,12 @@ export const useAppleGameStart = () => {
     },
   });
 
-  const gameStart = () => {
-    mutate(accessToken);
+  const gameStart = async () => {
+    if (!accessToken) {
+      await guestMutate();
+    }
+
+    await mutateAsync(accessToken);
   };
 
   return { gameStart, data, isLoading };

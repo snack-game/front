@@ -69,8 +69,8 @@ export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
 
 export const useMemberGuest = () => {
   const onSuccess = useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST);
-  const { mutate } = useMemberMutation<void>(membersApi.guest, onSuccess);
-  return { guestMutate: mutate };
+  const { mutateAsync } = useMemberMutation<void>(membersApi.guest, onSuccess);
+  return { guestMutate: mutateAsync };
 };
 
 export const useMemberRegister = () =>

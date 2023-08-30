@@ -1,3 +1,4 @@
+import ErrorImage from '@assets/images/error.png';
 import { FallbackProps } from '@components/base/ErrorBoundary';
 import Button from '@components/common/Button/Button';
 
@@ -17,7 +18,7 @@ const RetryError = ({ message, resetErrorBoundary }: FallbackProps) => {
           width: '80px',
           height: '80px',
         }}
-        src=""
+        src={ErrorImage}
         alt={'에러 이미지'}
       />
       <span>{message}</span>

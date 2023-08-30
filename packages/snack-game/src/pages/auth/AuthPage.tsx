@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
-import RetryError from '@components/common/RetryError';
+import RetryError from '@components/common/Error/RetryError';
 import ToggleSwitch from '@components/common/Toggle/ToggleSwitch';
 import LoginForm from '@components/ui/AuthForm/LoginForm';
 import RegisterForm from '@components/ui/AuthForm/RegisterForm';

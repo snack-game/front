@@ -23,6 +23,7 @@ export class Drag {
     this.isDrawing = true;
     const clientX = event.clientX;
     const clientY = event.clientY;
+
     this.startX = clientX - (clientLeft - window.scrollX);
     this.startY = clientY - (clientTop - window.scrollY);
 

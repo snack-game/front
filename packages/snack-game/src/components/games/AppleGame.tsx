@@ -13,10 +13,9 @@ interface AppleGameProps {
   clientLeft: number;
   clientTop: number;
   appleGameState?: appleGameStateType;
+  drag: Drag;
+  appleGameManager: AppleGameManager;
 }
-
-const drag: Drag = new Drag();
-const appleGameManager: AppleGameManager = new AppleGameManager();
 
 const AppleGame = ({
   clientWidth,
@@ -24,6 +23,8 @@ const AppleGame = ({
   clientLeft,
   clientTop,
   appleGameState,
+  drag,
+  appleGameManager,
 }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
