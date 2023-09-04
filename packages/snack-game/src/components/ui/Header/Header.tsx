@@ -11,19 +11,19 @@ import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useLocalStorage from '@hooks/useLocalStorage';
+import { useInternalRouter } from '@hooks/useInternalRouter';
 import useToast from '@hooks/useToast';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
   const resetUser = useResetRecoilState(resetUserState);
-  const { deleteStorageValue } = useLocalStorage({ key: 'accessToken' });
+  const { replace } = useInternalRouter();
   const openToast = useToast();
 
   const handleLogout = () => {
     resetUser();
-    deleteStorageValue();
     openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
+    replace(PATH.HOME);
   };
 
   return (

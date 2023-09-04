@@ -1,28 +1,25 @@
 import { useMutation } from 'react-query';
 
 import { AxiosError } from 'axios';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import appleGameApi from '@api/appleGame';
+import { userState } from '@utils/atoms/auth';
 import { appleGameState } from '@utils/atoms/game';
 import { appleGameStateType } from '@utils/types/game.type';
 
 import { ServerError } from '@constants/api.constant';
-import LOCAL_STORAGE from '@constants/localstorage.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import { useMemberGuest } from '@hooks/queries/members.query';
 import useError from '@hooks/useError';
-import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 export const useAppleGameStart = () => {
   const errorPopup = useError();
   const openToast = useToast();
+  const userStateValue = useRecoilValue(userState);
   const setAppleGameState = useSetRecoilState(appleGameState);
   const { guestMutate } = useMemberGuest();
-  const { storageValue: accessToken } = useLocalStorage<string>({
-    key: LOCAL_STORAGE.ACCESS_TOKEN,
-  });
 
   const { mutateAsync, data, isLoading } = useMutation<
     appleGameStateType,
@@ -46,11 +43,11 @@ export const useAppleGameStart = () => {
   });
 
   const gameStart = async () => {
-    if (!accessToken) {
-      await guestMutate();
+    if (!userStateValue.accessToken) {
+      await guestMutate().then((response) => mutateAsync(response.accessToken));
+    } else {
+      await mutateAsync(userStateValue.accessToken);
     }
-
-    await mutateAsync(accessToken);
   };
 
   return { gameStart, data, isLoading };
