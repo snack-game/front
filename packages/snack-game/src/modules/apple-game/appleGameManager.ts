@@ -63,9 +63,17 @@ export class AppleGameManager {
     startY: number,
     currentX: number,
     currentY: number,
-  ): { newApples: Apple[]; removedApples: Apple[]; isGolden: boolean } {
+  ): {
+    newApples: Apple[];
+    removedApples: Apple[];
+    isGolden: boolean;
+    getScore: boolean;
+    score: number;
+  } {
     let sum = 0;
     let isGolden = false;
+    let getScore = false;
+    let score = 0;
     let removedApples: Apple[] = [];
 
     const x = Math.min(startX, currentX);
@@ -90,8 +98,11 @@ export class AppleGameManager {
     });
 
     if (sum == 10) {
+      getScore = true;
+
       this.applesInDragArea.forEach((apple) => {
         if (apple.isGolden) isGolden = true;
+        score++;
       });
 
       removedApples = this.applesInDragArea;
@@ -101,7 +112,7 @@ export class AppleGameManager {
       );
     }
 
-    return { newApples, removedApples, isGolden };
+    return { newApples, removedApples, isGolden, getScore, score };
   }
 
   handleAppleRendering(

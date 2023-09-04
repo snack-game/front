@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -21,8 +21,9 @@ const AppleGameWrapper = styled.div`
 `;
 
 const AppleGameContainer = () => {
-  const dragRef = useRef(new Drag());
-  const appleGameManagerRef = useRef(new AppleGameManager());
+  const drag = useMemo(() => new Drag(), []);
+  const appleGameManager = useMemo(() => new AppleGameManager(), []);
+
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const [timeRemaining, setTimeRemaining] = useState<number>(10);
@@ -68,9 +69,9 @@ const AppleGameContainer = () => {
             clientHeight={clientHeight}
             clientLeft={clientLeft}
             clientTop={clientTop}
-            appleGameState={data}
-            drag={dragRef.current}
-            appleGameManager={appleGameManagerRef.current}
+            appleGameInfo={data}
+            drag={drag}
+            appleGameManager={appleGameManager}
           />
         )}
         <Button

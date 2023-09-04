@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
@@ -13,8 +12,16 @@ import ThumbnailCard from '@components/ui/ThumbnailCard/ThumbnailCard';
 import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
+import { useInternalRouter } from '@hooks/useInternalRouter';
 
 const MainPage = () => {
+  const { push } = useInternalRouter();
+
+  const handleAppleGameEnter = () => {
+    window.scrollTo(0, 0);
+    push(PATH.APPLE_GAME);
+  };
+
   return (
     <>
       <Helmet>
@@ -39,9 +46,7 @@ const MainPage = () => {
               '드래그 영역의 사과 숫자합이 10이되면 점수를 얻습니다!\n 황금 사과를 제거해 판을 새로고치고 높은 점수를 받아보아요!'
             }
           >
-            <Link to={PATH.APPLE_GAME}>
-              <Button content={'입장'}></Button>
-            </Link>
+            <Button content={'입장'} onClick={handleAppleGameEnter}></Button>
           </ThumbnailCard>
         </CardsContainer>
         <TeamInfo />

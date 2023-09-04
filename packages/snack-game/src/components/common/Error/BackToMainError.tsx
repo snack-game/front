@@ -2,13 +2,14 @@ import ErrorImage from '@assets/images/error.png';
 import { FallbackProps } from '@components/base/ErrorBoundary';
 import Button from '@components/common/Button/Button';
 
+import PATH from '@constants/path.constant';
 import { useInternalRouter } from '@hooks/useInternalRouter';
 
 const BackToMainError = ({ message }: FallbackProps) => {
   const { replace } = useInternalRouter();
 
   const handleBackToMain = () => {
-    replace('/');
+    replace(PATH.HOME);
   };
 
   return (
