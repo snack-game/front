@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+import { useSetRecoilState } from 'recoil';
+
 import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
+import { appleGameState } from '@utils/atoms/game';
 import { appleGameStateType } from '@utils/types/game.type';
 
 import useCanvas from '@hooks/useCanvas';
@@ -12,7 +15,7 @@ interface AppleGameProps {
   clientHeight: number;
   clientLeft: number;
   clientTop: number;
-  appleGameState?: appleGameStateType;
+  appleGameInfo?: appleGameStateType;
   drag: Drag;
   appleGameManager: AppleGameManager;
 }
@@ -22,12 +25,13 @@ const AppleGame = ({
   clientHeight,
   clientLeft,
   clientTop,
-  appleGameState,
+  appleGameInfo,
   drag,
   appleGameManager,
 }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
+  const setAppleGameState = useSetRecoilState(appleGameState);
 
   const animation = (ctx: CanvasRenderingContext2D) => {
     // background
@@ -67,12 +71,12 @@ const AppleGame = ({
   }, [canvasRef.current, clientWidth, clientHeight]);
 
   useEffect(() => {
-    if (appleGameState) {
+    if (appleGameInfo) {
       setApples(
         appleGameManager.generateApples(
           clientWidth,
           clientHeight,
-          appleGameState.apples,
+          appleGameInfo.apples,
         ),
       );
     }
@@ -88,7 +92,7 @@ const AppleGame = ({
       case 'mouseup': {
         drag.onMouseUp();
 
-        const { newApples, removedApples, isGolden } =
+        const { newApples, removedApples, isGolden, getScore, score } =
           appleGameManager.checkApplesInDragArea(
             apples,
             drag.startX,
@@ -96,6 +100,13 @@ const AppleGame = ({
             drag.currentX,
             drag.currentY,
           );
+
+        if (getScore) {
+          setAppleGameState((prev: appleGameStateType) => ({
+            ...prev,
+            score: prev.score + score,
+          }));
+        }
 
         setApples(newApples);
         setRemovedApples(removedApples);

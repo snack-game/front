@@ -8,12 +8,10 @@ import { userState } from '@utils/atoms/auth';
 import { AuthType, MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
-import LOCAL_STORAGE from '@constants/localstorage.constant';
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useError from '@hooks/useError';
 import { useInternalRouter } from '@hooks/useInternalRouter';
-import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 interface useMemberAuthProps {
@@ -43,13 +41,9 @@ const useMemberMutation = <T>(
 const useMemberOnSuccess = (message: string, redirect?: string) => {
   const openToast = useToast();
   const setUserState = useSetRecoilState(userState);
-  const { setStorageValue } = useLocalStorage({
-    key: LOCAL_STORAGE.ACCESS_TOKEN,
-  });
   const router = useInternalRouter();
 
   return ({ accessToken, member }: AuthType) => {
-    setStorageValue(accessToken);
     setUserState(() => ({
       id: member.id,
       name: member.name,
