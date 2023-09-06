@@ -6,7 +6,7 @@ import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game';
-import { appleGameStateType } from '@utils/types/game.type';
+import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
 
 import useCanvas from '@hooks/useCanvas';
 
@@ -102,9 +102,16 @@ const AppleGame = ({
           );
 
         if (getScore) {
+          const removedAppleCoordinates: appleGameMoveType[] =
+            removedApples.map((apple) => apple.coordinates);
+
           setAppleGameState((prev: appleGameStateType) => ({
             ...prev,
             score: prev.score + score,
+            coordinates: [
+              ...(prev.coordinates || []),
+              { coordinates: removedAppleCoordinates },
+            ],
           }));
         }
 

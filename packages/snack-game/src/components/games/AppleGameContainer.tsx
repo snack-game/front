@@ -2,14 +2,19 @@ import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 
 import Button from '@components/common/Button/Button';
 import Loading from '@components/common/Loading';
 import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
+import { appleGameState } from '@utils/atoms/game';
 
-import { useAppleGameStart } from '@hooks/queries/appleGame.query';
+import {
+  useAppleGameEnd,
+  useAppleGameStart,
+} from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
 
 const AppleGameWrapper = styled.div`
@@ -20,18 +25,28 @@ const AppleGameWrapper = styled.div`
   height: 80vh;
 `;
 
+const GameHUD = styled.div`
+  width: 80%;
+  height: 2rem;
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
+`;
+
 const AppleGameContainer = () => {
   const drag = useMemo(() => new Drag(), []);
   const appleGameManager = useMemo(() => new AppleGameManager(), []);
 
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(10);
+  const [timeRemaining, setTimeRemaining] = useState<number>(30);
+  const appleGameValue = useRecoilValue(appleGameState);
   const [start, setStart] = useState<boolean>(false);
   const { clientWidth, clientHeight, clientLeft, clientTop } = useClientRect({
     canvasBaseRef,
   });
   const { gameStart, data, isLoading } = useAppleGameStart();
+  const { gameEnd } = useAppleGameEnd();
 
   const handleStartButton = () => {
     gameStart().then(() => {
@@ -40,7 +55,7 @@ const AppleGameContainer = () => {
     });
   };
 
-  const gameEnd = () => {
+  const handleGameEnd = () => {
     setStart(false);
   };
 
@@ -54,13 +69,16 @@ const AppleGameContainer = () => {
         clearTimeout(timerId);
       };
     } else if (timeRemaining === 0) {
-      gameEnd();
+      handleGameEnd();
     }
   }, [start, timeRemaining]);
 
   return (
     <>
-      {timeRemaining}
+      <GameHUD>
+        <p>{appleGameValue.score + '점'}</p>
+        <p>{timeRemaining + '초'}</p>
+      </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
         {isLoading && <Loading />}
         {start && (
