@@ -11,20 +11,17 @@ import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useCookie from '@hooks/useCookie';
 import { useInternalRouter } from '@hooks/useInternalRouter';
 import useToast from '@hooks/useToast';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
-  const { removeCookie } = useCookie();
   const resetUser = useResetRecoilState(resetUserState);
   const { replace } = useInternalRouter();
   const openToast = useToast();
 
   const handleLogout = () => {
     resetUser();
-    removeCookie('accessToken');
     openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
     replace(PATH.HOME);
   };
@@ -39,7 +36,7 @@ const Header = () => {
         <Link to={PATH.BOARD}>
           <Button content={'리더보드'} size={'small'} />
         </Link>
-        {userInfo.name ? (
+        {userInfo.accessToken ? (
           <>
             {userInfo.name} 님
             <Button

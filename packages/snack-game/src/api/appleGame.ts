@@ -1,27 +1,22 @@
-import {
-  appleGameCheckMovePropsType,
-  appleGameEndPropsType,
-  appleGameStateType,
-} from '@utils/types/game.type';
+import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
 
 import api from './index';
 
 const appleGameApi = {
   endPoint: {
     game: '/games/1',
-    checkMove: '/sessions',
-    gameEnd: '/sessions',
+    gameEnd: '/sessionId',
   },
-
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
 
-  gameStart: async (): Promise<appleGameStateType> => {
+  gameStart: async (accessToken: string): Promise<appleGameStateType> => {
     const { data } = await api.post(appleGameApi.endPoint.game, null, {
       headers: {
         ...appleGameApi.headers,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -32,22 +27,27 @@ const appleGameApi = {
     };
   },
 
-  checkGameMove: async ({
-    sessionId,
-    coordinates,
-  }: appleGameCheckMovePropsType): Promise<void> => {
-    await api.put(`${appleGameApi.endPoint.checkMove}/${sessionId}/moves`, {
-      headers: {
-        ...appleGameApi.headers,
-      },
-      data: coordinates,
-    });
-  },
-
-  gameEnd: async ({ sessionId }: appleGameEndPropsType): Promise<void> => {
+  gameEnd: async (accessToken: string, sessionId: string): Promise<void> => {
     await api.put(`${appleGameApi.endPoint.gameEnd}/${sessionId}/end`, {
       headers: {
         ...appleGameApi.headers,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+
+  checkGameMove: async (
+    accessToken: string,
+    sessionId: string,
+    move: appleGameMoveType[],
+  ): Promise<void> => {
+    await api.put(`${appleGameApi.endPoint.gameEnd}/${sessionId}/end`, {
+      headers: {
+        ...appleGameApi.headers,
+        Authorization: `Bearer ${accessToken}`,
+      },
+      data: {
+        move,
       },
     });
   },

@@ -37,7 +37,8 @@ export class AppleGameManager {
           appleRadius +
           BORDER_OFFSET;
         const apple = new Apple(
-          { x: row, y: column },
+          column,
+          row,
           x,
           y,
           apples[row][column],
@@ -204,12 +205,12 @@ export class AppleGameManager {
 
     return apples.map((apple) => {
       apple.position.x =
-        apple.coordinates.x * availableWidth +
+        apple.row * availableWidth +
         availableWidth / 2 -
         appleRadius +
         BORDER_OFFSET;
       apple.position.y =
-        apple.coordinates.y * availableHeight +
+        apple.column * availableHeight +
         availableHeight / 2 -
         appleRadius +
         BORDER_OFFSET;

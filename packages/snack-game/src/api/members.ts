@@ -1,5 +1,5 @@
 import api from '@api/index';
-import { MemberType } from '@utils/types/member.type';
+import { AuthType, MemberType } from '@utils/types/member.type';
 
 const membersApi = {
   endPoint: {
@@ -14,26 +14,26 @@ const membersApi = {
     Accept: 'application/json',
   },
 
-  login: async ({ name }: MemberType): Promise<MemberType> => {
+  login: async ({ name }: MemberType): Promise<AuthType> => {
     const { data } = await api.post(membersApi.endPoint.login, {
       name,
     });
-    return data;
+    return { accessToken: data.accessToken, member: data.member };
   },
 
-  register: async ({ name, group }: MemberType): Promise<MemberType> => {
+  register: async ({ name, group }: MemberType): Promise<AuthType> => {
     const { data } = await api.post(membersApi.endPoint.register, {
       name,
       group: group?.name,
     });
 
-    return data;
+    return { accessToken: data.accessToken, member: data.member };
   },
 
-  guest: async (): Promise<MemberType> => {
+  guest: async (): Promise<AuthType> => {
     const { data } = await api.post(membersApi.endPoint.guest);
 
-    return data;
+    return { accessToken: data.accessToken, member: data.member };
   },
 };
 

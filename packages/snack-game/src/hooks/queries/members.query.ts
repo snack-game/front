@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import membersApi from '@api/members';
 import { userState } from '@utils/atoms/auth';
-import { MemberType } from '@utils/types/member.type';
+import { AuthType, MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import PATH from '@constants/path.constant';
@@ -15,16 +15,16 @@ import { useInternalRouter } from '@hooks/useInternalRouter';
 import useToast from '@hooks/useToast';
 
 interface useMemberAuthProps {
-  apiMethod: (member: MemberType) => Promise<MemberType>;
+  apiMethod: (member: MemberType) => Promise<AuthType>;
   message: string;
 }
 
 const useMemberMutation = <T>(
-  apiMethod: (args: T) => Promise<MemberType>,
-  onSuccess: (data: MemberType) => void,
+  apiMethod: (args: T) => Promise<AuthType>,
+  onSuccess: (data: AuthType) => void,
 ) => {
   const errorPopup = useError();
-  return useMutation<MemberType, AxiosError<ServerError>, T>(apiMethod, {
+  return useMutation<AuthType, AxiosError<ServerError>, T>(apiMethod, {
     retry: 0,
     onError: (error: AxiosError<ServerError>) => {
       if (error.response) {
@@ -43,11 +43,12 @@ const useMemberOnSuccess = (message: string, redirect?: string) => {
   const setUserState = useSetRecoilState(userState);
   const router = useInternalRouter();
 
-  return (member: MemberType) => {
+  return ({ accessToken, member }: AuthType) => {
     setUserState(() => ({
       id: member.id,
       name: member.name,
       group: member.group,
+      accessToken,
     }));
     openToast(message, 'success');
     if (redirect) router.push(redirect);

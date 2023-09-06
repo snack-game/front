@@ -4,7 +4,6 @@ const groupsApi = {
   endPoint: {
     names: '/groups/names',
   },
-
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
