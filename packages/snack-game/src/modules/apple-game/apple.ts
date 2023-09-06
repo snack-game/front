@@ -2,8 +2,7 @@ import AppleImage from '@assets/images/apple.png';
 import GoldenApple from '@assets/images/golden-apple.png';
 
 export class Apple {
-  public row: number;
-  public column: number;
+  public coordinates: { x: number; y: number };
   public position: { x: number; y: number };
   public number: number;
   public inDragArea = false;
@@ -15,8 +14,7 @@ export class Apple {
   public readonly gravity: number;
 
   constructor(
-    row: number,
-    column: number,
+    coordinates: { x: number; y: number },
     x: number,
     y: number,
     number: number,
@@ -26,8 +24,7 @@ export class Apple {
     velocity: { x: number; y: number },
     isGolden: boolean,
   ) {
-    this.row = row;
-    this.column = column;
+    this.coordinates = coordinates;
     this.number = 0;
     this.position = { x, y };
     this.number = number;
