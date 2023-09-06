@@ -6,7 +6,6 @@ export interface MemberType {
     name: string | null;
   };
   accessToken?: string;
-  bestScore?: number;
 }
 
 export interface AuthType {
