@@ -8,7 +8,7 @@ import useForm from '@hooks/useForm';
 import * as Styled from './Form.style';
 
 const LoginForm = () => {
-  const { authMutate: loginMutate } = useMemberLogin();
+  const loginMutate = useMemberLogin();
 
   const { values, handleChangeValue } = useForm<string>({
     initialValues: {
@@ -22,7 +22,7 @@ const LoginForm = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutate({ name: values.name.value });
+    loginMutate.mutate({ name: values.name.value });
   };
 
   return (

@@ -1,16 +1,12 @@
-import { useMutation } from 'react-query';
-
-import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 
 import membersApi from '@api/members';
 import { userState } from '@utils/atoms/auth';
 import { AuthType, MemberType } from '@utils/types/member.type';
 
-import { ServerError } from '@constants/api.constant';
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useError from '@hooks/useError';
+import useGenericMutation from '@hooks/useGenericMutation';
 import { useInternalRouter } from '@hooks/useInternalRouter';
 import useToast from '@hooks/useToast';
 
@@ -18,25 +14,6 @@ interface useMemberAuthProps {
   apiMethod: (member: MemberType) => Promise<AuthType>;
   message: string;
 }
-
-const useMemberMutation = <T>(
-  apiMethod: (args: T) => Promise<AuthType>,
-  onSuccess: (data: AuthType) => void,
-) => {
-  const errorPopup = useError();
-  return useMutation<AuthType, AxiosError<ServerError>, T>(apiMethod, {
-    retry: 0,
-    onError: (error: AxiosError<ServerError>) => {
-      if (error.response) {
-        if (error.response.status >= 500) {
-          throw error;
-        }
-        errorPopup(error.response.status, error.response.data.messages);
-      }
-    },
-    onSuccess,
-  });
-};
 
 const useMemberOnSuccess = (message: string, redirect?: string) => {
   const openToast = useToast();
@@ -57,14 +34,17 @@ const useMemberOnSuccess = (message: string, redirect?: string) => {
 
 export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
   const onSuccess = useMemberOnSuccess(message, PATH.HOME);
-  const { mutate } = useMemberMutation<MemberType>(apiMethod, onSuccess);
-  return { authMutate: mutate };
+  return useGenericMutation<MemberType, AuthType>({
+    apiMethod,
+    onSuccess,
+  });
 };
 
 export const useMemberGuest = () => {
-  const onSuccess = useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST);
-  const { mutateAsync } = useMemberMutation<void>(membersApi.guest, onSuccess);
-  return { guestMutate: mutateAsync };
+  return useGenericMutation<void, AuthType>({
+    apiMethod: membersApi.guest,
+    onSuccess: useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST),
+  });
 };
 
 export const useMemberRegister = () =>

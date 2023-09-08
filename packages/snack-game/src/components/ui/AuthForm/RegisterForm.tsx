@@ -11,7 +11,7 @@ import useForm from '@hooks/useForm';
 import * as Styled from './Form.style';
 
 const RegisterForm = () => {
-  const { authMutate: registerMutate } = useMemberRegister();
+  const registerMutate = useMemberRegister();
 
   const { values, handleChangeValue, setFieldValue } = useForm<string>({
     initialValues: {
@@ -30,7 +30,7 @@ const RegisterForm = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    registerMutate({
+    registerMutate.mutate({
       name: values.name.value,
       group: {
         name: values.group.value === '' ? null : values.group.value,

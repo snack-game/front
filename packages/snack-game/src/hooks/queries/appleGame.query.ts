@@ -1,117 +1,65 @@
-import { useMutation } from 'react-query';
-
-import { AxiosError } from 'axios';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import appleGameApi from '@api/appleGame';
-import { userState } from '@utils/atoms/auth';
 import { appleGameState } from '@utils/atoms/game';
-import {
-  appleGameCheckMovePropsType,
-  appleGameEndPropsType,
-  appleGameStateType,
-} from '@utils/types/game.type';
+import { appleGameStateType } from '@utils/types/game.type';
 
-import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import { useMemberGuest } from '@hooks/queries/members.query';
-import useError from '@hooks/useError';
+import useGenericMutation from '@hooks/useGenericMutation';
 import useToast from '@hooks/useToast';
 
 export const useAppleGameStart = () => {
-  const errorPopup = useError();
   const openToast = useToast();
-  const userValue = useRecoilValue(userState);
   const setAppleGameState = useSetRecoilState(appleGameState);
-  const { guestMutate } = useMemberGuest();
 
-  const { mutateAsync, data, isLoading } = useMutation<
-    appleGameStateType,
-    AxiosError<ServerError>,
-    void
-  >(appleGameApi.gameStart, {
-    retry: 0,
-    onError: (error: AxiosError<ServerError>) => {
-      if (error.response) {
-        if (error.response.status >= 500) {
-          throw error;
-        }
-
-        errorPopup(error.response.status, error.response.data.messages);
-      }
-    },
+  return useGenericMutation<void, appleGameStateType>({
+    apiMethod: appleGameApi.gameStart,
     onSuccess: (data: appleGameStateType) => {
       setAppleGameState(data);
       openToast(TOAST_MESSAGE.GAME_START, 'success');
     },
   });
-
-  const gameStart = async () => {
-    if (!userValue.accessToken) {
-      await guestMutate().then(() => mutateAsync());
-    } else {
-      await mutateAsync();
-    }
-  };
-
-  return { gameStart, data, isLoading };
 };
 
-export const useAppleGameEnd = () => {
-  const errorPopup = useError();
+export const useAppleGameSessionEnd = () => {
   const openToast = useToast();
-  const appleGameValue = useRecoilValue(appleGameState);
 
-  const { mutateAsync: checkGameMove, isLoading } = useMutation<
-    void,
-    AxiosError<ServerError>,
-    appleGameCheckMovePropsType
-  >(appleGameApi.checkGameMove, {
-    retry: 0,
-    onError: (error: AxiosError<ServerError>) => {
-      if (error.response) {
-        if (error.response.status >= 500) {
-          throw error;
-        }
-
-        errorPopup(error.response.status, error.response.data.messages);
-      }
+  const { mutateAsync: gameEndCheck } = useGenericMutation({
+    apiMethod: appleGameApi.gameEnd,
+    onSuccess: () => {
+      openToast(TOAST_MESSAGE.GAME_END, 'success');
     },
   });
 
-  const { mutateAsync: gameEndCheck } = useMutation<
-    void,
-    AxiosError<ServerError>,
-    appleGameEndPropsType
-  >(appleGameApi.gameEnd, {
-    retry: 0,
-    onError: (error: AxiosError<ServerError>) => {
-      if (error.response) {
-        if (error.response.status >= 500) {
-          throw error;
-        }
+  return { gameEndCheck };
+};
 
-        errorPopup(error.response.status, error.response.data.messages);
-      }
+export const useAppleGameCheck = () => {
+  const { gameEndCheck } = useAppleGameSessionEnd();
+  const appleGameValue = useRecoilValue(appleGameState);
+
+  const { mutate: checkGameMove } = useGenericMutation({
+    apiMethod: appleGameApi.checkGameMove,
+    onSuccess: async () => {
+      await gameEndCheck({
+        sessionId: appleGameValue.sessionId,
+      });
     },
   });
 
   const gameEnd = () => {
     const sessionId = appleGameValue.sessionId;
+    const coordinates = appleGameValue.coordinates;
 
-    if (appleGameValue.coordinates) {
-      checkGameMove({
-        sessionId: sessionId,
-        coordinates: appleGameValue.coordinates,
-      }).then(() => {
-        gameEndCheck({
-          sessionId: appleGameValue.sessionId,
-        }).then(() => {
-          openToast(TOAST_MESSAGE.GAME_END, 'success');
-        });
-      });
+    if (!sessionId || !coordinates) {
+      throw Error('게임의 상태가 올바르지 않아요!');
     }
+
+    checkGameMove({
+      sessionId: sessionId,
+      coordinates,
+    });
   };
 
-  return { gameEnd, isLoading, gameEndCheck };
+  return { gameEnd };
 };

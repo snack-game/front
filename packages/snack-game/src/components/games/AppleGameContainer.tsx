@@ -12,7 +12,7 @@ import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game';
 
 import {
-  useAppleGameEnd,
+  useAppleGameCheck,
   useAppleGameStart,
 } from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
@@ -38,26 +38,27 @@ const AppleGameContainer = () => {
   const appleGameManager = useMemo(() => new AppleGameManager(), []);
 
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-
-  const [timeRemaining, setTimeRemaining] = useState<number>(120);
-  const appleGameValue = useRecoilValue(appleGameState);
-  const [start, setStart] = useState<boolean>(false);
   const { clientWidth, clientHeight, clientLeft, clientTop } = useClientRect({
     canvasBaseRef,
   });
-  const { gameStart, data, isLoading } = useAppleGameStart();
-  const { gameEnd } = useAppleGameEnd();
+
+  const { gameEnd } = useAppleGameCheck();
+  const gameStart = useAppleGameStart();
+
+  const [start, setStart] = useState<boolean>(false);
+  const [timeRemaining, setTimeRemaining] = useState<number>(10);
+  const appleGameValue = useRecoilValue(appleGameState);
 
   const handleStartButton = () => {
-    gameStart().then(() => {
+    gameStart.mutateAsync().then(() => {
       setStart(true);
-      setTimeRemaining(120);
+      setTimeRemaining(10);
     });
   };
 
   const handleGameEnd = () => {
-    gameEnd();
     setStart(false);
+    gameEnd();
   };
 
   useEffect(() => {
@@ -81,14 +82,14 @@ const AppleGameContainer = () => {
         <p>{timeRemaining + '초'}</p>
       </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
-        {isLoading && <Loading />}
+        {gameStart.isLoading && <Loading />}
         {start && (
           <AppleGame
             clientWidth={clientWidth}
             clientHeight={clientHeight}
             clientLeft={clientLeft}
             clientTop={clientTop}
-            appleGameInfo={data}
+            appleGameInfo={gameStart.data}
             drag={drag}
             appleGameManager={appleGameManager}
           />
