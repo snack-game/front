@@ -9,7 +9,6 @@ export interface FallbackProps {
 interface ErrorBoundaryProps {
   fallback: ComponentType<FallbackProps>;
   onReset?: () => void;
-  message?: string;
 }
 
 interface ErrorBoundaryState {
@@ -46,7 +45,7 @@ class ErrorBoundary extends Component<
         <FallbackComponent
           error={this.state.error}
           resetErrorBoundary={this.resetErrorBoundary}
-          message={this.props.message}
+          message={this.state.error.message}
         />
       );
     }

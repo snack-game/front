@@ -11,14 +11,10 @@ interface QueryBoundaryProps {
   message?: string;
 }
 
-const QueryBoundary = ({
-  children,
-  errorFallback,
-  message = '오류가 발생했어요',
-}: QueryBoundaryProps) => {
+const QueryBoundary = ({ children, errorFallback }: QueryBoundaryProps) => {
   const { reset } = useQueryErrorResetBoundary();
   return (
-    <ErrorBoundary fallback={errorFallback} onReset={reset} message={message}>
+    <ErrorBoundary fallback={errorFallback} onReset={reset}>
       <Suspense fallback={<Loading type={'component'} />}>{children}</Suspense>
     </ErrorBoundary>
   );
