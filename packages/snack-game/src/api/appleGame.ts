@@ -18,7 +18,12 @@ const appleGameApi = {
     Accept: 'application/json',
   },
 
-  gameStart: async (): Promise<appleGameStateType> => {
+  gameStart: async (
+    accessToken: string | void,
+  ): Promise<appleGameStateType> => {
+    if (accessToken)
+      api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
     const { data } = await api.post(appleGameApi.endPoint.game);
 
     return {

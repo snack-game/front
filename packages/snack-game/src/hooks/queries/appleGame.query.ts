@@ -1,24 +1,46 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import appleGameApi from '@api/appleGame';
+import { userState } from '@utils/atoms/auth';
 import { appleGameState } from '@utils/atoms/game';
 import { appleGameStateType } from '@utils/types/game.type';
+import { AuthType } from '@utils/types/member.type';
 
 import { TOAST_MESSAGE } from '@constants/toast.constant';
+import { useMemberGuest } from '@hooks/queries/members.query';
 import useGenericMutation from '@hooks/useGenericMutation';
 import useToast from '@hooks/useToast';
 
 export const useAppleGameStart = () => {
   const openToast = useToast();
+  const userStateValue = useRecoilValue(userState);
+  const guestMutation = useMemberGuest();
   const setAppleGameState = useSetRecoilState(appleGameState);
 
-  return useGenericMutation<void, appleGameStateType>({
+  const gameStartMutation = useGenericMutation<
+    string | void,
+    appleGameStateType
+  >({
     apiMethod: appleGameApi.gameStart,
     onSuccess: (data: appleGameStateType) => {
       setAppleGameState(data);
       openToast(TOAST_MESSAGE.GAME_START, 'success');
     },
   });
+
+  const gameStart = async () => {
+    if (!userStateValue.accessToken) {
+      await guestMutation
+        .mutateAsync()
+        .then(async ({ accessToken }: AuthType) => {
+          await gameStartMutation.mutateAsync(accessToken);
+        });
+    } else {
+      await gameStartMutation.mutateAsync();
+    }
+  };
+
+  return { gameStart, gameStartMutation };
 };
 
 export const useAppleGameSessionEnd = () => {

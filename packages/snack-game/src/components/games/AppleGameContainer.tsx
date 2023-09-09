@@ -43,16 +43,16 @@ const AppleGameContainer = () => {
   });
 
   const { gameEnd } = useAppleGameCheck();
-  const gameStart = useAppleGameStart();
+  const { gameStart, gameStartMutation } = useAppleGameStart();
 
   const [start, setStart] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number>(10);
+  const [timeRemaining, setTimeRemaining] = useState<number>(120);
   const appleGameValue = useRecoilValue(appleGameState);
 
   const handleStartButton = () => {
-    gameStart.mutateAsync().then(() => {
+    gameStart().then(() => {
       setStart(true);
-      setTimeRemaining(10);
+      setTimeRemaining(120);
     });
   };
 
@@ -82,14 +82,14 @@ const AppleGameContainer = () => {
         <p>{timeRemaining + '초'}</p>
       </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
-        {gameStart.isLoading && <Loading />}
+        {gameStartMutation.isLoading && <Loading />}
         {start && (
           <AppleGame
             clientWidth={clientWidth}
             clientHeight={clientHeight}
             clientLeft={clientLeft}
             clientTop={clientTop}
-            appleGameInfo={gameStart.data}
+            appleGameInfo={gameStartMutation.data}
             drag={drag}
             appleGameManager={appleGameManager}
           />
