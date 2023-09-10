@@ -33,8 +33,19 @@ const Header = () => {
         <span>Snack Game</span>
       </Styled.Title>
       <Styled.Nav>
+        <Link to={PATH.BLOG}>
+          <Button
+            content={'블로그'}
+            size={'small'}
+            color={theme.colors.primaryButton}
+          />
+        </Link>
         <Link to={PATH.BOARD}>
-          <Button content={'리더보드'} size={'small'} />
+          <Button
+            content={'리더보드'}
+            size={'small'}
+            color={theme.colors.darkYellow}
+          />
         </Link>
         {userInfo.accessToken ? (
           <>
@@ -44,17 +55,16 @@ const Header = () => {
               content={'로그아웃'}
               size={'small'}
               onClick={handleLogout}
+              color={theme.colors.darkBrown}
             />
           </>
         ) : (
           <>
             <Link to={PATH.AUTH}>
               <Button
-                content={'랭킹 등록하기!'}
+                content={'로그인!'}
                 size={'small'}
-                color={theme.colors.background}
-                text={'black'}
-                border={true}
+                color={theme.colors.lightGreen}
               />
             </Link>
           </>

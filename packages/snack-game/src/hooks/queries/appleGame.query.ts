@@ -46,7 +46,7 @@ export const useAppleGameStart = () => {
 export const useAppleGameSessionEnd = () => {
   const openToast = useToast();
 
-  const { mutateAsync: gameEndCheck } = useGenericMutation({
+  const gameEndCheck = useGenericMutation({
     apiMethod: appleGameApi.gameEnd,
     onSuccess: () => {
       openToast(TOAST_MESSAGE.GAME_END, 'success');
@@ -60,10 +60,10 @@ export const useAppleGameCheck = () => {
   const { gameEndCheck } = useAppleGameSessionEnd();
   const appleGameValue = useRecoilValue(appleGameState);
 
-  const { mutate: checkGameMove } = useGenericMutation({
+  const checkGameMove = useGenericMutation({
     apiMethod: appleGameApi.checkGameMove,
     onSuccess: async () => {
-      await gameEndCheck({
+      await gameEndCheck.mutateAsync({
         sessionId: appleGameValue.sessionId,
       });
     },
@@ -77,7 +77,7 @@ export const useAppleGameCheck = () => {
       throw Error('게임의 상태가 올바르지 않아요!');
     }
 
-    checkGameMove({
+    checkGameMove.mutate({
       sessionId: sessionId,
       coordinates,
     });

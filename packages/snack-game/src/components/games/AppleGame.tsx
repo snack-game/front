@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-
-import { useSetRecoilState } from 'recoil';
+import React from 'react';
 
 import { Apple } from '@modules/apple-game/apple';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
-import { appleGameState } from '@utils/atoms/game';
-import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
+import { appleGameStateType } from '@utils/types/game.type';
 
+import { useAppleGameLogic } from '@hooks/game/useAppleGame';
 import useCanvas from '@hooks/useCanvas';
 
 interface AppleGameProps {
@@ -29,10 +27,6 @@ const AppleGame = ({
   drag,
   appleGameManager,
 }: AppleGameProps) => {
-  const [apples, setApples] = useState<Apple[]>([]);
-  const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-  const setAppleGameState = useSetRecoilState(appleGameState);
-
   const animation = (ctx: CanvasRenderingContext2D) => {
     // background
     ctx.clearRect(0, 0, clientWidth, clientHeight);
@@ -66,68 +60,16 @@ const AppleGame = ({
     animation,
   });
 
-  useEffect(() => {
-    appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
-  }, [canvasRef.current, clientWidth, clientHeight]);
-
-  useEffect(() => {
-    if (appleGameInfo) {
-      setApples(
-        appleGameManager.generateApples(
-          clientWidth,
-          clientHeight,
-          appleGameInfo.apples,
-        ),
-      );
-    }
-  }, []);
-
-  const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    switch (event.type) {
-      case 'mousedown': {
-        drag.onMouseDown(event, clientLeft, clientTop);
-        break;
-      }
-
-      case 'mouseup': {
-        drag.onMouseUp();
-
-        const { newApples, removedApples, isGolden, getScore, score } =
-          appleGameManager.checkApplesInDragArea(
-            apples,
-            drag.startX,
-            drag.startY,
-            drag.currentX,
-            drag.currentY,
-          );
-
-        if (getScore) {
-          const removedAppleCoordinates: appleGameMoveType[] =
-            removedApples.map((apple) => apple.coordinates);
-
-          setAppleGameState((prev: appleGameStateType) => ({
-            ...prev,
-            score: prev.score + score,
-            coordinates: [
-              ...(prev.coordinates || []),
-              { coordinates: removedAppleCoordinates },
-            ],
-          }));
-        }
-
-        setApples(newApples);
-        setRemovedApples(removedApples);
-
-        // if (isGolden) setApples(appleGameManager.generateApples(rect));
-        break;
-      }
-
-      case 'mousemove': {
-        drag.onMouseMove(event, clientLeft, clientTop);
-        break;
-      }
-    }
-  };
+  const { handleMouseEvent, setRemovedApples, removedApples, apples } =
+    useAppleGameLogic({
+      clientWidth,
+      clientHeight,
+      clientLeft,
+      clientTop,
+      appleGameInfo,
+      drag,
+      appleGameManager,
+    });
 
   return (
     <canvas

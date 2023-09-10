@@ -21,10 +21,9 @@ const useGenericMutation = <TArgs = unknown, TResult = unknown>({
     retry: 0,
     onError: (error: AxiosError<ServerError>) => {
       if (error.response) {
-        if (error.response.status >= 500) {
-          throw error;
-        }
         errorPopup(error.response.status, error.response.data.messages);
+
+        throw error;
       }
     },
     onSettled,

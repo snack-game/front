@@ -46,7 +46,7 @@ export const Button = styled.button<StyledButtonProps>`
 
   &:hover {
     background-color: ${(props) =>
-      props.color ? darken(0.1, props.color) : theme.colors.primaryButtonHover};
+      darken(0.1, props.color || theme.colors.primaryButtonHover)};
   }
 
   &:disabled {
