@@ -85,3 +85,15 @@ export const useAppleGameCheck = () => {
 
   return { gameEnd };
 };
+
+export const useAppleGameRefresh = () => {
+  const openToast = useToast();
+  const setAppleGameState = useSetRecoilState(appleGameState);
+
+  return useGenericMutation<number, appleGameStateType>({
+    apiMethod: appleGameApi.gameRefresh,
+    onSuccess: (data: appleGameStateType) => {
+      setAppleGameState(data);
+    },
+  });
+};

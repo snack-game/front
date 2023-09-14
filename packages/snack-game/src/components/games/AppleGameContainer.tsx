@@ -13,6 +13,7 @@ import { appleGameState } from '@utils/atoms/game';
 
 import {
   useAppleGameCheck,
+  useAppleGameRefresh,
   useAppleGameStart,
 } from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
@@ -27,10 +28,11 @@ const AppleGameWrapper = styled.div`
 
 const GameHUD = styled.div`
   width: 80%;
-  height: 2rem;
+  height: 3rem;
   display: flex;
   margin: auto;
   justify-content: space-around;
+  align-items: center;
 `;
 
 const AppleGameContainer = () => {
@@ -44,6 +46,7 @@ const AppleGameContainer = () => {
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
+  const gameRefresh = useAppleGameRefresh();
 
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
@@ -59,6 +62,14 @@ const AppleGameContainer = () => {
   const handleGameEnd = () => {
     setStart(false);
     gameEnd();
+  };
+
+  const handleRefresh = () => {
+    setStart(false);
+    gameRefresh.mutateAsync(appleGameValue.sessionId).then(() => {
+      setStart(true);
+      setTimeRemaining(120);
+    });
   };
 
   useEffect(() => {
@@ -77,10 +88,18 @@ const AppleGameContainer = () => {
 
   return (
     <>
-      <GameHUD>
-        <p>{appleGameValue.score + '점'}</p>
-        <p>{timeRemaining + '초'}</p>
-      </GameHUD>
+      {start && (
+        <GameHUD>
+          <p>{appleGameValue.score + '점'}</p>
+          <p>{timeRemaining + '초'}</p>
+          <Button
+            content={'새로고침'}
+            wrapper={css('margin: 0;')}
+            size={'small'}
+            onClick={handleRefresh}
+          ></Button>
+        </GameHUD>
+      )}
       <AppleGameWrapper ref={canvasBaseRef}>
         {gameStartMutation.isLoading && <Loading />}
         {start && (

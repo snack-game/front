@@ -11,6 +11,7 @@ const appleGameApi = {
     game: '/games/1',
     checkMove: '/sessions',
     gameEnd: '/sessions',
+    gameRefresh: '/sessions',
   },
 
   headers: {
@@ -45,6 +46,18 @@ const appleGameApi = {
 
   gameEnd: async ({ sessionId }: appleGameEndPropsType): Promise<void> => {
     await api.put(`${appleGameApi.endPoint.gameEnd}/${sessionId}/end`);
+  },
+
+  gameRefresh: async (sessionId: number): Promise<appleGameStateType> => {
+    await api.delete(`${appleGameApi.endPoint.gameRefresh}/${sessionId}/board`);
+
+    const { data } = await api.post(appleGameApi.endPoint.game);
+
+    return {
+      apples: data.apples,
+      sessionId: data.sessionId,
+      score: data.score,
+    };
   },
 };
 
