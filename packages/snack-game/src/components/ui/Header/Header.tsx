@@ -40,7 +40,7 @@ const Header = () => {
             color={theme.colors.primaryButton}
           />
         </Link>
-        <Link to={PATH.BOARD}>
+        <Link to={PATH.RANKING}>
           <Button
             content={'리더보드'}
             size={'small'}

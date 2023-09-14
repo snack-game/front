@@ -7,7 +7,7 @@ const PATH = {
 
   APPLE_GAME: '/game/apple-game',
 
-  BOARD: '/board',
+  RANKING: '/ranking',
 
   BLOG: 'https://jumbled-droplet-70f.notion.site/f3aa70fb65624792bd4ed7ecdb082aff?v=b8e12a036e824f06b1de001f0385d47c&pvs=4',
 };

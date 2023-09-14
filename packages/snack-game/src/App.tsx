@@ -23,6 +23,8 @@ const AuthPage = lazy(() => import('@pages/auth/AuthPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
+const RankingPage = lazy(() => import('@pages/board/RankingPage'));
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -43,6 +45,9 @@ const App = () => {
 
                   {/*Game*/}
                   <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+
+                  {/*RANKING*/}
+                  <Route path={PATH.RANKING} element={<RankingPage />} />
                 </Routes>
               </Suspense>
             </ErrorBoundary>
