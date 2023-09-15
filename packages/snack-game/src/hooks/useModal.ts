@@ -1,13 +1,27 @@
-import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+
+import { modalState } from '@utils/atoms/modal.atom';
+import { ModalType } from '@utils/types/common.type';
 
 const useModal = () => {
-  const [isShowing, setIsShowing] = useState(false);
+  const setModalState = useSetRecoilState(modalState);
 
-  const toggleModal = () => {
-    setIsShowing(!isShowing);
+  const openModal = ({ title, description, children }: ModalType) => {
+    setModalState(() => ({
+      title,
+      description,
+      children,
+      open: true,
+    }));
   };
 
-  return { toggleModal, isShowing };
+  const closeModal = () => {
+    setModalState(() => ({
+      open: false,
+    }));
+  };
+
+  return { openModal, closeModal };
 };
 
 export default useModal;

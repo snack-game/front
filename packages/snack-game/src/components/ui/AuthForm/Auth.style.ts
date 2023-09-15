@@ -7,18 +7,7 @@ export const Form = styled.form`
   padding: 2rem;
   margin-top: 2.5rem;
   flex-direction: column;
-  border-radius: 0.5rem;
   width: 100%;
-  background-color: ${theme.colors.background};
-  border: 1px solid ${theme.colors.boxBorder};
-
-  @media (min-width: 768px) {
-    margin-top: 0;
-    width: 50%;
-  }
-  @media (min-width: 1024px) {
-    width: 33.333333%;
-  }
 `;
 
 export const Title = styled.h2`
@@ -40,4 +29,9 @@ export const Description = styled.p`
   line-height: 1rem;
   white-space: pre-line;
   color: ${theme.colors.description};
+`;
+
+export const AuthTypeContainer = styled.div`
+  width: fit-content;
+  margin: 1rem auto 0 auto;
 `;

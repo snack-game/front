@@ -8,4 +8,6 @@ export const ATOM_KEY = {
   APPLE_GAME: 'appleGameState',
   APPLE_GAME_SESSION: 'appleGameSessionState',
   RESET_APPLE_GAME: 'resetAppleGameState',
+
+  MODAL: 'modalState',
 };

@@ -9,6 +9,7 @@ import RecoilizeDebugger from 'recoilize';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading';
+import Modal from '@components/common/Modal/Modal';
 import Toast from '@components/common/Toast';
 import errorPage from '@pages/error/ErrorPage';
 import theme from '@utils/theme';
@@ -19,11 +20,9 @@ import { globalStyles } from './App.style';
 
 const MainPage = lazy(() => import('@pages/MainPage'));
 
-const AuthPage = lazy(() => import('@pages/auth/AuthPage'));
-
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
-const RankingPage = lazy(() => import('@pages/board/RankingPage'));
+const RankingPage = lazy(() => import('@pages/ranking/RankingPage'));
 
 const queryClient = new QueryClient();
 
@@ -40,9 +39,6 @@ const App = () => {
                 <Routes>
                   <Route path={PATH.HOME} element={<MainPage />} />
 
-                  {/*Auth*/}
-                  <Route path={PATH.AUTH} element={<AuthPage />} />
-
                   {/*Game*/}
                   <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
@@ -50,6 +46,7 @@ const App = () => {
                   <Route path={PATH.RANKING} element={<RankingPage />} />
                 </Routes>
               </Suspense>
+              <Modal />
             </ErrorBoundary>
             <Toast />
           </ThemeProvider>

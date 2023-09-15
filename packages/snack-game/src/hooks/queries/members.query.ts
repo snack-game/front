@@ -1,13 +1,12 @@
 import { useSetRecoilState } from 'recoil';
 
 import membersApi from '@api/members';
-import { userState } from '@utils/atoms/auth';
+import { userState } from '@utils/atoms/auth.atom';
 import { AuthType, MemberType } from '@utils/types/member.type';
 
-import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useGenericMutation from '@hooks/useGenericMutation';
-import { useInternalRouter } from '@hooks/useInternalRouter';
+import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 interface useMemberAuthProps {
@@ -15,10 +14,10 @@ interface useMemberAuthProps {
   message: string;
 }
 
-const useMemberOnSuccess = (message: string, redirect?: string) => {
+const useMemberOnSuccess = (message: string) => {
   const openToast = useToast();
   const setUserState = useSetRecoilState(userState);
-  const router = useInternalRouter();
+  const { closeModal } = useModal();
 
   return ({ accessToken, member }: AuthType) => {
     setUserState(() => ({
@@ -28,12 +27,12 @@ const useMemberOnSuccess = (message: string, redirect?: string) => {
       accessToken,
     }));
     openToast(message, 'success');
-    if (redirect) router.push(redirect);
+    closeModal();
   };
 };
 
 export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
-  const onSuccess = useMemberOnSuccess(message, PATH.HOME);
+  const onSuccess = useMemberOnSuccess(message);
   return useGenericMutation<MemberType, AuthType>({
     apiMethod,
     onSuccess,

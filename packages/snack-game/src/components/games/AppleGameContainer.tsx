@@ -9,7 +9,7 @@ import Loading from '@components/common/Loading';
 import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
-import { appleGameState } from '@utils/atoms/game';
+import { appleGameState } from '@utils/atoms/game.atom';
 
 import {
   useAppleGameCheck,

@@ -5,20 +5,27 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import LogoImage from '@assets/images/logo.png';
 import Button from '@components/common/Button/Button';
+import AuthContainer from '@components/ui/AuthForm/AuthContainer';
 import * as Styled from '@components/ui/Header/Header.style';
-import { resetUserState, userState } from '@utils/atoms/auth';
+import { resetUserState, userState } from '@utils/atoms/auth.atom';
 import theme from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import { useInternalRouter } from '@hooks/useInternalRouter';
+import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 const Header = () => {
   const userInfo = useRecoilValue(userState);
   const resetUser = useResetRecoilState(resetUserState);
+  const { openModal } = useModal();
   const { replace } = useInternalRouter();
   const openToast = useToast();
+
+  const handleLogin = () => {
+    openModal({ children: <AuthContainer /> });
+  };
 
   const handleLogout = () => {
     resetUser();
@@ -60,13 +67,12 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link to={PATH.AUTH}>
-              <Button
-                content={'로그인!'}
-                size={'small'}
-                color={theme.colors.lightGreen}
-              />
-            </Link>
+            <Button
+              content={'로그인!'}
+              size={'small'}
+              color={theme.colors.lightGreen}
+              onClick={handleLogin}
+            />
           </>
         )}
       </Styled.Nav>

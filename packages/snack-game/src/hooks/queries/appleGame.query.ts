@@ -1,8 +1,8 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import appleGameApi from '@api/appleGame';
-import { userState } from '@utils/atoms/auth';
-import { appleGameState } from '@utils/atoms/game';
+import { userState } from '@utils/atoms/auth.atom';
+import { appleGameState } from '@utils/atoms/game.atom';
 import { appleGameStateType } from '@utils/types/game.type';
 import { AuthType } from '@utils/types/member.type';
 
@@ -87,7 +87,6 @@ export const useAppleGameCheck = () => {
 };
 
 export const useAppleGameRefresh = () => {
-  const openToast = useToast();
   const setAppleGameState = useSetRecoilState(appleGameState);
 
   return useGenericMutation<number, appleGameStateType>({
