@@ -8,7 +8,7 @@ import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
 import { useMemberRegister } from '@hooks/queries/members.query';
 import useForm from '@hooks/useForm';
 
-import * as Styled from './Form.style';
+import * as Styled from './Auth.style';
 
 const RegisterForm = () => {
   const registerMutate = useMemberRegister();

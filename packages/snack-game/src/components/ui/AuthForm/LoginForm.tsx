@@ -5,7 +5,7 @@ import { NAME_REGEXP } from '@constants/regexp.constant';
 import { useMemberLogin } from '@hooks/queries/members.query';
 import useForm from '@hooks/useForm';
 
-import * as Styled from './Form.style';
+import * as Styled from './Auth.style';
 
 const LoginForm = () => {
   const loginMutate = useMemberLogin();

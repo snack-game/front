@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { Apple } from '@modules/apple-game/apple';
 import { Drag } from '@modules/apple-game/drag';
-import { appleGameState } from '@utils/atoms/game';
+import { appleGameState } from '@utils/atoms/game.atom';
 import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
 
 interface AppleGameProps {

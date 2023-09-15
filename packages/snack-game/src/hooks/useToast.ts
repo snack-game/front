@@ -1,7 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 
-import { toastState } from '@utils/atoms/toast';
-import { ToastType } from '@utils/types/toast.type';
+import { toastState } from '@utils/atoms/toast.atom';
+import { ToastType } from '@utils/types/common.type';
 
 const useToast = () => {
   const setToastState = useSetRecoilState(toastState);

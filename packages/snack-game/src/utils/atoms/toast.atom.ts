@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-import { ToastType } from '@utils/types/toast.type';
+import { ToastType } from '@utils/types/common.type';
 
 import { ATOM_KEY } from '@constants/atom.constant';
 import { TOAST_ID } from '@constants/toast.constant';

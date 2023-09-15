@@ -2,7 +2,7 @@ import { toast, Toaster } from 'react-hot-toast';
 
 import { useRecoilValue } from 'recoil';
 
-import { toastState } from '@utils/atoms/toast';
+import { toastState } from '@utils/atoms/toast.atom';
 
 import useDebounce from '@hooks/useDebounce';
 
