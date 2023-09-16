@@ -18,7 +18,7 @@ import PATH from '@constants/path.constant';
 
 import { globalStyles } from './App.style';
 
-const MainPage = lazy(() => import('@pages/MainPage'));
+const MainPage = lazy(() => import('@pages/main/MainPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 

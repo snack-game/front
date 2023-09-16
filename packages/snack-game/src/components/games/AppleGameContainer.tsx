@@ -88,18 +88,17 @@ const AppleGameContainer = () => {
 
   return (
     <>
-      {start && (
-        <GameHUD>
-          <p>{appleGameValue.score + '점'}</p>
-          <p>{timeRemaining + '초'}</p>
-          <Button
-            content={'새로고침'}
-            wrapper={css('margin: 0;')}
-            size={'small'}
-            onClick={handleRefresh}
-          ></Button>
-        </GameHUD>
-      )}
+      <GameHUD>
+        <p>{appleGameValue.score + '점'}</p>
+        <p>{timeRemaining + '초'}</p>
+        <Button
+          content={'새로고침'}
+          wrapper={css('margin: 0;')}
+          size={'small'}
+          onClick={handleRefresh}
+          disabled={!start}
+        ></Button>
+      </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
         {gameStartMutation.isLoading && <Loading />}
         {start && (
