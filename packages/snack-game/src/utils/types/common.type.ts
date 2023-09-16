@@ -1,3 +1,5 @@
+import { AnimationItem } from 'lottie-web';
+
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 
 export interface ModalType {
@@ -6,3 +8,15 @@ export interface ModalType {
   open?: boolean;
   children?: React.ReactNode;
 }
+
+export type LottieOptionTypes = {
+  loop?: boolean;
+  autoplay?: boolean;
+  assetsPath?: string;
+  name?: string;
+  animationData: object;
+  controller?: React.MutableRefObject<AnimationItem | null>;
+  stopFrame?: number;
+  playOnHover?: boolean;
+  playOnClick?: boolean;
+};

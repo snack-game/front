@@ -1,19 +1,26 @@
 import { Helmet } from 'react-helmet-async';
 
-import Lottie from 'lottie-react';
-
 import AppleGameLottie from '@assets/lottie/apple-game.json';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button/Button';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import TeamInfo from '@components/ui/TeamInfo/TeamInfo';
+import { LottieOptionTypes } from '@utils/types/common.type';
 
 import PATH from '@constants/path.constant';
 import { useInternalRouter } from '@hooks/useInternalRouter';
+import useLottie from '@hooks/useLottie';
 
 import * as Styled from './MainPage.style';
 
+const lottieOptions: LottieOptionTypes = {
+  animationData: AppleGameLottie,
+  autoplay: true,
+  loop: true,
+};
+
 const MainPage = () => {
+  const { ref } = useLottie(lottieOptions);
   const { push } = useInternalRouter();
 
   const handleAppleGameEnter = () => {
@@ -30,7 +37,7 @@ const MainPage = () => {
       <PageContainer>
         <Styled.AppleGamePageContainer>
           <Styled.AppleGamePageLeft>
-            <Lottie animationData={AppleGameLottie} />
+            <div ref={ref} />
           </Styled.AppleGamePageLeft>
           <Styled.AppleGamePageRight>
             <h1>사과게임</h1>

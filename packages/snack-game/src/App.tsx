@@ -50,8 +50,8 @@ const App = () => {
             </ErrorBoundary>
             <Toast />
           </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </RecoilRoot>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );

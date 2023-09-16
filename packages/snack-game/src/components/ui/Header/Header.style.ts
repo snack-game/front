@@ -42,7 +42,6 @@ export const Title = styled.a`
 
 export const Nav = styled.nav`
   display: flex;
-  line-height: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
