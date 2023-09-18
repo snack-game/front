@@ -45,12 +45,13 @@ export const Nav = styled.nav`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 1.5rem;
 
   @media (min-width: 768px) {
     margin-left: auto;
   }
 
-  & > a {
-    margin-right: 2rem;
+  & > p {
+    font-size: 1.25rem;
   }
 `;

@@ -4,12 +4,15 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 
+import RefreshLottie from '@assets/lottie/refresh.json';
 import Button from '@components/common/Button/Button';
 import Loading from '@components/common/Loading';
 import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game.atom';
+import theme from '@utils/theme';
+import { LottieOptionTypes } from '@utils/types/common.type';
 
 import {
   useAppleGameCheck,
@@ -17,6 +20,7 @@ import {
   useAppleGameStart,
 } from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
+import useLottie from '@hooks/useLottie';
 
 const AppleGameWrapper = styled.div`
   margin-left: auto;
@@ -33,7 +37,13 @@ const GameHUD = styled.div`
   margin: auto;
   justify-content: space-around;
   align-items: center;
+  //background-color: ${theme.colors.primaryButton};
 `;
+
+const lottieOptions: LottieOptionTypes = {
+  animationData: RefreshLottie,
+  playOnHover: true,
+};
 
 const AppleGameContainer = () => {
   const drag = useMemo(() => new Drag(), []);
@@ -47,10 +57,11 @@ const AppleGameContainer = () => {
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
   const gameRefresh = useAppleGameRefresh();
+  const appleGameValue = useRecoilValue(appleGameState);
+  const { ref } = useLottie(lottieOptions);
 
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
-  const appleGameValue = useRecoilValue(appleGameState);
 
   const handleStartButton = () => {
     gameStart().then(() => {
@@ -65,6 +76,8 @@ const AppleGameContainer = () => {
   };
 
   const handleRefresh = () => {
+    if (!start) return;
+
     setStart(false);
     gameRefresh.mutateAsync(appleGameValue.sessionId).then(() => {
       setStart(true);
@@ -91,13 +104,14 @@ const AppleGameContainer = () => {
       <GameHUD>
         <p>{appleGameValue.score + '점'}</p>
         <p>{timeRemaining + '초'}</p>
-        <Button
-          content={'새로고침'}
-          wrapper={css('margin: 0;')}
-          size={'small'}
+        <div
+          ref={ref}
           onClick={handleRefresh}
-          disabled={!start}
-        ></Button>
+          css={css({
+            width: '2.5rem',
+            height: '2.5rem',
+          })}
+        />
       </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
         {gameStartMutation.isLoading && <Loading />}

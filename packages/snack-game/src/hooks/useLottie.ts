@@ -14,7 +14,6 @@ const useLottie = (options: LottieOptionTypes) => {
     controller,
     stopFrame,
     playOnHover,
-    playOnClick,
   } = options;
 
   const container = useRef<HTMLDivElement | null>(null);
@@ -70,7 +69,6 @@ const useLottie = (options: LottieOptionTypes) => {
     name,
     animationData,
     playOnHover,
-    playOnClick,
     stopFrame,
   ]);
 

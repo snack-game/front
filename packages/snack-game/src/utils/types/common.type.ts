@@ -18,5 +18,5 @@ export type LottieOptionTypes = {
   controller?: React.MutableRefObject<AnimationItem | null>;
   stopFrame?: number;
   playOnHover?: boolean;
-  playOnClick?: boolean;
+  playOnToggle?: boolean;
 };

@@ -6,11 +6,12 @@ import * as Styled from './Button.style';
 
 interface ButtonProps {
   className?: string;
-  content: string;
+  content?: string;
   onClick?: () => void;
   wrapper?: SerializedStyles;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  children?: React.ReactNode;
 }
 
 const Button = ({
@@ -23,6 +24,7 @@ const Button = ({
   show = true,
   color,
   text = 'white',
+  children,
   border = false,
 }: ButtonProps & Styled.StyledButtonProps) => {
   return (
@@ -38,6 +40,7 @@ const Button = ({
         border={border}
       >
         {content}
+        {children}
       </Styled.Button>
     </Styled.ButtonContainer>
   );

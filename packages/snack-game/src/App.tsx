@@ -47,8 +47,8 @@ const App = () => {
                 </Routes>
               </Suspense>
               <Modal />
+              <Toast />
             </ErrorBoundary>
-            <Toast />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </RecoilRoot>

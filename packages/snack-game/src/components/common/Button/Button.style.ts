@@ -18,7 +18,7 @@ export const Button = styled.button<StyledButtonProps>`
         return '0.25rem 0.75rem';
       case 'large':
         return '0.75rem 2.25rem';
-      default: // medium
+      default:
         return '0.5rem 1.5rem';
     }
   }};
@@ -29,7 +29,7 @@ export const Button = styled.button<StyledButtonProps>`
         return '0.875rem';
       case 'large':
         return '1.25rem';
-      default: // medium
+      default:
         return '1.125rem';
     }
   }};
