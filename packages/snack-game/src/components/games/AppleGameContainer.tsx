@@ -11,7 +11,6 @@ import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game.atom';
-import theme from '@utils/theme';
 import { LottieOptionTypes } from '@utils/types/common.type';
 
 import {
@@ -37,7 +36,6 @@ const GameHUD = styled.div`
   margin: auto;
   justify-content: space-around;
   align-items: center;
-  //background-color: ${theme.colors.primaryButton};
 `;
 
 const lottieOptions: LottieOptionTypes = {

@@ -45,12 +45,12 @@ const Menu = () => {
         wrapper={css({ margin: '0.2rem' })}
       />
       <DropDownContainer>
-        <DropDownItem>
-          <Link to={PATH.BLOG}>블로그</Link>
-        </DropDownItem>
-        <DropDownItem>
-          <Link to={PATH.RANKING}>리더보드</Link>
-        </DropDownItem>
+        <Link to={PATH.BLOG}>
+          <DropDownItem>블로그</DropDownItem>
+        </Link>
+        <Link to={PATH.RANKING}>
+          <DropDownItem>리더보드</DropDownItem>
+        </Link>
         <DropDownItem>
           {userInfo.accessToken ? (
             <div onClick={handleLogout}>로그아웃</div>
