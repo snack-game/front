@@ -6,7 +6,7 @@ import rankingApi from '@api/ranking';
 import { RankingType } from '@utils/types/common.type';
 
 export const useGetTotalRanking = () => {
-  const { isLoading, data } = useQuery<RankingType[], AxiosError>(
+  const { data } = useQuery<RankingType[], AxiosError>(
     'totalRanking',
     rankingApi.totalRanking,
     {
@@ -14,11 +14,11 @@ export const useGetTotalRanking = () => {
     },
   );
 
-  return { isLoading, data };
+  return data;
 };
 
 export const useGetUserRanking = () => {
-  const { isLoading, data } = useQuery<RankingType, AxiosError>(
+  const { data } = useQuery<RankingType, AxiosError>(
     'userRanking',
     rankingApi.userRanking,
     {
@@ -26,5 +26,5 @@ export const useGetUserRanking = () => {
     },
   );
 
-  return { isLoading, data };
+  return data;
 };

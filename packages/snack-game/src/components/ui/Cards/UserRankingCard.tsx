@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 
 import PersonImage from '@assets/images/person.png';
 import ThumbnailCard from '@components/common/Card/ThumbnailCard/ThumbnailCard';
-import Loading from '@components/common/Loading';
 
 import { useGetUserRanking } from '@hooks/queries/ranking.query';
 
@@ -15,26 +14,22 @@ const UserRankingCardContainer = styled.div`
 `;
 
 const UserRankingCard = () => {
-  const { isLoading, data } = useGetUserRanking();
+  const userRanking = useGetUserRanking();
 
   return (
     <UserRankingCardContainer>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <ThumbnailCard
-          imgSrc={PersonImage}
-          title={data?.owner.name + ' 님'}
-          content={
-            '최고점수: ' +
-            data?.score +
-            '점!\n' +
-            '랭킹: ' +
-            data?.ranking +
-            '위!'
-          }
-        ></ThumbnailCard>
-      )}
+      <ThumbnailCard
+        imgSrc={PersonImage}
+        title={userRanking?.owner.name + ' 님'}
+        content={
+          '최고점수: ' +
+          userRanking?.score +
+          '점!\n' +
+          '랭킹: ' +
+          userRanking?.ranking +
+          '위!'
+        }
+      ></ThumbnailCard>
     </UserRankingCardContainer>
   );
 };

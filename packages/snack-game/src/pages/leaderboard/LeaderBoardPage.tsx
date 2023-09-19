@@ -2,8 +2,8 @@ import { Helmet } from 'react-helmet-async';
 
 import styled from '@emotion/styled';
 
-import ErrorBoundary from '@components/base/ErrorBoundary';
 import PageContainer from '@components/base/PageContainer';
+import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
 import UserRankingCard from '@components/ui/Cards/UserRankingCard';
 import RankingTable from '@components/ui/RankingTable/RankingTable';
@@ -27,12 +27,12 @@ const LeaderBoardPage = () => {
       </Helmet>
       <PageContainer>
         <ContentContainer>
-          <ErrorBoundary fallback={RetryError}>
+          <QueryBoundary errorFallback={RetryError}>
             <UserRankingCard />
-          </ErrorBoundary>
-          <ErrorBoundary fallback={RetryError}>
+          </QueryBoundary>
+          <QueryBoundary errorFallback={RetryError}>
             <RankingTable />
-          </ErrorBoundary>
+          </QueryBoundary>
         </ContentContainer>
       </PageContainer>
     </>
