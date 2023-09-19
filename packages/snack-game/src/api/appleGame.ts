@@ -14,11 +14,6 @@ const appleGameApi = {
     gameRefresh: '/sessions',
   },
 
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-
   gameStart: async (
     accessToken: string | void,
   ): Promise<appleGameStateType> => {

@@ -4,6 +4,7 @@ import theme from '@utils/theme';
 
 export const FooterContainer = styled.div`
   width: 100%;
+  max-width: 1280px;
   display: flex;
   padding: 2rem 1.25rem;
   margin-left: auto;

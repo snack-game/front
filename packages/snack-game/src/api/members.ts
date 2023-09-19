@@ -9,10 +9,6 @@ const membersApi = {
 
     names: '/members/names',
   },
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
 
   login: async ({ name }: MemberType): Promise<AuthType> => {
     const { data } = await api.post(membersApi.endPoint.login, {

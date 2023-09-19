@@ -4,6 +4,7 @@ import theme from '@utils/theme';
 
 export const HeaderContainer = styled.div`
   width: 100%;
+  max-width: 1280px;
   display: flex;
   padding: 1.25rem;
   margin-left: auto;

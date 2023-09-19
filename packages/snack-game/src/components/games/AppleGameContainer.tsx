@@ -11,6 +11,7 @@ import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game.atom';
+import theme from '@utils/theme';
 import { LottieOptionTypes } from '@utils/types/common.type';
 
 import {
@@ -24,7 +25,7 @@ import useLottie from '@hooks/useLottie';
 const AppleGameWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
-  background-color: #ffedd5;
+  background-color: ${theme.colors.lightOrange};
   width: 80%;
   height: 80vh;
 `;

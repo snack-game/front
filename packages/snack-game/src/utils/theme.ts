@@ -9,6 +9,8 @@ const theme = {
     primaryButton: '#fb923c',
     primaryButtonHover: '#f97316',
 
+    lightOrange: '#ffedd5',
+
     lightGreen: '#22c55e',
     superRed: '#F24957',
     errorColor: '#EF6262',

@@ -20,3 +20,13 @@ export type LottieOptionTypes = {
   playOnHover?: boolean;
   playOnToggle?: boolean;
 };
+
+export type RankingType = {
+  ranking: number;
+  owner: {
+    id: number;
+    name: string;
+    group: string | null;
+  };
+  score: number;
+};
