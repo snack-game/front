@@ -8,6 +8,8 @@ import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game.atom';
 import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
 
+import useDebouncedCallback from '@hooks/useDebouncedCallback';
+
 interface AppleGameProps {
   clientWidth: number;
   clientHeight: number;
@@ -30,9 +32,15 @@ export const useAppleGameLogic = ({
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
   const setAppleGameState = useSetRecoilState(appleGameState);
+  const debouncedUpdate = useDebouncedCallback({
+    target: () =>
+      appleGameManager.updateApplePosition(clientWidth, clientHeight, apples),
+    delay: 300,
+  });
 
   useEffect(() => {
-    appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
+    // appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
+    debouncedUpdate();
   }, [clientWidth, clientHeight]);
 
   useEffect(() => {

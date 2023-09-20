@@ -18,7 +18,7 @@ export const HeaderContainer = styled.div`
   }
 `;
 
-export const Title = styled.a`
+export const Title = styled.div`
   display: flex;
   margin-bottom: 1rem;
   color: ${theme.colors.titleText};

@@ -30,32 +30,31 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <RecoilizeDebugger />
-          <ThemeProvider theme={theme}>
-            <ErrorBoundary fallback={errorPage}>
-              <Global styles={globalStyles} />
-              <Suspense fallback={<Loading type={'page'} />}>
-                <Routes>
-                  <Route path={PATH.HOME} element={<MainPage />} />
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <RecoilizeDebugger />
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary fallback={errorPage}>
+            <Global styles={globalStyles} />
+            <Suspense fallback={<Loading type={'page'} />}>
+              <Routes>
+                {/*Main*/}
+                <Route path={PATH.HOME} element={<MainPage />} />
 
-                  {/*Game*/}
-                  <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+                {/*Game*/}
+                <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
-                  {/*RANKING*/}
-                  <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
-                </Routes>
-              </Suspense>
-              <Modal />
-              <Toast />
-            </ErrorBoundary>
-          </ThemeProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </RecoilRoot>
-      </QueryClientProvider>
-    </>
+                {/*RANKING*/}
+                <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
+              </Routes>
+            </Suspense>
+            <Modal />
+            <Toast />
+          </ErrorBoundary>
+        </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </RecoilRoot>
+    </QueryClientProvider>
   );
 };
 
