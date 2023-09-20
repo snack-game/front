@@ -10,7 +10,7 @@ import RecoilizeDebugger from 'recoilize';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading';
 import Modal from '@components/common/Modal/Modal';
-import Toast from '@components/common/Toast';
+import Toast from '@components/ui/Toast/Toast';
 import errorPage from '@pages/error/ErrorPage';
 import theme from '@utils/theme';
 

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useRecoilValue } from 'recoil';
 
 import LogoImage from '@assets/images/logo.png';
@@ -12,10 +14,12 @@ const Header = () => {
 
   return (
     <Styled.HeaderContainer>
-      <Styled.Title href={PATH.HOME}>
-        <img src={LogoImage} alt={'로고 이미지'} />
-        <span>Snack Game</span>
-      </Styled.Title>
+      <Link to={PATH.HOME}>
+        <Styled.Title>
+          <img src={LogoImage} alt={'로고 이미지'} />
+          <span>Snack Game</span>
+        </Styled.Title>
+      </Link>
       <Styled.Nav>
         {userInfo.accessToken && <p>{userInfo.name} 님</p>}
         <Menu />

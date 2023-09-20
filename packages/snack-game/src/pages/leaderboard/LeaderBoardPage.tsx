@@ -1,12 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 
 import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
 import UserRankingCard from '@components/ui/Cards/UserRankingCard';
 import RankingTable from '@components/ui/RankingTable/RankingTable';
+import { userState } from '@utils/atoms/auth.atom';
 
 const ContentContainer = styled.div`
   display: flex;
@@ -20,6 +22,7 @@ const ContentContainer = styled.div`
 `;
 
 const LeaderBoardPage = () => {
+  const userStateValue = useRecoilValue(userState);
   return (
     <>
       <Helmet>
@@ -27,9 +30,11 @@ const LeaderBoardPage = () => {
       </Helmet>
       <PageContainer>
         <ContentContainer>
-          <QueryBoundary errorFallback={RetryError}>
-            <UserRankingCard />
-          </QueryBoundary>
+          {userStateValue.accessToken && (
+            <QueryBoundary errorFallback={RetryError}>
+              <UserRankingCard />
+            </QueryBoundary>
+          )}
           <QueryBoundary errorFallback={RetryError}>
             <RankingTable />
           </QueryBoundary>
