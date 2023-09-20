@@ -17,20 +17,24 @@ const UserRankingCard = () => {
   const userRanking = useGetUserRanking();
 
   return (
-    <UserRankingCardContainer>
-      <ThumbnailCard
-        imgSrc={PersonImage}
-        title={userRanking?.owner.name + ' 님'}
-        content={
-          '최고점수: ' +
-          userRanking?.score +
-          '점!\n' +
-          '랭킹: ' +
-          userRanking?.ranking +
-          '위!'
-        }
-      ></ThumbnailCard>
-    </UserRankingCardContainer>
+    <>
+      {userRanking?.ranking && (
+        <UserRankingCardContainer>
+          <ThumbnailCard
+            imgSrc={PersonImage}
+            title={userRanking?.owner.name + ' 님'}
+            content={
+              '최고점수: ' +
+              userRanking?.score +
+              '점!\n' +
+              '랭킹: ' +
+              userRanking?.ranking +
+              '위!'
+            }
+          ></ThumbnailCard>
+        </UserRankingCardContainer>
+      )}
+    </>
   );
 };
 

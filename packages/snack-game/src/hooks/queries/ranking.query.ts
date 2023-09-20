@@ -5,11 +5,14 @@ import { AxiosError } from 'axios';
 import rankingApi from '@api/ranking';
 import { RankingType } from '@utils/types/common.type';
 
+import { ServerError } from '@constants/api.constant';
+
 export const useGetTotalRanking = () => {
   const { data } = useQuery<RankingType[], AxiosError>(
     'totalRanking',
     rankingApi.totalRanking,
     {
+      retry: false,
       useErrorBoundary: true,
     },
   );
@@ -18,11 +21,18 @@ export const useGetTotalRanking = () => {
 };
 
 export const useGetUserRanking = () => {
-  const { data } = useQuery<RankingType, AxiosError>(
+  const { data } = useQuery<RankingType, AxiosError<ServerError>>(
     'userRanking',
     rankingApi.userRanking,
     {
-      useErrorBoundary: true,
+      retry: false,
+      onError: (error: AxiosError<ServerError>) => {
+        if (error.response?.status === 400) {
+          return;
+        }
+
+        throw error;
+      },
     },
   );
 

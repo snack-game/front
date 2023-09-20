@@ -29,4 +29,5 @@ export type RankingType = {
     group: string | null;
   };
   score: number;
+  message?: string;
 };
