@@ -60,23 +60,32 @@ const AppleGame = ({
     animation,
   });
 
-  const { handleMouseEvent, setRemovedApples, removedApples, apples } =
-    useAppleGameLogic({
-      clientWidth,
-      clientHeight,
-      clientLeft,
-      clientTop,
-      appleGameInfo,
-      drag,
-      appleGameManager,
-    });
+  const {
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    setRemovedApples,
+    removedApples,
+    apples,
+  } = useAppleGameLogic({
+    clientWidth,
+    clientHeight,
+    clientLeft,
+    clientTop,
+    appleGameInfo,
+    drag,
+    appleGameManager,
+  });
 
   return (
     <canvas
       ref={canvasRef}
-      onMouseDown={handleMouseEvent}
-      onMouseMove={handleMouseEvent}
-      onMouseUp={handleMouseEvent}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchMove={handleMouseMove}
+      onTouchEnd={handleMouseUp}
     ></canvas>
   );
 };

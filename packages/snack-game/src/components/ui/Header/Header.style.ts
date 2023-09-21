@@ -9,18 +9,15 @@ export const HeaderContainer = styled.div`
   padding: 1.25rem;
   margin-left: auto;
   margin-right: auto;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
+  justify-content: space-between;
+  justify-items: center;
 `;
 
 export const Title = styled.div`
   display: flex;
-  margin-bottom: 1rem;
   color: ${theme.colors.titleText};
   font-weight: 500;
   align-items: center;

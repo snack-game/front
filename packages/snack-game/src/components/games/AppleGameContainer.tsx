@@ -28,6 +28,11 @@ const AppleGameWrapper = styled.div`
   background-color: ${theme.colors.lightOrange};
   width: 80%;
   height: 80vh;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    height: 100vh;
+  }
 `;
 
 const GameHUD = styled.div`

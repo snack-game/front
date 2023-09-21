@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { AnimationItem } from 'lottie-web';
 
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
@@ -31,3 +33,7 @@ export type RankingType = {
   score: number;
   message?: string;
 };
+
+export type MouseEventType =
+  | React.MouseEvent<HTMLCanvasElement>
+  | React.TouchEvent<HTMLCanvasElement>;

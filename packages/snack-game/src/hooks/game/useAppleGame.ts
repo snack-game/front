@@ -1,11 +1,12 @@
 // useAppleGameLogic.js
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSetRecoilState } from 'recoil';
 
 import { Apple } from '@modules/apple-game/apple';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game.atom';
+import { MouseEventType } from '@utils/types/common.type';
 import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
 
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
@@ -55,57 +56,53 @@ export const useAppleGameLogic = ({
     }
   }, []);
 
-  const handleMouseEvent = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    switch (event.type) {
-      case 'mousedown': {
-        drag.onMouseDown(event, clientLeft, clientTop);
-        break;
-      }
+  const handleMouseDown = (event: MouseEventType) => {
+    drag.onMouseDown(event, clientLeft, clientTop);
+  };
 
-      case 'mouseup': {
-        drag.onMouseUp();
+  const handleMouseUp = () => {
+    drag.onMouseUp();
 
-        const { newApples, removedApples, isGolden, getScore, score } =
-          appleGameManager.checkApplesInDragArea(
-            apples,
-            drag.startX,
-            drag.startY,
-            drag.currentX,
-            drag.currentY,
-          );
+    const { newApples, removedApples, isGolden, getScore, score } =
+      appleGameManager.checkApplesInDragArea(
+        apples,
+        drag.startX,
+        drag.startY,
+        drag.currentX,
+        drag.currentY,
+      );
 
-        if (getScore) {
-          const removedAppleCoordinates: appleGameMoveType[] =
-            removedApples.map((apple: Apple) => apple.coordinates);
+    if (getScore) {
+      const removedAppleCoordinates: appleGameMoveType[] = removedApples.map(
+        (apple: Apple) => apple.coordinates,
+      );
 
-          setAppleGameState((prev: appleGameStateType) => ({
-            ...prev,
-            score: prev.score + score,
-            coordinates: [
-              ...(prev.coordinates || []),
-              { coordinates: removedAppleCoordinates },
-            ],
-          }));
-        }
-
-        setApples(newApples);
-        setRemovedApples(removedApples);
-
-        // if (isGolden) setApples(appleGameManager.generateApples(rect));
-        break;
-      }
-
-      case 'mousemove': {
-        drag.onMouseMove(event, clientLeft, clientTop);
-        break;
-      }
+      setAppleGameState((prev: appleGameStateType) => ({
+        ...prev,
+        score: prev.score + score,
+        coordinates: [
+          ...(prev.coordinates || []),
+          { coordinates: removedAppleCoordinates },
+        ],
+      }));
     }
+
+    setApples(newApples);
+    setRemovedApples(removedApples);
+
+    // if (isGolden) setApples(appleGameManager.generateApples(rect));
+  };
+
+  const handleMouseMove = (event: MouseEventType) => {
+    drag.onMouseMove(event, clientLeft, clientTop);
   };
 
   return {
     apples,
     removedApples,
     setRemovedApples,
-    handleMouseEvent,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
   };
 };

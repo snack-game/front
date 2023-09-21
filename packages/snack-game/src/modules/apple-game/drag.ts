@@ -1,11 +1,19 @@
 import React from 'react';
 
+import { MouseEventType } from '@utils/types/common.type';
+
 export class Drag {
   public startX: number;
   public startY: number;
   public currentX: number;
   public currentY: number;
   public isDrawing: boolean;
+
+  isTouchEvent(
+    event: MouseEventType,
+  ): event is React.TouchEvent<HTMLCanvasElement> {
+    return (event as React.TouchEvent<HTMLCanvasElement>).touches !== undefined;
+  }
 
   constructor() {
     this.startX = 0;
@@ -16,13 +24,21 @@ export class Drag {
   }
 
   onMouseDown(
-    event: React.MouseEvent<HTMLCanvasElement>,
+    event: MouseEventType,
     clientLeft: number,
     clientTop: number,
   ): void {
     this.isDrawing = true;
-    const clientX = event.clientX;
-    const clientY = event.clientY;
+
+    let clientX, clientY;
+
+    if (this.isTouchEvent(event)) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
 
     this.startX = clientX - (clientLeft - window.scrollX);
     this.startY = clientY - (clientTop - window.scrollY);
@@ -32,12 +48,19 @@ export class Drag {
   }
 
   onMouseMove(
-    event: React.MouseEvent<HTMLCanvasElement>,
+    event: MouseEventType,
     clientLeft: number,
     clientTop: number,
   ): void {
-    const clientX = event.clientX;
-    const clientY = event.clientY;
+    let clientX, clientY;
+
+    if (this.isTouchEvent(event)) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
 
     this.currentX = clientX - (clientLeft - window.scrollX);
     this.currentY = clientY - (clientTop - window.scrollY);
