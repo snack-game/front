@@ -12,7 +12,7 @@ export const useGetTotalRanking = () => {
     'totalRanking',
     rankingApi.totalRanking,
     {
-      retry: false,
+      retry: 1,
       useErrorBoundary: true,
     },
   );
@@ -21,20 +21,21 @@ export const useGetTotalRanking = () => {
 };
 
 export const useGetUserRanking = () => {
-  const { data } = useQuery<RankingType, AxiosError<ServerError>>(
+  const { data, error } = useQuery<RankingType, AxiosError<ServerError>>(
     'userRanking',
     rankingApi.userRanking,
     {
-      retry: false,
-      onError: (error: AxiosError<ServerError>) => {
-        if (error.response?.status === 400) {
-          return;
-        }
-
-        throw error;
-      },
+      retry: 1,
     },
   );
+
+  if (error) {
+    if (error.response?.status == 400) {
+      return;
+    }
+
+    throw error;
+  }
 
   return data;
 };

@@ -23,6 +23,7 @@ const ContentContainer = styled.div`
 
 const LeaderBoardPage = () => {
   const userStateValue = useRecoilValue(userState);
+
   return (
     <>
       <Helmet>
