@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 
 import RefreshLottie from '@assets/lottie/refresh.json';
 import Button from '@components/common/Button/Button';
-import Loading from '@components/common/Loading';
+import Loading from '@components/common/Loading/Loading';
 import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';

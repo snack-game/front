@@ -21,7 +21,7 @@ export const Highlight = styled.div<StyledToggleSwitchProps>`
   height: 100%;
   width: 50%;
   border-radius: 15px;
-  background-color: ${theme.colors.primaryButton};
+  background-color: ${theme.colors.orange};
   position: absolute;
   top: 0;
   transition: transform 0.3s ease-in-out;

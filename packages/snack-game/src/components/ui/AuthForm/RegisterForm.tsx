@@ -71,7 +71,6 @@ const RegisterForm = () => {
       </Styled.InputContainer>
       <Button
         content={'확인'}
-        type={'submit'}
         disabled={!values.name.valid || !values.group.valid}
       />
       <Styled.Description>

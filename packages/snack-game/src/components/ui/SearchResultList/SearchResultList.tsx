@@ -1,4 +1,4 @@
-import Loading from '@components/common/Loading';
+import Loading from '@components/common/Loading/Loading';
 
 import { useGetGroupsNames } from '@hooks/queries/groups.query';
 import useDebounce from '@hooks/useDebounce';

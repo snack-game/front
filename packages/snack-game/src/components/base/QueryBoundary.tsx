@@ -1,7 +1,7 @@
 import { ComponentType, ReactNode, Suspense } from 'react';
 import { useQueryErrorResetBoundary } from 'react-query';
 
-import Loading from '@components/common/Loading';
+import Loading from '@components/common/Loading/Loading';
 
 import ErrorBoundary, { FallbackProps } from './ErrorBoundary';
 

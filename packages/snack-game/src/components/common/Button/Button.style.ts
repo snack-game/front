@@ -6,12 +6,17 @@ import theme from '@utils/theme';
 export interface StyledButtonProps {
   show?: boolean;
   size?: 'small' | 'medium' | 'large';
-  color?: string;
+  color: string;
   text?: 'black' | 'white';
   border?: boolean;
 }
 
 export const Button = styled.button<StyledButtonProps>`
+  background-color: ${(props) => props.color};
+  line-height: 1.75rem;
+  border-radius: 0.25rem;
+  border: none;
+
   padding: ${(props) => {
     switch (props.size) {
       case 'small':
@@ -37,23 +42,13 @@ export const Button = styled.button<StyledButtonProps>`
   display: ${(props) => (props.show ? 'inline-flex' : 'none')};
   color: ${(props) =>
     props.text == 'white' ? theme.colors.background : theme.colors.description};
-  background-color: ${(props) => props.color || theme.colors.primaryButton};
-  border: ${(props) =>
-    props.border ? `1px solid ${theme.colors.boxBorder}` : 'none'};
-
-  line-height: 1.75rem;
-  border-radius: 0.25rem;
 
   &:hover {
-    background-color: ${(props) =>
-      darken(0.1, props.color || theme.colors.primaryButtonHover)};
+    background-color: ${(props) => darken(0.1, props.color)};
   }
 
   &:disabled {
-    background-color: ${(props) =>
-      props.color
-        ? transparentize(0.5, props.color)
-        : 'rgba(249, 115, 22, 0.5)'};
+    background-color: ${(props) => transparentize(0.5, props.color)};
   }
 `;
 

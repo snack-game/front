@@ -2,45 +2,43 @@ import React from 'react';
 
 import { SerializedStyles } from '@emotion/react';
 
+import theme from '@utils/theme';
+
 import * as Styled from './Button.style';
 
-interface ButtonProps {
+export interface ButtonProps {
   className?: string;
   content?: string;
   onClick?: () => void;
   wrapper?: SerializedStyles;
-  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  children?: React.ReactNode;
+  show?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  color?: string;
+  text?: 'black' | 'white';
 }
 
 const Button = ({
   content,
   onClick,
   wrapper,
-  type = 'button',
   disabled,
   size = 'medium',
   show = true,
-  color,
+  color = theme.colors.orange,
   text = 'white',
-  children,
-  border = false,
-}: ButtonProps & Styled.StyledButtonProps) => {
+}: ButtonProps) => {
   return (
     <Styled.ButtonContainer css={wrapper}>
       <Styled.Button
         onClick={onClick}
-        type={type}
         disabled={disabled}
         show={show}
         size={size}
         text={text}
         color={color}
-        border={border}
       >
         {content}
-        {children}
       </Styled.Button>
     </Styled.ButtonContainer>
   );

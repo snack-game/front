@@ -39,7 +39,7 @@ const LoginForm = () => {
           valid={values.name.valid}
         />
       </Styled.InputContainer>
-      <Button content={'확인'} type={'submit'} disabled={!values.name.valid} />
+      <Button content={'확인'} disabled={!values.name.valid} />
     </Styled.Form>
   );
 };

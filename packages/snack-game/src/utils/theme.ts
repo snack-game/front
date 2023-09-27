@@ -6,8 +6,7 @@ const theme = {
     boxBorder: '#d1d5db',
     gray: '#f3f4f6',
 
-    primaryButton: '#fb923c',
-    primaryButtonHover: '#f97316',
+    orange: '#fb923c',
 
     lightOrange: '#ffedd5',
 

@@ -18,7 +18,7 @@ const TableTitle = styled.div`
   justify-content: space-between;
   padding: 1.5rem 2.5rem;
   border-radius: 15px;
-  background-color: ${theme.colors.primaryButton};
+  background-color: ${theme.colors.orange};
   color: white;
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
