@@ -33,15 +33,14 @@ export const useAppleGameLogic = ({
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
   const setAppleGameState = useSetRecoilState(appleGameState);
-  const debouncedUpdate = useDebouncedCallback({
+  const debouncedApplePositionUpdate = useDebouncedCallback({
     target: () =>
       appleGameManager.updateApplePosition(clientWidth, clientHeight, apples),
     delay: 300,
   });
 
   useEffect(() => {
-    // appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
-    debouncedUpdate();
+    debouncedApplePositionUpdate();
   }, [clientWidth, clientHeight]);
 
   useEffect(() => {
@@ -63,7 +62,7 @@ export const useAppleGameLogic = ({
   const handleMouseUp = () => {
     drag.onMouseUp();
 
-    const { newApples, removedApples, isGolden, getScore, score } =
+    const { newApples, removedApples, getScore, score } =
       appleGameManager.checkApplesInDragArea(
         apples,
         drag.startX,
@@ -85,12 +84,10 @@ export const useAppleGameLogic = ({
           { coordinates: removedAppleCoordinates },
         ],
       }));
+
+      setApples(newApples);
+      setRemovedApples(removedApples);
     }
-
-    setApples(newApples);
-    setRemovedApples(removedApples);
-
-    // if (isGolden) setApples(appleGameManager.generateApples(rect));
   };
 
   const handleMouseMove = (event: MouseEventType) => {

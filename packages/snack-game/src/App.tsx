@@ -1,11 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
 import { RecoilRoot } from 'recoil';
-import RecoilizeDebugger from 'recoilize';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading/Loading';
@@ -32,7 +30,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <RecoilizeDebugger />
         <ThemeProvider theme={theme}>
           <ErrorBoundary fallback={errorPage}>
             <Global styles={globalStyles} />
@@ -52,7 +49,6 @@ const App = () => {
             <Toast />
           </ErrorBoundary>
         </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </RecoilRoot>
     </QueryClientProvider>
   );

@@ -44,9 +44,9 @@ const appleGameApi = {
   },
 
   gameRefresh: async (sessionId: number): Promise<appleGameStateType> => {
-    await api.delete(`${appleGameApi.endPoint.gameRefresh}/${sessionId}/board`);
-
-    const { data } = await api.post(appleGameApi.endPoint.game);
+    const { data } = await api.delete(
+      `${appleGameApi.endPoint.gameRefresh}/${sessionId}/board`,
+    );
 
     return {
       apples: data.apples,

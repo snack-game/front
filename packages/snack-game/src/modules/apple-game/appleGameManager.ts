@@ -48,7 +48,7 @@ export class AppleGameManager {
             x: Math.random() * 4 - 2,
             y: 0,
           },
-          cnt == randomNum,
+          false,
         );
         units.push(apple);
       }
