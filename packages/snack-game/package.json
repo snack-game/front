@@ -42,7 +42,6 @@
     "@types/jest": "^29.5.2",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
-    "@types/recoilize": "^0.8.0",
     "@types/testing-library__jest-dom": "^5.14.7",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",

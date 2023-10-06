@@ -8,10 +8,10 @@ import api from './index';
 
 const appleGameApi = {
   endPoint: {
-    game: '/games/1',
-    checkMove: '/sessions',
-    gameEnd: '/sessions',
-    gameRefresh: '/sessions',
+    game: '/v2/games/1',
+    checkMove: '/v2/sessions',
+    gameEnd: '/v2/sessions',
+    gameRefresh: '/v2/sessions',
   },
 
   gameStart: async (
@@ -31,11 +31,11 @@ const appleGameApi = {
 
   checkGameMove: async ({
     sessionId,
-    coordinates,
-  }: appleGameCheckMovePropsType): Promise<void> => {
+    rects,
+  }: appleGameCheckMovePropsType): Promise<void | appleGameStateType> => {
     await api.put(
       `${appleGameApi.endPoint.checkMove}/${sessionId}/moves`,
-      coordinates,
+      rects,
     );
   },
 

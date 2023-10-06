@@ -9,7 +9,7 @@ import useModal from '@hooks/useModal';
 import * as Styled from './Modal.style';
 
 const Modal = () => {
-  const { title, description, open, children } = useRecoilValue(modalState);
+  const { title, open, children } = useRecoilValue(modalState);
 
   const { closeModal } = useModal();
 

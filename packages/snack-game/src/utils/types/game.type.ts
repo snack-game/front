@@ -1,17 +1,25 @@
-export type appleGameMoveType = { y: number; x: number };
+export interface appleType {
+  number: number;
+  golden: boolean;
+}
 
-export type coordinatesType = { coordinates: appleGameMoveType[] }[];
+export type coordinatesType = { y: number; x: number };
+
+export interface appleGameRectType {
+  topLeft: coordinatesType;
+  bottomRight: coordinatesType;
+}
 
 export interface appleGameStateType {
-  apples: number[][];
+  apples: appleType[][];
   sessionId: number;
   score: number;
-  coordinates?: coordinatesType;
+  rects?: appleGameRectType[];
 }
 
 export interface appleGameCheckMovePropsType {
   sessionId: number;
-  coordinates: coordinatesType;
+  rects: appleGameRectType[];
 }
 
 export interface appleGameEndPropsType {

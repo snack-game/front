@@ -45,9 +45,9 @@ const App = () => {
                 <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
               </Routes>
             </Suspense>
-            <Modal />
-            <Toast />
           </ErrorBoundary>
+          <Modal />
+          <Toast />
         </ThemeProvider>
       </RecoilRoot>
     </QueryClientProvider>

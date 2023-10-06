@@ -10,6 +10,7 @@ export const appleGameState = atom<appleGameStateType>({
     apples: [],
     sessionId: 0,
     score: 0,
+    rects: [],
   },
 });
 

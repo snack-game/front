@@ -125,7 +125,7 @@ const AppleGameContainer = () => {
             clientHeight={clientHeight}
             clientLeft={clientLeft}
             clientTop={clientTop}
-            appleGameInfo={gameStartMutation.data}
+            appleGameInfo={appleGameValue}
             drag={drag}
             appleGameManager={appleGameManager}
           />

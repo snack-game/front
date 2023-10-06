@@ -1,14 +1,16 @@
 // useAppleGameLogic.js
 import { useEffect, useState } from 'react';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { Apple } from '@modules/apple-game/apple';
+import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameState } from '@utils/atoms/game.atom';
 import { MouseEventType } from '@utils/types/common.type';
-import { appleGameMoveType, appleGameStateType } from '@utils/types/game.type';
+import { appleGameStateType, coordinatesType } from '@utils/types/game.type';
 
+import { useAppleGameCheck } from '@hooks/queries/appleGame.query';
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
 
 interface AppleGameProps {
@@ -18,7 +20,7 @@ interface AppleGameProps {
   clientTop: number;
   appleGameInfo?: appleGameStateType;
   drag: Drag;
-  appleGameManager: any;
+  appleGameManager: AppleGameManager;
 }
 
 export const useAppleGameLogic = ({
@@ -32,7 +34,9 @@ export const useAppleGameLogic = ({
 }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-  const setAppleGameState = useSetRecoilState(appleGameState);
+  const { checkMove } = useAppleGameCheck();
+  const [appleGameStateValue, setAppleGameState] =
+    useRecoilState(appleGameState);
   const debouncedApplePositionUpdate = useDebouncedCallback({
     target: () =>
       appleGameManager.updateApplePosition(clientWidth, clientHeight, apples),
@@ -56,13 +60,14 @@ export const useAppleGameLogic = ({
   }, []);
 
   const handleMouseDown = (event: MouseEventType) => {
+    console.log(appleGameStateValue);
     drag.onMouseDown(event, clientLeft, clientTop);
   };
 
   const handleMouseUp = () => {
     drag.onMouseUp();
 
-    const { newApples, removedApples, getScore, score } =
+    const { newApples, removedApples, isGolden, getScore, score } =
       appleGameManager.checkApplesInDragArea(
         apples,
         drag.startX,
@@ -72,16 +77,36 @@ export const useAppleGameLogic = ({
       );
 
     if (getScore) {
-      const removedAppleCoordinates: appleGameMoveType[] = removedApples.map(
+      const removedAppleCoordinates: coordinatesType[] = removedApples.map(
         (apple: Apple) => apple.coordinates,
       );
+
+      if (isGolden) {
+        checkMove().then((response) => {
+          if (response === undefined) {
+            throw Error('게임판을 새로 받아오는데 실패했어요!');
+          }
+
+          setAppleGameState((prev: appleGameStateType) => ({
+            ...prev,
+            apples: response.apples,
+            score: prev.score + score,
+            rects: [
+              ...(prev.rects || []),
+              appleGameManager.getRectApplePosition(removedAppleCoordinates),
+            ],
+          }));
+        });
+
+        return;
+      }
 
       setAppleGameState((prev: appleGameStateType) => ({
         ...prev,
         score: prev.score + score,
-        coordinates: [
-          ...(prev.coordinates || []),
-          { coordinates: removedAppleCoordinates },
+        rects: [
+          ...(prev.rects || []),
+          appleGameManager.getRectApplePosition(removedAppleCoordinates),
         ],
       }));
 

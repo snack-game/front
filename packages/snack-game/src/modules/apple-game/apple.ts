@@ -19,7 +19,7 @@ export class Apple {
     y: number,
     number: number,
     radius: number,
-    style: number,
+    style: boolean,
     gravity: number,
     velocity: { x: number; y: number },
     isGolden: boolean,

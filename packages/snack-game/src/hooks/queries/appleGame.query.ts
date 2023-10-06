@@ -3,7 +3,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import appleGameApi from '@api/appleGame';
 import { userState } from '@utils/atoms/auth.atom';
 import { appleGameState } from '@utils/atoms/game.atom';
-import { appleGameStateType } from '@utils/types/game.type';
+import {
+  appleGameCheckMovePropsType,
+  appleGameStateType,
+} from '@utils/types/game.type';
 import { AuthType } from '@utils/types/member.type';
 
 import { TOAST_MESSAGE } from '@constants/toast.constant';
@@ -60,30 +63,43 @@ export const useAppleGameCheck = () => {
   const { gameEndCheck } = useAppleGameSessionEnd();
   const appleGameValue = useRecoilValue(appleGameState);
 
-  const checkGameMove = useGenericMutation({
+  const checkGameMove = useGenericMutation<
+    appleGameCheckMovePropsType,
+    void | appleGameStateType
+  >({
     apiMethod: appleGameApi.checkGameMove,
-    onSuccess: async () => {
-      await gameEndCheck.mutateAsync({
-        sessionId: appleGameValue.sessionId,
-      });
-    },
   });
 
-  const gameEnd = () => {
+  const checkMove = () => {
     const sessionId = appleGameValue.sessionId;
-    const coordinates = appleGameValue.coordinates;
+    const rects = appleGameValue.rects;
 
-    if (!sessionId || !coordinates) {
+    if (!sessionId || !rects) {
       throw Error('게임의 상태가 올바르지 않아요!');
     }
 
-    checkGameMove.mutate({
-      sessionId: sessionId,
-      coordinates,
-    });
+    return checkGameMove.mutateAsync({ sessionId, rects });
   };
 
-  return { gameEnd };
+  const gameEnd = () => {
+    const sessionId = appleGameValue.sessionId;
+    const rects = appleGameValue.rects;
+
+    if (!sessionId || !rects) {
+      throw Error('게임의 상태가 올바르지 않아요!');
+    }
+
+    checkGameMove
+      .mutateAsync({
+        sessionId: sessionId,
+        rects,
+      })
+      .then(() => {
+        gameEndCheck.mutate({ sessionId });
+      });
+  };
+
+  return { gameEnd, checkMove };
 };
 
 export const useAppleGameRefresh = () => {

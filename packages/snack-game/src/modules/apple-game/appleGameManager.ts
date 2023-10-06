@@ -1,8 +1,13 @@
 import { Apple } from '@modules/apple-game/apple';
+import {
+  appleGameRectType,
+  appleType,
+  coordinatesType,
+} from '@utils/types/game.type';
 
 const BORDER_OFFSET = 30;
 const ROWS = 10;
-const COLUMNS = 10;
+const COLUMNS = 12;
 
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
@@ -10,7 +15,7 @@ export class AppleGameManager {
   generateApples(
     clientWidth: number,
     clientHeight: number,
-    apples: number[][],
+    apples: appleType[][],
   ): Apple[] {
     const units = [];
 
@@ -19,13 +24,8 @@ export class AppleGameManager {
 
     const appleRadius = Math.min(availableWidth, availableHeight) * 0.4;
 
-    const randomNum = Math.floor(Math.random() * 100);
-
-    let cnt = 0;
-
     for (let row = 0; row < ROWS; row++) {
       for (let column = 0; column < COLUMNS; column++) {
-        cnt++;
         const x =
           column * availableWidth +
           availableWidth / 2 -
@@ -40,15 +40,15 @@ export class AppleGameManager {
           { y: row, x: column },
           x,
           y,
-          apples[row][column],
+          apples[row][column].number,
           appleRadius,
-          cnt == randomNum ? 0 : 1,
+          !apples[row][column].golden,
           0.5,
           {
             x: Math.random() * 4 - 2,
             y: 0,
           },
-          false,
+          apples[row][column].golden,
         );
         units.push(apple);
       }
@@ -234,5 +234,38 @@ export class AppleGameManager {
     }
 
     this.drawApple(ctx, Apple);
+  }
+
+  getRectApplePosition(points: coordinatesType[]): appleGameRectType {
+    if (points.length === 0) {
+      throw new Error('No points provided');
+    }
+
+    const topLeft = {
+      x: points[0].x,
+      y: points[0].y,
+    };
+
+    const bottomRight = {
+      x: points[0].x,
+      y: points[0].y,
+    };
+
+    for (const point of points) {
+      if (point.x < topLeft.x) {
+        topLeft.x = point.x;
+      }
+      if (point.y < topLeft.y) {
+        topLeft.y = point.y;
+      }
+      if (point.x > bottomRight.x) {
+        bottomRight.x = point.x;
+      }
+      if (point.y > bottomRight.y) {
+        bottomRight.y = point.y;
+      }
+    }
+
+    return { topLeft, bottomRight };
   }
 }
