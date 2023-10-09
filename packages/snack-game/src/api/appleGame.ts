@@ -33,10 +33,16 @@ const appleGameApi = {
     sessionId,
     rects,
   }: appleGameCheckMovePropsType): Promise<void | appleGameStateType> => {
-    await api.put(
+    const { data } = await api.put(
       `${appleGameApi.endPoint.checkMove}/${sessionId}/moves`,
       rects,
     );
+
+    return {
+      apples: data.apples,
+      sessionId: data.sessionId,
+      score: data.score,
+    };
   },
 
   gameEnd: async ({ sessionId }: appleGameEndPropsType): Promise<void> => {

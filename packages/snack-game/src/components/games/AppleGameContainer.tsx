@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import RefreshLottie from '@assets/lottie/refresh.json';
 import Button from '@components/common/Button/Button';
@@ -10,7 +10,7 @@ import Loading from '@components/common/Loading/Loading';
 import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
-import { appleGameState } from '@utils/atoms/game.atom';
+import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
 import theme from '@utils/theme';
 import { LottieOptionTypes } from '@utils/types/common.type';
 
@@ -61,6 +61,9 @@ const AppleGameContainer = () => {
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
   const gameRefresh = useAppleGameRefresh();
+  const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
+    appleGameProgressState,
+  );
   const appleGameValue = useRecoilValue(appleGameState);
   const { ref } = useLottie(lottieOptions);
 
@@ -76,7 +79,8 @@ const AppleGameContainer = () => {
 
   const handleGameEnd = () => {
     setStart(false);
-    gameEnd();
+    gameEnd(appleGameProgressValue);
+    setAppleGameProgress([]);
   };
 
   const handleRefresh = () => {
@@ -86,6 +90,7 @@ const AppleGameContainer = () => {
     gameRefresh.mutateAsync(appleGameValue.sessionId).then(() => {
       setStart(true);
       setTimeRemaining(120);
+      setAppleGameProgress([]);
     });
   };
 

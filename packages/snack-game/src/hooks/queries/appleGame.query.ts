@@ -5,6 +5,7 @@ import { userState } from '@utils/atoms/auth.atom';
 import { appleGameState } from '@utils/atoms/game.atom';
 import {
   appleGameCheckMovePropsType,
+  appleGameRectType,
   appleGameStateType,
 } from '@utils/types/game.type';
 import { AuthType } from '@utils/types/member.type';
@@ -70,20 +71,8 @@ export const useAppleGameCheck = () => {
     apiMethod: appleGameApi.checkGameMove,
   });
 
-  const checkMove = () => {
+  const gameEnd = (rects: appleGameRectType[]) => {
     const sessionId = appleGameValue.sessionId;
-    const rects = appleGameValue.rects;
-
-    if (!sessionId || !rects) {
-      throw Error('게임의 상태가 올바르지 않아요!');
-    }
-
-    return checkGameMove.mutateAsync({ sessionId, rects });
-  };
-
-  const gameEnd = () => {
-    const sessionId = appleGameValue.sessionId;
-    const rects = appleGameValue.rects;
 
     if (!sessionId || !rects) {
       throw Error('게임의 상태가 올바르지 않아요!');
@@ -99,7 +88,7 @@ export const useAppleGameCheck = () => {
       });
   };
 
-  return { gameEnd, checkMove };
+  return { gameEnd, checkGameMove };
 };
 
 export const useAppleGameRefresh = () => {

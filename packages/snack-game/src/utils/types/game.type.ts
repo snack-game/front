@@ -10,11 +10,12 @@ export interface appleGameRectType {
   bottomRight: coordinatesType;
 }
 
+export type appleGameProgressType = appleGameRectType[];
+
 export interface appleGameStateType {
   apples: appleType[][];
   sessionId: number;
   score: number;
-  rects?: appleGameRectType[];
 }
 
 export interface appleGameCheckMovePropsType {
