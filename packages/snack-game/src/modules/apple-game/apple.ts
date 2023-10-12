@@ -1,5 +1,5 @@
 import AppleImage from '@assets/images/apple.png';
-import GoldenApple from '@assets/images/golden-apple.png';
+import GoldenApple from '@assets/images/golden_apple.png';
 
 export class Apple {
   public coordinates: { y: number; x: number };

@@ -5,7 +5,7 @@ import {
   coordinatesType,
 } from '@utils/types/game.type';
 
-const BORDER_OFFSET = 30;
+const BORDER_OFFSET = 20;
 const ROWS = 10;
 const COLUMNS = 12;
 
@@ -148,7 +148,7 @@ export class AppleGameManager {
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
     ctx.font = `${Apple.radius}px Dovemayo_gothic`;
-    ctx.fillStyle = '#f1f5f9';
+    ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(

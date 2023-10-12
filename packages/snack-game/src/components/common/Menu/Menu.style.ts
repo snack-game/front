@@ -74,7 +74,7 @@ export const DropDownItem = styled.li`
   padding: 10px 20px;
   color: black;
   width: 10rem;
-  font-size: 16px;
+  font-size: 12px;
   opacity: 1;
   cursor: pointer;
   border-radius: 15px;

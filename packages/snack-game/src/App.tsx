@@ -24,6 +24,8 @@ const LeaderBoardPage = lazy(
   () => import('@pages/leaderboard/LeaderBoardPage'),
 );
 
+const TeamPage = lazy(() => import('@pages/team/TeamPage'));
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -43,6 +45,9 @@ const App = () => {
 
                 {/*RANKING*/}
                 <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
+
+                {/*TEAM*/}
+                <Route path={PATH.TEAM} element={<TeamPage />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>

@@ -4,7 +4,6 @@ import AppleGameLottie from '@assets/lottie/apple-game.json';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button/Button';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
-import TeamInfo from '@components/ui/TeamInfo/TeamInfo';
 import { LottieOptionTypes } from '@utils/types/common.type';
 
 import PATH from '@constants/path.constant';
@@ -46,12 +45,14 @@ const MainPage = () => {
               <br />
               황금사과를 통해 판을 초기화하고 고득점을 노려보아요!
             </p>
-            <div className="flex justify-center">
-              <Button content={'입장'} onClick={handleAppleGameEnter}></Button>
-            </div>
+
+            <Button
+              content={'게임 시작'}
+              size={'large'}
+              onClick={handleAppleGameEnter}
+            ></Button>
           </Styled.AppleGamePageRight>
         </Styled.AppleGamePageContainer>
-        <TeamInfo />
       </PageContainer>
     </>
   );

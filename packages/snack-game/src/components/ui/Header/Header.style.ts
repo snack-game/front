@@ -40,6 +40,18 @@ export const Title = styled.div`
 
 export const Nav = styled.nav`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  color: ${theme.colors.titleText};
+
+  & > p {
+    font-size: 1.25rem;
+  }
+`;
+
+export const UserInfo = styled.div`
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;

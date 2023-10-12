@@ -4,6 +4,7 @@ const PATH = {
   LOGIN: '/login',
   REGISTER: '/register',
   AUTH: '/auth',
+  TEAM: '/team',
 
   APPLE_GAME: '/game/apple-game',
 
