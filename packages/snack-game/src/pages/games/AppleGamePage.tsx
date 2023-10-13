@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
@@ -9,6 +9,10 @@ import Footer from '@components/ui/Footer/Footer';
 import Header from '@components/ui/Header/Header';
 
 const AppleGamePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Helmet>

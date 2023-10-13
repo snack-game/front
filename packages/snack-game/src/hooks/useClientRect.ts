@@ -20,7 +20,6 @@ export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
         setClientTop(rect.top);
       }
     };
-
     setClientRect();
 
     window.addEventListener('resize', setClientRect);

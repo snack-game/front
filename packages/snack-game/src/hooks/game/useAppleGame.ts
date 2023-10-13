@@ -26,36 +26,62 @@ interface AppleGameProps {
   appleGameInfo?: appleGameStateType;
   drag: Drag;
   appleGameManager: AppleGameManager;
-  animation: (ctx: CanvasRenderingContext2D) => void;
 }
 
 export const useAppleGameLogic = ({
   clientWidth,
   clientHeight,
+  clientLeft,
+  clientTop,
   appleGameInfo,
   drag,
   appleGameManager,
-  clientLeft,
-  clientTop,
-  animation,
 }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-  const { checkGameMove } = useAppleGameCheck();
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
-  const appleGameCanvasRef = useCanvas({
-    clientWidth,
-    clientHeight,
-    animation,
-  });
   const [appleGameStateValue, setAppleGameState] =
     useRecoilState(appleGameState);
+
+  const { checkGameMove } = useAppleGameCheck();
+
   const debouncedApplePositionUpdate = useDebouncedCallback({
     target: () =>
       appleGameManager.updateApplePosition(clientWidth, clientHeight, apples),
     delay: 300,
+  });
+
+  const appleGameCanvasRef = useCanvas({
+    clientWidth,
+    clientHeight,
+    animation: (ctx: CanvasRenderingContext2D) => {
+      // background
+      ctx.clearRect(0, 0, clientWidth, clientHeight);
+
+      drag.drawDragArea(ctx);
+
+      // render game
+      apples.forEach((apple: Apple) => {
+        appleGameManager.handleAppleRendering(
+          ctx,
+          drag.startX,
+          drag.startY,
+          drag.currentX,
+          drag.currentY,
+          drag.isDrawing,
+          apple,
+        );
+      });
+
+      removedApples.forEach((removedApple: Apple) => {
+        appleGameManager.updateFallingPosition(ctx, clientHeight, removedApple);
+        if (removedApple.remove) {
+          setRemovedApples([]);
+        }
+      });
+    },
   });
 
   useEffect(() => {
@@ -110,6 +136,7 @@ export const useAppleGameLogic = ({
   };
 
   const handleMouseDown = (event: MouseEventType) => {
+    console.log(clientWidth, clientHeight, clientLeft, clientTop);
     drag.onMouseDown(event, clientLeft, clientTop);
   };
 

@@ -54,9 +54,6 @@ const AppleGameContainer = () => {
   const appleGameManager = useMemo(() => new AppleGameManager(), []);
 
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-  const { clientWidth, clientHeight, clientLeft, clientTop } = useClientRect({
-    canvasBaseRef,
-  });
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
@@ -69,6 +66,10 @@ const AppleGameContainer = () => {
 
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
+
+  const { clientWidth, clientHeight, clientLeft, clientTop } = useClientRect({
+    canvasBaseRef,
+  });
 
   const handleStartButton = () => {
     gameStart().then(() => {

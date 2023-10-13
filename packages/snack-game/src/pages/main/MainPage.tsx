@@ -26,7 +26,6 @@ const MainPage = () => {
   const { push } = useInternalRouter();
 
   const handleAppleGameEnter = () => {
-    window.scrollTo(0, 0);
     push(PATH.APPLE_GAME);
   };
 
