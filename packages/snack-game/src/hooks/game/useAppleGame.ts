@@ -37,6 +37,7 @@ export const useAppleGameLogic = ({
   drag,
   appleGameManager,
 }: AppleGameProps) => {
+  const [stage, setStage] = useState<number>(0);
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
@@ -100,28 +101,26 @@ export const useAppleGameLogic = ({
         handleMouseMove,
         { passive: false },
       );
-      appleGameCanvasRef.current.addEventListener('touchend', handleMouseUp, {
-        passive: false,
-      });
-
-      return () => {
-        if (appleGameCanvasRef.current) {
-          appleGameCanvasRef.current.removeEventListener(
-            'touchstart',
-            handleMouseDown,
-          );
-          appleGameCanvasRef.current.removeEventListener(
-            'touchmove',
-            handleMouseMove,
-          );
-          appleGameCanvasRef.current.removeEventListener(
-            'touchend',
-            handleMouseUp,
-          );
-        }
-      };
+      appleGameCanvasRef.current.addEventListener('touchend', handleMouseUp);
     }
-  }, [appleGameCanvasRef.current]);
+
+    return () => {
+      if (appleGameCanvasRef.current) {
+        appleGameCanvasRef.current.removeEventListener(
+          'touchstart',
+          handleMouseDown,
+        );
+        appleGameCanvasRef.current.removeEventListener(
+          'touchmove',
+          handleMouseMove,
+        );
+        appleGameCanvasRef.current.removeEventListener(
+          'touchend',
+          handleMouseUp,
+        );
+      }
+    };
+  }, [appleGameCanvasRef.current, stage, appleGameStateValue.score]);
 
   useEffect(() => {
     if (appleGameInfo) {
@@ -136,17 +135,16 @@ export const useAppleGameLogic = ({
   };
 
   const handleMouseDown = (event: MouseEventType) => {
-    console.log(clientWidth, clientHeight, clientLeft, clientTop);
     drag.onMouseDown(event, clientLeft, clientTop);
+    event.preventDefault();
   };
 
   const handleMouseMove = (event: MouseEventType) => {
     drag.onMouseMove(event, clientLeft, clientTop);
+    event.preventDefault();
   };
 
-  const handleMouseUp = () => {
-    drag.onMouseUp();
-
+  const handleMouseUp = (event: MouseEventType) => {
     const { newApples, removedApples, isGolden, getScore, score } =
       appleGameManager.checkApplesInDragArea(
         apples,
@@ -184,6 +182,7 @@ export const useAppleGameLogic = ({
 
             setApplesByGameInfo(response.apples);
             setAppleGameProgress([]);
+            setStage((prev: number) => prev + 1);
           });
       }
 
@@ -196,6 +195,9 @@ export const useAppleGameLogic = ({
       setAppleGameProgress(rects);
       setRemovedApples(removedApples);
     }
+
+    drag.onMouseUp(event);
+    event.preventDefault();
   };
 
   return {

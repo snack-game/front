@@ -64,7 +64,8 @@ export class Drag {
     this.currentY = clientY - (clientTop - window.scrollY);
   }
 
-  onMouseUp(): void {
+  onMouseUp(event: MouseEventType): void {
+    event.preventDefault();
     this.isDrawing = false;
   }
 
