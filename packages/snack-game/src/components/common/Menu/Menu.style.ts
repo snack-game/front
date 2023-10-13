@@ -86,4 +86,8 @@ export const DropDownItem = styled.li`
   & > div {
     width: 100%;
   }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;

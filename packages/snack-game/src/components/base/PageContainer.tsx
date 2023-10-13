@@ -2,22 +2,15 @@ import React, { ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
-import Footer from '@components/ui/Footer/Footer';
-import Header from '@components/ui/Header/Header';
-
 interface PageContainerProps {
   children: ReactNode;
 }
 
 const PageContainer = ({ children }: PageContainerProps) => {
   return (
-    <>
-      <Header />
-      <PageContainerWrapper>
-        <PageContainerInner>{children}</PageContainerInner>
-      </PageContainerWrapper>
-      <Footer />
-    </>
+    <PageContainerWrapper>
+      <PageContainerInner>{children}</PageContainerInner>
+    </PageContainerWrapper>
   );
 };
 

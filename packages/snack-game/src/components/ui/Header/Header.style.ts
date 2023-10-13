@@ -10,7 +10,6 @@ export const HeaderContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
   flex-direction: row;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   justify-items: center;
@@ -44,24 +43,27 @@ export const Nav = styled.nav`
   align-items: center;
   gap: 4rem;
   color: ${theme.colors.titleText};
+  font-size: 1rem;
 
-  & > p {
-    font-size: 1.25rem;
+  & > a:hover {
+    color: ${theme.colors.description};
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
-export const UserInfo = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-
-  @media (min-width: 768px) {
-    margin-left: auto;
+export const Desktop = styled.div`
+  @media (max-width: 768px) {
+    display: none;
   }
+`;
 
-  & > p {
-    font-size: 1.25rem;
+export const Mobile = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
   }
 `;

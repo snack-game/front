@@ -53,9 +53,30 @@ const Header = () => {
       </Styled.Nav>
 
       {userInfo.accessToken ? (
-        <Menu buttonContent={userInfo.name + ' 님'}>
-          <DropDownItem onClick={handleLogout}>로그아웃</DropDownItem>
-        </Menu>
+        <>
+          <Styled.Desktop>
+            <Menu buttonContent={userInfo.name + ' 님'}>
+              <DropDownItem onClick={handleLogout}>로그아웃</DropDownItem>
+            </Menu>
+          </Styled.Desktop>
+          <Styled.Mobile>
+            <Menu buttonContent={userInfo.name + ' 님'}>
+              <DropDownItem>
+                <Link to={PATH.APPLE_GAME}>게임</Link>
+              </DropDownItem>
+              <DropDownItem>
+                <Link to={PATH.RANKING}>랭킹</Link>
+              </DropDownItem>
+              <DropDownItem>
+                <Link to={PATH.BLOG}>블로그</Link>
+              </DropDownItem>
+              <DropDownItem>
+                <Link to={PATH.TEAM}>팀 소개</Link>
+              </DropDownItem>
+              <DropDownItem onClick={handleLogout}>로그아웃</DropDownItem>
+            </Menu>
+          </Styled.Mobile>
+        </>
       ) : (
         <Button
           content={'로그인'}

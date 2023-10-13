@@ -15,6 +15,7 @@ import {
 } from '@utils/types/game.type';
 
 import { useAppleGameCheck } from '@hooks/queries/appleGame.query';
+import useCanvas from '@hooks/useCanvas';
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
 
 interface AppleGameProps {
@@ -25,6 +26,7 @@ interface AppleGameProps {
   appleGameInfo?: appleGameStateType;
   drag: Drag;
   appleGameManager: AppleGameManager;
+  animation: (ctx: CanvasRenderingContext2D) => void;
 }
 
 export const useAppleGameLogic = ({
@@ -35,6 +37,7 @@ export const useAppleGameLogic = ({
   appleGameManager,
   clientLeft,
   clientTop,
+  animation,
 }: AppleGameProps) => {
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
@@ -42,6 +45,11 @@ export const useAppleGameLogic = ({
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
+  const appleGameCanvasRef = useCanvas({
+    clientWidth,
+    clientHeight,
+    animation,
+  });
   const [appleGameStateValue, setAppleGameState] =
     useRecoilState(appleGameState);
   const debouncedApplePositionUpdate = useDebouncedCallback({
@@ -53,6 +61,41 @@ export const useAppleGameLogic = ({
   useEffect(() => {
     debouncedApplePositionUpdate();
   }, [clientWidth, clientHeight]);
+
+  useEffect(() => {
+    if (appleGameCanvasRef.current) {
+      appleGameCanvasRef.current.addEventListener(
+        'touchstart',
+        handleMouseDown,
+        { passive: false },
+      );
+      appleGameCanvasRef.current.addEventListener(
+        'touchmove',
+        handleMouseMove,
+        { passive: false },
+      );
+      appleGameCanvasRef.current.addEventListener('touchend', handleMouseUp, {
+        passive: false,
+      });
+
+      return () => {
+        if (appleGameCanvasRef.current) {
+          appleGameCanvasRef.current.removeEventListener(
+            'touchstart',
+            handleMouseDown,
+          );
+          appleGameCanvasRef.current.removeEventListener(
+            'touchmove',
+            handleMouseMove,
+          );
+          appleGameCanvasRef.current.removeEventListener(
+            'touchend',
+            handleMouseUp,
+          );
+        }
+      };
+    }
+  }, [appleGameCanvasRef.current]);
 
   useEffect(() => {
     if (appleGameInfo) {
@@ -67,9 +110,11 @@ export const useAppleGameLogic = ({
   };
 
   const handleMouseDown = (event: MouseEventType) => {
-    console.log(appleGameProgressValue);
-    console.log(appleGameStateValue);
     drag.onMouseDown(event, clientLeft, clientTop);
+  };
+
+  const handleMouseMove = (event: MouseEventType) => {
+    drag.onMouseMove(event, clientLeft, clientTop);
   };
 
   const handleMouseUp = () => {
@@ -126,10 +171,6 @@ export const useAppleGameLogic = ({
     }
   };
 
-  const handleMouseMove = (event: MouseEventType) => {
-    drag.onMouseMove(event, clientLeft, clientTop);
-  };
-
   return {
     apples,
     removedApples,
@@ -137,5 +178,6 @@ export const useAppleGameLogic = ({
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
+    appleGameCanvasRef,
   };
 };

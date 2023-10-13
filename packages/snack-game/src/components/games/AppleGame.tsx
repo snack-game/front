@@ -6,7 +6,6 @@ import { Drag } from '@modules/apple-game/drag';
 import { appleGameStateType } from '@utils/types/game.type';
 
 import { useAppleGameLogic } from '@hooks/game/useAppleGame';
-import useCanvas from '@hooks/useCanvas';
 
 interface AppleGameProps {
   clientWidth: number;
@@ -54,12 +53,6 @@ const AppleGame = ({
     });
   };
 
-  const canvasRef = useCanvas({
-    clientWidth,
-    clientHeight,
-    animation,
-  });
-
   const {
     handleMouseDown,
     handleMouseMove,
@@ -67,6 +60,7 @@ const AppleGame = ({
     setRemovedApples,
     removedApples,
     apples,
+    appleGameCanvasRef,
   } = useAppleGameLogic({
     clientWidth,
     clientHeight,
@@ -75,17 +69,15 @@ const AppleGame = ({
     appleGameInfo,
     drag,
     appleGameManager,
+    animation,
   });
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={appleGameCanvasRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      onTouchStart={handleMouseDown}
-      onTouchMove={handleMouseMove}
-      onTouchEnd={handleMouseUp}
     ></canvas>
   );
 };

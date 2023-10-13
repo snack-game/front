@@ -34,6 +34,4 @@ export type RankingType = {
   message?: string;
 };
 
-export type MouseEventType =
-  | React.MouseEvent<HTMLCanvasElement>
-  | React.TouchEvent<HTMLCanvasElement>;
+export type MouseEventType = React.MouseEvent<HTMLCanvasElement> | TouchEvent;

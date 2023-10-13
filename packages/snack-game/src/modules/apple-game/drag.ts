@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { MouseEventType } from '@utils/types/common.type';
 
 export class Drag {
@@ -9,10 +7,8 @@ export class Drag {
   public currentY: number;
   public isDrawing: boolean;
 
-  isTouchEvent(
-    event: MouseEventType,
-  ): event is React.TouchEvent<HTMLCanvasElement> {
-    return (event as React.TouchEvent<HTMLCanvasElement>).touches !== undefined;
+  isTouchEvent(event: MouseEventType): event is TouchEvent {
+    return (event as TouchEvent).touches !== undefined;
   }
 
   constructor() {
@@ -28,6 +24,7 @@ export class Drag {
     clientLeft: number,
     clientTop: number,
   ): void {
+    event.preventDefault();
     this.isDrawing = true;
 
     let clientX, clientY;
@@ -52,6 +49,7 @@ export class Drag {
     clientLeft: number,
     clientTop: number,
   ): void {
+    event.preventDefault();
     let clientX, clientY;
 
     if (this.isTouchEvent(event)) {

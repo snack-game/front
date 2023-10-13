@@ -1,3 +1,4 @@
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import styled from '@emotion/styled';
@@ -7,6 +8,8 @@ import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
 import UserRankingCard from '@components/ui/Cards/UserRankingCard';
+import Footer from '@components/ui/Footer/Footer';
+import Header from '@components/ui/Header/Header';
 import RankingTable from '@components/ui/RankingTable/RankingTable';
 import { userState } from '@utils/atoms/auth.atom';
 
@@ -29,6 +32,7 @@ const LeaderBoardPage = () => {
       <Helmet>
         <title>Snack Game || Board</title>
       </Helmet>
+      <Header />
       <PageContainer>
         <ContentContainer>
           {userStateValue.accessToken && (
@@ -41,6 +45,7 @@ const LeaderBoardPage = () => {
           </QueryBoundary>
         </ContentContainer>
       </PageContainer>
+      <Footer />
     </>
   );
 };
