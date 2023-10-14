@@ -26,12 +26,12 @@ const AppleGameWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   background-color: ${theme.colors.lightOrange};
-  width: 80%;
+  width: 90%;
   height: 80vh;
 
-  @media (max-width: 900px) {
+  @media (max-width: 768px) {
     width: 100%;
-    height: 100vh;
+    height: 90vh;
   }
 `;
 
@@ -42,6 +42,10 @@ const GameHUD = styled.div`
   margin: auto;
   justify-content: space-around;
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: 2rem;
+  }
 `;
 
 const lottieOptions: LottieOptionTypes = {
@@ -54,6 +58,7 @@ const AppleGameContainer = () => {
   const appleGameManager = useMemo(() => new AppleGameManager(), []);
 
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
@@ -75,6 +80,10 @@ const AppleGameContainer = () => {
     gameStart().then(() => {
       setStart(true);
       setTimeRemaining(120);
+
+      if (gameHUDRef.current) {
+        gameHUDRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   };
 
@@ -111,7 +120,7 @@ const AppleGameContainer = () => {
 
   return (
     <>
-      <GameHUD>
+      <GameHUD ref={gameHUDRef}>
         <p>{appleGameValue.score + '점'}</p>
         <p>{timeRemaining + '초'}</p>
         <div
