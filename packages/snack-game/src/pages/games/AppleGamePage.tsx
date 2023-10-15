@@ -5,8 +5,6 @@ import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
 import AppleGameContainer from '@components/games/AppleGameContainer';
-import Footer from '@components/ui/Footer/Footer';
-import Header from '@components/ui/Header/Header';
 
 const AppleGamePage = () => {
   useEffect(() => {
@@ -18,13 +16,11 @@ const AppleGamePage = () => {
       <Helmet>
         <title>Snack Game || Apple Game</title>
       </Helmet>
-      <Header />
       <PageContainer>
         <QueryBoundary errorFallback={RetryError}>
           <AppleGameContainer />
         </QueryBoundary>
       </PageContainer>
-      <Footer />
     </>
   );
 };

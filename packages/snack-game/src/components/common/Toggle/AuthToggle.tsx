@@ -1,15 +1,15 @@
 import React from 'react';
 
-import * as Styled from './ToggleSwitch.style';
+import * as Styled from './AuthToggle.style';
 
-interface ToggleSwitchProps {
+interface AuthToggleProps {
   toggle: boolean;
   left: string;
   right: string;
   onClick: () => void;
 }
 
-const ToggleSwitch = ({ toggle, left, right, onClick }: ToggleSwitchProps) => {
+const AuthToggle = ({ toggle, left, right, onClick }: AuthToggleProps) => {
   return (
     <Styled.ToggleContainer onClick={onClick}>
       <Styled.ToggleLeft toggle={toggle}>{left}</Styled.ToggleLeft>
@@ -19,4 +19,4 @@ const ToggleSwitch = ({ toggle, left, right, onClick }: ToggleSwitchProps) => {
   );
 };
 
-export default ToggleSwitch;
+export default AuthToggle;

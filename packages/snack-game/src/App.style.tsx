@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 
-export const globalStyles = css`
+export const globalStyles = (theme: string) => css`
   @font-face {
     font-family: 'Dovemayo_gothic';
+    src: local('./assets/fonts/Dovemayo_gothic.woff2');
     font-weight: normal;
     font-style: normal;
   }
@@ -102,6 +103,10 @@ export const globalStyles = css`
     margin: 0;
     padding: 0;
     font-family: Dovemayo_gothic, sans-serif;
+  }
+
+  body {
+    background-color: ${theme === 'light' ? '#ffffff' : '#37393a'};
   }
 
   a {

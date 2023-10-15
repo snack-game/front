@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useRecoilValue } from 'recoil';
 
-import { modalState } from '@utils/atoms/modal.atom';
+import { modalState } from '@utils/atoms/common.atom';
 
 import useModal from '@hooks/useModal';
 

@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const ThumbnailCardContainer = styled.div`
   display: flex;
   padding: 2rem;
   flex-direction: column;
   border-radius: 15px;
-  border: 1px solid ${theme.colors.boxBorder};
+  border: 1px solid ${(props) => props.theme.colors.boxBorder};
   width: 60%;
   margin: auto;
   height: fit-content;

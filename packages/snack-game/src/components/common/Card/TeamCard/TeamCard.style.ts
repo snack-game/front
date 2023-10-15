@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const Container = styled.div`
   display: flex;
   text-align: center;
@@ -34,7 +32,7 @@ export const Contents = styled.div`
 `;
 
 export const Name = styled.h2`
-  color: ${theme.colors.titleText};
+  color: ${(props) => props.theme.colors.titleText};
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;
@@ -42,12 +40,12 @@ export const Name = styled.h2`
 
 export const Position = styled.h3`
   margin-bottom: 0.75rem;
-  color: ${theme.colors.description};
+  color: ${(props) => props.theme.colors.description};
 `;
 
 export const Intro = styled.span`
   display: block;
-  color: ${theme.colors.description};
+  color: ${(props) => props.theme.colors.description};
   white-space: pre-line;
 `;
 

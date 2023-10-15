@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const Modal = styled.div`
   width: 100vw;
   height: 100vh;
@@ -24,6 +22,6 @@ export const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
-  background-color: ${theme.colors.background};
-  border: 1px solid ${theme.colors.boxBorder};
+  background-color: ${(props) => props.theme.colors.background};
+  border: 1px solid ${(props) => props.theme.colors.boxBorder};
 `;

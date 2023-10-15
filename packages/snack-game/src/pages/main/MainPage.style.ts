@@ -39,7 +39,7 @@ export const AppleGamePageRight = styled.div`
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: 500;
-    color: #111827;
+    color: ${(props) => props.theme.colors.titleText};
 
     @media (min-width: 640px) {
       font-size: 2.25rem;
@@ -50,5 +50,6 @@ export const AppleGamePageRight = styled.div`
   & > p {
     margin-bottom: 2rem;
     line-height: 1.625;
+    color: ${(props) => props.theme.colors.description};
   }
 `;

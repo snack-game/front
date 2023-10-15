@@ -1,4 +1,4 @@
-const theme = {
+export const lightTheme = {
   colors: {
     titleText: '#111827',
     description: '#6b7280',
@@ -6,17 +6,29 @@ const theme = {
     boxBorder: '#d1d5db',
     gray: '#f3f4f6',
 
+    lightGreen: '#22c55e',
+    errorColor: '#EF6262',
     orange: '#fb923c',
 
-    lightOrange: '#ffedd5',
+    appleGameBackground: '#ffedd5',
 
-    lightGreen: '#22c55e',
-    superRed: '#F24957',
-    errorColor: '#EF6262',
-
-    darkYellow: '#F9B132',
-    darkBrown: '#DB862C',
+    buttonText: '#ffffff',
   },
 };
 
-export default theme;
+export const darkTheme = {
+  colors: {
+    titleText: '#E8EEF2',
+    description: '#C7D3DD',
+    background: '#37393a',
+    boxBorder: '#605F5E',
+    gray: '#f3f4f6',
+
+    lightGreen: '#22c55e',
+    errorColor: '#EF6262',
+    orange: '#fb923c',
+
+    appleGameBackground: '#605F5E',
+    buttonText: '#E8EEF2',
+  },
+};

@@ -1,5 +1,6 @@
 export const ATOM_KEY = {
   TOAST: 'toastState',
+  RESET_TOAST: 'resetToastState',
 
   USER: 'userState',
   USER_PERSIST: 'userPersistState',
@@ -12,4 +13,6 @@ export const ATOM_KEY = {
   RESET_APPLE_GAME_PROGRESS: 'resetAppleGameProgressState',
 
   MODAL: 'modalState',
+
+  THEME: 'themeState',
 };

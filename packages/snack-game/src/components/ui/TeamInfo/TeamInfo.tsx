@@ -49,7 +49,7 @@ export const Title = styled.div`
   text-align: center;
   flex-direction: column;
   width: 100%;
-  color: #111827;
+  color: ${(props) => props.theme.colors.titleText};
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 500;

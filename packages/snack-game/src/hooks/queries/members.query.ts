@@ -1,7 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 
 import membersApi from '@api/members';
-import { userState } from '@utils/atoms/auth.atom';
+import { userState } from '@utils/atoms/member.atom';
 import { AuthType, MemberType } from '@utils/types/member.type';
 
 import { TOAST_MESSAGE } from '@constants/toast.constant';

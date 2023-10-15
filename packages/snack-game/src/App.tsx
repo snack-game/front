@@ -1,16 +1,16 @@
-import { lazy, Suspense } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
-import { RecoilRoot } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading/Loading';
 import Modal from '@components/common/Modal/Modal';
 import Toast from '@components/ui/Toast/Toast';
 import errorPage from '@pages/error/ErrorPage';
-import theme from '@utils/theme';
+import { themeState } from '@utils/atoms/common.atom';
+import { darkTheme, lightTheme } from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 
@@ -26,36 +26,36 @@ const LeaderBoardPage = lazy(
 
 const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 
-const queryClient = new QueryClient();
-
 const App = () => {
+  const themeStateValue = useRecoilValue(themeState);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundary fallback={errorPage}>
-            <Global styles={globalStyles} />
-            <Suspense fallback={<Loading type={'page'} />}>
-              <Routes>
-                {/*Main*/}
-                <Route path={PATH.HOME} element={<MainPage />} />
+    <>
+      <ThemeProvider
+        theme={themeStateValue === 'light' ? lightTheme : darkTheme}
+      >
+        <ErrorBoundary fallback={errorPage}>
+          <Global styles={globalStyles(themeStateValue)} />
+          <Suspense fallback={<Loading type={'page'} />}>
+            <Routes>
+              {/*Main*/}
+              <Route path={PATH.HOME} element={<MainPage />} />
 
-                {/*Game*/}
-                <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+              {/*Game*/}
+              <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
-                {/*RANKING*/}
-                <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
+              {/*RANKING*/}
+              <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
 
-                {/*TEAM*/}
-                <Route path={PATH.TEAM} element={<TeamPage />} />
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
+              {/*TEAM*/}
+              <Route path={PATH.TEAM} element={<TeamPage />} />
+            </Routes>
+          </Suspense>
           <Modal />
           <Toast />
-        </ThemeProvider>
-      </RecoilRoot>
-    </QueryClientProvider>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </>
   );
 };
 

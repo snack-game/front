@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const Ul = styled.ul`
   width: 100%;
   list-style: none;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   border-radius: 1rem;
-  border: 1px solid ${theme.colors.boxBorder};
+  border: 1px solid ${(props) => props.theme.colors.boxBorder};
   padding: 0.5rem 0 0.5rem 0;
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0;
 `;
@@ -17,7 +15,7 @@ export const Li = styled.li`
   width: 95%;
   padding: 1rem 0.5rem 1rem 0.5rem;
   margin: auto;
-  border-bottom: 1px solid ${theme.colors.boxBorder};
+  border-bottom: 1px solid ${(props) => props.theme.colors.boxBorder};
   cursor: pointer;
 
   &:last-of-type {
@@ -25,6 +23,6 @@ export const Li = styled.li`
   }
 
   &:hover {
-    background-color: ${theme.colors.gray};
+    background-color: ${(props) => props.theme.colors.gray};
   }
 `;

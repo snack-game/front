@@ -11,6 +11,12 @@ export interface ModalType {
   children?: React.ReactNode;
 }
 
+export interface toastStateType {
+  id?: string;
+  message: string;
+  type?: ToastType;
+}
+
 export type LottieOptionTypes = {
   loop?: boolean;
   autoplay?: boolean;
@@ -35,3 +41,18 @@ export type RankingType = {
 };
 
 export type MouseEventType = React.MouseEvent<HTMLCanvasElement> | TouchEvent;
+
+export type ColorsTypes = {
+  titleText: string;
+  description: string;
+  background: string;
+  boxBorder: string;
+  gray: string;
+
+  lightGreen: string;
+  errorColor: string;
+  orange: string;
+
+  appleGameBackground: string;
+  buttonText: string;
+};

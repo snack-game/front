@@ -1,13 +1,12 @@
 import { ReactNode } from 'react';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 
 import Button from '@components/common/Button/Button';
 import {
   DropDownContainer,
   SideBarContainer,
 } from '@components/common/Menu/Menu.style';
-import theme from '@utils/theme';
 
 interface MenuProps {
   buttonContent: string;
@@ -15,6 +14,8 @@ interface MenuProps {
 }
 
 const Menu = ({ buttonContent, children }: MenuProps) => {
+  const theme = useTheme();
+
   return (
     <SideBarContainer>
       <Button

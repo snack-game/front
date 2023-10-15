@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
 import { darken, transparentize } from 'polished';
 
-import theme from '@utils/theme';
-
 export interface StyledButtonProps {
   show?: boolean;
   size?: 'small' | 'medium' | 'large';
-  color: string;
+  color?: string;
   text?: 'black' | 'white';
   border?: boolean;
 }
 
 export const Button = styled.button<StyledButtonProps>`
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.color || props.theme.colors.orange};
   line-height: 1.75rem;
   border-radius: 0.25rem;
   border: none;
@@ -40,15 +38,16 @@ export const Button = styled.button<StyledButtonProps>`
   }};
 
   display: ${(props) => (props.show ? 'inline-flex' : 'none')};
-  color: ${(props) =>
-    props.text == 'white' ? theme.colors.background : theme.colors.description};
+  color: ${(props) => props.theme.colors.buttonText};
 
   &:hover {
-    background-color: ${(props) => darken(0.1, props.color)};
+    background-color: ${(props) =>
+      darken(0.1, props.color || props.theme.colors.orange)};
   }
 
   &:disabled {
-    background-color: ${(props) => transparentize(0.5, props.color)};
+    background-color: ${(props) =>
+      transparentize(0.5, props.color || props.theme.colors.orange)};
   }
 `;
 

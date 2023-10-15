@@ -2,8 +2,6 @@ import React from 'react';
 
 import { SerializedStyles } from '@emotion/react';
 
-import theme from '@utils/theme';
-
 import * as Styled from './Button.style';
 
 export interface ButtonProps {
@@ -25,7 +23,7 @@ const Button = ({
   disabled,
   size = 'medium',
   show = true,
-  color = theme.colors.orange,
+  color,
   text = 'white',
 }: ButtonProps) => {
   return (

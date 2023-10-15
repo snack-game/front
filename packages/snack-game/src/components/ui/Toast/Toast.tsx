@@ -1,14 +1,14 @@
 import { toast, Toaster } from 'react-hot-toast';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
-import { toastState } from '@utils/atoms/toast.atom';
+import { resetToastState, toastState } from '@utils/atoms/common.atom';
 
 import useDebounce from '@hooks/useDebounce';
 
 const Toast = () => {
   const { message, type } = useRecoilValue(toastState);
-
+  const resetToast = useResetRecoilState(resetToastState);
   useDebounce({
     target: () => {
       if (message) {
@@ -30,6 +30,7 @@ const Toast = () => {
               icon: '⚠️',
             });
         }
+        resetToast();
       }
     },
     delay: 300,

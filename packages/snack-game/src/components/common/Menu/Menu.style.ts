@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import { darken } from 'polished';
 
-import theme from '@utils/theme';
-
 export const SideBarContainer = styled.div`
   position: relative;
 
@@ -15,11 +13,11 @@ export const DropDownContainer = styled.ul`
   display: none;
   position: absolute;
   border-radius: 15px;
-  border: 1px solid ${theme.colors.boxBorder};
+  border: 1px solid ${(props) => props.theme.colors.boxBorder};
   padding: 0.2rem;
   right: 0;
   z-index: 30;
-  background-color: ${theme.colors.gray};
+  background-color: ${(props) => props.theme.colors.gray};
   animation: growOut 300ms ease-in-out forwards;
   transform-origin: top center;
 
@@ -80,7 +78,7 @@ export const DropDownItem = styled.li`
   border-radius: 15px;
 
   &:hover {
-    background-color: ${darken(0.1, theme.colors.gray)};
+    background-color: ${(props) => darken(0.1, props.theme.colors.gray)};
   }
 
   & > div {

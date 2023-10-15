@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const HeaderContainer = styled.div`
   width: 100%;
   max-width: 1280px;
@@ -17,7 +15,7 @@ export const HeaderContainer = styled.div`
 
 export const Title = styled.div`
   display: flex;
-  color: ${theme.colors.titleText};
+  color: ${(props) => props.theme.colors.titleText};
   font-weight: 500;
   align-items: center;
 
@@ -42,16 +40,23 @@ export const Nav = styled.nav`
   justify-content: center;
   align-items: center;
   gap: 4rem;
-  color: ${theme.colors.titleText};
+  color: ${(props) => props.theme.colors.titleText};
   font-size: 1rem;
 
   & > a:hover {
-    color: ${theme.colors.description};
+    color: ${(props) => props.theme.colors.description};
   }
 
   @media (max-width: 768px) {
     display: none;
   }
+`;
+
+export const Options = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Desktop = styled.div`

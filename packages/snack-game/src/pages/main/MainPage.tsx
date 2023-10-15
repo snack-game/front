@@ -4,8 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import AppleGameLottie from '@assets/lottie/apple-game.json';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button/Button';
-import Footer from '@components/ui/Footer/Footer';
-import Header from '@components/ui/Header/Header';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import { LottieOptionTypes } from '@utils/types/common.type';
 
@@ -35,7 +33,6 @@ const MainPage = () => {
         <title>Snack Game || Main</title>
       </Helmet>
       <SnackRainContainer />
-      <Header />
       <PageContainer>
         <Styled.AppleGamePageContainer>
           <Styled.AppleGamePageLeft>
@@ -57,7 +54,6 @@ const MainPage = () => {
           </Styled.AppleGamePageRight>
         </Styled.AppleGamePageContainer>
       </PageContainer>
-      <Footer />
     </>
   );
 };

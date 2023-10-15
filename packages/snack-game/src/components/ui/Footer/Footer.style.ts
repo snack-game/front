@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const FooterContainer = styled.div`
   width: 100%;
   max-width: 1280px;
@@ -19,7 +17,7 @@ export const FooterContainer = styled.div`
 
 export const Title = styled.a`
   display: flex;
-  color: ${theme.colors.titleText};
+  color: ${(props) => props.theme.colors.titleText};
   font-weight: 500;
   justify-content: center;
   align-items: center;
@@ -37,7 +35,7 @@ export const Title = styled.a`
 
 export const CopyRight = styled.p`
   margin-top: 1rem;
-  color: ${theme.colors.description};
+  color: ${(props) => props.theme.colors.description};
   font-size: 0.875rem;
   line-height: 1.25rem;
 
@@ -48,19 +46,19 @@ export const CopyRight = styled.p`
     margin-top: 0;
     margin-left: 1rem;
     border-left-width: 2px;
-    border-color: ${theme.colors.boxBorder};
+    border-color: ${(props) => props.theme.colors.boxBorder};
   }
 
   & > a {
     margin-left: 0.25rem;
-    color: #4b5563;
+    color: ${(props) => props.theme.colors.description};
   }
 `;
 
 export const IconProvider = styled.span`
   display: inline-flex;
   margin-top: 1rem;
-  color: ${theme.colors.description};
+  color: ${(props) => props.theme.colors.description};
   font-size: 0.75rem;
   line-height: 1rem;
   justify-content: center;

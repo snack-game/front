@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 export const Form = styled.form`
   display: flex;
   padding: 2rem;
@@ -15,7 +13,7 @@ export const Title = styled.h2`
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: ${theme.colors.titleText};
+  color: ${(props) => props.theme.colors.titleText};
 `;
 
 export const InputContainer = styled.div`
@@ -28,7 +26,7 @@ export const Description = styled.p`
   font-size: 0.75rem;
   line-height: 1rem;
   white-space: pre-line;
-  color: ${theme.colors.description};
+  color: ${(props) => props.theme.colors.description};
 `;
 
 export const AuthTypeContainer = styled.div`

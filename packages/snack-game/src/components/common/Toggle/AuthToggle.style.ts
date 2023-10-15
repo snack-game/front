@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import theme from '@utils/theme';
-
 interface StyledToggleSwitchProps {
   toggle: boolean;
 }
@@ -21,7 +19,7 @@ export const Highlight = styled.div<StyledToggleSwitchProps>`
   height: 100%;
   width: 50%;
   border-radius: 15px;
-  background-color: ${theme.colors.orange};
+  background-color: ${(props) => props.theme.colors.orange};
   position: absolute;
   top: 0;
   transition: transform 0.3s ease-in-out;
@@ -35,7 +33,9 @@ export const ToggleLeft = styled.div<StyledToggleSwitchProps>`
   z-index: 1;
   transition: ease-in-out 0.3s;
   color: ${(props) =>
-    props.toggle ? theme.colors.titleText : theme.colors.background};
+    props.toggle
+      ? props.theme.colors.titleText
+      : props.theme.colors.background};
 `;
 
 export const ToggleRight = styled.div<StyledToggleSwitchProps>`
@@ -44,5 +44,7 @@ export const ToggleRight = styled.div<StyledToggleSwitchProps>`
   z-index: 1;
   transition: ease-in-out 0.3s;
   color: ${(props) =>
-    props.toggle ? theme.colors.background : theme.colors.titleText};
+    props.toggle
+      ? props.theme.colors.background
+      : props.theme.colors.titleText};
 `;

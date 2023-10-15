@@ -2,6 +2,9 @@ import React, { ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
+import Footer from '@components/ui/Footer/Footer';
+import Header from '@components/ui/Header/Header';
+
 interface PageContainerProps {
   children: ReactNode;
 }
@@ -9,7 +12,9 @@ interface PageContainerProps {
 const PageContainer = ({ children }: PageContainerProps) => {
   return (
     <PageContainerWrapper>
+      <Header />
       <PageContainerInner>{children}</PageContainerInner>
+      <Footer />
     </PageContainerWrapper>
   );
 };
