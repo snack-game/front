@@ -7,12 +7,17 @@ import Moon from '@assets/images/moon.png';
 import Sun from '@assets/images/sun.png';
 import { themeState } from '@utils/atoms/common.atom';
 
+import useLocalStorage from '@hooks/useLocalStorage';
+
 const ThemeToggle = () => {
   const [themeStateValue, setThemeState] = useRecoilState(themeState);
-  const [theme, setTheme] = useState(true);
+  const { setStorageValue, storageValue } = useLocalStorage({ key: 'theme' });
+  const [theme, setTheme] = useState(storageValue === 'light');
 
   const handleThemeToggle = () => {
-    setThemeState(themeStateValue === 'light' ? 'dark' : 'light');
+    const toggledTheme = themeStateValue === 'light' ? 'dark' : 'light';
+    setThemeState(toggledTheme);
+    setStorageValue(toggledTheme);
     setTheme(!theme);
   };
 

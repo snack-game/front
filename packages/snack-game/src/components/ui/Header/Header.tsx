@@ -18,6 +18,12 @@ import { useInternalRouter } from '@hooks/useInternalRouter';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
+const Logo = () => {
+  const img = new Image();
+  img.src = LogoImage;
+  return img;
+};
+
 const Header = () => {
   const theme = useTheme();
   const { openModal } = useModal();

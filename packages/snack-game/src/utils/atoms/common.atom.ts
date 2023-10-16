@@ -27,7 +27,7 @@ export const resetToastState = selector({
   set: ({ reset }) => reset(toastState),
 });
 
-export const themeState = atom<'light' | 'dark'>({
+export const themeState = atom({
   key: ATOM_KEY.THEME,
-  default: 'light',
+  default: JSON.parse(window.localStorage.getItem('theme') || 'light'),
 });
