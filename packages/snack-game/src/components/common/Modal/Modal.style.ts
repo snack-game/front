@@ -24,4 +24,8 @@ export const ModalContainer = styled.div`
   border-radius: 0.5rem;
   background-color: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.boxBorder};
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;

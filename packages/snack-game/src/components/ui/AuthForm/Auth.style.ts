@@ -1,5 +1,14 @@
 import styled from '@emotion/styled';
 
+export const AuthTypeContainer = styled.div`
+  width: fit-content;
+  margin: 1rem auto 0 auto;
+
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
+`;
+
 export const Form = styled.form`
   display: flex;
   padding: 2rem;
@@ -27,9 +36,4 @@ export const Description = styled.p`
   line-height: 1rem;
   white-space: pre-line;
   color: ${(props) => props.theme.colors.description};
-`;
-
-export const AuthTypeContainer = styled.div`
-  width: fit-content;
-  margin: 1rem auto 0 auto;
 `;
