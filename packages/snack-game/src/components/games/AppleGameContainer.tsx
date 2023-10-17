@@ -59,15 +59,16 @@ const AppleGameContainer = () => {
 
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const { ref } = useLottie(lottieOptions);
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
   const gameRefresh = useAppleGameRefresh();
+
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
   const appleGameValue = useRecoilValue(appleGameState);
-  const { ref } = useLottie(lottieOptions);
 
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);

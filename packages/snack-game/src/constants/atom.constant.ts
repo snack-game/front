@@ -15,4 +15,5 @@ export const ATOM_KEY = {
   MODAL: 'modalState',
 
   THEME: 'themeState',
+  DEFAULT_THEME: 'defaultThemeState',
 };

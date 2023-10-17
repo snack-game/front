@@ -5,7 +5,7 @@ import { appleGameState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 import {
   appleGameCheckMovePropsType,
-  appleGameRectType,
+  appleGameProgressType,
   appleGameStateType,
 } from '@utils/types/game.type';
 import { AuthType } from '@utils/types/member.type';
@@ -39,9 +39,11 @@ export const useAppleGameStart = () => {
         .then(async ({ accessToken }: AuthType) => {
           await gameStartMutation.mutateAsync(accessToken);
         });
-    } else {
-      await gameStartMutation.mutateAsync();
+
+      return;
     }
+
+    await gameStartMutation.mutateAsync();
   };
 
   return { gameStart, gameStartMutation };
@@ -71,7 +73,7 @@ export const useAppleGameCheck = () => {
     apiMethod: appleGameApi.checkGameMove,
   });
 
-  const gameEnd = (rects: appleGameRectType[]) => {
+  const gameEnd = (rects: appleGameProgressType) => {
     const sessionId = appleGameValue.sessionId;
 
     if (!sessionId || !rects) {

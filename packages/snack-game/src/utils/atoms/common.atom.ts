@@ -29,5 +29,15 @@ export const resetToastState = selector({
 
 export const themeState = atom({
   key: ATOM_KEY.THEME,
-  default: JSON.parse(window.localStorage.getItem('theme') || 'light'),
+  default: selector({
+    key: ATOM_KEY.DEFAULT_THEME,
+    get: () => {
+      const storedTheme = window.localStorage.getItem('theme');
+      if (!storedTheme) {
+        window.localStorage.setItem('theme', JSON.stringify('light'));
+        return 'light';
+      }
+      return storedTheme;
+    },
+  }),
 });
