@@ -37,7 +37,7 @@ export const themeState = atom({
         window.localStorage.setItem('theme', JSON.stringify('light'));
         return 'light';
       }
-      return storedTheme;
+      return JSON.parse(storedTheme);
     },
   }),
 });
