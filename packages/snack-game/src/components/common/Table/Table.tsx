@@ -7,7 +7,8 @@ interface TableProps {
 }
 
 const TableContainer = styled.div`
-  width: 100%;
+  width: 80%;
+  margin: auto;
 `;
 
 const TableTitle = styled.div`

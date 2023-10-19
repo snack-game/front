@@ -6,15 +6,12 @@ export const ThumbnailCardContainer = styled.div`
   flex-direction: column;
   border-radius: 15px;
   border: 1px solid ${(props) => props.theme.colors.boxBorder};
-  width: 60%;
+  width: 30%;
   margin: auto;
   height: fit-content;
   align-items: center;
-
-  @media (min-width: 640px) {
-    flex-direction: row;
-    width: 100%;
-  }
+  text-align: center;
+  min-width: 225px;
 `;
 
 export const Thumbnail = styled.div`
@@ -25,13 +22,8 @@ export const Thumbnail = styled.div`
   border-radius: 9999px;
   padding: 1rem;
 
-  @media (min-width: 640px) {
-    margin-bottom: 0;
-    margin-right: 2rem;
-  }
-
   & > img {
-    width: 4rem;
+    width: 5rem;
   }
 `;
 

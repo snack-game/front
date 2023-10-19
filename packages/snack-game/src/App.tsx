@@ -29,7 +29,6 @@ const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 const App = () => {
   const themeStateValue = useRecoilValue(themeState);
 
-  console.log(themeStateValue);
   return (
     <>
       <ThemeProvider
