@@ -22,7 +22,7 @@ const Menu = ({ buttonContent, children }: MenuProps) => {
         content={buttonContent}
         size={'small'}
         color={theme.colors.lightGreen}
-        wrapper={css({ margin: '0.2rem' })}
+        wrapper={css({ marginTop: '0.2rem' })}
       />
       <DropDownContainer>{children}</DropDownContainer>
     </SideBarContainer>

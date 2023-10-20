@@ -4,14 +4,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import RefreshLottie from '@assets/lottie/refresh.json';
+import Refrash from '@assets/images/refresh.png';
 import Button from '@components/common/Button/Button';
 import Loading from '@components/common/Loading/Loading';
 import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
-import { LottieOptionTypes } from '@utils/types/common.type';
 
 import {
   useAppleGameCheck,
@@ -19,18 +18,16 @@ import {
   useAppleGameStart,
 } from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
-import useLottie from '@hooks/useLottie';
 
 const AppleGameWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   background-color: ${(props) => props.theme.colors.appleGameBackground};
-  width: 90%;
-  height: 80vh;
+  width: 100%;
+  height: 90vh;
 
   @media (max-width: 768px) {
-    width: 100%;
-    height: 90vh;
+    height: 95vh;
   }
 `;
 
@@ -43,15 +40,15 @@ const GameHUD = styled.div`
   align-items: center;
   color: ${(props) => props.theme.colors.titleText};
 
+  & > img {
+    width: 2rem;
+    height: 2rem;
+  }
+
   @media (max-width: 768px) {
     height: 2rem;
   }
 `;
-
-const lottieOptions: LottieOptionTypes = {
-  animationData: RefreshLottie,
-  playOnHover: true,
-};
 
 const AppleGameContainer = () => {
   const drag = useMemo(() => new Drag(), []);
@@ -59,7 +56,6 @@ const AppleGameContainer = () => {
 
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-  const { ref } = useLottie(lottieOptions);
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
@@ -124,14 +120,7 @@ const AppleGameContainer = () => {
       <GameHUD ref={gameHUDRef}>
         <p>{appleGameValue.score + '점'}</p>
         <p>{timeRemaining + '초'}</p>
-        <div
-          ref={ref}
-          onClick={handleRefresh}
-          css={css({
-            width: '2.5rem',
-            height: '2.5rem',
-          })}
-        />
+        <img src={Refrash} alt={'새로고침'} onClick={handleRefresh} />
       </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
         {gameStartMutation.isLoading && <Loading />}

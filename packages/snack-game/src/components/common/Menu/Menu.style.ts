@@ -18,7 +18,7 @@ export const DropDownContainer = styled.ul`
   right: 0;
   z-index: 30;
   background-color: ${(props) => props.theme.colors.gray};
-  animation: growOut 300ms ease-in-out forwards;
+  animation: growOut 200ms ease-in-out forwards;
   transform-origin: top center;
 
   @-moz-keyframes growOut {

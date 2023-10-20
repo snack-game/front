@@ -11,8 +11,9 @@ const UserRankingCardWrapper = styled.div`
   transform: translateX(-50%);
   padding: 1.5rem;
   border: 1px solid;
-  border-color: ${(props) => props.theme.colors.boxBorder};
+  border-color: ${(props) => props.theme.colors.orange};
   border-radius: 1rem;
+  color: ${(props) => props.theme.colors.titleText};
   background-color: ${(props) => props.theme.colors.background};
   box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
 `;

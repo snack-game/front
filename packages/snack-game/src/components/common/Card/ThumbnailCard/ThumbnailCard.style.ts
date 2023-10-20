@@ -30,13 +30,14 @@ export const Thumbnail = styled.div`
 export const Info = styled.div`
   flex-grow: 1;
   white-space: pre-wrap;
+  color: ${(props) => props.theme.colors.orange};
 
   & > h2 {
     margin-bottom: 0.75rem;
     font-size: 1.125rem;
     line-height: 1.75rem;
     font-weight: 500;
-    color: #111827;
+    color: ${(props) => props.theme.colors.titleText};
   }
 
   & > p {

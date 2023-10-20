@@ -16,13 +16,17 @@ const TableItemContainer = styled.div`
   font-size: 1rem;
   color: ${(props) => props.theme.colors.titleText};
   margin-bottom: 0.5rem;
+
+  & > p {
+    color: ${(props) => props.theme.colors.orange};
+  }
 `;
 
 const TableItem = ({ ranking, name, score }: TableItemProps) => {
   return (
     <TableItemContainer>
       <p>{ranking}</p>
-      <p>{name}</p>
+      <span>{name}</span>
       <p>{score}</p>
     </TableItemContainer>
   );

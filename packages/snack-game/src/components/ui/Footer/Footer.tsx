@@ -14,7 +14,7 @@ const Footer = () => {
       </Styled.CopyRight>
       <Styled.IconProvider>
         <a href="https://www.flaticon.com/kr/free-icons/" title="아이콘">
-          아이콘 제작자: Freepik, Triangle Squad
+          Icons: Freepik, Triangle Squad, IYAHICON from www.flaticon.com
         </a>
       </Styled.IconProvider>
     </Styled.FooterContainer>
