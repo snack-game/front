@@ -1,5 +1,5 @@
 export interface GroupType {
-  id: number;
+  id?: number;
   name: string;
 }
 

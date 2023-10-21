@@ -22,7 +22,7 @@ const LoginForm = () => {
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutate.mutate({ name: values.name.value });
+    loginMutate.mutate({ name: values.name.value, group: null });
   };
 
   return (
