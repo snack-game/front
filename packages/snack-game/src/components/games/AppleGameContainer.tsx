@@ -23,11 +23,12 @@ const AppleGameWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   background-color: ${(props) => props.theme.colors.appleGameBackground};
-  width: 100%;
-  height: 90vh;
+  width: 80%;
+  height: 80vh;
 
-  @media (max-width: 768px) {
-    height: 95vh;
+  @media (max-width: 900px) {
+    width: 100%;
+    height: 90vh;
   }
 `;
 

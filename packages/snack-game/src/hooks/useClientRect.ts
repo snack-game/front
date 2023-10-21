@@ -1,5 +1,7 @@
 import { RefObject, useEffect, useState } from 'react';
 
+import useDebouncedCallback from '@hooks/useDebouncedCallback';
+
 interface useClientRectProps {
   canvasBaseRef: RefObject<HTMLElement>;
 }
@@ -10,8 +12,8 @@ export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
   const [clientLeft, setClientLeft] = useState<number>(0);
   const [clientTop, setClientTop] = useState<number>(0);
 
-  useEffect(() => {
-    const setClientRect = () => {
+  const debouncedSetClientRect = useDebouncedCallback({
+    target: () => {
       if (canvasBaseRef.current) {
         const rect = canvasBaseRef.current.getBoundingClientRect();
         setClientWidth(rect.width);
@@ -19,13 +21,17 @@ export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
         setClientLeft(rect.left);
         setClientTop(rect.top);
       }
-    };
-    setClientRect();
+    },
+    delay: 300,
+  });
 
-    window.addEventListener('resize', setClientRect);
+  useEffect(() => {
+    debouncedSetClientRect();
+
+    window.addEventListener('resize', debouncedSetClientRect);
 
     return () => {
-      window.removeEventListener('resize', setClientRect);
+      window.removeEventListener('resize', debouncedSetClientRect);
     };
   }, []);
 

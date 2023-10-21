@@ -86,4 +86,12 @@ export class Drag {
       ctx.stroke();
     }
   }
+
+  resetDragArea() {
+    this.startX = 0;
+    this.startY = 0;
+    this.currentX = 0;
+    this.currentY = 0;
+    this.isDrawing = false;
+  }
 }
