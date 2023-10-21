@@ -22,6 +22,7 @@ const TopRankingCard = ({ rankInfo }: TopRankingCardProps) => {
       <ThumbnailCard
         imgSrc={loadedImages[rankInfo.ranking - 1].src}
         title={rankInfo.owner.name + ' 님'}
+        subTitle={rankInfo.owner.group?.name || '그룹 없음'}
         content={rankInfo.score + '점!'}
       ></ThumbnailCard>
     </TopRankingCardWrapper>

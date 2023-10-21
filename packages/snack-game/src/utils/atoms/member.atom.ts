@@ -13,10 +13,7 @@ export const userState = atom<MemberType>({
   key: ATOM_KEY.USER,
   default: {
     name: '',
-    group: {
-      id: 0,
-      name: null,
-    },
+    group: null,
   },
   effects_UNSTABLE: [persistAtomUser],
 });

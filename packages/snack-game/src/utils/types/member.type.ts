@@ -1,10 +1,12 @@
+export interface GroupType {
+  id: number;
+  name: string;
+}
+
 export interface MemberType {
   id?: number;
   name?: string;
-  group?: {
-    id?: number;
-    name: string | null;
-  };
+  group: GroupType | null;
   accessToken?: string;
 }
 

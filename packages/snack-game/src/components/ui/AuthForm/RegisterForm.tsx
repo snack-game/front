@@ -54,11 +54,11 @@ const RegisterForm = () => {
       </Styled.InputContainer>
       <Styled.InputContainer>
         <Input
-          placeholder={'소속'}
+          placeholder={'그룹'}
           type={'text'}
           id={'auth-group-input'}
           onChange={handleChangeValue('group')}
-          errorMessage={'소속은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
+          errorMessage={'그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
           valid={values.group.valid}
           value={values.group.value}
         />
@@ -75,7 +75,7 @@ const RegisterForm = () => {
       />
       <Styled.Description>
         {
-          '소속은 나중에 설정해도 괜찮아요!\n존재하지 않는 소속이면 새로 만들어져요!'
+          '그룹은 나중에 설정해도 괜찮아요!\n존재하지 않는 그룹이면 새로 만들어져요!'
         }
       </Styled.Description>
     </Styled.Form>

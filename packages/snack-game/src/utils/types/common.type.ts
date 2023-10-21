@@ -2,6 +2,8 @@ import React from 'react';
 
 import { AnimationItem } from 'lottie-web';
 
+import { GroupType } from '@utils/types/member.type';
+
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 
 export interface ModalType {
@@ -34,7 +36,7 @@ export type RankingType = {
   owner: {
     id: number;
     name: string;
-    group: string | null;
+    group: GroupType | null;
   };
   score: number;
   message?: string;

@@ -3,10 +3,16 @@ import * as Styled from './ThumbnailCard.style';
 interface ThumbnailCardProps {
   imgSrc?: string;
   title?: string;
+  subTitle?: string;
   content?: string;
 }
 
-const ThumbnailCard = ({ title, content, imgSrc }: ThumbnailCardProps) => {
+const ThumbnailCard = ({
+  title,
+  content,
+  subTitle,
+  imgSrc,
+}: ThumbnailCardProps) => {
   return (
     <Styled.ThumbnailCardContainer>
       {imgSrc && (
@@ -16,6 +22,7 @@ const ThumbnailCard = ({ title, content, imgSrc }: ThumbnailCardProps) => {
       )}
       <Styled.Info>
         <h2>{title}</h2>
+        <span>{subTitle}</span>
         <p>{content}</p>
       </Styled.Info>
     </Styled.ThumbnailCardContainer>

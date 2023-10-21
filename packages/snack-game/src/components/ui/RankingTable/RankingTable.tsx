@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 
 import TopRankingCard from '@components/common/Card/TopRankingCard';
+import RankingTableItem from '@components/common/Table/RankingTableItem';
 import Table from '@components/common/Table/Table';
-import TableItem from '@components/common/Table/TableItem';
 
 import { useGetTotalRanking } from '@hooks/queries/ranking.query';
 
 const RankingTable = () => {
-  const tableTitle = ['랭킹', '이름', '점수'];
+  const tableTitle = ['랭킹', '이름', '그룹', '점수'];
   const totalRanking = useGetTotalRanking();
 
   const topRanking = totalRanking?.slice(0, 3);
@@ -23,10 +23,11 @@ const RankingTable = () => {
       <Table tableTitle={tableTitle}>
         {otherRanking?.map((item, index) => {
           return (
-            <TableItem
+            <RankingTableItem
               key={index + 3}
               ranking={item.ranking}
               name={item.owner.name}
+              group={item.owner.group}
               score={item.score}
             />
           );

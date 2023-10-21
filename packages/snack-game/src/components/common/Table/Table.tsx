@@ -7,8 +7,12 @@ interface TableProps {
 }
 
 const TableContainer = styled.div`
-  width: 80%;
+  width: 70%;
   margin: auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const TableTitle = styled.div`
@@ -21,6 +25,15 @@ const TableTitle = styled.div`
   color: white;
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
+
+  & > div {
+    flex: 1;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.2rem 0.1rem;
+  }
 `;
 
 const Table = ({ children, tableTitle }: TableProps) => {

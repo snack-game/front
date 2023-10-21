@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 
+import { GroupType } from '@utils/types/member.type';
+
 interface TableItemProps {
   ranking: number;
   name: string;
+  group: GroupType | null;
   score: number;
 }
 
@@ -20,16 +23,27 @@ const TableItemContainer = styled.div`
   & > p {
     color: ${(props) => props.theme.colors.orange};
   }
+
+  & > span,
+  & > p {
+    flex: 1;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.2rem 0.1rem;
+  }
 `;
 
-const TableItem = ({ ranking, name, score }: TableItemProps) => {
+const RankingTableItem = ({ ranking, name, group, score }: TableItemProps) => {
   return (
     <TableItemContainer>
       <p>{ranking}</p>
       <span>{name}</span>
+      <span>{group === null ? 'x' : group.name}</span>
       <p>{score}</p>
     </TableItemContainer>
   );
 };
 
-export default TableItem;
+export default RankingTableItem;

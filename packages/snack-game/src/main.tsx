@@ -8,7 +8,14 @@ import { RecoilRoot } from 'recoil';
 
 import App from './App';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const Root = () => {
   return (
