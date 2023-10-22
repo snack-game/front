@@ -22,20 +22,20 @@ export class AppleGameManager {
     const availableWidth = (clientWidth - BORDER_OFFSET * 2) / COLUMNS;
     const availableHeight = (clientHeight - BORDER_OFFSET * 2) / ROWS;
 
-    const appleRadius = Math.min(availableWidth, availableHeight) * 0.4;
+    const appleRadius = Math.floor(
+      Math.min(availableWidth, availableHeight) * 0.4,
+    );
+    const appleXOffSet = Math.floor(
+      availableWidth + availableWidth / 2 - appleRadius + BORDER_OFFSET,
+    );
+    const appleYOffSet = Math.floor(
+      availableHeight + availableHeight / 2 - appleRadius + BORDER_OFFSET,
+    );
 
     for (let row = 0; row < ROWS; row++) {
       for (let column = 0; column < COLUMNS; column++) {
-        const x =
-          column * availableWidth +
-          availableWidth / 2 -
-          appleRadius +
-          BORDER_OFFSET;
-        const y =
-          row * availableHeight +
-          availableHeight / 2 -
-          appleRadius +
-          BORDER_OFFSET;
+        const x = column * appleXOffSet;
+        const y = row * appleYOffSet;
         const apple = new Apple(
           { y: row, x: column },
           x,

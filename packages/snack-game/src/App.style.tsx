@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 export const globalStyles = (theme: string) => css`
   @font-face {
     font-family: 'Dovemayo_gothic';
-    src: local('./assets/fonts/Dovemayo_gothic.woff2');
+    src: url('./assets/fonts/Dovemayo_gothic.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
   }

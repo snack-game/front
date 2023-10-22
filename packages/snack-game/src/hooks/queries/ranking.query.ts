@@ -12,7 +12,6 @@ export const useGetTotalRanking = () => {
     QUERY_KEY.TOTAL_RANKING,
     rankingApi.totalRanking,
     {
-      retry: false,
       suspense: true,
       useErrorBoundary: true,
     },
@@ -26,7 +25,6 @@ export const useGetUserRanking = () => {
     QUERY_KEY.USER_RANKING,
     rankingApi.userRanking,
     {
-      retry: false,
       suspense: true,
       useErrorBoundary: (error: AxiosError<ServerError>) => {
         if (!error.response) throw error;

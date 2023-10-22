@@ -42,7 +42,6 @@ export const useAppleGameLogic = ({
   const [particles] = useState<Particle[]>([]);
   const [apples, setApples] = useState<Apple[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
@@ -53,7 +52,6 @@ export const useAppleGameLogic = ({
 
   const debouncedApplePositionUpdate = useDebouncedCallback({
     target: () => {
-      console.log('debouncedApplePositionUpdate');
       appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
       drag.resetDragArea();
     },
