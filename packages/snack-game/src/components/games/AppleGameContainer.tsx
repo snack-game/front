@@ -105,7 +105,7 @@ const AppleGameContainer = () => {
   useEffect(() => {
     if (start && timeRemaining > 0) {
       const timerId = setTimeout(() => {
-        setTimeRemaining(timeRemaining - 1);
+        setTimeRemaining((preTime) => preTime - 1);
       }, 1000);
 
       return () => {

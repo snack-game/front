@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 
 import { AppleGameProps } from '@utils/types/game.type';
 
@@ -38,4 +38,4 @@ const AppleGame = ({
   );
 };
 
-export default AppleGame;
+export default memo(AppleGame);
