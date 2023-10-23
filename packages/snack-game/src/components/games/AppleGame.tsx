@@ -1,26 +1,14 @@
 import React from 'react';
 
-import { AppleGameManager } from '@modules/apple-game/appleGameManager';
-import { Drag } from '@modules/apple-game/drag';
-import { appleGameStateType } from '@utils/types/game.type';
+import { AppleGameProps } from '@utils/types/game.type';
 
 import { useAppleGameLogic } from '@hooks/game/useAppleGame';
 
-interface AppleGameProps {
-  clientWidth: number;
-  clientHeight: number;
-  clientLeft: number;
-  clientTop: number;
-  appleGameInfo?: appleGameStateType;
-  drag: Drag;
-  appleGameManager: AppleGameManager;
-}
-
 const AppleGame = ({
-  clientWidth,
-  clientHeight,
-  clientLeft,
-  clientTop,
+  offsetWidth,
+  offsetHeight,
+  offsetLeft,
+  offsetTop,
   appleGameInfo,
   drag,
   appleGameManager,
@@ -31,10 +19,10 @@ const AppleGame = ({
     handleMouseUp,
     appleGameCanvasRef,
   } = useAppleGameLogic({
-    clientWidth,
-    clientHeight,
-    clientLeft,
-    clientTop,
+    offsetWidth,
+    offsetHeight,
+    offsetLeft,
+    offsetTop,
     appleGameInfo,
     drag,
     appleGameManager,

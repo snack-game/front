@@ -1,15 +1,13 @@
-// useAppleGameLogic.js
 import { useCallback, useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 
 import { Apple } from '@modules/apple-game/apple';
-import { AppleGameManager } from '@modules/apple-game/appleGameManager';
-import { Drag } from '@modules/apple-game/drag';
 import { Particle } from '@modules/apple-game/particle';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
 import { MouseEventType } from '@utils/types/common.type';
 import {
+  AppleGameProps,
   appleGameStateType,
   appleType,
   coordinatesType,
@@ -19,21 +17,11 @@ import { useAppleGameCheck } from '@hooks/queries/appleGame.query';
 import useCanvas from '@hooks/useCanvas';
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
 
-interface AppleGameProps {
-  clientWidth: number;
-  clientHeight: number;
-  clientLeft: number;
-  clientTop: number;
-  appleGameInfo?: appleGameStateType;
-  drag: Drag;
-  appleGameManager: AppleGameManager;
-}
-
 export const useAppleGameLogic = ({
-  clientWidth,
-  clientHeight,
-  clientLeft,
-  clientTop,
+  offsetWidth,
+  offsetHeight,
+  offsetLeft,
+  offsetTop,
   appleGameInfo,
   drag,
   appleGameManager,
@@ -52,18 +40,17 @@ export const useAppleGameLogic = ({
 
   const debouncedApplePositionUpdate = useDebouncedCallback({
     target: () => {
-      appleGameManager.updateApplePosition(clientWidth, clientHeight, apples);
-      drag.resetDragArea();
+      appleGameManager.updateApplePosition(offsetWidth, offsetHeight, apples);
     },
     delay: 300,
   });
 
   const appleGameCanvasRef = useCanvas({
-    clientWidth,
-    clientHeight,
+    offsetWidth,
+    offsetHeight,
     animation: (ctx: CanvasRenderingContext2D) => {
       // background
-      ctx.clearRect(0, 0, clientWidth, clientHeight);
+      ctx.clearRect(0, 0, offsetWidth, offsetHeight);
 
       drag.drawDragArea(ctx);
 
@@ -81,7 +68,7 @@ export const useAppleGameLogic = ({
       });
 
       removedApples.forEach((removedApple: Apple) => {
-        appleGameManager.updateFallingPosition(ctx, clientHeight, removedApple);
+        appleGameManager.updateFallingPosition(ctx, offsetHeight, removedApple);
         if (removedApple.remove) {
           setRemovedApples([]);
         }
@@ -93,7 +80,7 @@ export const useAppleGameLogic = ({
 
   useEffect(() => {
     debouncedApplePositionUpdate();
-  }, [clientWidth, clientHeight]);
+  }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
     if (appleGameCanvasRef.current) {
@@ -136,11 +123,11 @@ export const useAppleGameLogic = ({
 
   const setApplesByGameInfo = (apples: appleType[][]) => {
     setApples(
-      appleGameManager.generateApples(clientWidth, clientHeight, apples),
+      appleGameManager.generateApples(offsetWidth, offsetHeight, apples),
     );
   };
 
-  const handleParticles = (ctx: CanvasRenderingContext2D) => {
+  const handleParticles = useCallback((ctx: CanvasRenderingContext2D) => {
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw(ctx);
@@ -149,99 +136,96 @@ export const useAppleGameLogic = ({
         i--;
       }
     }
-  };
+  }, []);
 
   const handleMouseDown = useCallback(
     (event: MouseEventType) => {
-      drag.onMouseDown(event, clientLeft, clientTop);
+      drag.onMouseDown(event, offsetLeft, offsetTop);
       event.preventDefault();
     },
-    [drag, clientLeft, clientTop],
+    [drag, offsetLeft, offsetTop],
   );
 
   const handleMouseMove = useCallback(
     (event: MouseEventType) => {
-      drag.onMouseMove(event, clientLeft, clientTop);
+      drag.onMouseMove(event, offsetLeft, offsetTop);
       event.preventDefault();
     },
-    [drag, clientLeft, clientTop],
+    [drag, offsetLeft, offsetTop],
   );
 
-  const handleMouseUp = useCallback(
-    (event: MouseEventType) => {
-      const { newApples, removedApples, isGolden, getScore, score } =
-        appleGameManager.checkApplesInDragArea(
-          apples,
-          drag.startX,
-          drag.startY,
-          drag.currentX,
-          drag.currentY,
-        );
+  const handleMouseUp = useCallback(() => {
+    const { newApples, removedApples, isGolden, getScore, score } =
+      appleGameManager.checkApplesInDragArea(
+        apples,
+        drag.startX,
+        drag.startY,
+        drag.currentX,
+        drag.currentY,
+      );
 
-      if (getScore) {
-        removedApples.forEach((apple) => {
-          for (let i = 0; i < 5 + Math.floor(Math.random() * 2); i++) {
-            particles.push(
-              new Particle(
-                apple.position.x + apple.radius,
-                apple.position.y + apple.radius,
-              ),
-            );
-          }
-        });
-
-        const removedAppleCoordinates: coordinatesType[] = removedApples.map(
-          (apple: Apple) => apple.coordinates,
-        );
-
-        const rects = [
-          ...appleGameProgressValue,
-          appleGameManager.getRectApplePosition(removedAppleCoordinates),
-        ];
-
-        if (isGolden) {
-          checkGameMove
-            .mutateAsync({
-              sessionId: appleGameStateValue.sessionId,
-              rects,
-            })
-            .then((response) => {
-              if (!response) {
-                throw Error('게임판을 새로 받아오는데 실패했어요!');
-              }
-
-              setAppleGameState((prev: appleGameStateType) => ({
-                ...prev,
-                apples: response.apples,
-              }));
-
-              setApplesByGameInfo(response.apples);
-              setAppleGameProgress([]);
-              setStage((prev: number) => prev + 1);
-            });
+    if (getScore) {
+      removedApples.forEach((apple) => {
+        for (let i = 0; i < 5 + Math.floor(Math.random() * 2); i++) {
+          particles.push(
+            new Particle(
+              apple.position.x + apple.radius,
+              apple.position.y + apple.radius,
+            ),
+          );
         }
+      });
 
-        setAppleGameState((prev: appleGameStateType) => ({
-          ...prev,
-          score: prev.score + score,
-        }));
+      const removedAppleCoordinates: coordinatesType[] = removedApples.map(
+        (apple: Apple) => apple.coordinates,
+      );
 
-        if (!isGolden) setApples(newApples);
-        setAppleGameProgress(rects);
-        setRemovedApples(removedApples);
+      const rects = [
+        ...appleGameProgressValue,
+        appleGameManager.getRectApplePosition(removedAppleCoordinates),
+      ];
+
+      if (isGolden) {
+        checkGameMove
+          .mutateAsync({
+            sessionId: appleGameStateValue.sessionId,
+            rects,
+          })
+          .then((response) => {
+            if (!response) {
+              throw Error('게임판을 새로 받아오는데 실패했어요!');
+            }
+
+            setAppleGameState((prev: appleGameStateType) => ({
+              ...prev,
+              apples: response.apples,
+            }));
+
+            setApplesByGameInfo(response.apples);
+            setAppleGameProgress([]);
+            setStage((prev: number) => prev + 1);
+          });
       }
 
-      drag.onMouseUp(event);
-    },
-    [
-      stage,
-      apples,
-      drag,
-      appleGameManager,
-      appleGameProgressValue,
-      appleGameStateValue,
-    ],
-  );
+      setAppleGameState((prev: appleGameStateType) => ({
+        ...prev,
+        score: prev.score + score,
+      }));
+
+      if (!isGolden) setApples(newApples);
+      setAppleGameProgress(rects);
+      setRemovedApples(removedApples);
+    }
+
+    drag.onMouseUp();
+  }, [
+    stage,
+    apples,
+    drag,
+    appleGameManager,
+    appleGameProgressValue,
+    appleGameStateValue,
+  ]);
 
   return {
     apples,

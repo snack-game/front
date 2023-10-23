@@ -52,27 +52,27 @@ const GameHUD = styled.div`
 `;
 
 const AppleGameContainer = () => {
-  const drag = useMemo(() => new Drag(), []);
-  const appleGameManager = useMemo(() => new AppleGameManager(), []);
-
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+
+  const { offsetTop, offsetWidth, offsetLeft, offsetHeight } = useClientRect({
+    canvasBaseRef,
+  });
+
+  const drag = useMemo(() => new Drag(), []);
+  const appleGameManager = useMemo(() => new AppleGameManager(), []);
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
   const gameRefresh = useAppleGameRefresh();
 
+  const appleGameValue = useRecoilValue(appleGameState);
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
-  const appleGameValue = useRecoilValue(appleGameState);
 
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
-
-  const { clientWidth, clientHeight, clientLeft, clientTop } = useClientRect({
-    canvasBaseRef,
-  });
 
   const handleStartButton = () => {
     gameStart().then(() => {
@@ -127,26 +127,27 @@ const AppleGameContainer = () => {
         {gameStartMutation.isLoading && <Loading />}
         {start && (
           <AppleGame
-            clientWidth={clientWidth}
-            clientHeight={clientHeight}
-            clientLeft={clientLeft}
-            clientTop={clientTop}
+            offsetWidth={offsetWidth}
+            offsetHeight={offsetHeight}
+            offsetLeft={offsetLeft}
+            offsetTop={offsetTop}
             appleGameInfo={appleGameValue}
             drag={drag}
             appleGameManager={appleGameManager}
           />
         )}
-        <Button
-          content={'시작!'}
-          onClick={handleStartButton}
-          show={!start}
-          wrapper={css`
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-          `}
-        />
+        {!start && (
+          <Button
+            content={'시작!'}
+            onClick={handleStartButton}
+            wrapper={css`
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            `}
+          />
+        )}
       </AppleGameWrapper>
     </>
   );

@@ -7,22 +7,21 @@ interface useClientRectProps {
 }
 
 export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
-  const [clientWidth, setClientWidth] = useState<number>(0);
-  const [clientHeight, setClientHeight] = useState<number>(0);
-  const [clientLeft, setClientLeft] = useState<number>(0);
-  const [clientTop, setClientTop] = useState<number>(0);
+  const [offsetWidth, setOffsetWidth] = useState<number>(0);
+  const [offsetHeight, setOffsetHeight] = useState<number>(0);
+  const [offsetLeft, setOffsetLeft] = useState<number>(0);
+  const [offsetTop, setOffsetTop] = useState<number>(0);
 
   const debouncedSetClientRect = useDebouncedCallback({
     target: () => {
       if (canvasBaseRef.current) {
-        const rect = canvasBaseRef.current.getBoundingClientRect();
-        setClientWidth(rect.width);
-        setClientHeight(rect.height);
-        setClientLeft(rect.left);
-        setClientTop(rect.top);
+        setOffsetWidth(canvasBaseRef.current.offsetWidth);
+        setOffsetHeight(canvasBaseRef.current.offsetHeight);
+        setOffsetTop(canvasBaseRef.current.offsetTop);
+        setOffsetLeft(canvasBaseRef.current.offsetLeft);
       }
     },
-    delay: 300,
+    delay: 100,
   });
 
   useEffect(() => {
@@ -35,5 +34,10 @@ export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
     };
   }, []);
 
-  return { clientWidth, clientHeight, clientLeft, clientTop };
+  return {
+    offsetWidth,
+    offsetHeight,
+    offsetLeft,
+    offsetTop,
+  };
 };

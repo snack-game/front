@@ -13,35 +13,20 @@ export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
 
   generateApples(
-    clientWidth: number,
-    clientHeight: number,
+    offsetWidth: number,
+    offsetHeight: number,
     apples: appleType[][],
   ): Apple[] {
     const units = [];
 
-    const availableWidth = (clientWidth - BORDER_OFFSET * 2) / COLUMNS;
-    const availableHeight = (clientHeight - BORDER_OFFSET * 2) / ROWS;
-
-    const appleRadius = Math.floor(
-      Math.min(availableWidth, availableHeight) * 0.4,
-    );
-    const appleXOffSet = Math.floor(
-      availableWidth + availableWidth / 2 - appleRadius + BORDER_OFFSET,
-    );
-    const appleYOffSet = Math.floor(
-      availableHeight + availableHeight / 2 - appleRadius + BORDER_OFFSET,
-    );
-
     for (let row = 0; row < ROWS; row++) {
       for (let column = 0; column < COLUMNS; column++) {
-        const x = column * appleXOffSet;
-        const y = row * appleYOffSet;
         const apple = new Apple(
           { y: row, x: column },
-          x,
-          y,
+          0,
+          0,
           apples[row][column].number,
-          appleRadius,
+          0,
           !apples[row][column].golden,
           0.5,
           {
@@ -53,7 +38,8 @@ export class AppleGameManager {
         units.push(apple);
       }
     }
-    return units;
+
+    return this.updateApplePosition(offsetWidth, offsetHeight, units);
   }
 
   checkApplesInDragArea(
@@ -193,26 +179,26 @@ export class AppleGameManager {
   }
 
   updateApplePosition(
-    clientWidth: number,
-    clientHeight: number,
+    offsetWidth: number,
+    offsetHeight: number,
     apples: Apple[],
   ) {
-    const availableWidth = (clientWidth - BORDER_OFFSET * 2) / COLUMNS;
-    const availableHeight = (clientHeight - BORDER_OFFSET * 2) / ROWS;
+    const availableWidth = (offsetWidth - BORDER_OFFSET * 2) / COLUMNS;
+    const availableHeight = (offsetHeight - BORDER_OFFSET * 2) / ROWS;
 
-    const appleRadius = Math.min(availableWidth, availableHeight) * 0.4;
+    const appleRadius = Math.floor(
+      Math.min(availableWidth, availableHeight) * 0.4,
+    );
+    const appleXOffSet = Math.floor(
+      availableWidth / 2 - appleRadius + BORDER_OFFSET,
+    );
+    const appleYOffSet = Math.floor(
+      availableHeight / 2 - appleRadius + BORDER_OFFSET,
+    );
 
     return apples.map((apple) => {
-      apple.position.x =
-        apple.coordinates.x * availableWidth +
-        availableWidth / 2 -
-        appleRadius +
-        BORDER_OFFSET;
-      apple.position.y =
-        apple.coordinates.y * availableHeight +
-        availableHeight / 2 -
-        appleRadius +
-        BORDER_OFFSET;
+      apple.position.x = apple.coordinates.x * availableWidth + appleXOffSet;
+      apple.position.y = apple.coordinates.y * availableHeight + appleYOffSet;
       apple.radius = appleRadius;
 
       return apple;
@@ -221,7 +207,7 @@ export class AppleGameManager {
 
   updateFallingPosition(
     ctx: CanvasRenderingContext2D,
-    clientHeight: number,
+    offsetHeight: number,
     Apple: Apple,
   ) {
     Apple.velocity.y -= Apple.gravity;
@@ -229,7 +215,7 @@ export class AppleGameManager {
     Apple.position.x += Apple.velocity.x;
     Apple.position.y -= Apple.velocity.y;
 
-    if (Apple.position.y + Apple.radius * 2 >= clientHeight + 50) {
+    if (Apple.position.y + Apple.radius * 2 >= offsetHeight + 50) {
       Apple.remove = true;
     }
 

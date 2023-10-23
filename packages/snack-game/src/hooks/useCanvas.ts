@@ -1,14 +1,14 @@
 import { RefObject, useEffect, useRef } from 'react';
 
 interface useCanvasProps {
-  clientWidth: number;
-  clientHeight: number;
+  offsetWidth: number;
+  offsetHeight: number;
   animation: (ctx: CanvasRenderingContext2D) => void;
 }
 
 const useCanvas = ({
-  clientWidth,
-  clientHeight,
+  offsetWidth,
+  offsetHeight,
   animation,
 }: useCanvasProps) => {
   const canvasRef: RefObject<HTMLCanvasElement> =
@@ -22,11 +22,11 @@ const useCanvas = ({
       const devicePixelRatio = window.devicePixelRatio ?? 1;
 
       if (canvas && ctx) {
-        canvas.style.width = clientWidth + 'px';
-        canvas.style.height = clientHeight + 'px';
+        canvas.style.width = offsetWidth + 'px';
+        canvas.style.height = offsetHeight + 'px';
 
-        canvas.width = clientWidth * devicePixelRatio;
-        canvas.height = clientHeight * devicePixelRatio;
+        canvas.width = offsetWidth * devicePixelRatio;
+        canvas.height = offsetHeight * devicePixelRatio;
 
         ctx.scale(devicePixelRatio, devicePixelRatio);
       }
@@ -48,7 +48,7 @@ const useCanvas = ({
     return () => {
       window.cancelAnimationFrame(requestId);
     };
-  }, [clientWidth, clientHeight, animation, canvasRef.current]);
+  }, [offsetWidth, offsetHeight, animation, canvasRef.current]);
 
   return canvasRef;
 };

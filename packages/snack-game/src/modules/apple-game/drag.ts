@@ -24,7 +24,6 @@ export class Drag {
     clientLeft: number,
     clientTop: number,
   ): void {
-    event.preventDefault();
     this.isDrawing = true;
 
     let clientX, clientY;
@@ -49,7 +48,6 @@ export class Drag {
     clientLeft: number,
     clientTop: number,
   ): void {
-    event.preventDefault();
     let clientX, clientY;
 
     if (this.isTouchEvent(event)) {
@@ -64,8 +62,7 @@ export class Drag {
     this.currentY = clientY - (clientTop - window.scrollY);
   }
 
-  onMouseUp(event: MouseEventType): void {
-    event.preventDefault();
+  onMouseUp(): void {
     this.isDrawing = false;
   }
 
@@ -85,13 +82,5 @@ export class Drag {
 
       ctx.stroke();
     }
-  }
-
-  resetDragArea() {
-    this.startX = 0;
-    this.startY = 0;
-    this.currentX = 0;
-    this.currentY = 0;
-    this.isDrawing = false;
   }
 }

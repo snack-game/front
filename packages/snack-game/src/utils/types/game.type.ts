@@ -1,3 +1,6 @@
+import { AppleGameManager } from '@modules/apple-game/appleGameManager';
+import { Drag } from '@modules/apple-game/drag';
+
 export interface appleType {
   number: number;
   golden: boolean;
@@ -25,4 +28,14 @@ export interface appleGameCheckMovePropsType {
 
 export interface appleGameEndPropsType {
   sessionId: number;
+}
+
+export interface AppleGameProps {
+  offsetWidth: number;
+  offsetHeight: number;
+  offsetLeft: number;
+  offsetTop: number;
+  appleGameInfo?: appleGameStateType;
+  drag: Drag;
+  appleGameManager: AppleGameManager;
 }
