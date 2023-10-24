@@ -1,3 +1,5 @@
+import AppleImage from '@assets/images/apple.png';
+import GoldenAppleImage from '@assets/images/golden_apple.png';
 import { Apple } from '@modules/apple-game/apple';
 import {
   appleGameRectType,
@@ -11,6 +13,13 @@ const COLUMNS = 12;
 
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
+  public apple = new Image();
+  public goldenApple = new Image();
+
+  constructor() {
+    this.apple.src = AppleImage;
+    this.goldenApple.src = GoldenAppleImage;
+  }
 
   generateApples(
     offsetWidth: number,
@@ -124,7 +133,7 @@ export class AppleGameManager {
 
   drawApple(ctx: CanvasRenderingContext2D, Apple: Apple) {
     ctx.drawImage(
-      Apple.image,
+      Apple.isGolden ? this.goldenApple : this.apple,
       Apple.position.x,
       Apple.position.y,
       Apple.radius * 2,

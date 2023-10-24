@@ -1,6 +1,3 @@
-import AppleImage from '@assets/images/apple.png';
-import GoldenApple from '@assets/images/golden_apple.png';
-
 export class Apple {
   public coordinates: { y: number; x: number };
   public position: { x: number; y: number };
@@ -10,7 +7,7 @@ export class Apple {
   public isGolden;
   public velocity: { x: number; y: number };
   public radius: number;
-  public readonly image: HTMLImageElement;
+  public style: boolean;
   public readonly gravity: number;
 
   constructor(
@@ -28,10 +25,9 @@ export class Apple {
     this.number = 0;
     this.position = { x, y };
     this.number = number;
-    this.image = new Image();
-    this.image.src = style ? AppleImage : GoldenApple;
     this.radius = radius;
     this.gravity = gravity;
+    this.style = style;
     this.velocity = velocity;
     this.isGolden = isGolden;
   }

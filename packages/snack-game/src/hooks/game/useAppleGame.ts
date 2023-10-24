@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -127,7 +127,7 @@ export const useAppleGameLogic = ({
     );
   };
 
-  const handleParticles = useCallback((ctx: CanvasRenderingContext2D) => {
+  const handleParticles = (ctx: CanvasRenderingContext2D) => {
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw(ctx);
@@ -136,25 +136,19 @@ export const useAppleGameLogic = ({
         i--;
       }
     }
-  }, []);
+  };
 
-  const handleMouseDown = useCallback(
-    (event: MouseEventType) => {
-      drag.onMouseDown(event, offsetLeft, offsetTop);
-      event.preventDefault();
-    },
-    [drag, offsetLeft, offsetTop],
-  );
+  const handleMouseDown = (event: MouseEventType) => {
+    drag.onMouseDown(event, offsetLeft, offsetTop);
+    event.preventDefault();
+  };
 
-  const handleMouseMove = useCallback(
-    (event: MouseEventType) => {
-      drag.onMouseMove(event, offsetLeft, offsetTop);
-      event.preventDefault();
-    },
-    [drag, offsetLeft, offsetTop],
-  );
+  const handleMouseMove = (event: MouseEventType) => {
+    drag.onMouseMove(event, offsetLeft, offsetTop);
+    event.preventDefault();
+  };
 
-  const handleMouseUp = useCallback(() => {
+  const handleMouseUp = () => {
     const { newApples, removedApples, isGolden, getScore, score } =
       appleGameManager.checkApplesInDragArea(
         apples,
@@ -218,14 +212,7 @@ export const useAppleGameLogic = ({
     }
 
     drag.onMouseUp();
-  }, [
-    stage,
-    apples,
-    drag,
-    appleGameManager,
-    appleGameProgressValue,
-    appleGameStateValue,
-  ]);
+  };
 
   return {
     apples,
