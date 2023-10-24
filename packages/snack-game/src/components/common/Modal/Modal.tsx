@@ -9,7 +9,7 @@ import useModal from '@hooks/useModal';
 import * as Styled from './Modal.style';
 
 const Modal = () => {
-  const { title, open, children } = useRecoilValue(modalState);
+  const { open, children } = useRecoilValue(modalState);
 
   const { closeModal } = useModal();
 
@@ -35,7 +35,6 @@ const Modal = () => {
       {open && (
         <Styled.Modal onClick={closeModal}>
           <Styled.ModalContainer onClick={(event) => event.stopPropagation()}>
-            <h2>{title}</h2>
             {children}
           </Styled.ModalContainer>
         </Styled.Modal>

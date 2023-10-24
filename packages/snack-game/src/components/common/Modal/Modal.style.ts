@@ -27,5 +27,6 @@ export const ModalContainer = styled.div`
 
   @media (max-width: 768px) {
     width: 90%;
+    padding: 0.5rem;
   }
 `;

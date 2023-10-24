@@ -6,10 +6,8 @@ import { ModalType } from '@utils/types/common.type';
 const useModal = () => {
   const setModalState = useSetRecoilState(modalState);
 
-  const openModal = ({ title, description, children }: ModalType) => {
+  const openModal = ({ children }: ModalType) => {
     setModalState(() => ({
-      title,
-      description,
       children,
       open: true,
     }));

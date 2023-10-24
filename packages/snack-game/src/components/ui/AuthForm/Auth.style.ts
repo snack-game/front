@@ -3,10 +3,6 @@ import styled from '@emotion/styled';
 export const AuthTypeContainer = styled.div`
   width: fit-content;
   margin: 1rem auto 0 auto;
-
-  @media (max-width: 768px) {
-    width: 90vw;
-  }
 `;
 
 export const Form = styled.form`

@@ -5,10 +5,23 @@ import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
 import AppleGameContainer from '@components/games/AppleGameContainer';
+import AppleGameTutorial from '@components/ui/Tutorial/AppleGameTutorial';
+
+import useLocalStorage from '@hooks/useLocalStorage';
+import useModal from '@hooks/useModal';
 
 const AppleGamePage = () => {
+  const { storageValue } = useLocalStorage({
+    key: 'tutorial',
+  });
+  const { openModal } = useModal();
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    if (storageValue == undefined) {
+      openModal({ children: <AppleGameTutorial /> });
+    }
   }, []);
 
   return (
