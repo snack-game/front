@@ -51,7 +51,7 @@ export class SnackRainManager {
     this.units = [];
     this.settings = {
       unitMaximum: 5,
-      radius: 15,
+      radius: 12,
       gravity: 0.1,
       corFactor: 0.5,
       mass: 1,
