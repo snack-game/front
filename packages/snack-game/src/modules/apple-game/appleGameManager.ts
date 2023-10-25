@@ -13,13 +13,6 @@ const COLUMNS = 12;
 
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
-  public apple = new Image();
-  public goldenApple = new Image();
-
-  constructor() {
-    this.apple.src = AppleImage;
-    this.goldenApple.src = GoldenAppleImage;
-  }
 
   generateApples(
     offsetWidth: number,
@@ -36,13 +29,13 @@ export class AppleGameManager {
           0,
           apples[row][column].number,
           0,
-          !apples[row][column].golden,
           0.5,
           {
             x: Math.random() * 4 - 2,
             y: 0,
           },
           apples[row][column].golden,
+          apples[row][column].golden ? GoldenAppleImage : AppleImage,
         );
         units.push(apple);
       }
@@ -133,7 +126,7 @@ export class AppleGameManager {
 
   drawApple(ctx: CanvasRenderingContext2D, Apple: Apple) {
     ctx.drawImage(
-      Apple.isGolden ? this.goldenApple : this.apple,
+      Apple.image,
       Apple.position.x,
       Apple.position.y,
       Apple.radius * 2,

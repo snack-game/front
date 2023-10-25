@@ -54,6 +54,8 @@ export const useAppleGameLogic = ({
 
       drag.drawDragArea(ctx);
 
+      handleParticles(ctx);
+
       // render game
       apples.forEach((apple: Apple) => {
         appleGameManager.handleAppleRendering(
@@ -73,8 +75,6 @@ export const useAppleGameLogic = ({
           setRemovedApples([]);
         }
       });
-
-      handleParticles(ctx);
     },
   });
 

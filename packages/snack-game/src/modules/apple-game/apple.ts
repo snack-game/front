@@ -6,8 +6,8 @@ export class Apple {
   public remove = false;
   public isGolden;
   public velocity: { x: number; y: number };
+  public readonly image: HTMLImageElement;
   public radius: number;
-  public style: boolean;
   public readonly gravity: number;
 
   constructor(
@@ -16,10 +16,10 @@ export class Apple {
     y: number,
     number: number,
     radius: number,
-    style: boolean,
     gravity: number,
     velocity: { x: number; y: number },
     isGolden: boolean,
+    imageSrc: string,
   ) {
     this.coordinates = coordinates;
     this.number = 0;
@@ -27,7 +27,8 @@ export class Apple {
     this.number = number;
     this.radius = radius;
     this.gravity = gravity;
-    this.style = style;
+    this.image = new Image();
+    this.image.src = imageSrc;
     this.velocity = velocity;
     this.isGolden = isGolden;
   }
