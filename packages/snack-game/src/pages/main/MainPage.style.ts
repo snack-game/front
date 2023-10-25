@@ -17,10 +17,9 @@ export const AppleGamePageContainer = styled.div`
 export const AppleGamePageLeft = styled.div`
   margin-bottom: 2.5rem;
   width: 100%;
-
-  @media (min-width: 1024px) {
-    max-width: 30rem;
-  }
+  max-width: 30rem;
+  min-width: 20rem;
+  min-height: 16rem;
 `;
 
 export const AppleGamePageRight = styled.div`
