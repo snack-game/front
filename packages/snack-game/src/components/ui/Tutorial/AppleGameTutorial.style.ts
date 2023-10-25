@@ -26,12 +26,14 @@ export const TutorialNav = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  margin: 2rem;
+  margin: auto;
   display: flex;
+  width: 220px;
+  height: 220px;
   justify-content: center;
 
   & > img {
     margin: auto;
-    max-width: 15rem;
+    max-width: 220px;
   }
 `;
