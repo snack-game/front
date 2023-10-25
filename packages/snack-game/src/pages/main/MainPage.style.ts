@@ -6,6 +6,7 @@ export const AppleGamePageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   color: #4b5563;
+  justify-content: center;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -18,7 +19,7 @@ export const AppleGamePageLeft = styled.div`
   width: 100%;
 
   @media (min-width: 1024px) {
-    max-width: 34rem;
+    max-width: 30rem;
   }
 `;
 
