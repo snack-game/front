@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Refrash from '@assets/images/refresh.png';
+import Refresh from '@assets/images/refresh.png';
 import Button from '@components/common/Button/Button';
 import Loading from '@components/common/Loading/Loading';
 import AppleGame from '@components/games/AppleGame';
@@ -121,7 +121,7 @@ const AppleGameContainer = () => {
       <GameHUD ref={gameHUDRef}>
         <p>{appleGameValue.score + '점'}</p>
         <p>{timeRemaining + '초'}</p>
-        <img src={Refrash} alt={'새로고침'} onClick={handleRefresh} />
+        <img src={Refresh} alt={'새로고침'} onClick={handleRefresh} />
       </GameHUD>
       <AppleGameWrapper ref={canvasBaseRef}>
         {gameStartMutation.isLoading && <Loading />}

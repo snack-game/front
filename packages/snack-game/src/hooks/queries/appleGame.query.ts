@@ -34,16 +34,11 @@ export const useAppleGameStart = () => {
 
   const gameStart = async () => {
     if (!userStateValue.accessToken) {
-      await guestMutation
-        .mutateAsync()
-        .then(async ({ accessToken }: AuthType) => {
-          await gameStartMutation.mutateAsync(accessToken);
-        });
-
-      return;
+      const { accessToken }: AuthType = await guestMutation.mutateAsync();
+      await gameStartMutation.mutateAsync(accessToken);
+    } else {
+      await gameStartMutation.mutateAsync();
     }
-
-    await gameStartMutation.mutateAsync();
   };
 
   return { gameStart, gameStartMutation };

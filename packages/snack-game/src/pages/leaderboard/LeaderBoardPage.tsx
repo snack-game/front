@@ -6,8 +6,9 @@ import { useRecoilValue } from 'recoil';
 
 import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
-import UserRankingCard from '@components/common/Card/UserRankingCard';
+import UserRankingCard from '@components/common/Card/UserRankingCard/UserRankingCard';
 import RetryError from '@components/common/Error/RetryError';
+import UserRankingCardError from '@components/common/Error/UserRankingCardError';
 import RankingTable from '@components/ui/RankingTable/RankingTable';
 import { userState } from '@utils/atoms/member.atom';
 
@@ -28,7 +29,7 @@ const LeaderBoardPage = () => {
   return (
     <>
       <Helmet>
-        <title>Snack Game || Board</title>
+        <title>Snack Game || Ranking</title>
       </Helmet>
       <PageContainer>
         <ContentContainer>
@@ -36,7 +37,7 @@ const LeaderBoardPage = () => {
             <RankingTable />
           </QueryBoundary>
           {userStateValue.name && (
-            <QueryBoundary errorFallback={RetryError}>
+            <QueryBoundary errorFallback={UserRankingCardError}>
               <UserRankingCard />
             </QueryBoundary>
           )}
