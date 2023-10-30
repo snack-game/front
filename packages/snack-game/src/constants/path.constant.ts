@@ -6,6 +6,7 @@ const PATH = {
   AUTH: '/auth',
   TEAM: '/team',
   USER: '/user',
+  NOT_FOUND_ERROR: '*',
 
   APPLE_GAME: '/game/apple-game',
 

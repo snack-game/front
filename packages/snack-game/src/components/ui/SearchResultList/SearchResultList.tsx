@@ -8,9 +8,14 @@ import * as Styled from './SearchResultList.style';
 interface SearchResultListProps {
   value: string;
   onClick: (value: string) => void;
+  message?: string;
 }
 
-const SearchResultList = ({ value, onClick }: SearchResultListProps) => {
+const SearchResultList = ({
+  value,
+  onClick,
+  message = '일치하는 결과가 없어요!',
+}: SearchResultListProps) => {
   const debouncedValue = useDebounce({ target: value, delay: 500 });
   const { isLoading, data } = useGetGroupsNames({
     startWidth: debouncedValue,
@@ -28,7 +33,7 @@ const SearchResultList = ({ value, onClick }: SearchResultListProps) => {
           ) : (
             <>
               {groupList.length === 0 ? (
-                <Styled.Li>일치하는 결과가 없어요!</Styled.Li>
+                <Styled.Li>{message}</Styled.Li>
               ) : (
                 groupList.map((item) => (
                   <Styled.Li key={item} onClick={() => onClick(item)}>

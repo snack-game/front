@@ -2,8 +2,8 @@ export class Particle {
   private x: number;
   private y: number;
   public size: number;
-  private speedX: number;
-  private speedY: number;
+  private readonly speedX: number;
+  private readonly speedY: number;
 
   constructor(x: number, y: number) {
     this.x = x;

@@ -64,6 +64,7 @@ const RegisterForm = () => {
           <SearchResultList
             value={values.group.value}
             onClick={setFieldValue('group')}
+            message={'일치하는 그룹이 없어요! 새로 만들어 보아요!'}
           />
         </QueryBoundary>
       </Styled.InputContainer>

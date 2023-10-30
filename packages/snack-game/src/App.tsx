@@ -8,7 +8,7 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading/Loading';
 import Modal from '@components/common/Modal/Modal';
 import Toast from '@components/ui/Toast/Toast';
-import errorPage from '@pages/error/ErrorPage';
+import errorPage from '@pages/error/NotFoundErrorPage';
 import { themeState } from '@utils/atoms/common.atom';
 import { darkTheme, lightTheme } from '@utils/theme';
 
@@ -28,6 +28,7 @@ const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 
 const UserPage = lazy(() => import('@pages/user/UserPage'));
 
+const NotFoundErrorPage = lazy(() => import('@pages/error/NotFoundErrorPage'));
 const App = () => {
   const themeStateValue = useRecoilValue(themeState);
 
@@ -54,6 +55,12 @@ const App = () => {
 
               {/*User*/}
               <Route path={PATH.USER} element={<UserPage />} />
+
+              {/*Error*/}
+              <Route
+                path={PATH.NOT_FOUND_ERROR}
+                element={<NotFoundErrorPage />}
+              />
             </Routes>
           </Suspense>
           <Modal />
