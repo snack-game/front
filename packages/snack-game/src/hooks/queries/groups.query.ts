@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { AxiosError } from 'axios';
 
-import groupsApi from '@api/groups';
+import groupsApi from '@api/groups.api';
 
 import { QUERY_KEY } from '@constants/api.constant';
 

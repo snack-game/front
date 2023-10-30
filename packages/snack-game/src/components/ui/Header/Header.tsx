@@ -18,12 +18,6 @@ import { useInternalRouter } from '@hooks/useInternalRouter';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-const Logo = () => {
-  const img = new Image();
-  img.src = LogoImage;
-  return img;
-};
-
 const Header = () => {
   const theme = useTheme();
   const { openModal } = useModal();
@@ -66,23 +60,29 @@ const Header = () => {
           <>
             <Styled.Desktop>
               <Menu buttonContent={userInfo.name + ' 님'}>
+                <Link to={PATH.USER}>
+                  <DropDownItem>내 정보</DropDownItem>
+                </Link>
                 <DropDownItem onClick={handleLogout}>로그아웃</DropDownItem>
               </Menu>
             </Styled.Desktop>
             <Styled.Mobile>
               <Menu buttonContent={userInfo.name + ' 님'}>
-                <DropDownItem>
-                  <Link to={PATH.APPLE_GAME}>게임</Link>
-                </DropDownItem>
-                <DropDownItem>
-                  <Link to={PATH.RANKING}>랭킹</Link>
-                </DropDownItem>
-                <DropDownItem>
-                  <Link to={PATH.BLOG}>블로그</Link>
-                </DropDownItem>
-                <DropDownItem>
-                  <Link to={PATH.TEAM}>팀 소개</Link>
-                </DropDownItem>
+                <Link to={PATH.USER}>
+                  <DropDownItem>내 정보</DropDownItem>
+                </Link>
+                <Link to={PATH.APPLE_GAME}>
+                  <DropDownItem>게임</DropDownItem>
+                </Link>
+                <Link to={PATH.RANKING}>
+                  <DropDownItem>랭킹</DropDownItem>
+                </Link>
+                <Link to={PATH.BLOG}>
+                  <DropDownItem>블로그</DropDownItem>
+                </Link>
+                <Link to={PATH.TEAM}>
+                  <DropDownItem>팀 소개</DropDownItem>
+                </Link>
                 <DropDownItem onClick={handleLogout}>로그아웃</DropDownItem>
               </Menu>
             </Styled.Mobile>

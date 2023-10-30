@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 
-import membersApi from '@api/members';
+import membersApi from '@api/members.api';
 import { userState } from '@utils/atoms/member.atom';
 import { AuthType, MemberType } from '@utils/types/member.type';
 

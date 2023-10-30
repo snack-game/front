@@ -26,6 +26,8 @@ const LeaderBoardPage = lazy(
 
 const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 
+const UserPage = lazy(() => import('@pages/user/UserPage'));
+
 const App = () => {
   const themeStateValue = useRecoilValue(themeState);
 
@@ -49,6 +51,9 @@ const App = () => {
 
               {/*TEAM*/}
               <Route path={PATH.TEAM} element={<TeamPage />} />
+
+              {/*User*/}
+              <Route path={PATH.USER} element={<UserPage />} />
             </Routes>
           </Suspense>
           <Modal />

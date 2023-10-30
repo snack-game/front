@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { AxiosError } from 'axios';
 
-import rankingApi from '@api/ranking';
+import rankingApi from '@api/ranking.api';
 import { RankingType } from '@utils/types/common.type';
 
 import { QUERY_KEY, ServerError } from '@constants/api.constant';

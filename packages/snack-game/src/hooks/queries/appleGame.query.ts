@@ -1,6 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import appleGameApi from '@api/appleGame';
+import appleGameApi from '@api/apple-game.api';
 import { appleGameState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 import {
