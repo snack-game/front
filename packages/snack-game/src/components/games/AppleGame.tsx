@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { AppleGameProps } from '@utils/types/game.type';
 
-import { useAppleGameLogic } from '@hooks/game/useAppleGame';
+import useAppleGame from '@hooks/game/useAppleGame';
 
 const AppleGame = ({
   offsetWidth,
@@ -18,7 +18,7 @@ const AppleGame = ({
     handleMouseMove,
     handleMouseUp,
     appleGameCanvasRef,
-  } = useAppleGameLogic({
+  } = useAppleGame({
     offsetWidth,
     offsetHeight,
     offsetLeft,

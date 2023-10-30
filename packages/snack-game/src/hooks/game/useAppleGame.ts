@@ -17,7 +17,7 @@ import { useAppleGameCheck } from '@hooks/queries/appleGame.query';
 import useCanvas from '@hooks/useCanvas';
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
 
-export const useAppleGameLogic = ({
+const useAppleGame = ({
   offsetWidth,
   offsetHeight,
   offsetLeft,
@@ -224,3 +224,5 @@ export const useAppleGameLogic = ({
     appleGameCanvasRef,
   };
 };
+
+export default useAppleGame;

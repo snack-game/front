@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import PageContainer from '@components/base/PageContainer';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
-import AppleGameContainer from '@components/games/AppleGameContainer';
+import AppleGameController from '@components/games/AppleGameController';
 import AppleGameTutorial from '@components/ui/Tutorial/AppleGameTutorial';
 
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -31,7 +31,7 @@ const AppleGamePage = () => {
       </Helmet>
       <PageContainer>
         <QueryBoundary errorFallback={RetryError}>
-          <AppleGameContainer />
+          <AppleGameController />
         </QueryBoundary>
       </PageContainer>
     </>

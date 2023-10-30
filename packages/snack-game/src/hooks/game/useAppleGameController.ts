@@ -1,13 +1,7 @@
-import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Refresh from '@assets/images/refresh.png';
-import Button from '@components/common/Button/Button';
-import Loading from '@components/common/Loading/Loading';
-import AppleGame from '@components/games/AppleGame';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
@@ -19,39 +13,7 @@ import {
 } from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
 
-const AppleGameWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  background-color: ${(props) => props.theme.colors.appleGameBackground};
-  width: 80%;
-  height: 80vh;
-
-  @media (max-width: 900px) {
-    width: 100%;
-    height: 90vh;
-  }
-`;
-
-const GameHUD = styled.div`
-  width: 80%;
-  height: 3rem;
-  display: flex;
-  margin: auto;
-  justify-content: space-around;
-  align-items: center;
-  color: ${(props) => props.theme.colors.titleText};
-
-  & > img {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    height: 2rem;
-  }
-`;
-
-const AppleGameContainer = () => {
+const useAppleGameController = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
@@ -116,41 +78,22 @@ const AppleGameContainer = () => {
     }
   }, [start, timeRemaining]);
 
-  return (
-    <>
-      <GameHUD ref={gameHUDRef}>
-        <p>{appleGameValue.score + '점'}</p>
-        <p>{timeRemaining + '초'}</p>
-        <img src={Refresh} alt={'새로고침'} onClick={handleRefresh} />
-      </GameHUD>
-      <AppleGameWrapper ref={canvasBaseRef}>
-        {gameStartMutation.isLoading && <Loading />}
-        {start && (
-          <AppleGame
-            offsetWidth={offsetWidth}
-            offsetHeight={offsetHeight}
-            offsetLeft={offsetLeft}
-            offsetTop={offsetTop}
-            appleGameInfo={appleGameValue}
-            drag={drag}
-            appleGameManager={appleGameManager}
-          />
-        )}
-        {!start && (
-          <Button
-            content={'시작!'}
-            onClick={handleStartButton}
-            wrapper={css`
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            `}
-          />
-        )}
-      </AppleGameWrapper>
-    </>
-  );
+  return {
+    canvasBaseRef,
+    gameHUDRef,
+    offsetTop,
+    offsetWidth,
+    offsetLeft,
+    offsetHeight,
+    drag,
+    appleGameManager,
+    gameStartMutation,
+    start,
+    timeRemaining,
+    appleGameValue,
+    handleStartButton,
+    handleRefresh,
+  };
 };
 
-export default AppleGameContainer;
+export default useAppleGameController;

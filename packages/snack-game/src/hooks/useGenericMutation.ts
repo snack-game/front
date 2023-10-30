@@ -9,16 +9,19 @@ interface useGenericMutationProps<TArgs, TResult> {
   apiMethod: (args: TArgs) => Promise<TResult>;
   onSettled?: () => void;
   onSuccess?: (data: TResult) => void;
+  errorBoundary?: boolean;
 }
 
 const useGenericMutation = <TArgs = unknown, TResult = unknown>({
   apiMethod,
   onSettled,
   onSuccess,
+  errorBoundary = true,
 }: useGenericMutationProps<TArgs, TResult>) => {
   const errorPopup = useError();
   return useMutation<TResult, AxiosError<ServerError>, TArgs>(apiMethod, {
     retry: 0,
+    useErrorBoundary: errorBoundary,
     onError: (error: AxiosError<ServerError>) => {
       if (error.response) {
         errorPopup(error.response.status, error.response.data.messages);
