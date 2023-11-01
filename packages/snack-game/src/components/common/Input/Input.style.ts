@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
 export const InputContainer = styled.div`
-  margin-right: 1rem;
   width: 100%;
 `;
 

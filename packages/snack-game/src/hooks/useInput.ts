@@ -6,7 +6,9 @@ interface useInputProps<T> {
 }
 
 const useInput = <T>({ initialValue, isInvalid }: useInputProps<T>) => {
-  const [valid, setValid] = useState<boolean>(true);
+  const [valid, setValid] = useState<boolean>(
+    isInvalid ? isInvalid(initialValue) : true,
+  );
   const [value, setValue] = useState(initialValue);
 
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -19,10 +21,15 @@ const useInput = <T>({ initialValue, isInvalid }: useInputProps<T>) => {
     setValue(eventValue);
   };
 
+  const setFieldValue = (value: T): void => {
+    setValue(value);
+  };
+
   return {
     value,
     handleChangeValue,
     valid,
+    setFieldValue,
   };
 };
 

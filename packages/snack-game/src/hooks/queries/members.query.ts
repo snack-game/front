@@ -57,3 +57,14 @@ export const useMemberLogin = () =>
     apiMethod: membersApi.login,
     message: TOAST_MESSAGE.AUTH_LOGIN,
   });
+
+export const useUserChangeName = () => {
+  const openToast = useToast();
+
+  return useGenericMutation<MemberType, void>({
+    apiMethod: membersApi.changeName,
+    onSuccess: () => {
+      openToast(TOAST_MESSAGE.USER_CHANGE_NAME, 'success');
+    },
+  });
+};

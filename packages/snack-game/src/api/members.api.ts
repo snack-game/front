@@ -8,6 +8,8 @@ const membersApi = {
     guest: 'members/guest',
 
     names: '/members/names',
+
+    changeName: '/members/me/name',
   },
 
   login: async ({ name }: MemberType): Promise<AuthType> => {
@@ -30,6 +32,10 @@ const membersApi = {
     const { data } = await api.post(membersApi.endPoint.guest);
 
     return { accessToken: data.accessToken, member: data.member };
+  },
+
+  changeName: async ({ name }: MemberType): Promise<void> => {
+    return await api.put(membersApi.endPoint.changeName, { name });
   },
 };
 

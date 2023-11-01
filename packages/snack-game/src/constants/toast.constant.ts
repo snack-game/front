@@ -15,6 +15,12 @@ export const TOAST_MESSAGE = {
   AUTH_ERROR_NOT_FOUND: '존재하지 않는 사용자입니다!',
   AUTH_ERROR_DUPLICATE: '이미 존재하는 사용자입니다!',
 
+  // USER
+  USER_CHANGE_NAME: '이름 변경 완료!',
+
+  // GROUP
+  GROUP_CHANGE: '그룹 변경 완료!',
+
   // ERROR
   ERROR: '에러가 발생하였습니다!',
   ERROR_NOT_FOUND: '일치하는 결과가 없습니다!',
