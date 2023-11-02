@@ -34,20 +34,30 @@ const useMemberOnSuccess = (message: string) => {
   };
 };
 
-export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
+const useMemberOnError = () => {
   const openToast = useToast();
+
+  return (error: AxiosError<ServerError>) => {
+    if (!error.response) throw error;
+
+    openToast(error.response.data.messages, 'error');
+  };
+};
+
+const userMemberErrorBoundary = (error: AxiosError<ServerError>) => {
+  if (!error.response) throw error;
+
+  return error.response?.status >= 500;
+};
+
+export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
   const onSuccess = useMemberOnSuccess(message);
 
   return useMutation({
     mutationFn: apiMethod,
     onSuccess,
-    useErrorBoundary: (error: AxiosError<ServerError>) => {
-      if (!error.response) throw error;
-
-      openToast(error.response.data.messages, 'error');
-
-      return error.response?.status >= 500;
-    },
+    onError: useMemberOnError(),
+    useErrorBoundary: userMemberErrorBoundary,
   });
 };
 
@@ -55,6 +65,8 @@ export const useMemberGuest = () => {
   return useMutation({
     mutationFn: membersApi.guest,
     onSuccess: useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST),
+    onError: useMemberOnError(),
+    useErrorBoundary: userMemberErrorBoundary,
   });
 };
 
@@ -70,13 +82,15 @@ export const useMemberLogin = () =>
     message: TOAST_MESSAGE.AUTH_LOGIN,
   });
 
-export const useUserChangeName = () => {
+export const useChangeUserName = () => {
   const openToast = useToast();
 
   return useMutation({
-    mutationFn: membersApi.changeName,
+    mutationFn: membersApi.changeMemberName,
     onSuccess: () => {
-      openToast(TOAST_MESSAGE.USER_CHANGE_NAME, 'success');
+      openToast(TOAST_MESSAGE.CHANGE_USER_NAME, 'success');
     },
+    onError: useMemberOnError(),
+    useErrorBoundary: userMemberErrorBoundary,
   });
 };

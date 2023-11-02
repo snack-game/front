@@ -139,13 +139,13 @@ const useAppleGame = ({
   };
 
   const handleMouseDown = (event: MouseEventType) => {
-    drag.onMouseDown(event, offsetLeft, offsetTop);
     event.preventDefault();
+    drag.onMouseDown(event, offsetLeft, offsetTop);
   };
 
   const handleMouseMove = (event: MouseEventType) => {
-    drag.onMouseMove(event, offsetLeft, offsetTop);
     event.preventDefault();
+    drag.onMouseMove(event, offsetLeft, offsetTop);
   };
 
   const handleMouseUp = () => {

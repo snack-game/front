@@ -3,13 +3,13 @@ import { AuthType, MemberType } from '@utils/types/member.type';
 
 const membersApi = {
   endPoint: {
-    login: '/members/token',
+    login: '/tokens',
     register: '/members',
-    guest: 'members/guest',
+    guest: 'tokens/guest',
 
     names: '/members/names',
 
-    changeName: '/members/me/name',
+    changeMemberName: '/members/me/name',
   },
 
   login: async ({ name }: MemberType): Promise<AuthType> => {
@@ -34,8 +34,8 @@ const membersApi = {
     return { accessToken: data.accessToken, member: data.member };
   },
 
-  changeName: async ({ name }: MemberType): Promise<void> => {
-    return await api.put(membersApi.endPoint.changeName, { name });
+  changeMemberName: async (name: string): Promise<void> => {
+    return await api.put(membersApi.endPoint.changeMemberName, { name });
   },
 };
 

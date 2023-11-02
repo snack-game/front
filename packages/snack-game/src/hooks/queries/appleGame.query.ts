@@ -17,6 +17,22 @@ import { TOAST_MESSAGE } from '@constants/toast.constant';
 import { useMemberGuest } from '@hooks/queries/members.query';
 import useToast from '@hooks/useToast';
 
+const useAppleGameError = () => {
+  const openToast = useToast();
+
+  return (error: AxiosError<ServerError>) => {
+    if (!error.response) throw error;
+
+    openToast(error.response.data.messages, 'error');
+  };
+};
+
+const appleGameErrorBoundary = (error: AxiosError<ServerError>) => {
+  if (!error.response) throw error;
+
+  return error.response.status >= 500;
+};
+
 export const useAppleGameStart = () => {
   const openToast = useToast();
   const userStateValue = useRecoilValue(userState);
@@ -29,13 +45,8 @@ export const useAppleGameStart = () => {
       setAppleGameState(data);
       openToast(TOAST_MESSAGE.GAME_START, 'success');
     },
-    useErrorBoundary: (error: AxiosError<ServerError>) => {
-      if (!error.response) throw error;
-
-      openToast(error.response.data.messages, 'error');
-
-      return error.response?.status >= 500;
-    },
+    onError: useAppleGameError(),
+    useErrorBoundary: appleGameErrorBoundary,
   });
 
   const gameStart = async () => {
@@ -58,13 +69,8 @@ export const useAppleGameSessionEnd = () => {
     onSuccess: () => {
       openToast(TOAST_MESSAGE.GAME_END, 'success');
     },
-    useErrorBoundary: (error: AxiosError<ServerError>) => {
-      if (!error.response) throw error;
-
-      openToast(error.response.data.messages, 'error');
-
-      return error.response?.status >= 500;
-    },
+    onError: useAppleGameError(),
+    useErrorBoundary: appleGameErrorBoundary,
   });
 
   return { gameEndCheck };
@@ -76,6 +82,8 @@ export const useAppleGameCheck = () => {
 
   const checkGameMove = useMutation({
     mutationFn: appleGameApi.checkGameMove,
+    onError: useAppleGameError(),
+    useErrorBoundary: appleGameErrorBoundary,
   });
 
   const gameEnd = async (rects: appleGameProgressType) => {
@@ -97,7 +105,6 @@ export const useAppleGameCheck = () => {
 };
 
 export const useAppleGameRefresh = () => {
-  const openToast = useToast();
   const setAppleGameState = useSetRecoilState(appleGameState);
 
   return useMutation({
@@ -105,12 +112,7 @@ export const useAppleGameRefresh = () => {
     onSuccess: (data: appleGameStateType) => {
       setAppleGameState(data);
     },
-    useErrorBoundary: (error: AxiosError<ServerError>) => {
-      if (!error.response) throw error;
-
-      openToast(error.response.data.messages, 'error');
-
-      return error.response?.status >= 500;
-    },
+    onError: useAppleGameError(),
+    useErrorBoundary: appleGameErrorBoundary,
   });
 };

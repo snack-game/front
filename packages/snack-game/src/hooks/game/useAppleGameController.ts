@@ -36,32 +36,35 @@ const useAppleGameController = () => {
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
 
-  const handleStartButton = () => {
-    gameStart().then(() => {
-      setStart(true);
-      setTimeRemaining(120);
+  const handleStartButton = async () => {
+    await gameStart();
 
-      if (gameHUDRef.current) {
-        gameHUDRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
+    setStart(true);
+    setTimeRemaining(120);
+
+    if (gameHUDRef.current) {
+      gameHUDRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
-  const handleGameEnd = () => {
+  const handleGameEnd = async () => {
     setStart(false);
-    gameEnd(appleGameProgressValue);
+
+    await gameEnd(appleGameProgressValue);
+
     setAppleGameProgress([]);
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     if (!start) return;
 
     setStart(false);
-    gameRefresh.mutateAsync(appleGameValue.sessionId).then(() => {
-      setStart(true);
-      setTimeRemaining(120);
-      setAppleGameProgress([]);
-    });
+
+    await gameRefresh.mutateAsync(appleGameValue.sessionId);
+
+    setStart(true);
+    setTimeRemaining(120);
+    setAppleGameProgress([]);
   };
 
   useEffect(() => {

@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 
 import styled from '@emotion/styled';
+import { useRecoilState } from 'recoil';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import Button from '@components/common/Button/Button';
 import RetryError from '@components/common/Error/RetryError';
 import Input from '@components/common/Input/Input';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
+import { userState } from '@utils/atoms/member.atom';
 
 import { GROUP_CHANGE_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
-import { useUserChangeName } from '@hooks/queries/members.query';
+import { useChangeGroupName } from '@hooks/queries/groups.query';
+import { useChangeUserName } from '@hooks/queries/members.query';
 import { useGetUserRanking } from '@hooks/queries/ranking.query';
 import useInput from '@hooks/useInput';
 
 const UserInfo = () => {
-  const userNameChange = useUserChangeName();
+  const changeUserName = useChangeUserName();
+  const changeGroupName = useChangeGroupName();
 
   const [modifying, setModifying] = useState(false);
   const userRanking = useGetUserRanking();
+
+  const [userStateValue, setUserState] = useRecoilState(userState);
 
   const {
     value: nameValue,
@@ -38,11 +44,16 @@ const UserInfo = () => {
     isInvalid: (value) => GROUP_CHANGE_REGEXP.test(value),
   });
 
-  const handleUserChangeName = () => {
-    userNameChange.mutate({
-      name: nameValue,
-      group: null,
-    });
+  const handleChangeUserName = async () => {
+    await changeUserName.mutateAsync(nameValue);
+    setUserState((prev) => ({ ...prev, name: nameValue }));
+    setModifying(!modifying);
+  };
+
+  const handleChangeUserGroup = async () => {
+    await changeGroupName.mutateAsync(groupValue);
+    setUserState((prev) => ({ ...prev, group: { name: groupValue } }));
+    setModifying(!modifying);
   };
 
   return (
@@ -66,7 +77,7 @@ const UserInfo = () => {
               <Button
                 content={'저장'}
                 disabled={!nameValid}
-                onClick={handleUserChangeName}
+                onClick={handleChangeUserName}
               />
               <Input
                 placeholder={'그룹'}
@@ -86,22 +97,28 @@ const UserInfo = () => {
                   message={'일치하는 그룹이 없어요! 새로 만들어 보아요!'}
                 />
               </QueryBoundary>
-              <Button content={'저장'} disabled={!groupValid} />
+              <Button
+                content={'저장'}
+                disabled={!groupValid}
+                onClick={handleChangeUserGroup}
+              />
             </InfoContainer>
           </QueryBoundary>
         ) : (
           <>
             <h1>내 정보</h1>
             <InfoContainer>
-              <p>이름: {userRanking?.owner.name}</p>
+              <p>이름: {userStateValue.name}</p>
               <p>
                 그룹:
-                {userRanking?.owner.group
-                  ? userRanking.owner.group.name
-                  : '없음'}
+                {userStateValue.group ? userStateValue.group.name : '없음'}
               </p>
-              <p>랭킹: {userRanking?.ranking}등</p>
-              <p>최고 점수: {userRanking?.score}점!</p>
+              {userRanking && (
+                <>
+                  <p>랭킹: {userRanking.ranking}등</p>
+                  <p>최고 점수: {userRanking.score}점!</p>
+                </>
+              )}
             </InfoContainer>
             <Button content={'수정'} onClick={() => setModifying(!modifying)} />
           </>
