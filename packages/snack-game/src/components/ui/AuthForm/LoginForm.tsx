@@ -1,3 +1,5 @@
+import { FormEvent } from 'react';
+
 import Button from '@components/common/Button/Button';
 import Input from '@components/common/Input/Input';
 
@@ -20,7 +22,7 @@ const LoginForm = () => {
     },
   });
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     loginMutate.mutate({ name: values.name.value, group: null });
   };

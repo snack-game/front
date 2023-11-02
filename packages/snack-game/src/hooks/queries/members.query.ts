@@ -9,7 +9,6 @@ import { AuthType, MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useGenericMutation from '@hooks/queries/useGenericMutation';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
@@ -53,8 +52,8 @@ export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
 };
 
 export const useMemberGuest = () => {
-  return useGenericMutation<void, AuthType>({
-    apiMethod: membersApi.guest,
+  return useMutation({
+    mutationFn: membersApi.guest,
     onSuccess: useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST),
   });
 };
@@ -74,8 +73,8 @@ export const useMemberLogin = () =>
 export const useUserChangeName = () => {
   const openToast = useToast();
 
-  return useGenericMutation<MemberType, void>({
-    apiMethod: membersApi.changeName,
+  return useMutation({
+    mutationFn: membersApi.changeName,
     onSuccess: () => {
       openToast(TOAST_MESSAGE.USER_CHANGE_NAME, 'success');
     },

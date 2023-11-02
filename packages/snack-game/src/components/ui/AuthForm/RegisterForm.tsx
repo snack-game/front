@@ -1,3 +1,5 @@
+import { FormEvent } from 'react';
+
 import QueryBoundary from '@components/base/QueryBoundary';
 import Button from '@components/common/Button/Button';
 import RetryError from '@components/common/Error/RetryError';
@@ -28,7 +30,7 @@ const RegisterForm = () => {
     },
   });
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     registerMutate.mutate({
       name: values.name.value,
