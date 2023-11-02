@@ -88,13 +88,34 @@ const Header = () => {
             </Styled.Mobile>
           </>
         ) : (
-          <Button
-            content={'로그인'}
-            size={'small'}
-            color={theme.colors.lightGreen}
-            wrapper={css({ margin: '0.2rem' })}
-            onClick={handleLogin}
-          />
+          <>
+            <Styled.Desktop>
+              <Button
+                content={'로그인'}
+                size={'small'}
+                color={theme.colors.lightGreen}
+                wrapper={css({ margin: '0.2rem' })}
+                onClick={handleLogin}
+              />
+            </Styled.Desktop>
+            <Styled.Mobile>
+              <Menu buttonContent={'메뉴'}>
+                <DropDownItem onClick={handleLogin}>로그인</DropDownItem>
+                <Link to={PATH.APPLE_GAME}>
+                  <DropDownItem>게임</DropDownItem>
+                </Link>
+                <Link to={PATH.RANKING}>
+                  <DropDownItem>랭킹</DropDownItem>
+                </Link>
+                <Link to={PATH.BLOG}>
+                  <DropDownItem>블로그</DropDownItem>
+                </Link>
+                <Link to={PATH.TEAM}>
+                  <DropDownItem>팀 소개</DropDownItem>
+                </Link>
+              </Menu>
+            </Styled.Mobile>
+          </>
         )}
       </Styled.Options>
     </Styled.HeaderContainer>

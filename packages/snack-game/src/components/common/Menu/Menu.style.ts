@@ -16,7 +16,7 @@ export const DropDownContainer = styled.ul`
   border: 1px solid ${(props) => props.theme.colors.boxBorder};
   padding: 0.2rem;
   right: 0;
-  z-index: 30;
+  z-index: 10;
   background-color: ${(props) => props.theme.colors.gray};
   animation: growOut 200ms ease-in-out forwards;
   transform-origin: top center;
