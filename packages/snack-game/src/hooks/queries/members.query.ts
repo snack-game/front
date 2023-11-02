@@ -1,11 +1,15 @@
+import { useMutation } from 'react-query';
+
+import { AxiosError } from 'axios/index';
 import { useSetRecoilState } from 'recoil';
 
 import membersApi from '@api/members.api';
 import { userState } from '@utils/atoms/member.atom';
 import { AuthType, MemberType } from '@utils/types/member.type';
 
+import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useGenericMutation from '@hooks/useGenericMutation';
+import useGenericMutation from '@hooks/queries/useGenericMutation';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
@@ -32,10 +36,19 @@ const useMemberOnSuccess = (message: string) => {
 };
 
 export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
+  const openToast = useToast();
   const onSuccess = useMemberOnSuccess(message);
-  return useGenericMutation<MemberType, AuthType>({
-    apiMethod,
+
+  return useMutation({
+    mutationFn: apiMethod,
     onSuccess,
+    useErrorBoundary: (error: AxiosError<ServerError>) => {
+      if (!error.response) throw error;
+
+      openToast(error.response.data.messages, 'error');
+
+      return error.response?.status >= 500;
+    },
   });
 };
 

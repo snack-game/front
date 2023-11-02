@@ -11,19 +11,19 @@ const AuthContainer = () => {
   const [authToggle, setAuthToggle] = useState(false);
 
   return (
-    <QueryBoundary errorFallback={RetryError}>
-      <>
-        <Styled.AuthTypeContainer>
-          <AuthToggle
-            toggle={authToggle}
-            left={'로그인'}
-            right={'등록'}
-            onClick={() => setAuthToggle(!authToggle)}
-          />
-        </Styled.AuthTypeContainer>
+    <>
+      <Styled.AuthTypeContainer>
+        <AuthToggle
+          toggle={authToggle}
+          left={'로그인'}
+          right={'등록'}
+          onClick={() => setAuthToggle(!authToggle)}
+        />
+      </Styled.AuthTypeContainer>
+      <QueryBoundary errorFallback={RetryError}>
         {authToggle ? <RegisterForm /> : <LoginForm />}
-      </>
-    </QueryBoundary>
+      </QueryBoundary>
+    </>
   );
 };
 

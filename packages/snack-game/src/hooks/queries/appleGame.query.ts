@@ -12,7 +12,7 @@ import { AuthType } from '@utils/types/member.type';
 
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import { useMemberGuest } from '@hooks/queries/members.query';
-import useGenericMutation from '@hooks/useGenericMutation';
+import useGenericMutation from '@hooks/queries/useGenericMutation';
 import useToast from '@hooks/useToast';
 
 export const useAppleGameStart = () => {
