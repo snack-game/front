@@ -1,5 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+
+import { useTheme } from '@emotion/react';
 
 import AppleGameLottie from '@assets/lottie/apple-game.json';
 import PageContainer from '@components/base/PageContainer';
@@ -8,7 +11,6 @@ import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import { LottieOptionTypes } from '@utils/types/common.type';
 
 import PATH from '@constants/path.constant';
-import { useInternalRouter } from '@hooks/useInternalRouter';
 import useLottie from '@hooks/useLottie';
 
 import * as Styled from './MainPage.style';
@@ -20,12 +22,8 @@ const lottieOptions: LottieOptionTypes = {
 };
 
 const MainPage = () => {
+  const theme = useTheme();
   const { ref } = useLottie(lottieOptions);
-  const { push } = useInternalRouter();
-
-  const handleAppleGameEnter = () => {
-    push(PATH.APPLE_GAME);
-  };
 
   return (
     <>
@@ -46,11 +44,18 @@ const MainPage = () => {
               황금사과를 통해 판을 초기화하고 고득점을 노려보아요!
             </p>
 
-            <Button
-              content={'게임 시작'}
-              size={'large'}
-              onClick={handleAppleGameEnter}
-            ></Button>
+            <Styled.AppleGamePageInfo>
+              <Link to={PATH.APPLE_GAME}>
+                <Button content={'게임 시작'} size={'large'}></Button>
+              </Link>
+              <Link to={PATH.FEED_BACK}>
+                <Button
+                  content={'피드벡 보내기'}
+                  size={'medium'}
+                  color={theme.colors.lightGreen}
+                ></Button>
+              </Link>
+            </Styled.AppleGamePageInfo>
           </Styled.AppleGamePageRight>
         </Styled.AppleGamePageContainer>
       </PageContainer>

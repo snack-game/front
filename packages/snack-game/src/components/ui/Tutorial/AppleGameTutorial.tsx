@@ -70,7 +70,13 @@ const AppleGameTutorial = () => {
 
       {tutorialStep !== 5 && (
         <Styled.TutorialNav>
-          {tutorialStep !== 0 && (
+          {tutorialStep == 0 ? (
+            <Button
+              content={'건너뛰기'}
+              onClick={handleClose}
+              color={theme.colors.boxBorder}
+            />
+          ) : (
             <Button
               content={'이전'}
               color={theme.colors.boxBorder}

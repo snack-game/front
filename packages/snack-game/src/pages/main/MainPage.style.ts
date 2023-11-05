@@ -53,3 +53,11 @@ export const AppleGamePageRight = styled.div`
     color: ${(props) => props.theme.colors.description};
   }
 `;
+
+export const AppleGamePageInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  gap: 0.5rem;
+`;
