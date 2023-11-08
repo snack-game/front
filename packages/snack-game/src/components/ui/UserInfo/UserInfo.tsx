@@ -115,7 +115,7 @@ const UserInfo = () => {
               </p>
               {userRanking && (
                 <>
-                  <p>랭킹: {userRanking.ranking}등</p>
+                  <p>랭킹: {userRanking.rank}등</p>
                   <p>최고 점수: {userRanking.score}점!</p>
                 </>
               )}

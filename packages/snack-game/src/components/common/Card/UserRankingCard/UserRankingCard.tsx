@@ -7,12 +7,12 @@ const UserRankingCard = () => {
 
   return (
     <>
-      {userRanking?.ranking && (
+      {userRanking?.rank && (
         <Styled.UserRankingCardWrapper>
           <Styled.UserRankingCardItem>
             <p>{userRanking.owner.name}님</p>
             <p>{userRanking.owner.group?.name || '그룹없음'}</p>
-            <span>랭킹 {userRanking.ranking}등!</span>
+            <span>랭킹 {userRanking.rank}등!</span>
             <span>점수 {userRanking.score}점!</span>
           </Styled.UserRankingCardItem>
         </Styled.UserRankingCardWrapper>
