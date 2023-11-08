@@ -18,9 +18,9 @@ const loadedImages = [First, Second, Third].map((src) => {
 
 const TopRankingCard = ({ rankInfo }: TopRankingCardProps) => {
   return (
-    <TopRankingCardWrapper rank={rankInfo.ranking}>
+    <TopRankingCardWrapper rank={rankInfo.rank}>
       <ThumbnailCard
-        imgSrc={loadedImages[rankInfo.ranking - 1].src}
+        imgSrc={loadedImages[rankInfo.rank - 1].src}
         title={rankInfo.owner.name + ' 님'}
         subTitle={rankInfo.owner.group?.name || '그룹 없음'}
         content={rankInfo.score + '점!'}

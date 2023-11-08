@@ -2,7 +2,7 @@ import api from '@api/index';
 
 const rankingApi = {
   endPoint: {
-    totalRanking: '/rankings/all',
+    totalRanking: '/rankings?by=BEST_SCORE',
     userRanking: '/rankings/all/me',
   },
   headers: {

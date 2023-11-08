@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { GroupType } from '@utils/types/member.type';
 
 interface TableItemProps {
-  ranking: number;
+  rank: number;
   name: string;
   group: GroupType | null;
   score: number;
@@ -35,12 +35,12 @@ const TableItemContainer = styled.div`
   }
 `;
 
-const RankingTableItem = ({ ranking, name, group, score }: TableItemProps) => {
+const RankingTableItem = ({ rank, name, group, score }: TableItemProps) => {
   return (
     <TableItemContainer>
-      <p>{ranking}</p>
+      <p>{rank}</p>
       <span>{name}</span>
-      <span>{group === null ? 'x' : group.name}</span>
+      <span>{group?.name == null || group?.name == '' ? 'x' : group.name}</span>
       <p>{score}</p>
     </TableItemContainer>
   );

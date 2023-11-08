@@ -50,7 +50,7 @@ const MainPage = () => {
               </Link>
               <Link to={PATH.FEED_BACK}>
                 <Button
-                  content={'피드벡 보내기'}
+                  content={'피드백 보내기'}
                   size={'medium'}
                   color={theme.colors.lightGreen}
                 ></Button>
