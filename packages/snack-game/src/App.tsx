@@ -20,9 +20,7 @@ const MainPage = lazy(() => import('@pages/main/MainPage'));
 
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
-const LeaderBoardPage = lazy(
-  () => import('@pages/leaderboard/LeaderBoardPage'),
-);
+const LeaderBoardPage = lazy(() => import('@pages/ranking/RankingPage'));
 
 const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 

@@ -19,7 +19,7 @@ const ContentContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const LeaderBoardPage = () => {
+const RankingPage = () => {
   const userStateValue = useRecoilValue(userState);
 
   return (
@@ -43,4 +43,4 @@ const LeaderBoardPage = () => {
   );
 };
 
-export default LeaderBoardPage;
+export default RankingPage;
