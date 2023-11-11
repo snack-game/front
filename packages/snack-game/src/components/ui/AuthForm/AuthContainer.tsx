@@ -1,27 +1,12 @@
-import { useState } from 'react';
-
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/common/Error/RetryError';
-import AuthToggle from '@components/common/Toggle/AuthToggle';
-import * as Styled from '@components/ui/AuthForm/Auth.style';
 import LoginForm from '@components/ui/AuthForm/LoginForm';
-import RegisterForm from '@components/ui/AuthForm/RegisterForm';
 
 const AuthContainer = () => {
-  const [authToggle, setAuthToggle] = useState(false);
-
   return (
     <>
-      <Styled.AuthTypeContainer>
-        <AuthToggle
-          toggle={authToggle}
-          left={'로그인'}
-          right={'등록'}
-          onClick={() => setAuthToggle(!authToggle)}
-        />
-      </Styled.AuthTypeContainer>
       <QueryBoundary errorFallback={RetryError}>
-        {authToggle ? <RegisterForm /> : <LoginForm />}
+        <LoginForm />
       </QueryBoundary>
     </>
   );

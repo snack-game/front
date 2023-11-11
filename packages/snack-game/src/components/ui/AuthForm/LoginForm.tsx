@@ -1,8 +1,8 @@
 import { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-import GoogleSingIn from '@assets/images/google_signin.png';
-import KaKaoSingIn from '@assets/images/kakao_signin.png';
+import GoogleSingIn from '@assets/images/google.png';
+import KaKaoSingIn from '@assets/images/kakao.png';
 import Button from '@components/common/Button/Button';
 import Input from '@components/common/Input/Input';
 
@@ -47,12 +47,15 @@ const LoginForm = () => {
       </Styled.InputContainer>
       <Button content={'확인'} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
-        <Link to={PATH.GOOGLE} referrerPolicy={'origin'}>
-          <img src={GoogleSingIn} alt={'구글 로그인'} />
-        </Link>
-        <Link to={PATH.KAKAO} referrerPolicy={'origin'}>
-          <img src={KaKaoSingIn} alt={'카카오 로그인'} />
-        </Link>
+        <p>간편 로그인</p>
+        <Styled.SocialLoginImgContainer>
+          <Link to={PATH.GOOGLE} referrerPolicy={'origin'}>
+            <img src={GoogleSingIn} alt={'구글 로그인'} />
+          </Link>
+          <Link to={PATH.KAKAO} referrerPolicy={'origin'}>
+            <img src={KaKaoSingIn} alt={'카카오 로그인'} />
+          </Link>
+        </Styled.SocialLoginImgContainer>
       </Styled.SocialLoginContainer>
     </Styled.Form>
   );

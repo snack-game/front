@@ -40,10 +40,20 @@ export const SocialLoginContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 1.5rem;
+  gap: 1.5rem;
+
+  & > p {
+    color: ${(props) => props.theme.colors.description};
+  }
+`;
+
+export const SocialLoginImgContainer = styled.div`
+  display: flex;
   gap: 1rem;
 
   & > a > img {
     cursor: pointer;
-    width: 10rem;
+    width: 3rem;
+    border-radius: 100%;
   }
 `;
