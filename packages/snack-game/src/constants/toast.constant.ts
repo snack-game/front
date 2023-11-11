@@ -14,6 +14,7 @@ export const TOAST_MESSAGE = {
   AUTH_ERROR: '로그인에 실패하였습니다!',
   AUTH_ERROR_NOT_FOUND: '존재하지 않는 사용자입니다!',
   AUTH_ERROR_DUPLICATE: '이미 존재하는 사용자입니다!',
+  AUTH_SOCIAL: '소셜 로그인 완료!',
 
   // USER
   CHANGE_USER_NAME: '이름 변경 완료!',

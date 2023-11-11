@@ -31,7 +31,6 @@ export type LottieOptionTypes = {
 
 export type RankingType = {
   rank: number;
-  ranking: number;
   owner: {
     id: number;
     name: string;

@@ -39,25 +39,7 @@ const useLottie = (options: LottieOptionTypes) => {
         controller.current = player.current;
       }
 
-      if (playOnHover) {
-        container.current.addEventListener('mouseenter', () =>
-          player.current?.play(),
-        );
-        container.current.addEventListener('mouseleave', () =>
-          player.current?.stop(),
-        );
-      }
-
       return () => {
-        if (playOnHover) {
-          container.current?.removeEventListener('mouseenter', () =>
-            player.current?.play(),
-          );
-          container.current?.removeEventListener('mouseleave', () =>
-            player.current?.stop(),
-          );
-        }
-
         player.current?.destroy();
       };
     }

@@ -7,13 +7,13 @@ import Input from '@components/common/Input/Input';
 import SearchResultList from '@components/ui/SearchResultList/SearchResultList';
 
 import { GROUP_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
-import { useMemberRegister } from '@hooks/queries/members.query';
+import { useRegister } from '@hooks/queries/auth.query';
 import useForm from '@hooks/useForm';
 
 import * as Styled from './Auth.style';
 
 const RegisterForm = () => {
-  const registerMutate = useMemberRegister();
+  const registerMutate = useRegister();
 
   const { values, handleChangeValue, setFieldValue } = useForm<string>({
     initialValues: {

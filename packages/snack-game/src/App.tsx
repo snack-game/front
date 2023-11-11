@@ -26,7 +26,10 @@ const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 
 const UserPage = lazy(() => import('@pages/user/UserPage'));
 
+const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
+
 const NotFoundErrorPage = lazy(() => import('@pages/error/NotFoundErrorPage'));
+
 const App = () => {
   const themeStateValue = useRecoilValue(themeState);
 
@@ -53,6 +56,9 @@ const App = () => {
 
               {/*User*/}
               <Route path={PATH.USER} element={<UserPage />} />
+
+              {/*OAuth*/}
+              <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
 
               {/*Error*/}
               <Route

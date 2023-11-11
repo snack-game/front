@@ -14,7 +14,7 @@ import { AuthType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import { useMemberGuest } from '@hooks/queries/members.query';
+import { useGuest } from '@hooks/queries/auth.query';
 import useToast from '@hooks/useToast';
 
 const useAppleGameError = () => {
@@ -36,7 +36,7 @@ const appleGameErrorBoundary = (error: AxiosError<ServerError>) => {
 export const useAppleGameStart = () => {
   const openToast = useToast();
   const userStateValue = useRecoilValue(userState);
-  const guestMutation = useMemberGuest();
+  const guestMutation = useGuest();
   const setAppleGameState = useSetRecoilState(appleGameState);
 
   const gameStartMutation = useMutation({

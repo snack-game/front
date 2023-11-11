@@ -33,3 +33,17 @@ export const Description = styled.p`
   white-space: pre-line;
   color: ${(props) => props.theme.colors.description};
 `;
+
+export const SocialLoginContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  gap: 1rem;
+
+  & > a > img {
+    cursor: pointer;
+    width: 10rem;
+  }
+`;

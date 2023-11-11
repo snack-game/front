@@ -1,18 +1,20 @@
 import { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import GoogleSingIn from '@assets/images/google_signin.png';
 import KaKaoSingIn from '@assets/images/kakao_signin.png';
 import Button from '@components/common/Button/Button';
 import Input from '@components/common/Input/Input';
 
+import PATH from '@constants/path.constant';
 import { NAME_REGEXP } from '@constants/regexp.constant';
-import { useMemberLogin } from '@hooks/queries/members.query';
+import { useLogin } from '@hooks/queries/auth.query';
 import useForm from '@hooks/useForm';
 
 import * as Styled from './Auth.style';
 
 const LoginForm = () => {
-  const loginMutate = useMemberLogin();
+  const loginMutate = useLogin();
 
   const { values, handleChangeValue } = useForm<string>({
     initialValues: {
@@ -45,8 +47,12 @@ const LoginForm = () => {
       </Styled.InputContainer>
       <Button content={'확인'} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
-        <img src={GoogleSingIn} alt={'구글 로그인'} />
-        <img src={KaKaoSingIn} alt={'카카오 로그인'} />
+        <Link to={PATH.GOOGLE} referrerPolicy={'origin'}>
+          <img src={GoogleSingIn} alt={'구글 로그인'} />
+        </Link>
+        <Link to={PATH.KAKAO} referrerPolicy={'origin'}>
+          <img src={KaKaoSingIn} alt={'카카오 로그인'} />
+        </Link>
       </Styled.SocialLoginContainer>
     </Styled.Form>
   );
