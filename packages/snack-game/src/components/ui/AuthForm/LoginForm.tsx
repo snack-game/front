@@ -1,5 +1,7 @@
 import { FormEvent } from 'react';
 
+import GoogleSingIn from '@assets/images/google_signin.png';
+import KaKaoSingIn from '@assets/images/kakao_signin.png';
 import Button from '@components/common/Button/Button';
 import Input from '@components/common/Input/Input';
 
@@ -42,6 +44,10 @@ const LoginForm = () => {
         />
       </Styled.InputContainer>
       <Button content={'확인'} disabled={!values.name.valid} />
+      <Styled.SocialLoginContainer>
+        <img src={GoogleSingIn} alt={'구글 로그인'} />
+        <img src={KaKaoSingIn} alt={'카카오 로그인'} />
+      </Styled.SocialLoginContainer>
     </Styled.Form>
   );
 };
