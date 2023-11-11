@@ -48,7 +48,7 @@ const MainPage = () => {
               <Link to={PATH.APPLE_GAME}>
                 <Button content={'게임 시작'} size={'large'}></Button>
               </Link>
-              <Link to={PATH.FEED_BACK}>
+              <Link to={PATH.FEED_BACK} target="_blank">
                 <Button
                   content={'피드백 보내기'}
                   size={'medium'}

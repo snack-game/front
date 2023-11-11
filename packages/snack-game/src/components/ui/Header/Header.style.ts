@@ -52,6 +52,17 @@ export const Nav = styled.nav`
   }
 `;
 
+export const NavItemBlog = styled.div`
+  display: flex;
+  gap: 0.2rem;
+
+  & > img {
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+  }
+`;
+
 export const Options = styled.div`
   display: flex;
   gap: 1rem;

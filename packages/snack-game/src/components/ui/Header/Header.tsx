@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { css, useTheme } from '@emotion/react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
+import LINK from '@assets/images/link.png';
 import LogoImage from '@assets/images/logo.png';
 import Button from '@components/common/Button/Button';
 import Menu from '@components/common/Menu/Menu';
@@ -10,6 +11,7 @@ import { DropDownItem } from '@components/common/Menu/Menu.style';
 import ThemeToggle from '@components/common/Toggle/ThemeToggle';
 import AuthContainer from '@components/ui/AuthForm/AuthContainer';
 import * as Styled from '@components/ui/Header/Header.style';
+import { NavItemBlog } from '@components/ui/Header/Header.style';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import PATH from '@constants/path.constant';
@@ -50,7 +52,12 @@ const Header = () => {
       <Styled.Nav>
         <Link to={PATH.APPLE_GAME}>게임</Link>
         <Link to={PATH.RANKING}>랭킹</Link>
-        <Link to={PATH.BLOG}>블로그</Link>
+        <Link to={PATH.BLOG} target="_blank">
+          <NavItemBlog>
+            블로그
+            <img src={LINK} alt={'블로그'} />
+          </NavItemBlog>
+        </Link>
         <Link to={PATH.TEAM}>팀 소개</Link>
       </Styled.Nav>
 
@@ -77,7 +84,7 @@ const Header = () => {
                 <Link to={PATH.RANKING}>
                   <DropDownItem>랭킹</DropDownItem>
                 </Link>
-                <Link to={PATH.BLOG}>
+                <Link to={PATH.BLOG} target="_blank">
                   <DropDownItem>블로그</DropDownItem>
                 </Link>
                 <Link to={PATH.TEAM}>
@@ -107,7 +114,7 @@ const Header = () => {
                 <Link to={PATH.RANKING}>
                   <DropDownItem>랭킹</DropDownItem>
                 </Link>
-                <Link to={PATH.BLOG}>
+                <Link to={PATH.BLOG} target="_blank">
                   <DropDownItem>블로그</DropDownItem>
                 </Link>
                 <Link to={PATH.TEAM}>
