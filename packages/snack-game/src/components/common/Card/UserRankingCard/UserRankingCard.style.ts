@@ -14,6 +14,11 @@ export const UserRankingCardWrapper = styled.div`
   color: ${(props) => props.theme.colors.titleText};
   background-color: ${(props) => props.theme.colors.background};
   box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    font-size: 0.8rem;
+  }
 `;
 
 export const UserRankingCardItem = styled.div`

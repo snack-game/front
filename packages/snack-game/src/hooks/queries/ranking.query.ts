@@ -25,7 +25,6 @@ export const useGetUserRanking = () => {
     QUERY_KEY.USER_RANKING,
     rankingApi.userRanking,
     {
-      cacheTime: 0,
       suspense: true,
       useErrorBoundary: (error: AxiosError<ServerError>) => {
         if (!error.response) throw error;

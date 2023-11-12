@@ -35,7 +35,6 @@ const Header = () => {
 
   const handleLogout = () => {
     resetUser();
-    console.log('로그아웃');
     openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
     replace(PATH.HOME);
   };
