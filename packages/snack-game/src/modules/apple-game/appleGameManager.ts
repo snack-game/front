@@ -14,6 +14,14 @@ const COLUMNS = 12;
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
 
+  readonly appleImage = new Image();
+  readonly goldenAppleImage = new Image();
+
+  constructor() {
+    this.appleImage.src = AppleImage;
+    this.goldenAppleImage.src = GoldenAppleImage;
+  }
+
   generateApples(
     offsetWidth: number,
     offsetHeight: number,
@@ -29,7 +37,6 @@ export class AppleGameManager {
           0,
           apples[row][column].number,
           0,
-          0.5,
           {
             x: Math.random() * 4 - 2,
             y: 0,
@@ -212,7 +219,7 @@ export class AppleGameManager {
     offsetHeight: number,
     Apple: Apple,
   ) {
-    Apple.velocity.y -= Apple.gravity;
+    Apple.velocity.y -= 0.5;
 
     Apple.position.x += Apple.velocity.x;
     Apple.position.y -= Apple.velocity.y;

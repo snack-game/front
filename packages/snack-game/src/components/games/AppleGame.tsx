@@ -9,7 +9,6 @@ const AppleGame = ({
   offsetHeight,
   offsetLeft,
   offsetTop,
-  appleGameInfo,
   drag,
   appleGameManager,
 }: AppleGameProps) => {
@@ -23,7 +22,6 @@ const AppleGame = ({
     offsetHeight,
     offsetLeft,
     offsetTop,
-    appleGameInfo,
     drag,
     appleGameManager,
   });

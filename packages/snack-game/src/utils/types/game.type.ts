@@ -35,7 +35,6 @@ export interface AppleGameProps {
   offsetHeight: number;
   offsetLeft: number;
   offsetTop: number;
-  appleGameInfo?: appleGameStateType;
   drag: Drag;
   appleGameManager: AppleGameManager;
 }

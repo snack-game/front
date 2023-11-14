@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -13,10 +13,8 @@ import {
 } from '@utils/types/game.type';
 
 import { useAppleGameCheck } from '@hooks/queries/appleGame.query';
-import useCanvas from '@hooks/useCanvas';
-import useDebouncedCallback from '@hooks/useDebouncedCallback';
 
-const useAppleGame = ({
+const useTestAppleGame = ({
   offsetWidth,
   offsetHeight,
   offsetLeft,
@@ -31,60 +29,74 @@ const useAppleGame = ({
     useRecoilState(appleGameState);
 
   const [stage, setStage] = useState<number>(0);
-  const [particles] = useState<Particle[]>([]);
+  const [worker, setWorker] = useState<Worker>();
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
-  const [apples, setApples] = useState<Apple[]>(
-    appleGameManager.generateApples(
-      offsetWidth,
-      offsetHeight,
-      appleGameStateValue.apples,
-    ),
-  );
+  const [apples, setApples] = useState<Apple[]>([]);
 
   const { checkGameMove } = useAppleGameCheck();
 
-  const debouncedApplePositionUpdate = useDebouncedCallback({
-    target: () => {
-      appleGameManager.updateApplePosition(offsetWidth, offsetHeight, apples);
-    },
-    delay: 100,
-  });
+  const appleGameCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const appleGameCanvasRef = useCanvas({
-    offsetWidth,
-    offsetHeight,
-    animation: (ctx: CanvasRenderingContext2D) => {
-      // background
-      ctx.clearRect(0, 0, offsetWidth, offsetHeight);
+  const initializeWorker = (canvas: HTMLCanvasElement | null) => {
+    if (!canvas || worker) return;
+    const offScreen = canvas.transferControlToOffscreen();
+    const newWorker = new Worker(new URL('worker.ts', import.meta.url), {
+      type: 'module',
+    });
+    newWorker.postMessage(
+      { offScreen, devicePixelRatio, drag, offsetWidth, offsetHeight },
+      [offScreen],
+    );
+    setWorker(newWorker);
+  };
 
-      drag.drawDragArea(ctx);
+  const updateWorkerData = () => {
+    const particles: Particle[] = [];
 
-      handleParticles(ctx);
+    removedApples.forEach((removedApple: Apple) => {
+      appleGameManager.updateFallingPosition(offsetHeight, removedApple);
+      if (removedApple.remove) {
+        setRemovedApples([]);
+      }
+    });
 
-      // render game
-      apples.forEach((apple: Apple) => {
-        appleGameManager.handleAppleRendering(
-          ctx,
-          drag.startX,
-          drag.startY,
-          drag.currentX,
-          drag.currentY,
-          drag.isDrawing,
-          apple,
-        );
-      });
+    worker?.postMessage({
+      drag,
+      offsetWidth,
+      offsetHeight,
+      apples,
+      particles,
+      removedApples,
+    });
+  };
 
-      removedApples.forEach((removedApple: Apple) => {
-        appleGameManager.updateFallingPosition(ctx, offsetHeight, removedApple);
-        if (removedApple.remove) {
-          setRemovedApples([]);
-        }
-      });
-    },
-  });
+  const handleWorkerMessage = (e: any) => {
+    if (e.data === 'frameRendered') {
+      updateWorkerData();
+    }
+  };
 
   useEffect(() => {
-    debouncedApplePositionUpdate();
+    const canvas = appleGameCanvasRef.current;
+    initializeWorker(canvas);
+
+    return () => {
+      if (worker) {
+        console.log('worker terminated');
+        worker.terminate();
+      }
+    };
+  }, [appleGameCanvasRef.current]);
+
+  useEffect(() => {
+    if (worker) {
+      worker.onmessage = handleWorkerMessage;
+      updateWorkerData();
+    }
+  }, [worker, apples, removedApples]);
+
+  useEffect(() => {
+    appleGameManager.updateApplePosition(offsetWidth, offsetHeight, apples);
   }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
@@ -100,17 +112,20 @@ const useAppleGame = ({
       canvas.removeEventListener('touchmove', handleMouseMove);
       canvas.removeEventListener('touchend', handleMouseUp);
     };
-  }, [appleGameCanvasRef.current, stage, appleGameStateValue.score]);
+  }, [appleGameCanvasRef, stage, appleGameStateValue.score]);
 
-  const handleParticles = (ctx: CanvasRenderingContext2D) => {
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].draw(ctx);
-      if (particles[i].size <= 1) {
-        particles.splice(i, 1);
-        i--;
-      }
-    }
+  useEffect(() => {
+    setApplesByGameInfo();
+  }, []);
+
+  const setApplesByGameInfo = async () => {
+    setApples(
+      await appleGameManager.generateApples(
+        offsetWidth,
+        offsetHeight,
+        appleGameStateValue.apples,
+      ),
+    );
   };
 
   const handleMouseDown = (event: MouseEventType) => {
@@ -134,17 +149,6 @@ const useAppleGame = ({
       );
 
     if (getScore) {
-      removedApples.forEach((apple) => {
-        for (let i = 0; i < 5 + Math.floor(Math.random() * 2); i++) {
-          particles.push(
-            new Particle(
-              apple.position.x + apple.radius,
-              apple.position.y + apple.radius,
-            ),
-          );
-        }
-      });
-
       const removedAppleCoordinates: coordinatesType[] = removedApples.map(
         (apple: Apple) => apple.coordinates,
       );
@@ -170,13 +174,7 @@ const useAppleGame = ({
               apples: response.apples,
             }));
 
-            setApples(
-              appleGameManager.generateApples(
-                offsetWidth,
-                offsetHeight,
-                response.apples,
-              ),
-            );
+            setApplesByGameInfo();
             setAppleGameProgress([]);
             setStage((prev: number) => prev + 1);
           });
@@ -206,4 +204,4 @@ const useAppleGame = ({
   };
 };
 
-export default useAppleGame;
+export default useTestAppleGame;

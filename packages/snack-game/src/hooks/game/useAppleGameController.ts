@@ -14,27 +14,26 @@ import {
 import { useClientRect } from '@hooks/useClientRect';
 
 const useAppleGameController = () => {
-  const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-  const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-
-  const { offsetTop, offsetWidth, offsetLeft, offsetHeight } = useClientRect({
-    canvasBaseRef,
-  });
-
-  const drag = useMemo(() => new Drag(), []);
-  const appleGameManager = useMemo(() => new AppleGameManager(), []);
-
-  const { gameEnd } = useAppleGameCheck();
-  const { gameStart, gameStartMutation } = useAppleGameStart();
-  const gameRefresh = useAppleGameRefresh();
-
   const appleGameValue = useRecoilValue(appleGameState);
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
 
+  const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+
+  const drag = useMemo(() => new Drag(), []);
+  const appleGameManager = useMemo(() => new AppleGameManager(), []);
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
+
+  const { offsetTop, offsetWidth, offsetLeft, offsetHeight } = useClientRect({
+    canvasBaseRef,
+  });
+
+  const { gameEnd } = useAppleGameCheck();
+  const { gameStart, gameStartMutation } = useAppleGameStart();
+  const gameRefresh = useAppleGameRefresh();
 
   const handleStartButton = async () => {
     await gameStart();

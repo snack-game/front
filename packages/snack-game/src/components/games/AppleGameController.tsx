@@ -43,7 +43,6 @@ const AppleGameController = () => {
             offsetHeight={offsetHeight}
             offsetLeft={offsetLeft}
             offsetTop={offsetTop}
-            appleGameInfo={appleGameValue}
             drag={drag}
             appleGameManager={appleGameManager}
           />

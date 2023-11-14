@@ -21,7 +21,7 @@ export const useClientRect = ({ canvasBaseRef }: useClientRectProps) => {
         setOffsetLeft(canvasBaseRef.current.offsetLeft);
       }
     },
-    delay: 100,
+    delay: 300,
   });
 
   useEffect(() => {
