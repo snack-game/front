@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.11.0",
     "@testing-library/dom": "^9.3.1",
     "@types/styled-components": "^5.1.26",
+    "@vercel/analytics": "^1.1.1",
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
     "lottie-web": "^5.12.2",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -50,10 +50,8 @@ const useAppleGame = ({
     delay: 100,
   });
 
-  const appleGameCanvasRef = useCanvas({
-    offsetWidth,
-    offsetHeight,
-    animation: (ctx: CanvasRenderingContext2D) => {
+  const animation = useCallback(
+    (ctx: CanvasRenderingContext2D) => {
       // background
       ctx.clearRect(0, 0, offsetWidth, offsetHeight);
 
@@ -81,6 +79,13 @@ const useAppleGame = ({
         }
       });
     },
+    [apples, removedApples, drag, offsetWidth, offsetHeight],
+  );
+
+  const appleGameCanvasRef = useCanvas({
+    offsetWidth,
+    offsetHeight,
+    animation,
   });
 
   useEffect(() => {

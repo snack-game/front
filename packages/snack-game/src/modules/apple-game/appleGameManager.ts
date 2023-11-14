@@ -14,14 +14,6 @@ const COLUMNS = 12;
 export class AppleGameManager {
   public applesInDragArea: Apple[] = [];
 
-  readonly appleImage = new Image();
-  readonly goldenAppleImage = new Image();
-
-  constructor() {
-    this.appleImage.src = AppleImage;
-    this.goldenAppleImage.src = GoldenAppleImage;
-  }
-
   generateApples(
     offsetWidth: number,
     offsetHeight: number,

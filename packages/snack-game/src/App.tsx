@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
+import { Analytics } from '@vercel/analytics/react';
 import { useRecoilValue } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
@@ -35,6 +36,7 @@ const App = () => {
 
   return (
     <>
+      <Analytics />
       <ThemeProvider
         theme={themeStateValue === 'light' ? lightTheme : darkTheme}
       >
