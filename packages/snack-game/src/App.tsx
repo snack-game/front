@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
-import { Analytics } from '@vercel/analytics/react';
+import { inject } from '@vercel/analytics';
 import { useRecoilValue } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
@@ -16,6 +16,8 @@ import { darkTheme, lightTheme } from '@utils/theme';
 import PATH from '@constants/path.constant';
 
 import { globalStyles } from './App.style';
+
+inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
@@ -36,7 +38,6 @@ const App = () => {
 
   return (
     <>
-      <Analytics />
       <ThemeProvider
         theme={themeStateValue === 'light' ? lightTheme : darkTheme}
       >
