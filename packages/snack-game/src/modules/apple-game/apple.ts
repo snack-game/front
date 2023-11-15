@@ -17,15 +17,14 @@ export class Apple {
     radius: number,
     velocity: { x: number; y: number },
     isGolden: boolean,
-    imageSrc: string,
+    image: HTMLImageElement,
   ) {
     this.coordinates = coordinates;
     this.number = 0;
     this.position = { x, y };
     this.number = number;
     this.radius = radius;
-    this.image = new Image();
-    this.image.src = imageSrc;
+    this.image = image;
     this.velocity = velocity;
     this.isGolden = isGolden;
   }
