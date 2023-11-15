@@ -9,7 +9,15 @@ import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import PATH from '@constants/path.constant';
 import { useInternalRouter } from '@hooks/useInternalRouter';
 
-const NotFoundErrorPage = () => {
+interface ErrorPageProps {
+  code?: number | string;
+  message?: string;
+}
+
+const ErrorPage = ({
+  code = 'Error',
+  message = '오류가 발생했습니다.',
+}: ErrorPageProps) => {
   const { replace } = useInternalRouter();
 
   const handleBackToMain = () => {
@@ -19,7 +27,7 @@ const NotFoundErrorPage = () => {
   return (
     <>
       <Helmet>
-        <title>Snack Game || 404</title>
+        <title>Snack Game || Code: {code}</title>
       </Helmet>
       <SnackRainContainer />
       <PageContainer>
@@ -40,7 +48,7 @@ const NotFoundErrorPage = () => {
             src={ErrorImage}
             alt={'에러 이미지'}
           />
-          <span>{'존재하지 않는 페이지입니다!'}</span>
+          <span>{message}</span>
           <Button onClick={handleBackToMain} content={'돌아가기'} />
         </div>
       </PageContainer>
@@ -48,4 +56,4 @@ const NotFoundErrorPage = () => {
   );
 };
 
-export default NotFoundErrorPage;
+export default ErrorPage;

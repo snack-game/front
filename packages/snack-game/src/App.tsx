@@ -9,7 +9,6 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading/Loading';
 import Modal from '@components/common/Modal/Modal';
 import Toast from '@components/ui/Toast/Toast';
-import errorPage from '@pages/error/NotFoundErrorPage';
 import { themeState } from '@utils/atoms/common.atom';
 import { darkTheme, lightTheme } from '@utils/theme';
 
@@ -31,7 +30,7 @@ const UserPage = lazy(() => import('@pages/user/UserPage'));
 
 const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
 
-const NotFoundErrorPage = lazy(() => import('@pages/error/NotFoundErrorPage'));
+const ErrorPage = lazy(() => import('@pages/error/ErrorPage'));
 
 const App = () => {
   const themeStateValue = useRecoilValue(themeState);
@@ -41,7 +40,7 @@ const App = () => {
       <ThemeProvider
         theme={themeStateValue === 'light' ? lightTheme : darkTheme}
       >
-        <ErrorBoundary fallback={errorPage}>
+        <ErrorBoundary fallback={ErrorPage}>
           <Global styles={globalStyles(themeStateValue)} />
           <Suspense fallback={<Loading type={'page'} />}>
             <Routes>
@@ -62,11 +61,20 @@ const App = () => {
 
               {/*OAuth*/}
               <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
+              <Route
+                path={PATH.OAUTH_FAILURE}
+                element={<ErrorPage message={'소셜 로그인에 실패했습니다.'} />}
+              />
 
               {/*Error*/}
               <Route
                 path={PATH.NOT_FOUND_ERROR}
-                element={<NotFoundErrorPage />}
+                element={
+                  <ErrorPage
+                    code={404}
+                    message={'존재하지 않는 페이지입니다!'}
+                  />
+                }
               />
             </Routes>
           </Suspense>
