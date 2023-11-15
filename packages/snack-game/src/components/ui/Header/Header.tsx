@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { css, useTheme } from '@emotion/react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
@@ -16,15 +16,14 @@ import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import { useInternalRouter } from '@hooks/useInternalRouter';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 const Header = () => {
   const theme = useTheme();
   const { openModal } = useModal();
-  const { replace } = useInternalRouter();
   const openToast = useToast();
+  const navigate = useNavigate();
 
   const resetUser = useResetRecoilState(resetUserState);
   const userInfo = useRecoilValue(userState);
@@ -36,7 +35,7 @@ const Header = () => {
   const handleLogout = () => {
     resetUser();
     openToast(TOAST_MESSAGE.AUTH_LOGOUT, 'success');
-    replace(PATH.HOME);
+    navigate(PATH.HOME, { replace: true });
   };
 
   return (

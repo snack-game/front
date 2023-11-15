@@ -2,6 +2,7 @@ import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import GameResult from '@components/ui/GameResult/GameResult';
 import { AppleGameManager } from '@modules/apple-game/appleGameManager';
 import { Drag } from '@modules/apple-game/drag';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
@@ -12,6 +13,7 @@ import {
   useAppleGameStart,
 } from '@hooks/queries/appleGame.query';
 import { useClientRect } from '@hooks/useClientRect';
+import useModal from '@hooks/useModal';
 
 const useAppleGameController = () => {
   const appleGameValue = useRecoilValue(appleGameState);
@@ -27,13 +29,14 @@ const useAppleGameController = () => {
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
 
-  const { offsetTop, offsetWidth, offsetLeft, offsetHeight } = useClientRect({
-    canvasBaseRef,
-  });
-
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
   const gameRefresh = useAppleGameRefresh();
+
+  const { openModal } = useModal();
+  const { offsetTop, offsetWidth, offsetLeft, offsetHeight } = useClientRect({
+    canvasBaseRef,
+  });
 
   const handleStartButton = async () => {
     await gameStart();
@@ -76,7 +79,16 @@ const useAppleGameController = () => {
         clearTimeout(timerId);
       };
     } else if (timeRemaining === 0 && start) {
-      handleGameEnd();
+      handleGameEnd().then(() =>
+        openModal({
+          children: (
+            <GameResult
+              score={appleGameValue.score}
+              reStart={handleStartButton}
+            />
+          ),
+        }),
+      );
     }
   }, [start, timeRemaining]);
 

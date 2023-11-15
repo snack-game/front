@@ -1,13 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 import ErrorImage from '@assets/images/error.png';
+import { FallbackProps } from '@components/base/ErrorBoundary';
 import PageContainer from '@components/base/PageContainer';
 import Button from '@components/common/Button/Button';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 
 import PATH from '@constants/path.constant';
-import { useInternalRouter } from '@hooks/useInternalRouter';
 
 interface ErrorPageProps {
   code?: number | string;
@@ -17,11 +18,11 @@ interface ErrorPageProps {
 const ErrorPage = ({
   code = 'Error',
   message = '오류가 발생했습니다.',
-}: ErrorPageProps) => {
-  const { replace } = useInternalRouter();
+}: FallbackProps & ErrorPageProps) => {
+  const navigate = useNavigate();
 
   const handleBackToMain = () => {
-    replace(PATH.HOME);
+    navigate(PATH.HOME, { replace: true });
   };
 
   return (

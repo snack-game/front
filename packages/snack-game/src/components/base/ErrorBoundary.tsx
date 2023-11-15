@@ -1,8 +1,8 @@
 import { Component, ComponentType, PropsWithChildren } from 'react';
 
 export interface FallbackProps {
-  error: Error;
-  resetErrorBoundary: () => void;
+  error?: Error;
+  resetErrorBoundary?: () => void;
   message?: string;
 }
 

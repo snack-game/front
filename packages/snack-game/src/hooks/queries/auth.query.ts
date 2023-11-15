@@ -18,7 +18,12 @@ interface useMemberAuthProps {
   message: string;
 }
 
-const useMemberOnSuccess = (message: string) => {
+interface useMemberOnSuccessProps {
+  message: string;
+  guest?: boolean;
+}
+
+const useMemberOnSuccess = ({ message, guest }: useMemberOnSuccessProps) => {
   const openToast = useToast();
   const setUserState = useSetRecoilState(userState);
   const { closeModal } = useModal();
@@ -28,6 +33,7 @@ const useMemberOnSuccess = (message: string) => {
       id: member.id,
       name: member.name,
       group: member.group,
+      guest,
       accessToken,
     }));
     openToast(message, 'success');
@@ -42,7 +48,7 @@ const userMemberErrorBoundary = (error: AxiosError<ServerError>) => {
 };
 
 export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
-  const onSuccess = useMemberOnSuccess(message);
+  const onSuccess = useMemberOnSuccess({ message });
 
   return useMutation({
     mutationFn: apiMethod,
@@ -55,7 +61,10 @@ export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
 export const useGuest = () => {
   return useMutation({
     mutationFn: authApi.guest,
-    onSuccess: useMemberOnSuccess(TOAST_MESSAGE.AUTH_GUEST),
+    onSuccess: useMemberOnSuccess({
+      message: TOAST_MESSAGE.AUTH_GUEST,
+      guest: true,
+    }),
     onError: useOnError(),
     useErrorBoundary: userMemberErrorBoundary,
   });
@@ -76,8 +85,8 @@ export const useLogin = () =>
 export const useSocial = () => {
   return useMutation({
     mutationFn: authApi.social,
-    onSuccess: useMemberOnSuccess(TOAST_MESSAGE.AUTH_SOCIAL),
+    onSuccess: useMemberOnSuccess({ message: TOAST_MESSAGE.AUTH_SOCIAL }),
     onError: useOnError(),
-    useErrorBoundary: userMemberErrorBoundary,
+    useErrorBoundary: true,
   });
 };

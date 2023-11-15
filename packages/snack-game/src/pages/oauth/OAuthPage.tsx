@@ -1,26 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import PATH from '@constants/path.constant';
-import { useSocial } from '@hooks/queries/auth.query';
-import { useInternalRouter } from '@hooks/useInternalRouter';
+import QueryBoundary from '@components/base/QueryBoundary';
+import OAuthHandler from '@components/ui/AuthForm/OAuthHandler';
+import ErrorPage from '@pages/error/ErrorPage';
 
 const OAuthPage = () => {
-  const oAuthToken = useSocial();
-  const { push } = useInternalRouter();
-
-  useEffect(() => {
-    oAuthToken.mutateAsync().then(() => {
-      push(PATH.HOME);
-    });
-  }, []);
-
   return (
-    <>
-      <Helmet>
-        <title>Snack Game || OAuth</title>
-      </Helmet>
-    </>
+    <QueryBoundary errorFallback={ErrorPage}>
+      <>
+        <Helmet>
+          <title>Snack Game || OAuth</title>
+        </Helmet>
+        <OAuthHandler />
+      </>
+    </QueryBoundary>
   );
 };
 
