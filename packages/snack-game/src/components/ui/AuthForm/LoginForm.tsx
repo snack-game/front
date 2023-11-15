@@ -47,7 +47,7 @@ const LoginForm = () => {
       </Styled.InputContainer>
       <Button content={'확인'} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
-        <p>간편 로그인</p>
+        <p>간편하게 시작하기</p>
         <Styled.SocialLoginImgContainer>
           <Link to={PATH.GOOGLE} referrerPolicy={'origin'}>
             <img src={GoogleSingIn} alt={'구글 로그인'} />
