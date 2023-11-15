@@ -1,12 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
-const bounceAnimation = keyframes`
-  0% { transform: translate(-50%, -50%) scale(0.8); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
-  100% { transform: translate(-50%, -50%) scale(1); }
-`;
-
 export const Modal = styled.div`
   width: 100vw;
   height: 100vh;
@@ -20,7 +14,6 @@ export const ModalContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   height: fit-content;
   padding: 2rem;
   display: flex;
@@ -31,7 +24,13 @@ export const ModalContainer = styled.div`
   background-color: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.boxBorder};
 
-  animation: ${bounceAnimation} 0.5s ease;
+  transform: translate(-50%, -50%);
+
+  animation: ${keyframes`
+    0% { transform: translate(-50%, -50%) scale(0.5); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  `} 0.3s ease-in;
 
   @media (max-width: 768px) {
     width: 90%;

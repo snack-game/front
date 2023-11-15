@@ -8,7 +8,6 @@ export const AuthTypeContainer = styled.div`
 export const Form = styled.form`
   display: flex;
   padding: 2rem;
-  margin-top: 2.5rem;
   flex-direction: column;
   width: 100%;
 `;
@@ -40,20 +39,27 @@ export const SocialLoginContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 1.5rem;
-  gap: 1.5rem;
+  gap: 0.5rem;
+  color: ${(props) => props.theme.colors.description};
 
   & > p {
-    color: ${(props) => props.theme.colors.description};
+    font-size: 1.2rem;
+  }
+
+  & > span {
+    font-size: 1rem;
   }
 `;
 
 export const SocialLoginImgContainer = styled.div`
   display: flex;
   gap: 1rem;
+  padding-top: 1rem;
 
   & > a > img {
     cursor: pointer;
     width: 3rem;
+    height: 3rem;
     border-radius: 100%;
   }
 `;
