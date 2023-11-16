@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import membersApi from '@api/members.api';
 import { userState } from '@utils/atoms/member.atom';
-import { AuthType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
@@ -35,7 +35,7 @@ export const useIntegrateMember = () => {
 
   return useMutation({
     mutationFn: membersApi.integrateMember,
-    onSuccess: ({ accessToken, member }: AuthType) => {
+    onSuccess: ({ accessToken, member }: MemberType) => {
       setUserState(() => ({
         member,
         accessToken,
