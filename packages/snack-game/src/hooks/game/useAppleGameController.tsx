@@ -27,7 +27,7 @@ const useAppleGameController = () => {
   const drag = useMemo(() => new Drag(), []);
   const appleGameManager = useMemo(() => new AppleGameManager(), []);
   const [start, setStart] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number>(10);
+  const [timeRemaining, setTimeRemaining] = useState<number>(120);
 
   const { gameEnd } = useAppleGameCheck();
   const { gameStart, gameStartMutation } = useAppleGameStart();
@@ -42,7 +42,7 @@ const useAppleGameController = () => {
     await gameStart();
 
     setStart(true);
-    setTimeRemaining(10);
+    setTimeRemaining(120);
 
     if (gameHUDRef.current) {
       gameHUDRef.current.scrollIntoView({ behavior: 'smooth' });
