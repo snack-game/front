@@ -32,7 +32,7 @@ const RankingPage = () => {
           <QueryBoundary errorFallback={RetryError}>
             <RankingTable />
           </QueryBoundary>
-          {userStateValue.name && (
+          {userStateValue.member.name && (
             <QueryBoundary errorFallback={UserRankingCardError}>
               <UserRankingCard />
             </QueryBoundary>

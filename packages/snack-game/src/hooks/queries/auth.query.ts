@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import authApi from '@api/auth.api';
 import { userState } from '@utils/atoms/member.atom';
-import { AuthType, MemberType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
@@ -14,7 +14,7 @@ import useOnError from '@hooks/useOnError';
 import useToast from '@hooks/useToast';
 
 interface useMemberAuthProps {
-  apiMethod: (member: MemberType) => Promise<AuthType>;
+  apiMethod: (member: MemberType) => Promise<MemberType>;
   message: string;
 }
 
@@ -28,12 +28,9 @@ const useMemberOnSuccess = ({ message, guest }: useMemberOnSuccessProps) => {
   const setUserState = useSetRecoilState(userState);
   const { closeModal } = useModal();
 
-  return ({ accessToken, member }: AuthType) => {
+  return ({ accessToken, member }: MemberType) => {
     setUserState(() => ({
-      id: member.id,
-      name: member.name,
-      group: member.group,
-      guest,
+      member,
       accessToken,
     }));
     openToast(message, 'success');
@@ -41,7 +38,7 @@ const useMemberOnSuccess = ({ message, guest }: useMemberOnSuccessProps) => {
   };
 };
 
-const userMemberErrorBoundary = (error: AxiosError<ServerError>) => {
+const memberErrorBoundary = (error: AxiosError<ServerError>) => {
   if (!error.response) throw error;
 
   return error.response?.status >= 500;
@@ -54,7 +51,7 @@ export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
     mutationFn: apiMethod,
     onSuccess,
     onError: useOnError(),
-    useErrorBoundary: userMemberErrorBoundary,
+    useErrorBoundary: memberErrorBoundary,
   });
 };
 
@@ -66,7 +63,7 @@ export const useGuest = () => {
       guest: true,
     }),
     onError: useOnError(),
-    useErrorBoundary: userMemberErrorBoundary,
+    useErrorBoundary: memberErrorBoundary,
   });
 };
 

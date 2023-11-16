@@ -33,8 +33,10 @@ const RegisterForm = () => {
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     registerMutate.mutate({
-      name: values.name.value,
-      group: { name: values.group.value } || null,
+      member: {
+        name: values.name.value,
+        group: { name: values.group.value } || null,
+      },
     });
   };
 

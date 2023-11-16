@@ -16,7 +16,7 @@ const OAuthHandler = () => {
   const oAuthToken = useSocial();
 
   const handleOAuthLogin = async () => {
-    if (userStateValue.guest && userStateValue.accessToken) {
+    if (userStateValue.member.type == 'GUEST' && userStateValue.accessToken) {
       await integrateMember.mutateAsync();
     } else {
       await oAuthToken.mutateAsync();

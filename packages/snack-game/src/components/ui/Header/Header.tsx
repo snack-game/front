@@ -64,7 +64,7 @@ const Header = () => {
         {userInfo.accessToken ? (
           <>
             <Styled.Desktop>
-              <Menu buttonContent={userInfo.name + ' 님'}>
+              <Menu buttonContent={userInfo.member.name + ' 님'}>
                 <Link to={PATH.USER}>
                   <DropDownItem>내 정보</DropDownItem>
                 </Link>
@@ -72,7 +72,7 @@ const Header = () => {
               </Menu>
             </Styled.Desktop>
             <Styled.Mobile>
-              <Menu buttonContent={userInfo.name + ' 님'}>
+              <Menu buttonContent={userInfo.member.name + ' 님'}>
                 <Link to={PATH.USER}>
                   <DropDownItem>내 정보</DropDownItem>
                 </Link>

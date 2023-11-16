@@ -108,10 +108,12 @@ const UserInfo = () => {
           <>
             <h1>내 정보</h1>
             <InfoContainer>
-              <p>이름: {userStateValue.name}</p>
+              <p>이름: {userStateValue.member.name}</p>
               <p>
                 그룹:
-                {userStateValue.group ? userStateValue.group.name : '없음'}
+                {userStateValue.member.group
+                  ? userStateValue.member.group.name
+                  : '없음'}
               </p>
               {userRanking && (
                 <>

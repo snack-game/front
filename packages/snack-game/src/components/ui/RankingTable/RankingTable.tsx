@@ -21,10 +21,10 @@ const RankingTable = () => {
         })}
       </TopRankingCardWrapper>
       <Table tableTitle={tableTitle}>
-        {otherRanking?.map((item, index) => {
+        {otherRanking?.map((item) => {
           return (
             <RankingTableItem
-              key={index + 3}
+              key={item.rank}
               rank={item.rank}
               name={item.owner.name}
               group={item.owner.group}

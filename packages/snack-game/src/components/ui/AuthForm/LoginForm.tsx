@@ -28,7 +28,7 @@ const LoginForm = () => {
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
-    loginMutate.mutate({ name: values.name.value, group: null });
+    loginMutate.mutate({ member: { name: values.name.value, group: null } });
   };
 
   return (

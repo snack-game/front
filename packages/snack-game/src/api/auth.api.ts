@@ -1,5 +1,5 @@
 import api from '@api/index';
-import { AuthType, MemberType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 const authApi = {
   endPoint: {
@@ -9,29 +9,29 @@ const authApi = {
     social: '/tokens/social',
   },
 
-  login: async ({ name }: MemberType): Promise<AuthType> => {
+  login: async ({ member }: MemberType): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.login, {
-      name,
+      name: member.name,
     });
     return { accessToken: data.accessToken, member: data.member };
   },
 
-  register: async ({ name, group }: MemberType): Promise<AuthType> => {
+  register: async ({ member }: MemberType): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.register, {
-      name,
-      group: group?.name,
+      name: member.name,
+      group: member.group?.name,
     });
 
     return { accessToken: data.accessToken, member: data.member };
   },
 
-  guest: async (): Promise<AuthType> => {
+  guest: async (): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.guest);
 
     return { accessToken: data.accessToken, member: data.member };
   },
 
-  social: async (): Promise<AuthType> => {
+  social: async (): Promise<MemberType> => {
     const { data } = await api.post(
       authApi.endPoint.social,
       {},

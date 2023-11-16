@@ -37,10 +37,8 @@ export const useIntegrateMember = () => {
     mutationFn: membersApi.integrateMember,
     onSuccess: ({ accessToken, member }: AuthType) => {
       setUserState(() => ({
-        id: member.id,
-        name: member.name,
-        group: member.group,
-        accessToken: accessToken,
+        member,
+        accessToken,
       }));
       openToast(TOAST_MESSAGE.AUTH_SOCIAL, 'success');
     },

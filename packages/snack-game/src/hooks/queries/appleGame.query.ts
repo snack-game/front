@@ -10,7 +10,7 @@ import {
   appleGameProgressType,
   appleGameStateType,
 } from '@utils/types/game.type';
-import { AuthType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
@@ -51,7 +51,7 @@ export const useAppleGameStart = () => {
 
   const gameStart = async () => {
     if (!userStateValue.accessToken) {
-      const { accessToken }: AuthType = await guestMutation.mutateAsync();
+      const { accessToken }: MemberType = await guestMutation.mutateAsync();
       await gameStartMutation.mutateAsync(accessToken);
     } else {
       await gameStartMutation.mutateAsync();

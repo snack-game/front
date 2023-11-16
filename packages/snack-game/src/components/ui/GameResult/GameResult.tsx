@@ -33,7 +33,7 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
         <p>최종 점수: {score}점!</p>
         <Button content={'다시하기'} onClick={handleReStartButton} />
       </div>
-      {userStateValue.guest && (
+      {userStateValue.member.type === 'GUEST' && (
         <Styled.SocialLoginContainer>
           <p>나는 몇 등일까?</p>
           <RankingContainer>
