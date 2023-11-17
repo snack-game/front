@@ -46,13 +46,27 @@ const UserInfo = () => {
 
   const handleChangeUserName = async () => {
     await changeUserName.mutateAsync(nameValue);
-    setUserState((prev) => ({ ...prev, name: nameValue }));
+    setUserState((prev) => ({
+      ...prev,
+      member: {
+        ...prev.member,
+        name: nameValue,
+      },
+    }));
     setModifying(!modifying);
   };
 
   const handleChangeUserGroup = async () => {
     await changeGroupName.mutateAsync(groupValue);
-    setUserState((prev) => ({ ...prev, group: { name: groupValue } }));
+    setUserState((prev) => ({
+      ...prev,
+      member: {
+        ...prev.member,
+        group: {
+          name: groupValue,
+        },
+      },
+    }));
     setModifying(!modifying);
   };
 
