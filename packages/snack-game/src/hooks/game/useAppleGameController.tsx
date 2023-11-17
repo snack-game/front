@@ -77,6 +77,7 @@ const useAppleGameController = () => {
 
       return () => {
         clearTimeout(timerId);
+        setAppleGameProgress([]);
       };
     } else if (timeRemaining === 0 && start) {
       handleGameEnd().then(() =>
