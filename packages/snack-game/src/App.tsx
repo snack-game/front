@@ -1,22 +1,23 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
-// import { inject } from '@vercel/analytics';
-import { useRecoilValue } from 'recoil';
+import { inject } from '@vercel/analytics';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/common/Loading/Loading';
 import Modal from '@components/common/Modal/Modal';
 import Toast from '@components/ui/Toast/Toast';
 import { themeState } from '@utils/atoms/common.atom';
+import { resetUserState, userState } from '@utils/atoms/member.atom';
 import { darkTheme, lightTheme } from '@utils/theme';
 
 import PATH from '@constants/path.constant';
 
 import { globalStyles } from './App.style';
 
-// inject();
+inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
@@ -34,6 +35,14 @@ const ErrorPage = lazy(() => import('@pages/error/ErrorPage'));
 
 const App = () => {
   const themeStateValue = useRecoilValue(themeState);
+  const userStateValue = useRecoilValue(userState);
+  const resetUser = useResetRecoilState(resetUserState);
+
+  useEffect(() => {
+    if (!userStateValue.member) {
+      resetUser();
+    }
+  }, []);
 
   return (
     <>
