@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Global, ThemeProvider } from '@emotion/react';
-import { inject } from '@vercel/analytics';
+// import { inject } from '@vercel/analytics';
 import { useRecoilValue } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
@@ -16,7 +16,7 @@ import PATH from '@constants/path.constant';
 
 import { globalStyles } from './App.style';
 
-inject();
+// inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
