@@ -17,14 +17,14 @@ const RankingTable = () => {
     <RankingTableWrapper>
       <TopRankingCardWrapper>
         {topRanking?.map((item) => {
-          return <TopRankingCard key={item.rank} rankInfo={item} />;
+          return <TopRankingCard key={item.owner.name} rankInfo={item} />;
         })}
       </TopRankingCardWrapper>
       <Table tableTitle={tableTitle}>
         {otherRanking?.map((item) => {
           return (
             <RankingTableItem
-              key={item.rank}
+              key={item.owner.name}
               rank={item.rank}
               name={item.owner.name}
               group={item.owner.group}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ErrorImage from '@assets/images/error.png';
 import { FallbackProps } from '@components/base/ErrorBoundary';
@@ -19,12 +19,6 @@ const ErrorPage = ({
   code = 'Error',
   message = '오류가 발생했습니다.',
 }: FallbackProps & ErrorPageProps) => {
-  const navigate = useNavigate();
-
-  const handleBackToMain = () => {
-    navigate(PATH.HOME, { replace: true });
-  };
-
   return (
     <>
       <Helmet>
@@ -50,7 +44,9 @@ const ErrorPage = ({
             alt={'에러 이미지'}
           />
           <span>{message}</span>
-          <Button onClick={handleBackToMain} content={'돌아가기'} />
+          <Link to={PATH.HOME}>
+            <Button content={'돌아가기'} />
+          </Link>
         </div>
       </PageContainer>
     </>

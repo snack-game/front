@@ -154,10 +154,10 @@ const useAppleGame = ({
         (apple: Apple) => apple.coordinates,
       );
 
-      const rects = [
-        ...appleGameProgressValue,
-        appleGameManager.getRectApplePosition(removedAppleCoordinates),
-      ];
+      const newRect = appleGameManager.getRectApplePosition(
+        removedAppleCoordinates,
+      );
+      const rects = [...appleGameProgressValue, newRect];
 
       if (isGolden) {
         checkGameMove

@@ -263,6 +263,8 @@ export class AppleGameManager {
       }
     }
 
+    console.log(topLeft, bottomRight);
+
     return { topLeft, bottomRight };
   }
 }

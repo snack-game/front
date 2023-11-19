@@ -50,10 +50,9 @@ const useAppleGameController = () => {
   };
 
   const handleGameEnd = async () => {
-    setStart(false);
-
     await gameEnd(appleGameProgressValue);
 
+    setStart(false);
     setAppleGameProgress([]);
   };
 
@@ -77,7 +76,6 @@ const useAppleGameController = () => {
 
       return () => {
         clearTimeout(timerId);
-        setAppleGameProgress([]);
       };
     } else if (timeRemaining === 0 && start) {
       handleGameEnd().then(() =>
@@ -91,6 +89,10 @@ const useAppleGameController = () => {
         }),
       );
     }
+
+    return () => {
+      setAppleGameProgress([]);
+    };
   }, [start, timeRemaining]);
 
   return {
