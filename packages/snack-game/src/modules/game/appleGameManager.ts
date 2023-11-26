@@ -1,6 +1,6 @@
 import AppleImage from '@assets/images/apple.png';
 import GoldenAppleImage from '@assets/images/golden_apple.png';
-import { Apple } from '@modules/apple-game/apple';
+import { Apple } from '@modules/game/apple';
 import {
   appleGameRectType,
   appleType,
@@ -262,8 +262,6 @@ export class AppleGameManager {
         bottomRight.y = point.y;
       }
     }
-
-    console.log(topLeft, bottomRight);
 
     return { topLeft, bottomRight };
   }

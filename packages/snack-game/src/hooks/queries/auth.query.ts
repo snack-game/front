@@ -10,7 +10,6 @@ import { MemberType } from '@utils/types/member.type';
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useModal from '@hooks/useModal';
-import useOnError from '@hooks/useOnError';
 import useToast from '@hooks/useToast';
 
 interface useMemberAuthProps {
@@ -23,7 +22,7 @@ interface useMemberOnSuccessProps {
   guest?: boolean;
 }
 
-const useMemberOnSuccess = ({ message, guest }: useMemberOnSuccessProps) => {
+const useMemberOnSuccess = ({ message }: useMemberOnSuccessProps) => {
   const openToast = useToast();
   const setUserState = useSetRecoilState(userState);
   const { closeModal } = useModal();
@@ -35,6 +34,16 @@ const useMemberOnSuccess = ({ message, guest }: useMemberOnSuccessProps) => {
     }));
     openToast(message, 'success');
     closeModal();
+  };
+};
+
+const useOnError = () => {
+  const openToast = useToast();
+
+  return (error: AxiosError<ServerError>) => {
+    if (!error.response) throw error;
+
+    openToast(error.response.data.messages, 'error');
   };
 };
 

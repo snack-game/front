@@ -9,7 +9,6 @@ import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useOnError from '@hooks/useOnError';
 import useToast from '@hooks/useToast';
 
 export const useChangeUserName = () => {
@@ -27,6 +26,16 @@ export const useChangeUserName = () => {
       return error.response?.status >= 500;
     },
   });
+};
+
+const useOnError = () => {
+  const openToast = useToast();
+
+  return (error: AxiosError<ServerError>) => {
+    if (!error.response) throw error;
+
+    openToast(error.response.data.messages, 'error');
+  };
 };
 
 export const useIntegrateMember = () => {

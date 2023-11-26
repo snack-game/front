@@ -3,8 +3,8 @@ import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import GameResult from '@components/ui/GameResult/GameResult';
-import { AppleGameManager } from '@modules/apple-game/appleGameManager';
-import { Drag } from '@modules/apple-game/drag';
+import { AppleGameManager } from '@modules/game/appleGameManager';
+import { Drag } from '@modules/game/drag';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
 
 import {
@@ -107,7 +107,7 @@ const useAppleGameController = () => {
     gameStartMutation,
     start,
     timeRemaining,
-    appleGameValue,
+    score: appleGameValue.score,
     handleStartButton,
     handleRefresh,
   };

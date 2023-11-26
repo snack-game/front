@@ -3,10 +3,10 @@ import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import Refresh from '@assets/images/refresh.png';
 import Button from '@components/common/Button/Button';
 import Loading from '@components/common/Loading/Loading';
 import AppleGame from '@components/games/AppleGame';
+import AppleGameHUD from '@components/games/AppleGameHUD';
 
 import useAppleGameController from '@hooks/game/useAppleGameController';
 
@@ -23,21 +23,22 @@ const AppleGameController = () => {
     gameStartMutation,
     start,
     timeRemaining,
-    appleGameValue,
+    score,
     handleStartButton,
     handleRefresh,
   } = useAppleGameController();
 
   return (
     <>
-      <GameHUD ref={gameHUDRef}>
-        <p>{appleGameValue.score + '점'}</p>
-        <p>{timeRemaining + '초'}</p>
-        <img src={Refresh} alt={'새로고침'} onClick={handleRefresh} />
-      </GameHUD>
+      <AppleGameHUD
+        ref={gameHUDRef}
+        time={timeRemaining}
+        score={score}
+        handleRefresh={handleRefresh}
+      />
       <AppleGameWrapper ref={canvasBaseRef}>
         {gameStartMutation.isLoading && <Loading />}
-        {start && (
+        {start ? (
           <AppleGame
             offsetWidth={offsetWidth}
             offsetHeight={offsetHeight}
@@ -46,8 +47,7 @@ const AppleGameController = () => {
             drag={drag}
             appleGameManager={appleGameManager}
           />
-        )}
-        {!start && (
+        ) : (
           <Button
             content={'시작!'}
             onClick={handleStartButton}
@@ -74,25 +74,6 @@ const AppleGameWrapper = styled.div`
   @media (max-width: 900px) {
     width: 100%;
     height: 90vh;
-  }
-`;
-
-const GameHUD = styled.div`
-  width: 80%;
-  height: 3rem;
-  display: flex;
-  margin: auto;
-  justify-content: space-around;
-  align-items: center;
-  color: ${(props) => props.theme.colors.titleText};
-
-  & > img {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    height: 2rem;
   }
 `;
 

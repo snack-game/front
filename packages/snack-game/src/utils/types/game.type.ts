@@ -1,5 +1,5 @@
-import { AppleGameManager } from '@modules/apple-game/appleGameManager';
-import { Drag } from '@modules/apple-game/drag';
+import { AppleGameManager } from '@modules/game/appleGameManager';
+import { Drag } from '@modules/game/drag';
 
 export interface appleType {
   number: number;

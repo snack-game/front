@@ -41,18 +41,3 @@ export type RankingType = {
 };
 
 export type MouseEventType = React.MouseEvent<HTMLCanvasElement> | TouchEvent;
-
-export type ColorsTypes = {
-  titleText: string;
-  description: string;
-  background: string;
-  boxBorder: string;
-  gray: string;
-
-  lightGreen: string;
-  errorColor: string;
-  orange: string;
-
-  appleGameBackground: string;
-  buttonText: string;
-};

@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 
-import { Apple } from '@modules/apple-game/apple';
-import { Particle } from '@modules/apple-game/particle';
+import { Apple } from '@modules/game/apple';
+import { Particle } from '@modules/game/particle';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
 import { MouseEventType } from '@utils/types/common.type';
 import {
