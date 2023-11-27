@@ -65,22 +65,4 @@ export class Drag {
   onMouseUp(): void {
     this.isDrawing = false;
   }
-
-  drawDragArea(ctx: CanvasRenderingContext2D) {
-    if (this.isDrawing) {
-      const width = this.currentX - this.startX;
-      const height = this.currentY - this.startY;
-
-      ctx.beginPath();
-      ctx.rect(this.startX, this.startY, width, height);
-
-      ctx.fillStyle = 'rgba(248, 114, 114, 0.3)';
-      ctx.fill();
-
-      ctx.strokeStyle = 'rgba(248, 114, 114, 1)';
-      ctx.stroke();
-
-      ctx.stroke();
-    }
-  }
 }

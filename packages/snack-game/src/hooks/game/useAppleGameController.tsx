@@ -3,8 +3,9 @@ import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import GameResult from '@components/ui/GameResult/GameResult';
-import { AppleGameManager } from '@modules/game/appleGameManager';
 import { Drag } from '@modules/game/drag';
+import { GameManager } from '@modules/game/gameManager';
+import { GameRenderer } from '@modules/game/gameRenderer';
 import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
 
 import {
@@ -25,7 +26,8 @@ const useAppleGameController = () => {
   const gameHUDRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
   const drag = useMemo(() => new Drag(), []);
-  const appleGameManager = useMemo(() => new AppleGameManager(), []);
+  const gameManager = useMemo(() => new GameManager(), []);
+  const gameRenderer = useMemo(() => new GameRenderer(), []);
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(120);
 
@@ -34,9 +36,8 @@ const useAppleGameController = () => {
   const gameRefresh = useAppleGameRefresh();
 
   const { openModal } = useModal();
-  const { offsetTop, offsetWidth, offsetLeft, offsetHeight } = useClientRect({
-    canvasBaseRef,
-  });
+
+  const clientRect = useClientRect({ canvasBaseRef });
 
   const handleStartButton = async () => {
     await gameStart();
@@ -95,15 +96,22 @@ const useAppleGameController = () => {
     };
   }, [start, timeRemaining]);
 
+  useEffect(() => {
+    clientRect();
+
+    window.addEventListener('resize', clientRect);
+
+    return () => {
+      window.removeEventListener('resize', clientRect);
+    };
+  }, []);
+
   return {
     canvasBaseRef,
     gameHUDRef,
-    offsetTop,
-    offsetWidth,
-    offsetLeft,
-    offsetHeight,
     drag,
-    appleGameManager,
+    gameManager,
+    gameRenderer,
     gameStartMutation,
     start,
     timeRemaining,

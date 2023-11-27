@@ -7,6 +7,7 @@ export const ATOM_KEY = {
   RESET_USER: 'resetUserState',
 
   APPLE_GAME: 'appleGameState',
+  APPLE_GAME_OFFSET: 'appleGameOffsetState',
   APPLE_GAME_SESSION: 'appleGameSessionState',
   RESET_APPLE_GAME: 'resetAppleGameState',
   APPLE_GAME_PROGRESS: 'appleGameProgressState',

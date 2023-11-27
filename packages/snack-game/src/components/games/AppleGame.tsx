@@ -4,26 +4,16 @@ import { AppleGameProps } from '@utils/types/game.type';
 
 import useAppleGame from '@hooks/game/useAppleGame';
 
-const AppleGame = ({
-  offsetWidth,
-  offsetHeight,
-  offsetLeft,
-  offsetTop,
-  drag,
-  appleGameManager,
-}: AppleGameProps) => {
+const AppleGame = ({ drag, gameRenderer, gameManager }: AppleGameProps) => {
   const {
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
     appleGameCanvasRef,
   } = useAppleGame({
-    offsetWidth,
-    offsetHeight,
-    offsetLeft,
-    offsetTop,
     drag,
-    appleGameManager,
+    gameRenderer,
+    gameManager: gameManager,
   });
 
   return (

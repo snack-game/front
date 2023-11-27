@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { Apple } from '@modules/game/apple';
 import { Particle } from '@modules/game/particle';
-import { appleGameProgressState, appleGameState } from '@utils/atoms/game.atom';
+import {
+  appleGameProgressState,
+  appleGameState,
+  setAppleGameOffsetState,
+} from '@utils/atoms/game.atom';
 import { MouseEventType } from '@utils/types/common.type';
 import {
   AppleGameProps,
@@ -16,14 +20,10 @@ import { useAppleGameCheck } from '@hooks/queries/appleGame.query';
 import useCanvas from '@hooks/useCanvas';
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
 
-const useAppleGame = ({
-  offsetWidth,
-  offsetHeight,
-  offsetLeft,
-  offsetTop,
-  drag,
-  appleGameManager,
-}: AppleGameProps) => {
+const useAppleGame = ({ drag, gameManager, gameRenderer }: AppleGameProps) => {
+  const { offsetWidth, offsetHeight, offsetLeft, offsetTop } = useRecoilValue(
+    setAppleGameOffsetState,
+  );
   const [appleGameProgressValue, setAppleGameProgress] = useRecoilState(
     appleGameProgressState,
   );
@@ -34,7 +34,7 @@ const useAppleGame = ({
   const [particles] = useState<Particle[]>([]);
   const [removedApples, setRemovedApples] = useState<Apple[]>([]);
   const [apples, setApples] = useState<Apple[]>(
-    appleGameManager.generateApples(
+    gameManager.generateApples(
       offsetWidth,
       offsetHeight,
       appleGameStateValue.apples,
@@ -45,23 +45,21 @@ const useAppleGame = ({
 
   const debouncedApplePositionUpdate = useDebouncedCallback({
     target: () => {
-      appleGameManager.updateApplePosition(offsetWidth, offsetHeight, apples);
+      gameManager.updateApplePosition(offsetWidth, offsetHeight, apples);
     },
     delay: 100,
   });
 
   const animation = useCallback(
     (ctx: CanvasRenderingContext2D) => {
-      // background
       ctx.clearRect(0, 0, offsetWidth, offsetHeight);
 
-      drag.drawDragArea(ctx);
+      gameRenderer.drawDragArea(drag, ctx);
 
       handleParticles(ctx);
 
-      // render game
       apples.forEach((apple: Apple) => {
-        appleGameManager.handleAppleRendering(
+        gameRenderer.handleAppleRendering(
           ctx,
           drag.startX,
           drag.startY,
@@ -73,7 +71,8 @@ const useAppleGame = ({
       });
 
       removedApples.forEach((removedApple: Apple) => {
-        appleGameManager.updateFallingPosition(ctx, offsetHeight, removedApple);
+        gameManager.updateFallingPosition(ctx, offsetHeight, removedApple);
+        gameRenderer.drawApple(ctx, removedApple);
         if (removedApple.remove) {
           setRemovedApples([]);
         }
@@ -110,7 +109,7 @@ const useAppleGame = ({
   const handleParticles = (ctx: CanvasRenderingContext2D) => {
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
-      particles[i].draw(ctx);
+      gameRenderer.drawParticle(particles[i], ctx);
       if (particles[i].size <= 1) {
         particles.splice(i, 1);
         i--;
@@ -130,7 +129,7 @@ const useAppleGame = ({
 
   const handleMouseUp = () => {
     const { newApples, removedApples, isGolden, getScore, score } =
-      appleGameManager.checkApplesInDragArea(
+      gameManager.checkApplesInDragArea(
         apples,
         drag.startX,
         drag.startY,
@@ -154,9 +153,7 @@ const useAppleGame = ({
         (apple: Apple) => apple.coordinates,
       );
 
-      const newRect = appleGameManager.getRectApplePosition(
-        removedAppleCoordinates,
-      );
+      const newRect = gameManager.getRectApplePosition(removedAppleCoordinates);
       const rects = [...appleGameProgressValue, newRect];
 
       if (isGolden) {
@@ -176,7 +173,7 @@ const useAppleGame = ({
             }));
 
             setApples(
-              appleGameManager.generateApples(
+              gameManager.generateApples(
                 offsetWidth,
                 offsetHeight,
                 response.apples,

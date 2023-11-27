@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 
 import { SnackRainManager } from '@modules/snackRainManager';
+import { setAppleGameOffsetState } from '@utils/atoms/game.atom';
 
 import useCanvas from '@hooks/useCanvas';
 
-interface DropApplesProps {
-  offsetWidth: number;
-  offsetHeight: number;
-}
+const SnackRain = () => {
+  const { offsetWidth, offsetHeight } = useRecoilValue(setAppleGameOffsetState);
 
-const SnackRain = ({ offsetWidth, offsetHeight }: DropApplesProps) => {
   const snackRain = new SnackRainManager();
 
   const animation = (ctx: CanvasRenderingContext2D) => {

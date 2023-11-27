@@ -14,12 +14,9 @@ const AppleGameController = () => {
   const {
     canvasBaseRef,
     gameHUDRef,
-    offsetTop,
-    offsetWidth,
-    offsetLeft,
-    offsetHeight,
     drag,
-    appleGameManager,
+    gameManager,
+    gameRenderer,
     gameStartMutation,
     start,
     timeRemaining,
@@ -31,7 +28,7 @@ const AppleGameController = () => {
   return (
     <>
       <AppleGameHUD
-        ref={gameHUDRef}
+        gameHUDRef={gameHUDRef}
         time={timeRemaining}
         score={score}
         handleRefresh={handleRefresh}
@@ -40,12 +37,9 @@ const AppleGameController = () => {
         {gameStartMutation.isLoading && <Loading />}
         {start ? (
           <AppleGame
-            offsetWidth={offsetWidth}
-            offsetHeight={offsetHeight}
-            offsetLeft={offsetLeft}
-            offsetTop={offsetTop}
             drag={drag}
-            appleGameManager={appleGameManager}
+            gameRenderer={gameRenderer}
+            gameManager={gameManager}
           />
         ) : (
           <Button

@@ -1,5 +1,6 @@
-import { AppleGameManager } from '@modules/game/appleGameManager';
 import { Drag } from '@modules/game/drag';
+import { GameManager } from '@modules/game/gameManager';
+import { GameRenderer } from '@modules/game/gameRenderer';
 
 export interface appleType {
   number: number;
@@ -30,11 +31,15 @@ export interface appleGameEndPropsType {
   sessionId: number;
 }
 
-export interface AppleGameProps {
+export interface appleGameOffsetType {
   offsetWidth: number;
   offsetHeight: number;
   offsetLeft: number;
   offsetTop: number;
+}
+
+export interface AppleGameProps {
   drag: Drag;
-  appleGameManager: AppleGameManager;
+  gameManager: GameManager;
+  gameRenderer: GameRenderer;
 }

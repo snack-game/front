@@ -1,4 +1,4 @@
-import React, { RefObject, useRef } from 'react';
+import React, { RefObject, useEffect, useRef } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -16,11 +16,21 @@ const SnackRainWrapper = styled.div`
 const SnackRainContainer = () => {
   const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
 
-  const { offsetWidth, offsetHeight } = useClientRect({ canvasBaseRef });
+  const clientRect = useClientRect({ canvasBaseRef });
+
+  useEffect(() => {
+    clientRect();
+
+    window.addEventListener('resize', clientRect);
+
+    return () => {
+      window.removeEventListener('resize', clientRect);
+    };
+  }, []);
 
   return (
     <SnackRainWrapper ref={canvasBaseRef}>
-      <SnackRain offsetWidth={offsetWidth} offsetHeight={offsetHeight} />
+      <SnackRain />
     </SnackRainWrapper>
   );
 };

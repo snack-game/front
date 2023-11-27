@@ -1,6 +1,7 @@
 import { atom, selector } from 'recoil';
 
 import {
+  appleGameOffsetType,
   appleGameProgressType,
   appleGameStateType,
 } from '@utils/types/game.type';
@@ -25,4 +26,14 @@ export const resetAppleGameState = selector({
 export const appleGameProgressState = atom<appleGameProgressType>({
   key: ATOM_KEY.APPLE_GAME_PROGRESS,
   default: [],
+});
+
+export const setAppleGameOffsetState = atom<appleGameOffsetType>({
+  key: ATOM_KEY.APPLE_GAME_OFFSET,
+  default: {
+    offsetWidth: 0,
+    offsetHeight: 0,
+    offsetLeft: 0,
+    offsetTop: 0,
+  },
 });
