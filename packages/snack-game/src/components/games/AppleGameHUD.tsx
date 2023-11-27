@@ -5,20 +5,20 @@ import styled from '@emotion/styled';
 import Refresh from '@assets/images/refresh.png';
 
 interface AppleGameHUDProps {
-  ref: React.RefObject<HTMLDivElement>;
+  gameHUDRef: React.RefObject<HTMLDivElement>;
   time: number;
   handleRefresh: () => void;
   score: number;
 }
 
 const AppleGameHUD = ({
-  ref,
+  gameHUDRef,
   time,
   handleRefresh,
   score,
 }: AppleGameHUDProps) => {
   return (
-    <GameHUD ref={ref}>
+    <GameHUD ref={gameHUDRef}>
       <p>{score + '점'}</p>
       <p>{time + '초'}</p>
       <img src={Refresh} alt={'새로고침'} onClick={handleRefresh} />

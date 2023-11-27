@@ -11,7 +11,7 @@ const BORDER_OFFSET = 20;
 const ROWS = 10;
 const COLUMNS = 12;
 
-export class AppleGameManager {
+export class GameManager {
   public applesInDragArea: Apple[] = [];
 
   public appleGameImage: HTMLImageElement = new Image();
@@ -111,84 +111,6 @@ export class AppleGameManager {
     return { newApples, removedApples, isGolden, getScore, score };
   }
 
-  handleAppleRendering(
-    ctx: CanvasRenderingContext2D,
-    startX: number,
-    startY: number,
-    currentX: number,
-    currentY: number,
-    isDrawing: boolean,
-    Apple: Apple,
-  ) {
-    Apple.inDragArea = false;
-    this.drawApple(ctx, Apple);
-    this.highlightBorder(
-      ctx,
-      isDrawing,
-      startX,
-      startY,
-      currentX,
-      currentY,
-      Apple,
-    );
-  }
-
-  drawApple(ctx: CanvasRenderingContext2D, Apple: Apple) {
-    ctx.drawImage(
-      Apple.image,
-      Apple.position.x,
-      Apple.position.y,
-      Apple.radius * 2,
-      Apple.radius * 2,
-    );
-
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 2;
-    ctx.font = `${Apple.radius}px Dovemayo_gothic`;
-    ctx.fillStyle = '#ffffff';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(
-      Apple.number.toString(),
-      Apple.position.x + Apple.radius,
-      Apple.position.y + Apple.radius + Apple.radius / 3,
-    );
-  }
-
-  highlightBorder(
-    ctx: CanvasRenderingContext2D,
-    isDrawing: boolean,
-    startX: number,
-    startY: number,
-    currentX: number,
-    currentY: number,
-    Apple: Apple,
-  ) {
-    if (isDrawing) {
-      const centerX: number = Apple.position.x + Apple.radius;
-      const centerY: number = Apple.position.y + Apple.radius;
-      const x = Math.min(startX, currentX);
-      const y = Math.min(startY, currentY);
-      const width = Math.abs(startX - currentX);
-      const height = Math.abs(startY - currentY);
-
-      if (
-        centerX >= x &&
-        centerX <= x + width &&
-        centerY >= y &&
-        centerY <= y + height
-      ) {
-        Apple.inDragArea = true;
-
-        ctx.strokeStyle = 'yellow';
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, Apple.radius, 0, 2 * Math.PI);
-        ctx.stroke();
-      }
-    }
-  }
-
   updateApplePosition(
     offsetWidth: number,
     offsetHeight: number,
@@ -229,8 +151,6 @@ export class AppleGameManager {
     if (Apple.position.y + Apple.radius * 2 >= offsetHeight + 50) {
       Apple.remove = true;
     }
-
-    this.drawApple(ctx, Apple);
   }
 
   getRectApplePosition(points: coordinatesType[]): appleGameRectType {
