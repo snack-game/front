@@ -18,4 +18,13 @@ export class Particle {
     this.y += this.speedY;
     this.size -= 0.1;
   }
+
+  drawParticle(ctx: CanvasRenderingContext2D) {
+    ctx.fillStyle = '#F96464';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+  }
 }

@@ -1,6 +1,7 @@
 import { AppleData } from '@game/game.type';
 import Apple, { ApplePropType } from '@game/model/apple';
 import { Drag } from '@game/model/drag';
+import { Particle } from '@game/model/particle';
 import PlainApple from '@game/model/plainApple';
 import { MouseEventType } from '@utils/types/common.type';
 
@@ -8,6 +9,7 @@ export class ClassicModController {
   public drag: Drag = new Drag();
   protected apples: Apple[] = [];
   protected removedApples: Apple[] = [];
+  protected particles: Particle[] = [];
   protected row: number;
   protected column: number;
   protected borderOffset = 20;
@@ -64,6 +66,13 @@ export class ClassicModController {
       apple.drawApple(ctx);
     });
 
+    this.particles = this.particles.filter((particle) => {
+      particle.update();
+      particle.drawParticle(ctx);
+
+      return particle.size > 1;
+    });
+
     this.updateFallingPosition();
   }
 
@@ -104,6 +113,17 @@ export class ClassicModController {
       this.apples = this.apples.filter(
         (apple) => !applesInDragArea.includes(apple),
       );
+
+      this.removedApples.forEach((apple) => {
+        for (let i = 0; i < 5; i++) {
+          this.particles.push(
+            new Particle(
+              apple.getPosition().x + apple.getRadius(),
+              apple.getPosition().y + apple.getRadius(),
+            ),
+          );
+        }
+      });
     }
 
     return { applesInDragArea, getScore };

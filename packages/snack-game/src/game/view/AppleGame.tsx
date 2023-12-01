@@ -7,6 +7,7 @@ import Button from '@components/common/Button/Button';
 import GameResult from '@components/ui/GameResult/GameResult';
 import { ClassicModController } from '@game/controller/classicModController';
 import { GoldModController } from '@game/controller/goldModController';
+import { PlayGroundModeController } from '@game/controller/playGroundModeController';
 import { AppleData, scoredAppleRectType } from '@game/game.type';
 import AppleGameHUD from '@game/view/AppleGameHUD';
 import { MouseEventType } from '@utils/types/common.type';
@@ -14,12 +15,16 @@ import { MouseEventType } from '@utils/types/common.type';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useCanvas from '@hooks/useCanvas';
 import { useCanvasOffset } from '@hooks/useCanvasOffset';
+import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 type ServedAppleData = Promise<AppleData[][]> | AppleData[][];
 
-type GameMode = GoldModController | ClassicModController;
+type GameMode =
+  | GoldModController
+  | ClassicModController
+  | PlayGroundModeController;
 
 interface AppleGameProps {
   gameMode: string;
@@ -45,7 +50,7 @@ const AppleGame = ({
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const [error, setError] = useState<Error | null>(null);
+  const setError = useError();
 
   const openToast = useToast();
   const { openModal } = useModal();
@@ -58,10 +63,12 @@ const AppleGame = ({
         return new GoldModController({ row, column, sessionId });
       case 'classic':
         return new ClassicModController({ row, column });
+      case 'practice':
+        return new PlayGroundModeController({ row, column });
       default:
         return new GoldModController({ row, column, sessionId });
     }
-  }, [gameMode]);
+  }, [gameMode, row, column]);
 
   const animationFrame = gameController.animationFrame.bind(gameController);
 
@@ -71,15 +78,15 @@ const AppleGame = ({
     animationFrame,
   });
 
-  useEffect(() => {
+  const generateApples = async () => {
+    const apples = await startLogic();
+    gameController.generateApples(apples);
     gameController.updateApplePosition(offsetWidth, offsetHeight);
-  }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
+  };
 
   const handleStartButton = async () => {
     try {
-      const apples = await startLogic();
-      gameController.generateApples(apples);
-      gameController.updateApplePosition(offsetWidth, offsetHeight);
+      await generateApples();
       setStart(true);
       setTimeRemaining(time);
       openToast(TOAST_MESSAGE.GAME_START, 'success');
@@ -106,9 +113,13 @@ const AppleGame = ({
   };
 
   const handleRefresh = async () => {
-    gameController.resetGameState();
-    gameController.generateApples(await refreshLogic());
-    gameController.updateApplePosition(offsetWidth, offsetHeight);
+    try {
+      gameController.resetGameState();
+      gameController.generateApples(await refreshLogic());
+      gameController.updateApplePosition(offsetWidth, offsetHeight);
+    } catch (e) {
+      setError(new Error('새로고침에 실패했습니다.'));
+    }
   };
 
   const handleMouseDown = (event: MouseEventType) => {
@@ -132,14 +143,22 @@ const AppleGame = ({
   };
 
   useEffect(() => {
+    gameController.updateApplePosition(offsetWidth, offsetHeight);
+  }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
+
+  useEffect(() => {
+    generateApples();
+  }, [row, column]);
+
+  useEffect(() => {
+    setTimeRemaining(time);
+  }, [time]);
+
+  useEffect(() => {
     if (gameController instanceof GoldModController) {
       gameController.setSessionId(sessionId);
     }
-
-    if (error) {
-      throw error;
-    }
-  }, [error, sessionId]);
+  }, [sessionId]);
 
   useEffect(() => {
     if (start && timeRemaining > 0) {
