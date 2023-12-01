@@ -1,10 +1,10 @@
-import React, { RefObject, useEffect, useRef } from 'react';
+import React from 'react';
 
 import styled from '@emotion/styled';
 
 import SnackRain from '@components/ui/SnackRain/SnackRain';
 
-import { useClientRect } from '@hooks/useClientRect';
+import { useCanvasOffset } from '@hooks/useCanvasOffset';
 
 const SnackRainWrapper = styled.div`
   position: fixed;
@@ -14,23 +14,11 @@ const SnackRainWrapper = styled.div`
 `;
 
 const SnackRainContainer = () => {
-  const canvasBaseRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
-
-  const clientRect = useClientRect({ canvasBaseRef });
-
-  useEffect(() => {
-    clientRect();
-
-    window.addEventListener('resize', clientRect);
-
-    return () => {
-      window.removeEventListener('resize', clientRect);
-    };
-  }, []);
+  const { canvasBaseRef, offsetWidth, offsetHeight } = useCanvasOffset();
 
   return (
     <SnackRainWrapper ref={canvasBaseRef}>
-      <SnackRain />
+      <SnackRain offsetWidth={offsetWidth} offsetHeight={offsetHeight} />
     </SnackRainWrapper>
   );
 };

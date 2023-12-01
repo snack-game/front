@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import PageContainer from '@components/base/PageContainer';
-import QueryBoundary from '@components/base/QueryBoundary';
-import RetryError from '@components/common/Error/RetryError';
-import AppleGameController from '@components/games/AppleGameController';
+import GameContainer from '@components/ui/GameContainer/GameContainer';
 import AppleGameTutorial from '@components/ui/Tutorial/AppleGameTutorial';
 
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -30,9 +28,7 @@ const AppleGamePage = () => {
         <title>Snack Game || Apple Game</title>
       </Helmet>
       <PageContainer>
-        <QueryBoundary errorFallback={RetryError}>
-          <AppleGameController />
-        </QueryBoundary>
+        <GameContainer />
       </PageContainer>
     </>
   );

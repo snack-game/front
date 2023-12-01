@@ -1,15 +1,15 @@
 import { RefObject, useEffect, useRef } from 'react';
 
 interface useCanvasProps {
+  animationFrame: (ctx: CanvasRenderingContext2D) => void;
   offsetWidth: number;
   offsetHeight: number;
-  animation: (ctx: CanvasRenderingContext2D) => void;
 }
 
 const useCanvas = ({
+  animationFrame,
   offsetWidth,
   offsetHeight,
-  animation,
 }: useCanvasProps) => {
   const canvasRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
@@ -39,7 +39,8 @@ const useCanvas = ({
       requestId = window.requestAnimationFrame(requestAnimation);
 
       if (ctx) {
-        animation(ctx);
+        ctx.clearRect(0, 0, offsetWidth, offsetHeight);
+        animationFrame(ctx);
       }
     };
 
@@ -48,7 +49,7 @@ const useCanvas = ({
     return () => {
       window.cancelAnimationFrame(requestId);
     };
-  }, [offsetWidth, offsetHeight, animation, canvasRef.current]);
+  }, [offsetWidth, offsetHeight, animationFrame, canvasRef.current]);
 
   return canvasRef;
 };

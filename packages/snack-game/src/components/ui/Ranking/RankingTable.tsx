@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import TopRankingCard from '@components/common/Card/TopRankingCard';
 import RankingTableItem from '@components/common/Table/RankingTableItem';
 import Table from '@components/common/Table/Table';
+import TopRankingCard from '@components/ui/Ranking/TopRankingCard';
 
 import { useGetTotalRanking } from '@hooks/queries/ranking.query';
 

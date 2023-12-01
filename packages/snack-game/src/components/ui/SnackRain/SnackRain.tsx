@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
-import { useRecoilValue } from 'recoil';
 
-import { SnackRainManager } from '@modules/snackRainManager';
-import { setAppleGameOffsetState } from '@utils/atoms/game.atom';
+import { SnackRainManager } from '@utils/snackRainManager';
 
 import useCanvas from '@hooks/useCanvas';
 
-const SnackRain = () => {
-  const { offsetWidth, offsetHeight } = useRecoilValue(setAppleGameOffsetState);
+interface SnackRainProps {
+  offsetWidth: number;
+  offsetHeight: number;
+}
 
+const SnackRain = ({ offsetWidth, offsetHeight }: SnackRainProps) => {
   const snackRain = new SnackRainManager();
 
-  const animation = (ctx: CanvasRenderingContext2D) => {
+  const animationFrame = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, offsetWidth, offsetHeight);
     snackRain.drawSnackRain(ctx, offsetWidth, offsetHeight);
   };
 
-  const canvasRef = useCanvas({ offsetWidth, offsetHeight, animation });
+  const canvasRef = useCanvas({ offsetWidth, offsetHeight, animationFrame });
 
   return <StyledCanvas ref={canvasRef}></StyledCanvas>;
 };

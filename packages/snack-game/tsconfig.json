@@ -47,6 +47,9 @@
       ],
       "@constants/*": [
         "./src/constants/*"
+      ],
+      "@game/*": [
+        "./src/game/*"
       ]
     }
   },

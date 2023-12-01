@@ -1,11 +1,11 @@
 import { MouseEventType } from '@utils/types/common.type';
 
 export class Drag {
-  public startX: number;
-  public startY: number;
-  public currentX: number;
-  public currentY: number;
-  public isDrawing: boolean;
+  private startX: number;
+  private startY: number;
+  private currentX: number;
+  private currentY: number;
+  private isDrawing: boolean;
 
   isTouchEvent(event: MouseEventType): event is TouchEvent {
     return (event as TouchEvent).touches !== undefined;
@@ -17,6 +17,19 @@ export class Drag {
     this.currentX = 0;
     this.currentY = 0;
     this.isDrawing = false;
+  }
+
+  getDragArea() {
+    const x = Math.min(this.startX, this.currentX);
+    const y = Math.min(this.startY, this.currentY);
+    const width = Math.abs(this.startX - this.currentX);
+    const height = Math.abs(this.startY - this.currentY);
+
+    return { x, y, width, height };
+  }
+
+  getIsDrawing(): boolean {
+    return this.isDrawing;
   }
 
   onMouseDown(
@@ -64,5 +77,23 @@ export class Drag {
 
   onMouseUp(): void {
     this.isDrawing = false;
+  }
+
+  drawDragArea(ctx: CanvasRenderingContext2D) {
+    if (this.isDrawing) {
+      const width = this.currentX - this.startX;
+      const height = this.currentY - this.startY;
+
+      ctx.beginPath();
+      ctx.rect(this.startX, this.startY, width, height);
+
+      ctx.fillStyle = 'rgba(248, 114, 114, 0.3)';
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(248, 114, 114, 1)';
+      ctx.stroke();
+
+      ctx.stroke();
+    }
   }
 }

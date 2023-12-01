@@ -10,6 +10,7 @@ const RetryError = ({ message, resetErrorBoundary }: FallbackProps) => {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '1.5rem',
+        padding: '1rem',
       }}
     >
       <img

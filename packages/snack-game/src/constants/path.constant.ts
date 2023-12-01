@@ -8,7 +8,7 @@ const PATH = {
   USER: '/user',
   NOT_FOUND_ERROR: '*',
 
-  APPLE_GAME: '/game/game',
+  APPLE_GAME: '/game',
 
   RANKING: '/ranking',
 

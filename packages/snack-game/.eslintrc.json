@@ -66,7 +66,7 @@
             "position": "before"
           },
           {
-            "pattern": "{@assets/**,@components/**,@api/**,@modules/**,@types/**,@pages/**,@utils/**,@constans/**}",
+            "pattern": "{@assets/**,@components/**,@api/**,@modules/**,@types/**,@pages/**,@utils/**,@constans/**,@game/**}",
             "group": "internal",
             "position": "before"
           }

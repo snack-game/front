@@ -1,19 +1,14 @@
 import { useMutation } from 'react-query';
 
 import { AxiosError } from 'axios';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import appleGameApi from '@api/apple-game.api';
-import { appleGameState } from '@utils/atoms/game.atom';
+import { scoredAppleRectType } from '@game/game.type';
 import { userState } from '@utils/atoms/member.atom';
-import {
-  appleGameProgressType,
-  appleGameStateType,
-} from '@utils/types/game.type';
 import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
-import { TOAST_MESSAGE } from '@constants/toast.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useToast from '@hooks/useToast';
 
@@ -33,18 +28,12 @@ const appleGameErrorBoundary = (error: AxiosError<ServerError>) => {
   return error.response.status >= 500;
 };
 
-export const useAppleGameStart = () => {
-  const openToast = useToast();
+export const useGoldModeStart = () => {
   const userStateValue = useRecoilValue(userState);
   const guestMutation = useGuest();
-  const setAppleGameState = useSetRecoilState(appleGameState);
 
   const gameStartMutation = useMutation({
     mutationFn: appleGameApi.gameStart,
-    onSuccess: (data: appleGameStateType) => {
-      setAppleGameState(data);
-      openToast(TOAST_MESSAGE.GAME_START, 'success');
-    },
     onError: useAppleGameError(),
     useErrorBoundary: appleGameErrorBoundary,
   });
@@ -52,23 +41,18 @@ export const useAppleGameStart = () => {
   const gameStart = async () => {
     if (!userStateValue.accessToken) {
       const { accessToken }: MemberType = await guestMutation.mutateAsync();
-      await gameStartMutation.mutateAsync(accessToken);
+      return await gameStartMutation.mutateAsync(accessToken);
     } else {
-      await gameStartMutation.mutateAsync();
+      return await gameStartMutation.mutateAsync();
     }
   };
 
-  return { gameStart, gameStartMutation };
+  return { gameStart };
 };
 
 export const useAppleGameSessionEnd = () => {
-  const openToast = useToast();
-
   const gameEndCheck = useMutation({
     mutationFn: appleGameApi.gameEnd,
-    onSuccess: () => {
-      openToast(TOAST_MESSAGE.GAME_END, 'success');
-    },
     onError: useAppleGameError(),
     useErrorBoundary: appleGameErrorBoundary,
   });
@@ -76,9 +60,8 @@ export const useAppleGameSessionEnd = () => {
   return { gameEndCheck };
 };
 
-export const useAppleGameCheck = () => {
+export const useGoldModeCheck = () => {
   const { gameEndCheck } = useAppleGameSessionEnd();
-  const appleGameValue = useRecoilValue(appleGameState);
 
   const checkGameMove = useMutation({
     mutationFn: appleGameApi.checkGameMove,
@@ -86,9 +69,7 @@ export const useAppleGameCheck = () => {
     useErrorBoundary: appleGameErrorBoundary,
   });
 
-  const gameEnd = async (rects: appleGameProgressType) => {
-    const sessionId = appleGameValue.sessionId;
-
+  const gameEnd = async (sessionId: number, rects: scoredAppleRectType[]) => {
     if (!sessionId || !rects) {
       throw Error('게임의 상태가 올바르지 않아요!');
     }
@@ -98,20 +79,15 @@ export const useAppleGameCheck = () => {
       rects,
     });
 
-    gameEndCheck.mutate({ sessionId });
+    gameEndCheck.mutate(sessionId);
   };
 
   return { gameEnd, checkGameMove };
 };
 
 export const useAppleGameRefresh = () => {
-  const setAppleGameState = useSetRecoilState(appleGameState);
-
   return useMutation({
     mutationFn: appleGameApi.gameRefresh,
-    onSuccess: (data: appleGameStateType) => {
-      setAppleGameState(data);
-    },
     onError: useAppleGameError(),
     useErrorBoundary: appleGameErrorBoundary,
   });

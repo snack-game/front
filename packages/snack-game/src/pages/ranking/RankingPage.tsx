@@ -9,7 +9,7 @@ import QueryBoundary from '@components/base/QueryBoundary';
 import UserRankingCard from '@components/common/Card/UserRankingCard/UserRankingCard';
 import RetryError from '@components/common/Error/RetryError';
 import UserRankingCardError from '@components/common/Error/UserRankingCardError';
-import RankingTable from '@components/ui/RankingTable/RankingTable';
+import RankingTable from '@components/ui/Ranking/RankingTable';
 import { userState } from '@utils/atoms/member.atom';
 
 const ContentContainer = styled.div`

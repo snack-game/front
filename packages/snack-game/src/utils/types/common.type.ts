@@ -41,3 +41,10 @@ export type RankingType = {
 };
 
 export type MouseEventType = React.MouseEvent<HTMLCanvasElement> | TouchEvent;
+
+export interface canvasOffsetType {
+  offsetWidth: number;
+  offsetHeight: number;
+  offsetLeft: number;
+  offsetTop: number;
+}

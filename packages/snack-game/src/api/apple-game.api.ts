@@ -1,8 +1,4 @@
-import {
-  appleGameCheckMovePropsType,
-  appleGameEndPropsType,
-  appleGameStateType,
-} from '@utils/types/game.type';
+import { checkMoveType, goldModeType } from '@game/game.type';
 
 import api from './index';
 
@@ -14,9 +10,7 @@ const appleGameApi = {
     gameRefresh: '/v2/sessions',
   },
 
-  gameStart: async (
-    accessToken: string | void,
-  ): Promise<appleGameStateType> => {
+  gameStart: async (accessToken: string | void): Promise<goldModeType> => {
     if (accessToken)
       api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
@@ -32,7 +26,7 @@ const appleGameApi = {
   checkGameMove: async ({
     sessionId,
     rects,
-  }: appleGameCheckMovePropsType): Promise<void | appleGameStateType> => {
+  }: checkMoveType): Promise<void | goldModeType> => {
     const { data } = await api.put(
       `${appleGameApi.endPoint.checkMove}/${sessionId}/moves`,
       rects,
@@ -45,11 +39,11 @@ const appleGameApi = {
     };
   },
 
-  gameEnd: async ({ sessionId }: appleGameEndPropsType): Promise<void> => {
+  gameEnd: async (sessionId: number): Promise<void> => {
     await api.put(`${appleGameApi.endPoint.gameEnd}/${sessionId}/end`);
   },
 
-  gameRefresh: async (sessionId: number): Promise<appleGameStateType> => {
+  gameRefresh: async (sessionId: number): Promise<goldModeType> => {
     const { data } = await api.delete(
       `${appleGameApi.endPoint.gameRefresh}/${sessionId}/board`,
     );
