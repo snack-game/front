@@ -147,7 +147,9 @@ const AppleGame = ({
   }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
-    generateApples();
+    if (start) {
+      generateApples();
+    }
   }, [row, column]);
 
   useEffect(() => {
