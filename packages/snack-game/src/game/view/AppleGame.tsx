@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -176,6 +176,28 @@ const AppleGame = ({
     }
   }, [start, timeRemaining]);
 
+  useEffect(() => {
+    if (canvasRef.current) {
+      canvasRef.current.addEventListener('touchstart', handleMouseDown, {
+        passive: false,
+      });
+      canvasRef.current.addEventListener('touchmove', handleMouseMove, {
+        passive: false,
+      });
+
+      return () => {
+        canvasRef.current?.removeEventListener(
+          'mousedown',
+          () => handleMouseDown,
+        );
+        canvasRef.current?.removeEventListener(
+          'mousemove',
+          () => handleMouseMove,
+        );
+      };
+    }
+  }, [canvasRef.current]);
+
   return (
     <>
       <AppleGameHUD
@@ -190,6 +212,7 @@ const AppleGame = ({
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
+            onTouchEnd={handleMouseUp}
           ></canvas>
         ) : (
           <Button
@@ -221,4 +244,4 @@ const AppleGameWrapper = styled.div`
   }
 `;
 
-export default AppleGame;
+export default memo(AppleGame);
