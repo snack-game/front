@@ -34,6 +34,7 @@ export class ClassicModController {
     offsetLeft: number,
     offsetTop: number,
   ) {
+    event.preventDefault();
     this.drag.onMouseDown(event, offsetLeft, offsetTop);
   }
 
@@ -42,6 +43,7 @@ export class ClassicModController {
     offsetLeft: number,
     offsetTop: number,
   ) {
+    event.preventDefault();
     this.drag.onMouseMove(event, offsetLeft, offsetTop);
   }
 

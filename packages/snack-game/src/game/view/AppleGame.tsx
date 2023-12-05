@@ -117,18 +117,17 @@ const AppleGame = ({
       gameController.resetGameState();
       gameController.generateApples(await refreshLogic());
       gameController.updateApplePosition(offsetWidth, offsetHeight);
+      setTimeRemaining(time);
     } catch (e) {
       setError(new Error('새로고침에 실패했습니다.'));
     }
   };
 
   const handleMouseDown = (event: MouseEventType) => {
-    event.preventDefault();
     gameController.handleMouseDown(event, offsetLeft, offsetTop);
   };
 
   const handleMouseMove = (event: MouseEventType) => {
-    event.preventDefault();
     gameController.handleMouseMove(event, offsetLeft, offsetTop);
   };
 
@@ -184,14 +183,19 @@ const AppleGame = ({
       canvasRef.current.addEventListener('touchmove', handleMouseMove, {
         passive: false,
       });
+      canvasRef.current.addEventListener('touchend', handleMouseUp);
 
       return () => {
         canvasRef.current?.removeEventListener(
-          'mousedown',
+          'touchstart',
           () => handleMouseDown,
         );
         canvasRef.current?.removeEventListener(
-          'mousemove',
+          'touchmove',
+          () => handleMouseMove,
+        );
+        canvasRef.current?.removeEventListener(
+          'touchend',
           () => handleMouseMove,
         );
       };
@@ -212,7 +216,6 @@ const AppleGame = ({
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
-            onTouchEnd={handleMouseUp}
           ></canvas>
         ) : (
           <Button
