@@ -42,7 +42,7 @@ const AppleGame = ({
   startLogic,
   endLogic,
   refreshLogic,
-  time = 20,
+  time = 120,
   sessionId = 0,
   row = 10,
   column = 12,
@@ -107,9 +107,10 @@ const AppleGame = ({
       if (gameController instanceof GoldModController) {
         if (endLogic) {
           endLogic(gameController.getScoredAppleRect());
-          gameController.resetGameState();
         }
       }
+
+      gameController.resetGameState();
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }
