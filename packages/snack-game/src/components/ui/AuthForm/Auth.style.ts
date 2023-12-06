@@ -10,6 +10,8 @@ export const Form = styled.form`
   padding: 2rem;
   flex-direction: column;
   width: 100%;
+  min-width: 310px;
+  min-height: 400px;
 `;
 
 export const Title = styled.h2`
