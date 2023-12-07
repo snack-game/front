@@ -12,7 +12,7 @@ const PATH = {
 
   RANKING: '/ranking',
 
-  BLOG: 'https://jumbled-droplet-70f.notion.site/f3aa70fb65624792bd4ed7ecdb082aff?v=b8e12a036e824f06b1de001f0385d47c&pvs=4',
+  BLOG: 'https://blog.snackga.me/',
 
   FEED_BACK:
     'https://docs.google.com/forms/d/e/1FAIpQLScYLV4AQccEoAlcSo1fC9_1-7gC3KYR1lnOGJ7Xtqm5DPBbHg/viewform?usp=sharing',
