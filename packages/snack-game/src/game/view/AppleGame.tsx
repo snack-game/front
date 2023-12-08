@@ -98,6 +98,7 @@ const AppleGame = ({
   const handleGameEnd = () => {
     try {
       setStart(false);
+      setScore(0);
       openToast(TOAST_MESSAGE.GAME_END, 'success');
 
       openModal({
@@ -118,6 +119,7 @@ const AppleGame = ({
 
   const handleRefresh = async () => {
     try {
+      setScore(0);
       gameController.resetGameState();
       gameController.generateApples(await refreshLogic());
       gameController.updateApplePosition(offsetWidth, offsetHeight);
