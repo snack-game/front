@@ -1,16 +1,12 @@
-import { Link } from 'react-router-dom';
-
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 
-import GoogleSingIn from '@assets/images/google.png';
-import KaKaoSingIn from '@assets/images/kakao.png';
 import Button from '@components/common/Button/Button';
 import * as Styled from '@components/ui/AuthForm/Auth.style';
+import OAuthContainer from '@components/ui/AuthForm/OAuthContainer';
 import { userState } from '@utils/atoms/member.atom';
 
-import PATH from '@constants/path.constant';
 import useModal from '@hooks/useModal';
 
 interface GameResultProps {
@@ -39,14 +35,7 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
           <RankingContainer>
             ??? 등 <p>{score} 점</p>
           </RankingContainer>
-          <Styled.SocialLoginImgContainer>
-            <Link to={PATH.GOOGLE} referrerPolicy={'origin'}>
-              <img src={GoogleSingIn} alt={'구글 로그인'} />
-            </Link>
-            <Link to={PATH.KAKAO} referrerPolicy={'origin'}>
-              <img src={KaKaoSingIn} alt={'카카오 로그인'} />
-            </Link>
-          </Styled.SocialLoginImgContainer>
+          <OAuthContainer />
           <span>계정 연동하기!</span>
         </Styled.SocialLoginContainer>
       )}

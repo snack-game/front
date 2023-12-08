@@ -57,11 +57,16 @@ export const SocialLoginImgContainer = styled.div`
   display: flex;
   gap: 1rem;
   padding-top: 1rem;
+`;
 
-  & > a > img {
-    cursor: pointer;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 100%;
+export const SocialLoginDiv = styled.div`
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+
+  & > img {
+    width: 100%;
+    height: 100%;
   }
 `;

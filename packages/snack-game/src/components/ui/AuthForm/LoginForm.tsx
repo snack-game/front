@@ -1,12 +1,9 @@
 import { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 
-import GoogleSingIn from '@assets/images/google.png';
-import KaKaoSingIn from '@assets/images/kakao.png';
 import Button from '@components/common/Button/Button';
 import Input from '@components/common/Input/Input';
+import OAuthContainer from '@components/ui/AuthForm/OAuthContainer';
 
-import PATH from '@constants/path.constant';
 import { NAME_REGEXP } from '@constants/regexp.constant';
 import { useLogin } from '@hooks/queries/auth.query';
 import useForm from '@hooks/useForm';
@@ -48,14 +45,7 @@ const LoginForm = () => {
       <Button content={'확인'} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
         <p>간편하게 시작하기</p>
-        <Styled.SocialLoginImgContainer>
-          <Link to={PATH.GOOGLE} referrerPolicy={'origin'}>
-            <img src={GoogleSingIn} alt={'구글 로그인'} />
-          </Link>
-          <Link to={PATH.KAKAO} referrerPolicy={'origin'}>
-            <img src={KaKaoSingIn} alt={'카카오 로그인'} />
-          </Link>
-        </Styled.SocialLoginImgContainer>
+        <OAuthContainer />
       </Styled.SocialLoginContainer>
     </Styled.Form>
   );

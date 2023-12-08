@@ -91,8 +91,5 @@ export const useLogin = () =>
 export const useSocial = () => {
   return useMutation({
     mutationFn: authApi.social,
-    onSuccess: useMemberOnSuccess({ message: TOAST_MESSAGE.AUTH_SOCIAL }),
-    onError: useOnError(),
-    useErrorBoundary: true,
   });
 };

@@ -1,20 +1,17 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import QueryBoundary from '@components/base/QueryBoundary';
-import OAuthHandler from '@components/ui/AuthForm/OAuthHandler';
-import ErrorPage from '@pages/error/ErrorPage';
+import useOAuth from '@hooks/useOAuth';
 
 const OAuthPage = () => {
+  useOAuth();
+
   return (
-    <QueryBoundary errorFallback={ErrorPage}>
-      <>
-        <Helmet>
-          <title>Snack Game || OAuth</title>
-        </Helmet>
-        <OAuthHandler />
-      </>
-    </QueryBoundary>
+    <>
+      <Helmet>
+        <title>Snack Game || OAuth</title>
+      </Helmet>
+    </>
   );
 };
 

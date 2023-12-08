@@ -22,7 +22,7 @@ const ErrorPage = ({
   return (
     <>
       <Helmet>
-        <title>Snack Game || Code</title>
+        <title>Snack Game || Error</title>
       </Helmet>
       <SnackRainContainer />
       <PageContainer>
