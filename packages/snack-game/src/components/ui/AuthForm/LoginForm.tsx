@@ -5,13 +5,14 @@ import Input from '@components/common/Input/Input';
 import OAuthContainer from '@components/ui/AuthForm/OAuthContainer';
 
 import { NAME_REGEXP } from '@constants/regexp.constant';
-import { useLogin } from '@hooks/queries/auth.query';
+import { useLogin, useSocial } from '@hooks/queries/auth.query';
 import useForm from '@hooks/useForm';
 
 import * as Styled from './Auth.style';
 
 const LoginForm = () => {
   const loginMutate = useLogin();
+  const oAuthToken = useSocial();
 
   const { values, handleChangeValue } = useForm<string>({
     initialValues: {
@@ -45,7 +46,7 @@ const LoginForm = () => {
       <Button content={'확인'} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
         <p>간편하게 시작하기</p>
-        <OAuthContainer />
+        <OAuthContainer oAuthOnSuccess={oAuthToken.mutateAsync} />
       </Styled.SocialLoginContainer>
     </Styled.Form>
   );

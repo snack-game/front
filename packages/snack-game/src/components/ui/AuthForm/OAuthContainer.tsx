@@ -6,6 +6,7 @@ import GoogleSingIn from '@assets/images/google.png';
 import KaKaoSingIn from '@assets/images/kakao.png';
 import * as Styled from '@components/ui/AuthForm/Auth.style';
 import { userState } from '@utils/atoms/member.atom';
+import { MemberType } from '@utils/types/member.type';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
@@ -17,7 +18,11 @@ interface DialogProps {
   name: string;
 }
 
-const OAuthContainer = () => {
+interface OAuthContainerProps {
+  oAuthOnSuccess: () => Promise<MemberType>;
+}
+
+const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   const [popup, setPopup] = useState<boolean>(false);
 
   const setUserState = useSetRecoilState(userState);
@@ -39,17 +44,17 @@ const OAuthContainer = () => {
     setPopup(!popup);
   };
 
-  const OAuthListener = (event: MessageEvent) => {
+  const OAuthListener = async (event: MessageEvent) => {
     if (event.origin !== window.location.origin) return;
 
-    if (event.data.type === 'oAuth') {
-      const { member, accessToken } = event.data.memberData;
-      closeModal();
+    if (event.data.type === 'oAuthSuccess') {
+      const { member, accessToken } = await oAuthOnSuccess();
       openToast(TOAST_MESSAGE.AUTH_SOCIAL, 'success');
       setUserState(() => ({
         member,
         accessToken,
       }));
+      closeModal();
     }
 
     if (event.data.type === 'oAuthError') {

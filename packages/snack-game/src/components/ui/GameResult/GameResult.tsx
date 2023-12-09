@@ -7,6 +7,7 @@ import * as Styled from '@components/ui/AuthForm/Auth.style';
 import OAuthContainer from '@components/ui/AuthForm/OAuthContainer';
 import { userState } from '@utils/atoms/member.atom';
 
+import { useIntegrateMember } from '@hooks/queries/members.query';
 import useModal from '@hooks/useModal';
 
 interface GameResultProps {
@@ -16,6 +17,7 @@ interface GameResultProps {
 
 const GameResult = ({ score, reStart }: GameResultProps) => {
   const userStateValue = useRecoilValue(userState);
+  const integrateMember = useIntegrateMember();
   const { closeModal } = useModal();
 
   const handleReStartButton = () => {
@@ -35,7 +37,7 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
           <RankingContainer>
             ??? 등 <p>{score} 점</p>
           </RankingContainer>
-          <OAuthContainer />
+          <OAuthContainer oAuthOnSuccess={integrateMember.mutateAsync} />
           <span>계정 연동하기!</span>
         </Styled.SocialLoginContainer>
       )}
