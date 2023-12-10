@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useTheme } from '@emotion/react';
@@ -23,6 +24,7 @@ const lottieOptions: LottieOptionTypes = {
 
 const MainPage = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { ref } = useLottie(lottieOptions);
 
   return (
@@ -37,20 +39,15 @@ const MainPage = () => {
             <div ref={ref} />
           </Styled.AppleGamePageLeft>
           <Styled.AppleGamePageRight>
-            <h1>사과게임</h1>
-            <p>
-              드래그 영역의 숫자 합이 10이 되도록 사과를 떨궈주세요!
-              <br />
-              황금사과를 통해 판을 초기화하고 고득점을 노려보아요!
-            </p>
-
+            <h1>{t('main_title')}</h1>
+            <p>{t('main_desc')}</p>
             <Styled.AppleGamePageInfo>
               <Link to={PATH.APPLE_GAME}>
-                <Button content={'게임 시작'} size={'large'}></Button>
+                <Button content={t('main_start')} size={'large'}></Button>
               </Link>
               <Link to={PATH.FEED_BACK} target="_blank">
                 <Button
-                  content={'피드백 보내기'}
+                  content={t('main_feedback')}
                   size={'medium'}
                   color={theme.colors.lightGreen}
                 ></Button>

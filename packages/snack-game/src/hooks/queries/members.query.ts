@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 
 import { AxiosError } from 'axios';
@@ -5,16 +6,16 @@ import { AxiosError } from 'axios';
 import membersApi from '@api/members.api';
 
 import { ServerError } from '@constants/api.constant';
-import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useToast from '@hooks/useToast';
 
 export const useChangeUserName = () => {
   const openToast = useToast();
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: membersApi.changeMemberName,
     onSuccess: () => {
-      openToast(TOAST_MESSAGE.CHANGE_USER_NAME, 'success');
+      openToast(t('member_change_name'), 'success');
     },
     onError: useOnError(),
     useErrorBoundary: (error: AxiosError<ServerError>) => {

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery } from 'react-query';
 
 import { AxiosError } from 'axios';
@@ -5,7 +6,6 @@ import { AxiosError } from 'axios';
 import groupsApi from '@api/groups.api';
 
 import { QUERY_KEY, ServerError } from '@constants/api.constant';
-import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useToast from '@hooks/useToast';
 
 interface useGetGroupsNamesProps {
@@ -30,12 +30,13 @@ export const useGetGroupsNames = ({
 };
 
 export const useChangeGroupName = () => {
+  const { t } = useTranslation();
   const openToast = useToast();
 
   return useMutation({
     mutationFn: groupsApi.changeGroupName,
     onSuccess: () => {
-      openToast(TOAST_MESSAGE.CHANGE_GROUP, 'success');
+      openToast(t('member_change_group'), 'success');
     },
     onError: (error: AxiosError<ServerError>) => {
       if (!error.response) throw error;

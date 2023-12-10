@@ -1,4 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -12,7 +13,6 @@ import { AppleData, scoredAppleRectType } from '@game/game.type';
 import AppleGameHUD from '@game/view/AppleGameHUD';
 import { MouseEventType } from '@utils/types/common.type';
 
-import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useCanvas from '@hooks/useCanvas';
 import { useCanvasOffset } from '@hooks/useCanvasOffset';
 import useError from '@hooks/useError';
@@ -47,6 +47,7 @@ const AppleGame = ({
   row = 10,
   column = 12,
 }: AppleGameProps) => {
+  const { t } = useTranslation();
   const [start, setStart] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
@@ -89,7 +90,7 @@ const AppleGame = ({
       await generateApples();
       setStart(true);
       setTimeRemaining(time);
-      openToast(TOAST_MESSAGE.GAME_START, 'success');
+      openToast(t('game_start'), 'success');
     } catch (e) {
       setError(new Error('게임 시작에 실패했습니다.'));
     }
@@ -99,7 +100,7 @@ const AppleGame = ({
     try {
       setStart(false);
       setScore(0);
-      openToast(TOAST_MESSAGE.GAME_END, 'success');
+      openToast(t('game_end'), 'success');
 
       openModal({
         children: <GameResult score={score} reStart={handleStartButton} />,
@@ -225,7 +226,7 @@ const AppleGame = ({
           ></canvas>
         ) : (
           <Button
-            content={'시작!'}
+            content={t('game_start')}
             onClick={handleStartButton}
             wrapper={css`
               position: absolute;

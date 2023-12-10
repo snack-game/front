@@ -51,6 +51,7 @@ export const AppleGamePageRight = styled.div`
     margin-bottom: 2rem;
     line-height: 1.625;
     color: ${(props) => props.theme.colors.description};
+    white-space: pre-wrap;
   }
 `;
 

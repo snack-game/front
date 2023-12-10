@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 
 import { AxiosError } from 'axios';
@@ -8,21 +9,15 @@ import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
-import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 interface useMemberAuthProps {
   apiMethod: (member: MemberType) => Promise<MemberType>;
-  message: string;
 }
 
-interface useMemberOnSuccessProps {
-  message: string;
-  guest?: boolean;
-}
-
-const useMemberOnSuccess = ({ message }: useMemberOnSuccessProps) => {
+const useMemberOnSuccess = () => {
+  const { t } = useTranslation();
   const openToast = useToast();
   const setUserState = useSetRecoilState(userState);
   const { closeModal } = useModal();
@@ -32,7 +27,7 @@ const useMemberOnSuccess = ({ message }: useMemberOnSuccessProps) => {
       member,
       accessToken,
     }));
-    openToast(message, 'success');
+    openToast(t('login_success'), 'success');
     closeModal();
   };
 };
@@ -53,8 +48,8 @@ const memberErrorBoundary = (error: AxiosError<ServerError>) => {
   return error.response?.status >= 500;
 };
 
-export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
-  const onSuccess = useMemberOnSuccess({ message });
+export const useMemberAuth = ({ apiMethod }: useMemberAuthProps) => {
+  const onSuccess = useMemberOnSuccess();
 
   return useMutation({
     mutationFn: apiMethod,
@@ -67,10 +62,7 @@ export const useMemberAuth = ({ apiMethod, message }: useMemberAuthProps) => {
 export const useGuest = () => {
   return useMutation({
     mutationFn: authApi.guest,
-    onSuccess: useMemberOnSuccess({
-      message: TOAST_MESSAGE.AUTH_GUEST,
-      guest: true,
-    }),
+    onSuccess: useMemberOnSuccess(),
     onError: useOnError(),
     useErrorBoundary: memberErrorBoundary,
   });
@@ -79,13 +71,11 @@ export const useGuest = () => {
 export const useRegister = () =>
   useMemberAuth({
     apiMethod: authApi.register,
-    message: TOAST_MESSAGE.AUTH_REGISTER,
   });
 
 export const useLogin = () =>
   useMemberAuth({
     apiMethod: authApi.login,
-    message: TOAST_MESSAGE.AUTH_LOGIN,
   });
 
 export const useSocial = () => {

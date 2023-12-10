@@ -115,6 +115,12 @@ importers:
       axios:
         specifier: ^1.4.0
         version: 1.4.0
+      i18next:
+        specifier: ^23.7.8
+        version: 23.7.8
+      i18next-browser-languagedetector:
+        specifier: ^7.2.0
+        version: 7.2.0
       lottie-web:
         specifier: ^5.12.2
         version: 5.12.2
@@ -148,6 +154,9 @@ importers:
       react-hot-toast:
         specifier: ^2.4.1
         version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
+      react-i18next:
+        specifier: ^13.5.0
+        version: 13.5.0(i18next@23.7.8)(react-dom@18.2.0)(react@18.2.0)
       react-query:
         specifier: ^3.39.3
         version: 3.39.3(react-dom@18.2.0)(react@18.2.0)
@@ -585,6 +594,12 @@ packages:
 
   /@babel/runtime@7.22.10:
     resolution: {integrity: sha512-21t/fkKLMZI4pqP2wlmsQAWnYW1PDyKyyUV4vCi+B25ydmdaYTKXPwCj0BzSUnZf4seIiYvSA3jcZ3gdsMFkLQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.0
+
+  /@babel/runtime@7.23.5:
+    resolution: {integrity: sha512-NdUTHcPe4C99WxPub+K9l9tK5/lV4UXIoaHSYgzco9BCyjKAAwzdBI+wWtYqHt7LJdbo74ZjRPJgzVweq1sz0w==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
@@ -1403,7 +1418,7 @@ packages:
       react: '>=16.8.0'
       react-test-renderer: '>=16.8.0'
     dependencies:
-      '@babel/runtime': 7.22.10
+      '@babel/runtime': 7.23.5
       '@types/react': 16.14.45
       '@types/react-test-renderer': 16.9.5
       react: 18.2.0
@@ -2196,7 +2211,7 @@ packages:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
     engines: {node: '>=10', npm: '>=6'}
     dependencies:
-      '@babel/runtime': 7.22.10
+      '@babel/runtime': 7.23.5
       cosmiconfig: 7.1.0
       resolve: 1.22.4
 
@@ -2277,7 +2292,7 @@ packages:
   /broadcast-channel@3.7.0:
     resolution: {integrity: sha512-cIAKJXAxGJceNZGTZSBzMxzyOn72cVgPnKx4dc6LRjQgbaJUQqhy5rzL3zbMxkMWsGKkv2hSFkPRMEXfoMZ2Mg==}
     dependencies:
-      '@babel/runtime': 7.22.10
+      '@babel/runtime': 7.23.5
       detect-node: 2.1.0
       js-sha3: 0.8.0
       microseconds: 0.2.0
@@ -3724,6 +3739,12 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: true
 
+  /html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
   /http-proxy-agent@5.0.0:
     resolution: {integrity: sha512-n2hY8YdoRE1i7r6M0w9DIw5GgZN0G25P8zLCRQ8rjXtTU3vsNFBI/vWK/UIeE6g5MUUz6avwAPXmL6Fy9D/90w==}
     engines: {node: '>= 6'}
@@ -3754,6 +3775,18 @@ packages:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
     dev: true
+
+  /i18next-browser-languagedetector@7.2.0:
+    resolution: {integrity: sha512-U00DbDtFIYD3wkWsr2aVGfXGAj2TgnELzOX9qv8bT0aJtvPV9CRO77h+vgmHFBMe7LAxdwvT/7VkCWGya6L3tA==}
+    dependencies:
+      '@babel/runtime': 7.23.5
+    dev: false
+
+  /i18next@23.7.8:
+    resolution: {integrity: sha512-yCe9964O+1abdIG01AOzk6P9mQi0HVJV1B57whYJQu6TjmrB9JHHDYonDI8amGt6M6b9bP3x3R0Zh7ROmvX7JQ==}
+    dependencies:
+      '@babel/runtime': 7.23.5
+    dev: false
 
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -4793,7 +4826,7 @@ packages:
   /match-sorter@6.3.1:
     resolution: {integrity: sha512-mxybbo3pPNuA+ZuCUhm5bwNkXrJTbsk5VWbR5wiwz/GC6LIiegBGn2w3O08UG/jdbYLinw51fSQ5xNU1U3MgBw==}
     dependencies:
-      '@babel/runtime': 7.22.10
+      '@babel/runtime': 7.23.5
       remove-accents: 0.4.2
     dev: false
 
@@ -5443,6 +5476,26 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - csstype
+    dev: false
+
+  /react-i18next@13.5.0(i18next@23.7.8)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-CFJ5NDGJ2MUyBohEHxljOq/39NQ972rh1ajnadG9BjTk+UXbHLq4z5DKEbEQBDoIhUmmbuS/fIMJKo6VOax1HA==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.10
+      html-parse-stringify: 3.0.1
+      i18next: 23.7.8
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-is@16.13.1:
@@ -6386,7 +6439,7 @@ packages:
   /unload@2.2.0:
     resolution: {integrity: sha512-B60uB5TNBLtN6/LsgAf3udH9saB5p7gqJwcFfbOEZ8BcBHnGwCf6G/TGiEqkRAxX7zAFIUtzdrXQSdL3Q/wqNA==}
     dependencies:
-      '@babel/runtime': 7.22.10
+      '@babel/runtime': 7.23.5
       detect-node: 2.1.0
     dev: false
 
@@ -6507,6 +6560,11 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}

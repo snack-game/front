@@ -16,6 +16,7 @@ import { darkTheme, lightTheme } from '@utils/theme';
 import PATH from '@constants/path.constant';
 
 import { globalStyles } from './App.style';
+import '@utils/locales/i18n';
 
 inject();
 

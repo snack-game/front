@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
+
 import * as Styled from '@components/common/Card/UserRankingCard/UserRankingCard.style';
 
 import { useGetUserRanking } from '@hooks/queries/ranking.query';
 
 const UserRankingCard = () => {
+  const { t } = useTranslation();
   const userRanking = useGetUserRanking();
 
   return (
@@ -10,10 +13,10 @@ const UserRankingCard = () => {
       {userRanking?.rank && (
         <Styled.UserRankingCardWrapper>
           <Styled.UserRankingCardItem>
-            <p>{userRanking.owner.name}님</p>
-            <p>{userRanking.owner.group?.name || '그룹없음'}</p>
-            <span>랭킹 {userRanking.rank}등!</span>
-            <span>점수 {userRanking.score}점!</span>
+            <p>{userRanking.owner.name}</p>
+            <p>{userRanking.owner.group?.name || t('group_none')}</p>
+            <span>{`${t('rank_title')} ${userRanking.rank}${t('rank')}!`}</span>
+            <span>{`${userRanking.score}${t('game_score')}!`}</span>
           </Styled.UserRankingCardItem>
         </Styled.UserRankingCardWrapper>
       )}
