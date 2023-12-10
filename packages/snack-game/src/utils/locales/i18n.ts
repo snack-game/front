@@ -20,7 +20,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en_US',
+    fallbackLng: 'en-US',
     keySeparator: false,
     interpolation: {
       escapeValue: false,
