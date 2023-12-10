@@ -8,10 +8,13 @@ import { DropDownItem } from '@components/common/Menu/Menu.style';
 const LangSelect = () => {
   const { i18n } = useTranslation();
   const theme = useTheme();
-  const languageCode = i18n.language.slice(3);
+  const languageCode = i18n.language;
 
   return (
-    <Menu buttonContent={languageCode} color={theme.colors.orange}>
+    <Menu
+      buttonContent={languageCode === 'ko-KR' ? '한국어' : 'English'}
+      color={theme.colors.orange}
+    >
       <DropDownItem onClick={() => i18n.changeLanguage('ko-KR')}>
         한국어
       </DropDownItem>
