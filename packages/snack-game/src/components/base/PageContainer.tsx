@@ -24,17 +24,12 @@ export default PageContainer;
 const PageContainerWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
-
-  @media (min-width: 768px) {
-    max-width: 1280px;
-  }
 `;
 
 const PageContainerInner = styled.div`
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   padding-bottom: 2rem;
-  height: auto;
 
   @media (min-width: 768px) {
     padding-left: 1rem;
