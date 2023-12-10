@@ -25,6 +25,10 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
     closeModal();
   };
 
+  const onOAuthSuccess = async () => {
+    return await integrateMember.mutateAsync();
+  };
+
   return (
     <GameResultContainer>
       <div css={css({ display: 'flex', gap: '1rem', flexDirection: 'column' })}>
@@ -37,7 +41,7 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
           <RankingContainer>
             ??? 등 <p>{score} 점</p>
           </RankingContainer>
-          <OAuthContainer oAuthOnSuccess={integrateMember.mutateAsync} />
+          <OAuthContainer oAuthOnSuccess={onOAuthSuccess} />
           <span>계정 연동하기!</span>
         </Styled.SocialLoginContainer>
       )}

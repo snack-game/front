@@ -10,7 +10,6 @@ import { MemberType } from '@utils/types/member.type';
 
 import PATH from '@constants/path.constant';
 import { TOAST_MESSAGE } from '@constants/toast.constant';
-import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 interface DialogProps {
@@ -26,7 +25,6 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   const [popup, setPopup] = useState<boolean>(false);
 
   const setUserState = useSetRecoilState(userState);
-  const { closeModal } = useModal();
   const openToast = useToast();
 
   const openOAuthDialog = ({ url, name }: DialogProps) => {
@@ -54,7 +52,6 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
         member,
         accessToken,
       }));
-      closeModal();
     }
 
     if (event.data.type === 'oAuthError') {
