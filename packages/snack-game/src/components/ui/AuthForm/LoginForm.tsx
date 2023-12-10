@@ -9,10 +9,12 @@ import { useLogin, useSocial } from '@hooks/queries/auth.query';
 import useForm from '@hooks/useForm';
 
 import * as Styled from './Auth.style';
+import useModal from '@hooks/useModal';
 
 const LoginForm = () => {
   const loginMutate = useLogin();
   const oAuthToken = useSocial();
+  const { closeModal } = useModal();
 
   const { values, handleChangeValue } = useForm<string>({
     initialValues: {
@@ -27,6 +29,12 @@ const LoginForm = () => {
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     loginMutate.mutate({ member: { name: values.name.value, group: null } });
+  };
+
+  const onOAuthSuccess = async () => {
+    const member = await oAuthToken.mutateAsync();
+    closeModal();
+    return member;
   };
 
   return (
@@ -46,7 +54,7 @@ const LoginForm = () => {
       <Button content={'확인'} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
         <p>간편하게 시작하기</p>
-        <OAuthContainer oAuthOnSuccess={oAuthToken.mutateAsync} />
+        <OAuthContainer oAuthOnSuccess={onOAuthSuccess} />
       </Styled.SocialLoginContainer>
     </Styled.Form>
   );
