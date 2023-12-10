@@ -7,10 +7,10 @@ import en from '@utils/locales/en.json';
 import ko from '@utils/locales/ko.json';
 
 const resources = {
-  ko_KR: {
+  'ko-KR': {
     translation: ko,
   },
-  en_US: {
+  'en-US': {
     translation: en,
   },
 };

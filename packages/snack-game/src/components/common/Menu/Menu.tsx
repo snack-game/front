@@ -22,7 +22,7 @@ const Menu = ({ buttonContent, children, color }: MenuProps) => {
       <Button
         content={buttonContent}
         size={'small'}
-        color={!color && theme.colors.lightGreen}
+        color={color ? color : theme.colors.lightGreen}
         wrapper={css({ marginTop: '0.2rem' })}
       />
       <DropDownContainer>{children}</DropDownContainer>
