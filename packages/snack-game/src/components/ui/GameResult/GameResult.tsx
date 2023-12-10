@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
@@ -16,6 +18,7 @@ interface GameResultProps {
 }
 
 const GameResult = ({ score, reStart }: GameResultProps) => {
+  const { t } = useTranslation();
   const userStateValue = useRecoilValue(userState);
   const integrateMember = useIntegrateMember();
   const { closeModal } = useModal();
@@ -32,17 +35,23 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
   return (
     <GameResultContainer>
       <div css={css({ display: 'flex', gap: '1rem', flexDirection: 'column' })}>
-        <p>최종 점수: {score}점!</p>
-        <Button content={'다시하기'} onClick={handleReStartButton} />
+        <p>
+          {t('game_result')}: {score}
+          {t('game_score')}!
+        </p>
+        <Button content={t('game_restart')} onClick={handleReStartButton} />
       </div>
       {userStateValue.member.type === 'GUEST' && (
         <Styled.SocialLoginContainer>
           <p>나는 몇 등일까?</p>
           <RankingContainer>
-            ??? 등 <p>{score} 점</p>
+            ??? {t('rank')}
+            <p>
+              {score} {t('game_score')}
+            </p>
           </RankingContainer>
           <OAuthContainer oAuthOnSuccess={onOAuthSuccess} />
-          <span>계정 연동하기!</span>
+          <span>{t('login_integrate')}</span>
         </Styled.SocialLoginContainer>
       )}
     </GameResultContainer>
@@ -73,8 +82,7 @@ const RankingContainer = styled.div`
   margin: auto;
   bottom: 0.5rem;
   padding: 1rem;
-  border: 1px solid;
-  border-color: ${(props) => props.theme.colors.orange};
+  border: 1px solid ${(props) => props.theme.colors.orange};
   border-radius: 1rem;
   color: ${(props) => props.theme.colors.titleText};
   background-color: ${(props) => props.theme.colors.background};

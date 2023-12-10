@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import styled from '@emotion/styled';
 
 import ChilImage from '@assets/images/0chil.jpg';
@@ -5,20 +7,20 @@ import DongSuImage from '@assets/images/dongsu.webp';
 import TeamCard from '@components/common/Card/TeamCard/TeamCard';
 
 const TeamInfo = () => {
+  const { t } = useTranslation();
   const teamInfoList = [
     {
       imgSrc: DongSuImage,
       name: 'dev-dong-su',
       position: 'Front-End, Game Developer',
-      intro:
-        '긍정적으로 생각하기 좋아하고\n작은 일에서 행복을 찾는 삶을좋아합니다.\n',
+      intro: t('team_dongsu'),
       githubUrl: 'https://github.com/dev-dong-su',
     },
     {
       imgSrc: ChilImage,
       name: '0chil',
       position: 'Back-End Developer',
-      intro: '하나의 목적으로 움직이는 팀을\n만들고자 합니다.\n',
+      intro: t('team_0chil'),
       githubUrl: 'https://github.com/0chil',
     },
   ];

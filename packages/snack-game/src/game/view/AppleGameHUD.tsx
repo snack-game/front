@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styled from '@emotion/styled';
 
@@ -11,10 +12,11 @@ interface AppleGameHUDProps {
 }
 
 const AppleGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
+  const { t } = useTranslation();
   return (
     <GameHUD>
-      <p>{score + '점'}</p>
-      <p>{time + '초'}</p>
+      <p>{score + t('game_score')}</p>
+      <p>{time + t('game_time')}</p>
       <img src={Refresh} alt={'새로고침'} onClick={handleRefresh} />
     </GameHUD>
   );

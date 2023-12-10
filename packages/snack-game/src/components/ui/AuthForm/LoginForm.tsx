@@ -1,4 +1,5 @@
 import { FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@components/common/Button/Button';
 import Input from '@components/common/Input/Input';
@@ -7,11 +8,12 @@ import OAuthContainer from '@components/ui/AuthForm/OAuthContainer';
 import { NAME_REGEXP } from '@constants/regexp.constant';
 import { useLogin, useSocial } from '@hooks/queries/auth.query';
 import useForm from '@hooks/useForm';
-
-import * as Styled from './Auth.style';
 import useModal from '@hooks/useModal';
 
+import * as Styled from './Auth.style';
+
 const LoginForm = () => {
+  const { t } = useTranslation();
   const loginMutate = useLogin();
   const oAuthToken = useSocial();
   const { closeModal } = useModal();
@@ -39,21 +41,21 @@ const LoginForm = () => {
 
   return (
     <Styled.Form onSubmit={handleOnSubmit}>
-      <Styled.Title>로그인</Styled.Title>
+      <Styled.Title>{t('login_title')}</Styled.Title>
       <Styled.InputContainer>
         <Input
-          placeholder={'이름'}
+          placeholder={t('login_name')}
           type={'text'}
           id={'auth-name-input'}
           onChange={handleChangeValue('name')}
-          errorMessage={'이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
+          errorMessage={t('login_desc')}
           required={true}
           valid={values.name.valid}
         />
       </Styled.InputContainer>
-      <Button content={'확인'} disabled={!values.name.valid} />
+      <Button content={t('login_submit')} disabled={!values.name.valid} />
       <Styled.SocialLoginContainer>
-        <p>간편하게 시작하기</p>
+        <p>{t('login_oauth')}</p>
         <OAuthContainer oAuthOnSuccess={onOAuthSuccess} />
       </Styled.SocialLoginContainer>
     </Styled.Form>

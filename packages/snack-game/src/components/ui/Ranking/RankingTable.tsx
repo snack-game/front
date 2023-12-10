@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import styled from '@emotion/styled';
 
 import RankingTableItem from '@components/common/Table/RankingTableItem';
@@ -7,7 +9,8 @@ import TopRankingCard from '@components/ui/Ranking/TopRankingCard';
 import { useGetTotalRanking } from '@hooks/queries/ranking.query';
 
 const RankingTable = () => {
-  const tableTitle = ['랭킹', '이름', '그룹', '점수'];
+  const { t } = useTranslation();
+  const tableTitle = [t('rank_title'), t('name'), t('group'), t('score')];
   const totalRanking = useGetTotalRanking();
 
   const topRanking = totalRanking?.slice(0, 3);

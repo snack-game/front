@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 
 export const HeaderContainer = styled.div`
-  width: 100%;
-  max-width: 1280px;
+  width: 80%;
   display: flex;
   padding: 1.25rem;
   margin-left: auto;
@@ -11,6 +10,10 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   justify-items: center;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.div`
@@ -47,7 +50,7 @@ export const Nav = styled.nav`
     color: ${(props) => props.theme.colors.description};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     display: none;
   }
 `;

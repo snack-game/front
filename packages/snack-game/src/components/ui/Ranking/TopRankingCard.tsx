@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import styled from '@emotion/styled';
 
 import First from '@assets/images/first.png';
@@ -17,13 +19,15 @@ const loadedImages = [First, Second, Third].map((src) => {
 });
 
 const TopRankingCard = ({ rankInfo }: TopRankingCardProps) => {
+  const { t } = useTranslation();
+
   return (
     <TopRankingCardWrapper rank={rankInfo.rank}>
       <ThumbnailCard
         imgSrc={loadedImages[rankInfo.rank - 1].src}
-        title={rankInfo.owner.name + ' 님'}
-        subTitle={rankInfo.owner.group?.name || '그룹 없음'}
-        content={rankInfo.score + '점!'}
+        title={rankInfo.owner.name}
+        subTitle={rankInfo.owner.group?.name || t('group_none')}
+        content={rankInfo.score + t('game_score') + '!'}
       ></ThumbnailCard>
     </TopRankingCardWrapper>
   );

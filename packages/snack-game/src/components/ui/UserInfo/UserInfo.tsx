@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
@@ -17,6 +18,7 @@ import { useGetUserRanking } from '@hooks/queries/ranking.query';
 import useInput from '@hooks/useInput';
 
 const UserInfo = () => {
+  const { t } = useTranslation();
   const changeUserName = useChangeUserName();
   const changeGroupName = useChangeGroupName();
 
@@ -78,29 +80,25 @@ const UserInfo = () => {
             <h1>수정</h1>
             <InfoContainer>
               <Input
-                placeholder={'이름'}
+                placeholder={t('name')}
                 type={'text'}
                 value={nameValue}
                 onChange={nameValueChange}
-                errorMessage={
-                  '이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.'
-                }
+                errorMessage={t('login_desc')}
                 required={true}
                 valid={nameValid}
               />
               <Button
-                content={'저장'}
+                content={t('save')}
                 disabled={!nameValid}
                 onClick={handleChangeUserName}
               />
               <Input
-                placeholder={'그룹'}
+                placeholder={t('group')}
                 type={'text'}
                 value={groupValue}
                 onChange={groupValueChange}
-                errorMessage={
-                  '그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.'
-                }
+                errorMessage={t('login_desc')}
                 required={true}
                 valid={groupValid}
               />
@@ -108,11 +106,11 @@ const UserInfo = () => {
                 <SearchResultList
                   value={groupValue}
                   onClick={setFieldValue}
-                  message={'일치하는 그룹이 없어요! 새로 만들어 보아요!'}
+                  message={t('group_no_match')}
                 />
               </QueryBoundary>
               <Button
-                content={'저장'}
+                content={t('save')}
                 disabled={!groupValid}
                 onClick={handleChangeUserGroup}
               />
@@ -120,23 +118,34 @@ const UserInfo = () => {
           </QueryBoundary>
         ) : (
           <>
-            <h1>내 정보</h1>
+            <h1>{t('my_info_title')}</h1>
             <InfoContainer>
-              <p>이름: {userStateValue.member.name}</p>
               <p>
-                그룹:
+                {t('name')}: {userStateValue.member.name}
+              </p>
+              <p>
+                {t('group')}:{' '}
                 {userStateValue.member.group
                   ? userStateValue.member.group.name
-                  : '없음'}
+                  : t('group_none')}
               </p>
               {userRanking && (
                 <>
-                  <p>랭킹: {userRanking.rank}등</p>
-                  <p>최고 점수: {userRanking.score}점!</p>
+                  <p>
+                    {t('rank_title')}: {userRanking.rank}
+                    {t('rank')}
+                  </p>
+                  <p>
+                    {t('my_info_score')}: {userRanking.score}
+                    {t('game_score')}!
+                  </p>
                 </>
               )}
             </InfoContainer>
-            <Button content={'수정'} onClick={() => setModifying(!modifying)} />
+            <Button
+              content={t('modify')}
+              onClick={() => setModifying(!modifying)}
+            />
           </>
         )}
       </UserInfoContainer>
@@ -151,9 +160,8 @@ const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid;
   border-radius: 1rem;
-  border-color: ${(props) => props.theme.colors.orange};
+  border: 1px solid ${(props) => props.theme.colors.orange};
   background-color: ${(props) => props.theme.colors.background};
   box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
   padding: 1.5rem;

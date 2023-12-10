@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -9,7 +10,6 @@ import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
 import PATH from '@constants/path.constant';
-import { TOAST_MESSAGE } from '@constants/toast.constant';
 import useToast from '@hooks/useToast';
 
 interface DialogProps {
@@ -22,6 +22,7 @@ interface OAuthContainerProps {
 }
 
 const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
+  const { t } = useTranslation();
   const [popup, setPopup] = useState<boolean>(false);
 
   const setUserState = useSetRecoilState(userState);
@@ -47,7 +48,7 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
 
     if (event.data.type === 'oAuthSuccess') {
       const { member, accessToken } = await oAuthOnSuccess();
-      openToast(TOAST_MESSAGE.AUTH_SOCIAL, 'success');
+      openToast(t('login_success'), 'success');
       setUserState(() => ({
         member,
         accessToken,
@@ -55,7 +56,7 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     }
 
     if (event.data.type === 'oAuthError') {
-      openToast(TOAST_MESSAGE.AUTH_ERROR, 'error');
+      openToast(t('login_fail'), 'error');
     }
   };
 

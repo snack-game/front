@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styled from '@emotion/styled';
 
@@ -10,6 +11,7 @@ import GoldMode from '@game/view/gameModes/GoldMode';
 import PlayGroundMode from '@game/view/gameModes/PlayGroundMode';
 
 const GameContainer = () => {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<string>('gold');
 
   const handleModeSelect = (mode: string) => {
@@ -34,19 +36,19 @@ const GameContainer = () => {
       </ErrorBoundary>
       <ModeSelectContainer>
         <Button
-          content={'기본모드'}
+          content={t('game_gold_mode')}
           size={'small'}
           disabled={mode === 'gold'}
           onClick={() => handleModeSelect('gold')}
         />
         <Button
-          content={'클래식모드'}
+          content={t('game_classic_mode')}
           size={'small'}
           disabled={mode === 'classic'}
           onClick={() => handleModeSelect('classic')}
         />
         <Button
-          content={'놀이터모드'}
+          content={t('game_playground_mode')}
           size={'small'}
           disabled={mode === 'practice'}
           onClick={() => handleModeSelect('practice')}

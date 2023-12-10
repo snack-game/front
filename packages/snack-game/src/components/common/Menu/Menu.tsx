@@ -9,11 +9,12 @@ import {
 } from '@components/common/Menu/Menu.style';
 
 interface MenuProps {
-  buttonContent: string;
+  buttonContent?: string;
   children: ReactNode;
+  color?: string;
 }
 
-const Menu = ({ buttonContent, children }: MenuProps) => {
+const Menu = ({ buttonContent, children, color }: MenuProps) => {
   const theme = useTheme();
 
   return (
@@ -21,7 +22,7 @@ const Menu = ({ buttonContent, children }: MenuProps) => {
       <Button
         content={buttonContent}
         size={'small'}
-        color={theme.colors.lightGreen}
+        color={color ? color : theme.colors.lightGreen}
         wrapper={css({ marginTop: '0.2rem' })}
       />
       <DropDownContainer>{children}</DropDownContainer>
