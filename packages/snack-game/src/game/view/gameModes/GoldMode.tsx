@@ -23,8 +23,8 @@ const GoldMode = () => {
     setSessionId(sessionId);
 
     console.log('게임 시작');
-    if (window.opener) {
-      window.opener.postMessage({ gameState: 'start' }, '*');
+    if (window.parent) {
+      window.parent.postMessage({ gameState: 'start' }, '*');
     }
 
     return apples;
@@ -32,8 +32,8 @@ const GoldMode = () => {
 
   const endLogic = async (rects: scoredAppleRectType[]) => {
     console.log('게임 종료');
-    if (window.opener) {
-      window.opener.postMessage({ gameState: 'done' }, '*');
+    if (window.parent) {
+      window.parent.postMessage({ gameState: 'done' }, '*');
     }
     await gameEnd(sessionId, rects);
   };
