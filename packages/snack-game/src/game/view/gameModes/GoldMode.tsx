@@ -28,7 +28,6 @@ const GoldMode = () => {
     console.log('게임 종료');
     if (window.opener) {
       window.opener.postMessage({ gameState: 'done' }, '*');
-      window.close();
     }
     await gameEnd(sessionId, rects);
   };
