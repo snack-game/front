@@ -21,6 +21,12 @@ const GoldMode = () => {
   const startLogic = async () => {
     const { apples, sessionId } = await gameStart();
     setSessionId(sessionId);
+
+    console.log('게임 시작');
+    if (window.opener) {
+      window.opener.postMessage({ gameState: 'start' }, '*');
+    }
+
     return apples;
   };
 
