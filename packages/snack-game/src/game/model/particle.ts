@@ -16,7 +16,7 @@ export class Particle {
   update() {
     this.x += this.speedX;
     this.y += this.speedY;
-    this.size -= 0.1;
+    this.size = Math.abs(this.size - 0.1);
   }
 
   drawParticle(ctx: CanvasRenderingContext2D) {
