@@ -21,13 +21,19 @@ const GoldMode = () => {
   const startLogic = async () => {
     const { apples, sessionId } = await gameStart();
     setSessionId(sessionId);
+
+    console.log('게임 시작');
+    if (window.parent) {
+      window.parent.postMessage({ gameState: 'start' }, '*');
+    }
+
     return apples;
   };
 
   const endLogic = async (rects: scoredAppleRectType[]) => {
     console.log('게임 종료');
-    if (window.opener) {
-      window.opener.postMessage({ gameState: 'done' }, '*');
+    if (window.parent) {
+      window.parent.postMessage({ gameState: 'done' }, '*');
     }
     await gameEnd(sessionId, rects);
   };
