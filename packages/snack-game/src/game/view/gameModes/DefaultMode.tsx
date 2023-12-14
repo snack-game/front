@@ -90,11 +90,13 @@ const DefaultMode = () => {
   };
 
   const refreshGame = async () => {
-    const {apples} = await gameRefresh.mutateAsync(sessionId);
-    setAppleGame(mapToAppleGame(apples));
+    if (isOngoing) {
+      const {apples} = await gameRefresh.mutateAsync(sessionId);
+      setAppleGame(mapToAppleGame(apples));
 
-    resetGameStates();
-    setIsOngoing(true);
+      resetGameStates();
+      setIsOngoing(true);
+    }
   };
 
   const resetGameStates = () => {
