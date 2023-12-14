@@ -1,4 +1,4 @@
-import {memo, ReactNode, useEffect, useMemo} from 'react';
+import {memo, ReactNode, useEffect, useMemo, useState} from 'react';
 import styled from '@emotion/styled';
 import {AppleGame} from '@game/model/appleGame';
 import {MouseEventType} from '@utils/types/common.type';
@@ -17,6 +17,11 @@ interface AppleGameProps {
   startButton: ReactNode
 }
 
+interface EventListenerInfo {
+  event: string,
+  handler: any,
+}
+
 const AppleGameController = ({
                                isOngoing,
                                appleGame,
@@ -28,8 +33,10 @@ const AppleGameController = ({
   const {canvasBaseRef, offsetWidth, offsetHeight, offsetLeft, offsetTop} = useCanvasOffset();
 
   const drag = useMemo(() => new Drag(), []);
-  const fallingApples = useMemo<Apple[]>(() => [], []);
-  const particles = useMemo<Particle[]>(() => [], []);
+  const [fallingApples, setFallingApples] = useState<Apple[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  const eventListeners = useMemo<EventListenerInfo[]>(() => [], []);
 
   const animationFrame = (ctx: CanvasRenderingContext2D) => {
     const {x, y, width, height} = drag.getDragArea();
@@ -64,8 +71,8 @@ const AppleGameController = ({
       apple.setPosition({x: newPositionX, y: newPositionY});
 
       if (positionY > apple.getRadius() * appleGame.getColumn() * 3) {
-        fallingApples.length = 0;
-        particles.length = 0;
+        setFallingApples([]);
+        setParticles([]);
       }
     });
   }
@@ -89,7 +96,7 @@ const AppleGameController = ({
   const handleMouseUp = async () => {
     try {
       const removedApples = appleGame.removeApples();
-      fallingApples.push(...removedApples);
+      setFallingApples(prev => [...prev, ...removedApples]);
       removedApples.forEach(apple => {
         for (let i = 0; i < 5; i++) {
           particles.push(
@@ -118,30 +125,23 @@ const AppleGameController = ({
 
   useEffect(() => {
     if (canvasRef.current) {
-      canvasRef.current.addEventListener('touchstart', handleMouseDown, {
-        passive: false,
-      });
-      canvasRef.current.addEventListener('touchmove', handleMouseMove, {
-        passive: false,
-      });
-      canvasRef.current.addEventListener('touchend', handleMouseUp);
-
+      eventListeners.push(
+        {event: 'touchstart', handler: handleMouseDown},
+        {event: 'touchmove', handler: handleMouseMove},
+        {event: 'touchend', handler: handleMouseUp}
+      );
+      eventListeners.forEach(it =>
+        canvasRef.current?.addEventListener(it.event, it.handler, {passive: false})
+      );
       return () => {
-        canvasRef.current?.removeEventListener(
-          'touchstart',
-          () => handleMouseDown,
+        eventListeners.forEach(it =>
+          canvasRef.current?.removeEventListener(it.event, it.handler)
         );
-        canvasRef.current?.removeEventListener(
-          'touchmove',
-          () => handleMouseMove,
-        );
-        canvasRef.current?.removeEventListener(
-          'touchend',
-          () => handleMouseMove,
-        );
+        eventListeners.length = 0;
       };
     }
-  }, [canvasRef.current]);
+  }, [canvasRef.current, appleGame]);
+
 
   return (
     <>
