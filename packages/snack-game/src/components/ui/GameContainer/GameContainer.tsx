@@ -6,9 +6,8 @@ import styled from '@emotion/styled';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Button from '@components/common/Button/Button';
 import retryError from '@components/common/Error/RetryError';
-import ClassicMode from '@game/view/gameModes/ClassicMode';
-import GoldMode from '@game/view/gameModes/GoldMode';
-import PlayGroundMode from '@game/view/gameModes/PlayGroundMode';
+import ClassicMode from '@game/view/ClassicMode';
+import DefaultMode from '@game/view/DefaultMode';
 
 const GameContainer = () => {
   const { t } = useTranslation();
@@ -23,14 +22,10 @@ const GameContainer = () => {
       <ErrorBoundary fallback={retryError}>
         {(() => {
           switch (mode) {
-            case 'gold':
-              return <GoldMode />;
             case 'classic':
               return <ClassicMode />;
-            case 'practice':
-              return <PlayGroundMode />;
             default:
-              return <GoldMode />;
+              return <DefaultMode />;
           }
         })()}
       </ErrorBoundary>
@@ -46,12 +41,6 @@ const GameContainer = () => {
           size={'small'}
           disabled={mode === 'classic'}
           onClick={() => handleModeSelect('classic')}
-        />
-        <Button
-          content={t('game_playground_mode')}
-          size={'small'}
-          disabled={mode === 'practice'}
-          onClick={() => handleModeSelect('practice')}
         />
       </ModeSelectContainer>
     </>
