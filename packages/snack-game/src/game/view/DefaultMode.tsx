@@ -1,42 +1,45 @@
-import {AppleGame} from "@game/model/appleGame";
-import {useEffect, useState} from "react";
-import AppleGameHUD from "@game/view/AppleGameHUD";
-import useToast from "@hooks/useToast";
-import {useTranslation} from "react-i18next";
-import useError from "@hooks/useError";
-import GameResult from "@components/ui/GameResult/GameResult";
-import useModal from "@hooks/useModal";
-import {css} from "@emotion/react";
-import Button from "@components/common/Button/Button";
-import Apple from "@game/model/apple";
-import AppleGameController from "@game/view/AppleGameController";
-import QueryBoundary from "@components/base/QueryBoundary";
-import retryError from "@components/common/Error/RetryError";
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { css } from '@emotion/react';
+
+import QueryBoundary from '@components/base/QueryBoundary';
+import Button from '@components/common/Button/Button';
+import retryError from '@components/common/Error/RetryError';
+import GameResult from '@components/ui/GameResult/GameResult';
+import AppleGameController from '@game/controller/AppleGameController';
+import { goldModAppleType, scoredAppleRectType } from '@game/game.type';
+import Apple from '@game/model/apple';
+import { AppleGame } from '@game/model/appleGame';
+import { GoldenApple } from '@game/model/goldenApple';
+import PlainApple from '@game/model/plainApple';
+import AppleGameHUD from '@game/view/AppleGameHUD';
+
 import {
   useAppleGameRefresh,
   useAppleGameSessionEnd,
   useGoldModeCheck,
-  useGoldModeStart
+  useGoldModeStart,
 } from '@hooks/queries/appleGame.query';
-import {goldModAppleType, scoredAppleRectType} from "@game/game.type";
-import {GoldenApple} from "@game/model/goldenApple";
-import PlainApple from "@game/model/plainApple";
+import useError from '@hooks/useError';
+import useModal from '@hooks/useModal';
+import useToast from '@hooks/useToast';
 
 const DefaultMode = () => {
   const setError = useError();
   const openToast = useToast();
-  const {openModal} = useModal();
-  const {t} = useTranslation();
+  const { openModal } = useModal();
+  const { t } = useTranslation();
 
-  const {gameStart} = useGoldModeStart(); // TODO: 이름 알아서 수정 ㄱㄱ
-  const {checkMoves} = useGoldModeCheck();
-  const {gameEnd} = useAppleGameSessionEnd();
+  const { gameStart } = useGoldModeStart();
+  const { checkMoves } = useGoldModeCheck();
+  const { gameEnd } = useAppleGameSessionEnd();
   const gameRefresh = useAppleGameRefresh();
 
   const [sessionId, setSessionId] = useState(0);
   const [removedRects, setRemovedRects] = useState<scoredAppleRectType[]>([]);
 
-  const emptyGame = new AppleGame({row: 0, column: 0, apples: []});
+  const emptyGame = new AppleGame({ row: 0, column: 0, apples: [] });
   const defaultTime = 120;
 
   const [appleGame, setAppleGame] = useState(emptyGame);
@@ -46,7 +49,7 @@ const DefaultMode = () => {
 
   const startGame = async () => {
     try {
-      const {apples, sessionId} = await gameStart();
+      const { apples, sessionId } = await gameStart();
       setSessionId(sessionId);
       setAppleGame(mapToAppleGame(apples));
 
@@ -63,7 +66,7 @@ const DefaultMode = () => {
       removedRects.push(getRectFor(removedApples));
     }
 
-    if (removedApples.some(apple => apple instanceof GoldenApple)) {
+    if (removedApples.some((apple) => apple instanceof GoldenApple)) {
       const response = await checkMoves(sessionId, removedRects);
       if (response) {
         appleGame.updateApples(mapApples(response.apples));
@@ -83,7 +86,7 @@ const DefaultMode = () => {
       setIsOngoing(false);
 
       openToast(t('game_end'), 'success');
-      openModal({children: <GameResult score={score} reStart={startGame}/>});
+      openModal({ children: <GameResult score={score} reStart={startGame} /> });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }
@@ -91,7 +94,7 @@ const DefaultMode = () => {
 
   const refreshGame = async () => {
     if (isOngoing) {
-      const {apples} = await gameRefresh.mutateAsync(sessionId);
+      const { apples } = await gameRefresh.mutateAsync(sessionId);
       setAppleGame(mapToAppleGame(apples));
 
       resetGameStates();
@@ -103,46 +106,44 @@ const DefaultMode = () => {
     setRemovedRects([]);
     setRemainingTime(defaultTime);
     setScore(0);
-  }
+  };
 
-  const mapToAppleGame = (apples: goldModAppleType[][]) => new AppleGame({
+  const mapToAppleGame = (apples: goldModAppleType[][]) =>
+    new AppleGame({
       row: apples.length,
       column: apples[0].length,
-      apples: mapApples(apples)
-    }
-  );
+      apples: mapApples(apples),
+    });
 
   const mapApples = (appleDatas: goldModAppleType[][]) =>
-    appleDatas.flatMap(((row, i) =>
-        row.map(((apple, j) =>
-          mapApple(i, j, apple))
-        )
-    ));
+    appleDatas.flatMap((row, i) =>
+      row.map((apple, j) => mapApple(i, j, apple)),
+    );
 
   const mapApple = (y: number, x: number, appleData: goldModAppleType) => {
     const prop = {
-      coordinates: {y: y, x: x},
-      appleNumber: appleData.number
+      coordinates: { y: y, x: x },
+      appleNumber: appleData.number,
     };
     if (appleData.golden) {
       return new GoldenApple(prop);
     }
     return new PlainApple(prop);
-  }
+  };
 
   const getRectFor = (removedApples: Apple[]) => {
-    const yCoordinates = removedApples.map(it => it.getCoordinates().y);
-    const xCoordinates = removedApples.map(it => it.getCoordinates().x);
+    const yCoordinates = removedApples.map((it) => it.getCoordinates().y);
+    const xCoordinates = removedApples.map((it) => it.getCoordinates().x);
     const topLeft = {
       y: yCoordinates.reduce((one, other) => Math.min(one, other)),
-      x: xCoordinates.reduce((one, other) => Math.min(one, other))
-    }
+      x: xCoordinates.reduce((one, other) => Math.min(one, other)),
+    };
     const bottomRight = {
       y: yCoordinates.reduce((one, other) => Math.max(one, other)),
-      x: xCoordinates.reduce((one, other) => Math.max(one, other))
-    }
-    return {topLeft, bottomRight};
-  }
+      x: xCoordinates.reduce((one, other) => Math.max(one, other)),
+    };
+    return { topLeft, bottomRight };
+  };
 
   useEffect(() => {
     if (isOngoing && remainingTime > 0) {
@@ -170,10 +171,10 @@ const DefaultMode = () => {
             content={t('game_start')}
             onClick={startGame}
             wrapper={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
             `}
           />
         }

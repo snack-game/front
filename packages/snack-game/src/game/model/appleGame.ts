@@ -5,23 +5,35 @@ export class AppleGame {
   protected row: number;
   protected column: number;
   protected borderOffset = 20;
-  protected score = 0;
+  public score = 0;
 
-  constructor({row, column, apples}: { row: number; column: number, apples: Apple[] }) {
+  constructor({
+    row,
+    column,
+    apples,
+  }: {
+    row: number;
+    column: number;
+    apples: Apple[];
+  }) {
     this.row = row;
     this.column = column;
     this.apples = apples;
   }
 
   removeApples() {
-    const applesInDragArea = this.apples.filter(apple => apple.getInDragArea());
+    const applesInDragArea = this.apples.filter((apple) =>
+      apple.getInDragArea(),
+    );
     const sum = applesInDragArea
-      .map(it => it.getNumber())
+      .map((it) => it.getNumber())
       .reduce((previous, current) => previous + current, 0);
 
     if (sum == 10) {
       this.score += applesInDragArea.length;
-      this.apples = this.apples.filter(apple => !applesInDragArea.includes(apple));
+      this.apples = this.apples.filter(
+        (apple) => !applesInDragArea.includes(apple),
+      );
       return applesInDragArea;
     }
     return [];
@@ -52,7 +64,7 @@ export class AppleGame {
       const positionX = coordinateX * availableWidth + appleXOffSet;
       const positionY = coordinateY * availableHeight + appleYOffSet;
 
-      apple.setPosition({x: positionX, y: positionY});
+      apple.setPosition({ x: positionX, y: positionY });
       apple.setRadius(appleRadius);
     });
   }

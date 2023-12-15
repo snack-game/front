@@ -1,24 +1,27 @@
-import {AppleGame} from "@game/model/appleGame";
-import PlainApple from "@game/model/plainApple";
-import {useEffect, useState} from "react";
-import AppleGameHUD from "@game/view/AppleGameHUD";
-import useToast from "@hooks/useToast";
-import {useTranslation} from "react-i18next";
-import useError from "@hooks/useError";
-import GameResult from "@components/ui/GameResult/GameResult";
-import useModal from "@hooks/useModal";
-import {css} from "@emotion/react";
-import Button from "@components/common/Button/Button";
-import Apple from "@game/model/apple";
-import AppleGameController from "@game/view/AppleGameController";
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { css } from '@emotion/react';
+
+import Button from '@components/common/Button/Button';
+import GameResult from '@components/ui/GameResult/GameResult';
+import AppleGameController from '@game/controller/AppleGameController';
+import Apple from '@game/model/apple';
+import { AppleGame } from '@game/model/appleGame';
+import PlainApple from '@game/model/plainApple';
+import AppleGameHUD from '@game/view/AppleGameHUD';
+
+import useError from '@hooks/useError';
+import useModal from '@hooks/useModal';
+import useToast from '@hooks/useToast';
 
 const ClassicMode = () => {
   const setError = useError();
   const openToast = useToast();
-  const {openModal} = useModal();
-  const {t} = useTranslation();
+  const { openModal } = useModal();
+  const { t } = useTranslation();
 
-  const emptyGame = new AppleGame({row: 0, column: 0, apples: []});
+  const emptyGame = new AppleGame({ row: 0, column: 0, apples: [] });
   const defaultTime = 120;
   const defaultRows = 10;
   const defaultColumns = 18;
@@ -32,22 +35,26 @@ const ClassicMode = () => {
     const apples = [];
     for (let i = 0; i < defaultRows; i++) {
       for (let j = 0; j < defaultColumns; j++) {
-        apples.push(new PlainApple({
-          coordinates: {y: i, x: j},
-          appleNumber: Math.floor(Math.random() * 9) + 1
-        }));
+        apples.push(
+          new PlainApple({
+            coordinates: { y: i, x: j },
+            appleNumber: Math.floor(Math.random() * 9) + 1,
+          }),
+        );
       }
     }
     return apples;
-  }
+  };
 
   const startGame = async () => {
     try {
-      setAppleGame(new AppleGame({
-        row: defaultRows,
-        column: defaultColumns,
-        apples: await generateApples()
-      }));
+      setAppleGame(
+        new AppleGame({
+          row: defaultRows,
+          column: defaultColumns,
+          apples: await generateApples(),
+        }),
+      );
       setScore(0);
       setIsOngoing(true);
       setRemainingTime(defaultTime);
@@ -68,9 +75,8 @@ const ClassicMode = () => {
       openToast(t('game_end'), 'success');
 
       openModal({
-        children: <GameResult score={score} reStart={startGame}/>,
+        children: <GameResult score={score} reStart={startGame} />,
       });
-
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }
@@ -106,10 +112,10 @@ const ClassicMode = () => {
             content={t('game_start')}
             onClick={startGame}
             wrapper={css`
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
             `}
           />
         }

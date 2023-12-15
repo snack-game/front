@@ -6,8 +6,8 @@ import styled from '@emotion/styled';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Button from '@components/common/Button/Button';
 import retryError from '@components/common/Error/RetryError';
-import ClassicMode from '@game/view/gameModes/ClassicMode';
-import DefaultMode from "@game/view/gameModes/DefaultMode";
+import ClassicMode from '@game/view/ClassicMode';
+import DefaultMode from '@game/view/DefaultMode';
 
 const GameContainer = () => {
   const { t } = useTranslation();
