@@ -1,7 +1,10 @@
-import { memo, ReactNode, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import Button from '@components/common/Button/Button';
 import Apple from '@game/model/apple';
 import { AppleGame } from '@game/model/appleGame';
 import { Drag } from '@game/model/drag';
@@ -16,7 +19,7 @@ interface AppleGameProps {
   isOngoing: boolean;
   appleGame: AppleGame;
   onRemove: (removedApples: Apple[]) => Promise<void>;
-  startButton: ReactNode;
+  startGame?: () => Promise<void>;
 }
 
 interface EventListenerInfo {
@@ -28,10 +31,10 @@ const AppleGameController = ({
   isOngoing,
   appleGame,
   onRemove,
-  startButton,
+  startGame,
 }: AppleGameProps) => {
   const setError = useError();
-
+  const { t } = useTranslation();
   const { canvasBaseRef, offsetWidth, offsetHeight, offsetLeft, offsetTop } =
     useCanvasOffset();
 
@@ -166,7 +169,16 @@ const AppleGameController = ({
             onMouseUp={handleMouseUp}
           ></canvas>
         ) : (
-          startButton
+          <Button
+            content={t('game_start')}
+            onClick={startGame}
+            wrapper={css`
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            `}
+          />
         )}
       </AppleGameWrapper>
     </>

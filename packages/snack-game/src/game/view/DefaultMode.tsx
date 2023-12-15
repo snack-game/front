@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@emotion/react';
-
 import QueryBoundary from '@components/base/QueryBoundary';
-import Button from '@components/common/Button/Button';
 import retryError from '@components/common/Error/RetryError';
 import GameResult from '@components/ui/GameResult/GameResult';
 import AppleGameController from '@game/controller/AppleGameController';
@@ -166,18 +163,7 @@ const DefaultMode = () => {
       />
       <AppleGameController
         isOngoing={isOngoing}
-        startButton={
-          <Button
-            content={t('game_start')}
-            onClick={startGame}
-            wrapper={css`
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            `}
-          />
-        }
+        startGame={startGame}
         onRemove={onRemove}
         appleGame={appleGame}
       />

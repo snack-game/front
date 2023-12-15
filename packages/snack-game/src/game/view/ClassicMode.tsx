@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@emotion/react';
-
-import Button from '@components/common/Button/Button';
 import GameResult from '@components/ui/GameResult/GameResult';
 import AppleGameController from '@game/controller/AppleGameController';
 import Apple from '@game/model/apple';
@@ -107,18 +104,7 @@ const ClassicMode = () => {
       />
       <AppleGameController
         isOngoing={isOngoing}
-        startButton={
-          <Button
-            content={t('game_start')}
-            onClick={startGame}
-            wrapper={css`
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            `}
-          />
-        }
+        startGame={startGame}
         onRemove={onRemove}
         appleGame={appleGame}
       />
