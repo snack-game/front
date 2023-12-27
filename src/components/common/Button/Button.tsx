@@ -1,14 +1,10 @@
 import React from 'react';
 
-import { SerializedStyles } from '@emotion/react';
-
-import * as Styled from './Button.style';
 
 export interface ButtonProps {
   className?: string;
   content?: string;
   onClick?: () => void;
-  wrapper?: SerializedStyles;
   disabled?: boolean;
   show?: boolean;
   size?: 'small' | 'medium' | 'large';
@@ -19,7 +15,6 @@ export interface ButtonProps {
 const Button = ({
   content,
   onClick,
-  wrapper,
   disabled,
   size = 'medium',
   show = true,
@@ -27,18 +22,14 @@ const Button = ({
   text = 'white',
 }: ButtonProps) => {
   return (
-    <Styled.ButtonContainer css={wrapper}>
-      <Styled.Button
+    <div className={'bg-amber-400'}>
+      <button
         onClick={onClick}
         disabled={disabled}
-        show={show}
-        size={size}
-        text={text}
-        color={color}
       >
         {content}
-      </Styled.Button>
-    </Styled.ButtonContainer>
+      </button>
+    </div>
   );
 };
 
