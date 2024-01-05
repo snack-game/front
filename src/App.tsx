@@ -1,17 +1,17 @@
-import React, {lazy, Suspense, useEffect} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import {inject} from '@vercel/analytics';
-import {useRecoilValue, useResetRecoilState} from 'recoil';
+import { inject } from '@vercel/analytics';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
-import Loading from '@components/common/Loading/Loading';
-import Modal from '@components/common/Modal/Modal';
+import Loading from '@components/Loading/Loading';
+import Modal from '@components/Modal/Modal';
 import Toast from '@components/ui/Toast/Toast';
-import {resetUserState, userState} from '@utils/atoms/member.atom';
+import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import PATH from '@constants/path.constant';
-import '@utils/locales/i18n';
+import '@utils/i18n/i18n';
 
 inject();
 
@@ -70,10 +70,7 @@ const App = () => {
             <Route
               path={PATH.NOT_FOUND_ERROR}
               element={
-                <ErrorPage
-                  code={404}
-                  message={'존재하지 않는 페이지입니다!'}
-                />
+                <ErrorPage code={404} message={'존재하지 않는 페이지입니다!'} />
               }
             />
           </Routes>

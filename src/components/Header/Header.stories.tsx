@@ -1,13 +1,12 @@
-import Header from "@components/ui/Header/Header";
+import Header from '@components/Header/Header';
 
-import type {Meta, StoryObj} from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'components/Header',
   component: Header,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   tags: ['autodocs'],
   argTypes: {},

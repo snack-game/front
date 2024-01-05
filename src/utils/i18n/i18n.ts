@@ -1,26 +1,18 @@
 import { initReactI18next } from 'react-i18next';
 
-import i18n from 'i18next';
+import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import HttpBackend from 'i18next-http-backend';
 
-import en from '@utils/locales/en.json';
-import ko from '@utils/locales/ko.json';
-
-const resources = {
-  'ko-KR': {
-    translation: ko,
-  },
-  'en-US': {
-    translation: en,
-  },
-};
-
-i18n
+i18next
   .use(LanguageDetector)
   .use(initReactI18next)
+  .use(HttpBackend)
   .init({
-    resources,
-    fallbackLng: 'en-US',
+    fallbackLng: 'en',
+    backend: {
+      loadPath: './locale/{{lng}}/{{ns}}.json',
+    },
     keySeparator: false,
     interpolation: {
       escapeValue: false,
@@ -39,4 +31,6 @@ i18n
     },
   });
 
-export default i18n;
+console.log(i18next.language);
+
+export default i18next;

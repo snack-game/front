@@ -1,14 +1,14 @@
 import React from 'react';
-import {Helmet} from 'react-helmet-async';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-import {useTheme} from '@emotion/react';
+import i18next from 'i18next';
 
+import MainImage from '@assets/images/main.png';
 import AppleGameLottie from '@assets/lottie/apple-game.json';
-import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
-import {LottieOptionTypes} from '@utils/types/common.type';
-
-import useLottie from '@hooks/useLottie';
+import Button from '@components/Button/Button';
+import Carousel from '@components/Carousel/Carousel';
+import Header from '@components/Header/Header';
+import { LottieOptionTypes } from '@utils/types/common.type';
 
 const lottieOptions: LottieOptionTypes = {
   animationData: AppleGameLottie,
@@ -17,42 +17,42 @@ const lottieOptions: LottieOptionTypes = {
 };
 
 const MainPage = () => {
-  const theme = useTheme();
-  const { t } = useTranslation();
-  const { ref } = useLottie(lottieOptions);
+  const { t } = useTranslation('main');
+  console.log(i18next.language);
 
   return (
     <>
-        <div className={'bg-amber-400 p-10'}>
-          asdasdas
+      <div className="h-screen">
+        <Header />
+        <div className="bg-primary-light mx-auto my-6 flex max-w-7xl flex-col p-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex flex-col space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+              By Blizzard Entertainment
+            </span>
+            <h1 className="text-6xl font-bold">{t('title')}</h1>
+            <p className="max-w-md text-sm text-gray-300">
+              Overwatch is a colorful team-based shooter game starring a diverse
+              cast of powerful heroes. Travel the world, build a team, and
+              contest objectives in exhilarating 6v6 combat.
+            </p>
+            <Button>Select Game</Button>
+          </div>
+          <div className={'max-h-[510px] w-[510px] rounded-full bg-white p-4'}>
+            <img src={MainImage} alt={'main image'} />
+          </div>
         </div>
-      <Helmet>
-        <title>Snack Game || Main</title>
-      </Helmet>
-      <SnackRainContainer />
-      {/*<PageContainer>*/}
-        {/*<Styled.AppleGamePageContainer>*/}
-        {/*  <Styled.AppleGamePageLeft>*/}
-        {/*    <div ref={ref} />*/}
-        {/*  </Styled.AppleGamePageLeft>*/}
-        {/*  <Styled.AppleGamePageRight>*/}
-        {/*    <h1>{t('main_title')}</h1>*/}
-        {/*    <p>{t('main_desc')}</p>*/}
-        {/*    <Styled.AppleGamePageInfo>*/}
-        {/*      <Link to={PATH.APPLE_GAME}>*/}
-        {/*        <Button content={t('main_start')} size={'large'}></Button>*/}
-        {/*      </Link>*/}
-        {/*      <Link to={PATH.FEED_BACK} target="_blank">*/}
-        {/*        <Button*/}
-        {/*          content={t('main_feedback')}*/}
-        {/*          size={'medium'}*/}
-        {/*          color={theme.colors.lightGreen}*/}
-        {/*        ></Button>*/}
-        {/*      </Link>*/}
-        {/*    </Styled.AppleGamePageInfo>*/}
-        {/*  </Styled.AppleGamePageRight>*/}
-        {/*</Styled.AppleGamePageContainer>*/}
-      {/*</PageContainer>*/}
+        <div className={'mx-auto max-w-7xl'}>
+          <Carousel
+            items={[
+              { title: 'Apple Game' },
+              { title: 'Overwatch' },
+              { title: 'Overwatch' },
+              { title: 'Overwatch' },
+              { title: 'Overwatch' },
+            ]}
+          />
+        </div>
+      </div>
     </>
   );
 };

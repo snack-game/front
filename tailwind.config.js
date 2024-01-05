@@ -1,32 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        'blue': '#1fb6ff',
-        'purple': '#7e5bef',
-        'pink': '#ff49db',
-        'orange': '#ff7849',
-        'green': '#13ce66',
-        'yellow': '#ffc82c',
-        'gray-dark': '#273444',
-        'gray': '#8492a6',
-        'gray-light': '#d3dce6',
+        'primary-light': '#DEF9FF',
+        primary: '#9BCBD6',
+        'primary-dark': '#48C6D5',
+        'primary-deep-dark': '#113F4C',
 
-        "title": '#111827',
-        "description": '#6b7280',
-        "background": '#ffffff',
+        background: '#F8F8F8',
       },
 
       fontFamily: {
-        'dovemayo': ['DovemayoGothic', 'sans-serif'],
+        dovemayo: ['DovemayoGothic', 'sans-serif'],
       },
     },
   },
   plugins: [],
-}
-
+};
