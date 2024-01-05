@@ -5,8 +5,8 @@
     font-style: normal;
 }
 
-body {
-    @apply font-dovemayo;
+root{
+    background-color: #F8F8F8;
 }
 
 @tailwind base;

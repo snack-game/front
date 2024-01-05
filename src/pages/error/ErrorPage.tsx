@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 
 import ErrorImage from '@assets/images/error.png';
 import { FallbackProps } from '@components/base/ErrorBoundary';
-import PageContainer from '@components/base/PageContainer';
-import Button from '@components/common/Button/Button';
+import Button from '@components/Button/Button';
 import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 
 import PATH from '@constants/path.constant';
@@ -25,30 +24,29 @@ const ErrorPage = ({
         <title>Snack Game || Error</title>
       </Helmet>
       <SnackRainContainer />
-      <PageContainer>
-        <div
+
+      <div
+        css={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1.5rem',
+        }}
+      >
+        <img
           css={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1.5rem',
+            margin: 'auto',
+            width: '80px',
+            height: '80px',
           }}
-        >
-          <img
-            css={{
-              margin: 'auto',
-              width: '80px',
-              height: '80px',
-            }}
-            src={ErrorImage}
-            alt={'에러 이미지'}
-          />
-          <span>{message}</span>
-          <Link to={PATH.HOME}>
-            <Button content={'돌아가기'} />
-          </Link>
-        </div>
-      </PageContainer>
+          src={ErrorImage}
+          alt={'에러 이미지'}
+        />
+        <span>{message}</span>
+        <Link to={PATH.HOME}>
+          <Button>돌아가기</Button>
+        </Link>
+      </div>
     </>
   );
 };
