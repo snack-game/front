@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 
+import { motion } from 'framer-motion';
+
 type Size = 'md' | 'lg';
 
 type Style = 'border' | 'fill';
@@ -13,14 +15,14 @@ export interface ButtonProps {
 }
 
 const buttonSize: Record<Size, string> = {
-  md: 'px-2 py-1',
+  md: 'px-4 py-1',
   lg: 'px-4 py-2 text-xl',
 };
 
 const buttonStyle: Record<Style, string> = {
   border:
-    'ring-offset-background border border-input hover:bg-orange-400 hover:text-white',
-  fill: 'bg-orange-400 text-white',
+    'ring-offset-background border border-input hover:bg-primary hover:text-white',
+  fill: 'bg-primary text-white',
 };
 
 const Button = ({
@@ -28,18 +30,20 @@ const Button = ({
   onClick,
   disabled,
   size = 'md',
-  style = 'border',
+  style = 'fill',
 }: ButtonProps) => {
   const completeButtonClass = `${buttonSize[size]} ${buttonStyle[style]}`;
 
   return (
-    <button
+    <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-full transition-transform duration-200 hover:scale-105 disabled:pointer-events-none disabled:opacity-50 ${completeButtonClass}`}
+      className={`rounded-md disabled:pointer-events-none disabled:opacity-50 ${completeButtonClass}`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       {children ? children : 'None'}
-    </button>
+    </motion.button>
   );
 };
 

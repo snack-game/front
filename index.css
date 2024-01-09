@@ -5,8 +5,8 @@
     font-style: normal;
 }
 
-root{
-    background-color: #F8F8F8;
+body {
+    @apply bg-primary-light;
 }
 
 @tailwind base;

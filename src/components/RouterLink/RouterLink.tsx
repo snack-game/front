@@ -16,9 +16,9 @@ const RouterLink = ({
 }: RouterLinkProps) => {
   return (
     <Link
-      className={`flex items-center justify-center gap-0.5 text-sm font-medium underline-offset-4 transition-colors duration-200 
+      className={`text-plainText flex items-center justify-center gap-0.5 text-sm font-medium underline-offset-4 transition-colors duration-200 
       ${className} 
-      ${hover && 'hover:text-orange-400 hover:underline'}
+      ${hover && 'hover:text-primary hover:underline'}
       `}
       to={to}
     >
