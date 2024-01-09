@@ -1,27 +1,16 @@
-import { Ref } from 'react';
-
 import { LottieOptionTypes } from '@utils/types/common.type';
 
 import useLottie from '@hooks/useLottie';
 
 interface LottieProps {
   lottieOptions: LottieOptionTypes;
-  width: number;
-  height: number;
+  className?: string;
 }
 
-const Lottie = ({ width, height, lottieOptions }: LottieProps) => {
+const Lottie = ({ className, lottieOptions }: LottieProps) => {
   const { ref } = useLottie(lottieOptions);
 
-  return (
-    <div
-      ref={ref}
-      style={{
-        width: width,
-        height: height,
-      }}
-    ></div>
-  );
+  return <div ref={ref} className={className}></div>;
 };
 
 export default Lottie;

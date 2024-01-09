@@ -9,7 +9,7 @@ i18next
   .use(initReactI18next)
   .use(HttpBackend)
   .init({
-    fallbackLng: 'en',
+    fallbackLng: 'ko-KR',
     backend: {
       loadPath: './locale/{{lng}}/{{ns}}.json',
     },
@@ -27,7 +27,7 @@ i18next
         'path',
         'subdomain',
       ],
-      caches: ['localStorage', 'cookie'],
+      caches: ['localStorage'],
     },
   });
 

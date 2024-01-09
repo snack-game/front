@@ -12,10 +12,10 @@ const LangSelect = () => {
 
   return (
     <Menu
-      buttonContent={languageCode === 'ko-KR' ? '한국어' : 'English'}
+      buttonContent={languageCode === 'ko-KR-KR' ? '한국어' : 'English'}
       color={theme.colors.orange}
     >
-      <DropDownItem onClick={() => i18n.changeLanguage('ko-KR')}>
+      <DropDownItem onClick={() => i18n.changeLanguage('ko-KR-KR')}>
         한국어
       </DropDownItem>
       <DropDownItem onClick={() => i18n.changeLanguage('en-US')}>

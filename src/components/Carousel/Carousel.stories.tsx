@@ -1,3 +1,4 @@
+import LogoImage from '@assets/images/main.png';
 import Carousel from '@components/Carousel/Carousel';
 
 import type { Meta, StoryObj } from '@storybook/react';
@@ -19,11 +20,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     items: [
-      { title: 'Apple Game' },
-      { title: 'Overwatch' },
-      { title: 'Overwatch' },
-      { title: 'Overwatch' },
-      { title: 'Overwatch' },
+      { title: 'Apple Game', image: LogoImage },
+      { title: 'Overwatch', image: LogoImage },
+      { title: 'Overwatch', image: LogoImage },
+      { title: 'Overwatch', image: LogoImage },
+      { title: 'Overwatch', image: LogoImage },
     ],
+    selected: 0,
   },
 };

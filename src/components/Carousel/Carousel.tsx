@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, useEffect, useRef, useState } from 'react';
 
 interface CarouselItem {
   title: string;
+  image: string;
   isSelected?: boolean;
   onClick?: () => void;
 }
 
 interface CarouselProps {
   items: CarouselItem[];
+  selected: number;
+  setSelected: Dispatch<number>;
 }
 
-const Carousel = ({ items }: CarouselProps) => {
-  const [selected, setSelected] = useState<number>(0);
+const Carousel = ({ items, selected, setSelected }: CarouselProps) => {
   const [translateX, setTranslateX] = useState<number>(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -33,12 +35,12 @@ const Carousel = ({ items }: CarouselProps) => {
 
   return (
     <div
-      className={'min-w-7xl flex items-center justify-center overflow-hidden'}
+      className={'flex h-[200px] items-center justify-center overflow-hidden'}
     >
       <div className="relative w-full">
-        <div className="border-t-primary absolute left-1/2 top-0 h-0 w-0 -translate-x-1/2 transform rounded-md border-x-8 border-t-8 border-x-transparent"></div>
+        <div className="absolute left-1/2 top-0 h-0 w-0 -translate-x-1/2 transform rounded-md border-x-8 border-t-8 border-x-transparent border-t-primary"></div>
         <div
-          className={'flex gap-6 transition-transform duration-300'}
+          className={'my-6 flex gap-6 transition-transform duration-300'}
           style={{ transform: `translateX(${translateX}px)` }}
           ref={carouselRef}
         >
@@ -46,6 +48,7 @@ const Carousel = ({ items }: CarouselProps) => {
             <CarouselItem
               key={index}
               title={item.title}
+              image={item.image}
               isSelected={index === selected}
               onClick={() => setSelected(index)}
             />
@@ -56,17 +59,17 @@ const Carousel = ({ items }: CarouselProps) => {
   );
 };
 
-const CarouselItem = ({ title, isSelected, onClick }: CarouselItem) => {
+const CarouselItem = ({ title, image, isSelected, onClick }: CarouselItem) => {
   return (
     <div
-      className={`rounded-md p-10 shadow-lg ${
+      className={`h-[150px] w-[200px] cursor-pointer rounded-md bg-white p-4 shadow-lg ${
         isSelected
-          ? 'border-primary scale-100 border-2 duration-300'
-          : 'scale-75 duration-300'
+          ? 'scale-100 border-2 border-primary duration-300'
+          : 'scale-75 border-2 border-primary-dark duration-300'
       }`}
       onClick={onClick}
     >
-      {title}
+      <img src={image} alt={title} className={'h-full w-full object-cover'} />
     </div>
   );
 };

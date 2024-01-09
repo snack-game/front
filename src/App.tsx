@@ -11,7 +11,6 @@ import Toast from '@components/ui/Toast/Toast';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import PATH from '@constants/path.constant';
-import '@utils/i18n/i18n';
 
 inject();
 
@@ -20,8 +19,6 @@ const MainPage = lazy(() => import('@pages/main/MainPage'));
 const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
 
 const LeaderBoardPage = lazy(() => import('@pages/ranking/RankingPage'));
-
-const TeamPage = lazy(() => import('@pages/team/TeamPage'));
 
 const UserPage = lazy(() => import('@pages/user/UserPage'));
 
@@ -52,9 +49,6 @@ const App = () => {
 
             {/*RANKING*/}
             <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
-
-            {/*TEAM*/}
-            <Route path={PATH.TEAM} element={<TeamPage />} />
 
             {/*User*/}
             <Route path={PATH.USER} element={<UserPage />} />
