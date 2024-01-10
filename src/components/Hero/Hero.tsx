@@ -36,24 +36,31 @@ const heroContents = [
   {
     title: '사과게임',
     desc: '드래그 영역의 숫자 합이 10이 되도록 사과를 떨궈주세요!\n황금사과를 통해 판을 초기화하고 고득점을 노려보아요!',
+    leftContent: (
+      <>
+        <Button size={'lg'}>바로가기!</Button>
+        <Button style={'border'}>Feedback</Button>
+      </>
+    ),
     rightContent: <Lottie lottieOptions={lottieOptions} />,
   },
 
   {
     title: 'Coming Soon!',
     desc: 'Snack Game에서는 다양한 게임을 준비하고 있어요!\n다가올 게임들도 기대해 주세요!',
+    leftContent: <Button style={'border'}>FeedBack</Button>,
     rightContent: (
       <img
         src={ComingSoonImage}
         alt={'main image'}
-        className={'rounded-full bg-background'}
+        className={'rounded-full bg-primary-light'}
       />
     ),
   },
 ];
 
 const Hero = ({ selected }: HeroProps) => {
-  const { title, desc, rightContent } = heroContents[selected];
+  const { title, desc, rightContent, leftContent } = heroContents[selected];
 
   return (
     <motion.div
@@ -61,7 +68,7 @@ const Hero = ({ selected }: HeroProps) => {
       key={selected}
     >
       <motion.div
-        className={'flex flex-col space-y-2 text-center lg:text-start'}
+        className={'flex flex-col gap-4 text-center lg:text-start'}
         variants={variants}
         initial="initial"
         animate="animate"
@@ -79,9 +86,8 @@ const Hero = ({ selected }: HeroProps) => {
           {desc}
         </motion.div>
 
-        <motion.div variants={variants} className={'flex flex-col gap-2'}>
-          <Button size={'lg'}>Select Game</Button>
-          <Button style={'border'}>FeedBack</Button>
+        <motion.div variants={variants} className={'mt-2 flex flex-col gap-4'}>
+          {leftContent}
         </motion.div>
       </motion.div>
       <motion.div
