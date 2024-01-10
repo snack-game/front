@@ -27,7 +27,7 @@ const teamInfoList = [
     imgSrc: HwanImage,
     name: 'Hwanvely',
     position: 'Back-End Developer',
-    intro: 'test',
+    intro: '생각을 개발로\n구체화 시키는 것을 즐깁니다.',
     githubUrl: 'https://github.com/Hwanvely',
   },
 ];

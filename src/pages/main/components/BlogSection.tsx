@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 
+import LogoImage from '@assets/images/logo.png';
+import Button from '@components/Button/Button';
 import Spacing from '@components/Spacing/Spacing';
 
 const BlogSection = () => {
@@ -16,7 +18,7 @@ const BlogSection = () => {
           stiffness: 100,
         }}
       >
-        NEW!
+        Dev Log
       </motion.div>
       <motion.div
         className={'text-3xl font-bold text-primary-deep-dark lg:text-5xl'}
@@ -24,14 +26,27 @@ const BlogSection = () => {
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
       >
-        BLOG POST
+        BLOG!
       </motion.div>
 
       <Spacing size={3} />
 
-      <motion.div className={'flex w-full items-center justify-center'}>
-        <div className={'h-[400px] w-[300px] bg-primary'}></div>
-        <div className={'h-[400px] w-[300px] bg-primary'}></div>
+      <motion.div
+        className={'flex flex-col items-center justify-center gap-16'}
+        initial={{ y: 100, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
+      >
+        <div className={'rounded-full bg-primary p-10'}>
+          <img
+            src={LogoImage}
+            alt={'blog image'}
+            className={
+              'h-full max-h-[150px] w-full max-w-[150px] lg:max-h-[200px] lg:max-w-[200px]'
+            }
+          />
+        </div>
+        <Button size={'lg'}>바로가기</Button>
       </motion.div>
     </div>
   );
