@@ -9,7 +9,7 @@ const HeroSection = () => {
   const [selected, setSelected] = useState<number>(0);
 
   return (
-    <div className={'flex h-screen flex-col bg-primary py-12'}>
+    <section className={'flex h-screen flex-col bg-primary py-12'}>
       <div className={'flex h-full bg-white'}>
         <Hero selected={selected} />
       </div>
@@ -27,7 +27,7 @@ const HeroSection = () => {
           setSelected={setSelected}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

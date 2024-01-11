@@ -1,8 +1,10 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import Spacing from '@components/Spacing/Spacing';
+import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import BlogSection from '@pages/main/components/BlogSection';
 import HeroSection from '@pages/main/components/HeroSection';
 import TeamSection from '@pages/main/components/TeamSection';
@@ -10,8 +12,12 @@ import TeamSection from '@pages/main/components/TeamSection';
 const MainPage = () => {
   return (
     <>
+      <Helmet>
+        <title>Snack Game || Main</title>
+      </Helmet>
+      <SnackRainContainer />
       <Header />
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <HeroSection />
         <Spacing size={10} />
         <BlogSection />

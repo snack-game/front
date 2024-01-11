@@ -1,12 +1,16 @@
+import { Link } from 'react-router-dom';
+
 import { motion } from 'framer-motion';
 
 import LogoImage from '@assets/images/logo.png';
 import Button from '@components/Button/Button';
 import Spacing from '@components/Spacing/Spacing';
 
+import PATH from '@constants/path.constant';
+
 const BlogSection = () => {
   return (
-    <div className={'flex w-full flex-col items-center justify-center'}>
+    <section className={'flex w-full flex-col items-center justify-center'}>
       <motion.div
         className={'text-xl font-bold text-primary lg:text-xl'}
         initial={{ y: 50, opacity: 0 }}
@@ -37,7 +41,7 @@ const BlogSection = () => {
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
       >
-        <div className={'rounded-full bg-primary p-10'}>
+        <div className={'rounded-full bg-primary p-10 shadow-md'}>
           <img
             src={LogoImage}
             alt={'blog image'}
@@ -46,9 +50,11 @@ const BlogSection = () => {
             }
           />
         </div>
-        <Button size={'lg'}>바로가기</Button>
+        <Link to={PATH.BLOG} target="_blank">
+          <Button size={'lg'}>바로가기</Button>
+        </Link>
       </motion.div>
-    </div>
+    </section>
   );
 };
 

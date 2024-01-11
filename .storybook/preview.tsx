@@ -1,14 +1,17 @@
-import type {Preview} from '@storybook/react';
-import {RecoilRoot} from "recoil";
-import {BrowserRouter} from "react-router-dom";
+import type { Preview } from '@storybook/react';
+import { RecoilRoot } from 'recoil';
+import { BrowserRouter } from 'react-router-dom';
 import '../index.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 export const decorators = [
   // @ts-ignore
   (Story) => (
     <RecoilRoot>
       <BrowserRouter>
-        <Story />
+        <HelmetProvider>
+          <Story />
+        </HelmetProvider>
       </BrowserRouter>
     </RecoilRoot>
   ),
@@ -26,6 +29,5 @@ const preview: Preview = {
   },
   decorators: decorators,
 };
-
 
 export default preview;

@@ -6,8 +6,6 @@ import { modalState } from '@utils/atoms/common.atom';
 
 import useModal from '@hooks/useModal';
 
-import * as Styled from './Modal.style';
-
 const Modal = () => {
   const { open, children } = useRecoilValue(modalState);
 
@@ -33,11 +31,9 @@ const Modal = () => {
   return (
     <>
       {open && (
-        <Styled.Modal onClick={closeModal}>
-          <Styled.ModalContainer onClick={(event) => event.stopPropagation()}>
-            {children}
-          </Styled.ModalContainer>
-        </Styled.Modal>
+        <div onClick={closeModal}>
+          <div onClick={(event) => event.stopPropagation()}>{children}</div>
+        </div>
       )}
     </>
   );
