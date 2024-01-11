@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { motion, Variants } from 'framer-motion';
 
@@ -7,6 +8,8 @@ import AppleGameLottie from '@assets/lottie/apple-game.json';
 import Button from '@components/Button/Button';
 import Lottie from '@components/Lottie/Lottie';
 import { LottieOptionTypes } from '@utils/types/common.type';
+
+import PATH from '@constants/path.constant';
 
 interface HeroProps {
   selected: number;
@@ -38,8 +41,16 @@ const heroContents = [
     desc: '드래그 영역의 숫자 합이 10이 되도록 사과를 떨궈주세요!\n황금사과를 통해 판을 초기화하고 고득점을 노려보아요!',
     leftContent: (
       <>
-        <Button size={'lg'}>바로가기!</Button>
-        <Button style={'border'}>Feedback</Button>
+        <Link to={PATH.APPLE_GAME}>
+          <Button size={'lg'} className={'w-full'}>
+            바로가기!
+          </Button>
+        </Link>
+        <Link to={PATH.FEED_BACK} target={'_blank'}>
+          <Button style={'border'} className={'w-full'}>
+            피드백 보내기
+          </Button>
+        </Link>
       </>
     ),
     rightContent: <Lottie lottieOptions={lottieOptions} />,
@@ -48,7 +59,13 @@ const heroContents = [
   {
     title: 'Coming Soon!',
     desc: 'Snack Game에서는 다양한 게임을 준비하고 있어요!\n다가올 게임들도 기대해 주세요!',
-    leftContent: <Button style={'border'}>FeedBack</Button>,
+    leftContent: (
+      <Link to={PATH.FEED_BACK} target={'_blank'}>
+        <Button style={'border'} className={'w-full'}>
+          피드백 보내기
+        </Button>
+      </Link>
+    ),
     rightContent: (
       <img
         src={ComingSoonImage}

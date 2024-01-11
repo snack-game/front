@@ -1,10 +1,6 @@
 import { memo, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
-
-import Button from '@components/common/Button/Button';
+import Button from '@components/Button/Button';
 import Apple from '@game/model/apple';
 import { AppleGame } from '@game/model/appleGame';
 import { Drag } from '@game/model/drag';
@@ -34,7 +30,6 @@ const AppleGameController = ({
   startGame,
 }: AppleGameProps) => {
   const setError = useError();
-  const { t } = useTranslation();
   const { canvasBaseRef, offsetWidth, offsetHeight, offsetLeft, offsetTop } =
     useCanvasOffset();
 
@@ -135,17 +130,23 @@ const AppleGameController = ({
     ];
 
     if (canvasRef.current) {
-      eventListeners.forEach((listener) =>
-        canvasRef.current?.addEventListener(listener.event, listener.handler, {
-          passive: false,
-        }),
-      );
-      return () => {
-        eventListeners.forEach((listener) =>
-          canvasRef.current?.removeEventListener(
+      eventListeners.forEach(
+        (listener) =>
+          canvasRef.current?.addEventListener(
             listener.event,
             listener.handler,
+            {
+              passive: false,
+            },
           ),
+      );
+      return () => {
+        eventListeners.forEach(
+          (listener) =>
+            canvasRef.current?.removeEventListener(
+              listener.event,
+              listener.handler,
+            ),
         );
       };
     }
@@ -160,7 +161,7 @@ const AppleGameController = ({
 
   return (
     <>
-      <AppleGameWrapper ref={canvasBaseRef}>
+      <div ref={canvasBaseRef} className={'height-36 mx-auto w-[80%]'}>
         {isOngoing ? (
           <canvas
             ref={canvasRef}
@@ -170,32 +171,17 @@ const AppleGameController = ({
           ></canvas>
         ) : (
           <Button
-            content={t('game_start')}
             onClick={startGame}
-            wrapper={css`
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            `}
-          />
+            className={
+              'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'
+            }
+          >
+            게임시작!
+          </Button>
         )}
-      </AppleGameWrapper>
+      </div>
     </>
   );
 };
-
-const AppleGameWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  background-color: ${(props) => props.theme.colors.appleGameBackground};
-  width: 80%;
-  height: 80vh;
-
-  @media (max-width: 900px) {
-    width: 100%;
-    height: 90vh;
-  }
-`;
 
 export default memo(AppleGameController);

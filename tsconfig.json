@@ -54,11 +54,6 @@
     }
   },
   "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
+    "src", "svg.d.ts", "vite.config.ts"
+  ]
 }

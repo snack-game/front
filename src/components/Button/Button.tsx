@@ -10,6 +10,7 @@ export interface ButtonProps {
   children?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
   size?: Size;
   style?: Style;
 }
@@ -31,6 +32,7 @@ const Button = ({
   disabled,
   size = 'md',
   style = 'fill',
+  className,
 }: ButtonProps) => {
   const completeButtonClass = `${buttonSize[size]} ${buttonStyle[style]}`;
 
@@ -38,7 +40,9 @@ const Button = ({
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-md disabled:pointer-events-none disabled:opacity-50 ${completeButtonClass}`}
+      className={`rounded-md disabled:pointer-events-none disabled:opacity-50 
+      ${completeButtonClass}
+      ${className && className}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >

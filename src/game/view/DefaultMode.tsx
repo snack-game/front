@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import QueryBoundary from '@components/base/QueryBoundary';
-import retryError from '@components/common/Error/RetryError';
-import GameResult from '@components/ui/GameResult/GameResult';
+import retryError from '@components/Error/RetryError';
 import AppleGameController from '@game/controller/AppleGameController';
 import { goldModAppleType, scoredAppleRectType } from '@game/game.type';
 import Apple from '@game/model/apple';
 import { AppleGame } from '@game/model/appleGame';
 import { GoldenApple } from '@game/model/goldenApple';
 import PlainApple from '@game/model/plainApple';
-import AppleGameHUD from '@game/view/AppleGameHUD';
 
 import {
   useAppleGameRefresh,
@@ -83,7 +81,7 @@ const DefaultMode = () => {
       setIsOngoing(false);
 
       openToast(t('game_end'), 'success');
-      openModal({ children: <GameResult score={score} reStart={startGame} /> });
+      // openModal({ children: <GameResult score={score} reStart={startGame} /> });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }
@@ -156,11 +154,11 @@ const DefaultMode = () => {
 
   return (
     <QueryBoundary errorFallback={retryError}>
-      <AppleGameHUD
-        score={score}
-        time={remainingTime}
-        handleRefresh={refreshGame}
-      />
+      {/*<AppleGameHUD*/}
+      {/*  score={score}*/}
+      {/*  time={remainingTime}*/}
+      {/*  handleRefresh={refreshGame}*/}
+      {/*/>*/}
       <AppleGameController
         isOngoing={isOngoing}
         startGame={startGame}

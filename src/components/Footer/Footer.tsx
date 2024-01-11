@@ -8,6 +8,11 @@ const Footer = () => {
         <p className="mt-4 text-sm text-gray-500 sm:ml-4 sm:mt-0 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:pl-4">
           © 2023 Snack Game — @dev-dong-su, @0cil, @Hwanvely
         </p>
+        <div className={'ml-auto text-xs text-gray-500'}>
+          <a href="https://www.flaticon.com/kr/free-icons/" title="아이콘">
+            Icons: Freepik, Triangle Squad, IYAHICON from www.flaticon.com
+          </a>
+        </div>
       </div>
     </footer>
   );

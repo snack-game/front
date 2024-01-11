@@ -1,6 +1,6 @@
 import ErrorImage from '@assets/images/error.png';
 import { FallbackProps } from '@components/base/ErrorBoundary';
-import Button from '@components/common/Button/Button';
+import Button from '@components/Button/Button';
 
 const RetryError = ({ message, resetErrorBoundary }: FallbackProps) => {
   return (
@@ -23,7 +23,7 @@ const RetryError = ({ message, resetErrorBoundary }: FallbackProps) => {
         alt={'에러 이미지'}
       />
       <span>{message}</span>
-      <Button onClick={resetErrorBoundary} content={'재시도'} />
+      <Button onClick={resetErrorBoundary}>재시도</Button>
     </div>
   );
 };

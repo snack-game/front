@@ -1,14 +1,12 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { inject } from '@vercel/analytics';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/ui/Toast/Toast';
-import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import PATH from '@constants/path.constant';
 
@@ -16,7 +14,9 @@ inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
-const AppleGamePage = lazy(() => import('@pages/games/AppleGamePage'));
+const AppleGamePage = lazy(
+  () => import('@pages/games/AppleGame/AppleGamePage'),
+);
 
 const LeaderBoardPage = lazy(() => import('@pages/ranking/RankingPage'));
 
@@ -27,28 +27,22 @@ const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
 const ErrorPage = lazy(() => import('@pages/error/ErrorPage'));
 
 const App = () => {
-  const userStateValue = useRecoilValue(userState);
-  const resetUser = useResetRecoilState(resetUserState);
-
-  useEffect(() => {
-    if (!userStateValue.member) {
-      resetUser();
-    }
-  }, []);
-
   return (
     <>
       <ErrorBoundary fallback={ErrorPage}>
         <Suspense fallback={<Loading type={'page'} />}>
           <Routes>
             {/*Main*/}
-            <Route path={PATH.HOME} element={<MainPage />} />
+            <Route path={PATH.MAIN} element={<MainPage />} />
 
             {/*Game*/}
             <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
             {/*RANKING*/}
-            <Route path={PATH.RANKING} element={<LeaderBoardPage />} />
+            <Route
+              path={PATH.APPLE_GAME_RANKING}
+              element={<LeaderBoardPage />}
+            />
 
             {/*User*/}
             <Route path={PATH.USER} element={<UserPage />} />
