@@ -1,11 +1,11 @@
-import Apple from '@game/model/apple';
+import Apple from '@pages/games/AppleGame/game/model/apple';
 
 export class AppleGame {
+  public score = 0;
   protected apples: Apple[] = [];
   protected row: number;
   protected column: number;
   protected borderOffset = 20;
-  public score = 0;
 
   constructor({
     row,

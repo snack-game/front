@@ -1,15 +1,15 @@
-import {useMutation} from 'react-query';
+import { useMutation } from 'react-query';
 
-import {AxiosError} from 'axios';
-import {useRecoilValue} from 'recoil';
+import { AxiosError } from 'axios';
+import { useRecoilValue } from 'recoil';
 
 import appleGameApi from '@api/apple-game.api';
-import {scoredAppleRectType} from '@game/game.type';
-import {userState} from '@utils/atoms/member.atom';
-import {MemberType} from '@utils/types/member.type';
+import { scoredAppleRectType } from '@pages/games/AppleGame/game/game.type';
+import { userState } from '@utils/atoms/member.atom';
+import { MemberType } from '@utils/types/member.type';
 
-import {ServerError} from '@constants/api.constant';
-import {useGuest} from '@hooks/queries/auth.query';
+import { ServerError } from '@constants/api.constant';
+import { useGuest } from '@hooks/queries/auth.query';
 import useToast from '@hooks/useToast';
 
 const useAppleGameError = () => {
@@ -40,14 +40,14 @@ export const useGoldModeStart = () => {
 
   const gameStart = async () => {
     if (!userStateValue.accessToken) {
-      const {accessToken}: MemberType = await guestMutation.mutateAsync();
+      const { accessToken }: MemberType = await guestMutation.mutateAsync();
       return await gameStartMutation.mutateAsync(accessToken);
     } else {
       return await gameStartMutation.mutateAsync();
     }
   };
 
-  return {gameStart};
+  return { gameStart };
 };
 
 export const useAppleGameSessionEnd = () => {
@@ -57,18 +57,20 @@ export const useAppleGameSessionEnd = () => {
     useErrorBoundary: appleGameErrorBoundary,
   });
 
-  return {gameEnd};
+  return { gameEnd };
 };
 
 export const useGoldModeCheck = () => {
-
   const checkGameMove = useMutation({
     mutationFn: appleGameApi.checkGameMove,
     onError: useAppleGameError(),
     useErrorBoundary: appleGameErrorBoundary,
   });
 
-  const checkMoves = async (sessionId: number, rects: scoredAppleRectType[]) => {
+  const checkMoves = async (
+    sessionId: number,
+    rects: scoredAppleRectType[],
+  ) => {
     if (!sessionId || !rects) {
       throw Error('게임의 상태가 올바르지 않아요!');
     }
@@ -79,7 +81,7 @@ export const useGoldModeCheck = () => {
     });
   };
 
-  return {checkMoves};
+  return { checkMoves };
 };
 
 export const useAppleGameRefresh = () => {

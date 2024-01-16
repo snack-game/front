@@ -3,12 +3,16 @@ import { useTranslation } from 'react-i18next';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
-import AppleGameController from '@game/controller/AppleGameController';
-import { goldModAppleType, scoredAppleRectType } from '@game/game.type';
-import Apple from '@game/model/apple';
-import { AppleGame } from '@game/model/appleGame';
-import { GoldenApple } from '@game/model/goldenApple';
-import PlainApple from '@game/model/plainApple';
+import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
+import {
+  goldModAppleType,
+  scoredAppleRectType,
+} from '@pages/games/AppleGame/game/game.type';
+import Apple from '@pages/games/AppleGame/game/model/apple';
+import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
+import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
+import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
+import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
 
 import {
   useAppleGameRefresh,
@@ -154,11 +158,11 @@ const DefaultMode = () => {
 
   return (
     <QueryBoundary errorFallback={retryError}>
-      {/*<AppleGameHUD*/}
-      {/*  score={score}*/}
-      {/*  time={remainingTime}*/}
-      {/*  handleRefresh={refreshGame}*/}
-      {/*/>*/}
+      <AppleGameHUD
+        score={score}
+        time={remainingTime}
+        handleRefresh={refreshGame}
+      />
       <AppleGameController
         isOngoing={isOngoing}
         startGame={startGame}

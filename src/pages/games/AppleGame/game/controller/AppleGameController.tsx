@@ -1,10 +1,10 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import Button from '@components/Button/Button';
-import Apple from '@game/model/apple';
-import { AppleGame } from '@game/model/appleGame';
-import { Drag } from '@game/model/drag';
-import { Particle } from '@game/model/particle';
+import Apple from '@pages/games/AppleGame/game/model/apple';
+import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
+import { Drag } from '@pages/games/AppleGame/game/model/drag';
+import { Particle } from '@pages/games/AppleGame/game/model/particle';
 import { MouseEventType } from '@utils/types/common.type';
 
 import useCanvas from '@hooks/useCanvas';
@@ -160,27 +160,22 @@ const AppleGameController = ({
   ]);
 
   return (
-    <>
-      <div ref={canvasBaseRef} className={'height-36 mx-auto w-[80%]'}>
-        {isOngoing ? (
-          <canvas
-            ref={canvasRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-          ></canvas>
-        ) : (
-          <Button
-            onClick={startGame}
-            className={
-              'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'
-            }
-          >
+    <div ref={canvasBaseRef} className={'bg-game m-auto h-[80%] max-w-7xl'}>
+      {isOngoing ? (
+        <canvas
+          ref={canvasRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        ></canvas>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          <Button onClick={startGame} size="lg">
             게임시작!
           </Button>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 
