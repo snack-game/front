@@ -16,7 +16,7 @@ const MainPage = () => {
         <title>Snack Game || Main</title>
       </Helmet>
       <SnackRainContainer />
-      <Header />
+      <Header className={'fixed'} />
       <div className="flex flex-col">
         <HeroSection />
         <Spacing size={10} />

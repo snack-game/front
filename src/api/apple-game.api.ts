@@ -1,4 +1,7 @@
-import { checkMoveType, goldModeType } from '@game/game.type';
+import {
+  checkMoveType,
+  goldModeType,
+} from '@pages/games/AppleGame/game/game.type';
 
 import api from './index';
 

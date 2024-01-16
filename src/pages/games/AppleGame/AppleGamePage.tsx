@@ -3,8 +3,9 @@ import { Helmet } from 'react-helmet-async';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import retryError from '@components/Error/RetryError';
-import DefaultMode from '@game/view/DefaultMode';
+import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
+import DefaultMode from '@pages/games/AppleGame/game/view/DefaultMode';
 
 const AppleGamePage = () => {
   return (
@@ -13,11 +14,15 @@ const AppleGamePage = () => {
         <title>Snack Game || Apple Game</title>
       </Helmet>
 
-      <AppleGameHeader />
+      <div className={'h-screen'}>
+        <AppleGameHeader />
 
-      <ErrorBoundary fallback={retryError}>
-        <DefaultMode />
-      </ErrorBoundary>
+        <Spacing size={2} />
+
+        <ErrorBoundary fallback={retryError}>
+          <DefaultMode />
+        </ErrorBoundary>
+      </div>
     </>
   );
 };

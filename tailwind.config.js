@@ -9,7 +9,7 @@ export default {
         'primary-dark': '#a4693a',
         'primary-deep-dark': '#482e19',
 
-        background: '#fcf9f7',
+        game: '#FFEDD5',
       },
 
       fontFamily: {
