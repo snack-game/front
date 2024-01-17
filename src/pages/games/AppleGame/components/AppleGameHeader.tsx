@@ -29,7 +29,11 @@ const HeaderNav = () => {
 
       <Spacing size={3} direction={'horizontal'} />
 
-      <RouterLink to={'/'} className={'items-center'}>
+      <RouterLink
+        to={PATH.APPLE_GAME_RANKING}
+        className={'items-center'}
+        isActivated={location == PATH.APPLE_GAME_RANKING}
+      >
         <RankingIcon className={'mr-4 h-6 w-6'} />
         <span>랭킹</span>
       </RouterLink>

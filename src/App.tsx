@@ -18,7 +18,7 @@ const AppleGamePage = lazy(
   () => import('@pages/games/AppleGame/AppleGamePage'),
 );
 
-const LeaderBoardPage = lazy(() => import('@pages/ranking/RankingPage'));
+const RankingPage = lazy(() => import('@pages//games/AppleGame/RankingPage'));
 
 const UserPage = lazy(() => import('@pages/user/UserPage'));
 
@@ -39,10 +39,7 @@ const App = () => {
             <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
             {/*RANKING*/}
-            <Route
-              path={PATH.APPLE_GAME_RANKING}
-              element={<LeaderBoardPage />}
-            />
+            <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
 
             {/*User*/}
             <Route path={PATH.USER} element={<UserPage />} />

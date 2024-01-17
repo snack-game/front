@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="body-font mt-16 text-gray-600">
+    <footer className="body-font mx-auto mt-24 w-full max-w-7xl text-gray-600">
       <div className="container mx-auto flex flex-col items-center px-5 py-8 sm:flex-row">
         <a className="title-font flex items-center justify-center font-medium text-primary md:justify-start">
           <span className="ml-3 text-xl">Snack Game</span>
