@@ -1,5 +1,5 @@
 const PATH = {
-  HOME: '/',
+  MAIN: '/',
 
   LOGIN: '/login',
   REGISTER: '/register',
@@ -8,9 +8,8 @@ const PATH = {
   USER: '/user',
   NOT_FOUND_ERROR: '*',
 
-  APPLE_GAME: '/game',
-
-  RANKING: '/ranking',
+  APPLE_GAME: '/apple-game',
+  APPLE_GAME_RANKING: '/apple-game/ranking',
 
   BLOG: 'https://blog.snackga.me/',
 
