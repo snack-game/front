@@ -18,7 +18,9 @@ const AppleGamePage = lazy(
   () => import('@pages/games/AppleGame/AppleGamePage'),
 );
 
-const RankingPage = lazy(() => import('@pages//games/AppleGame/RankingPage'));
+const RankingPage = lazy(() => import('@pages/games/AppleGame/RankingPage'));
+
+const PolicyPage = lazy(() => import('@pages/policy/Policy'));
 
 const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
 
@@ -38,6 +40,8 @@ const App = () => {
 
             {/*RANKING*/}
             <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
+
+            <Route path={PATH.POLICY} element={<PolicyPage />} />
 
             {/*OAuth*/}
             <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
