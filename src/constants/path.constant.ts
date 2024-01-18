@@ -7,6 +7,7 @@ const PATH = {
   TEAM: '/team',
   USER: '/user',
   NOT_FOUND_ERROR: '*',
+  POLICY: '/policy',
 
   APPLE_GAME: '/apple-game',
   APPLE_GAME_RANKING: '/apple-game/ranking',
