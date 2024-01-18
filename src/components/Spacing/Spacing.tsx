@@ -1,8 +1,8 @@
-import { HTMLAttributes, memo } from 'react';
+import { memo } from 'react';
 
 type Direction = 'horizontal' | 'vertical';
 
-interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
+interface SpacingProps {
   direction?: Direction;
   size: number;
 }
