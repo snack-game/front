@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
+import GameResult from '@pages/games/AppleGame/components/GameResult';
 import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
 import {
   goldModAppleType,
@@ -54,7 +55,7 @@ const DefaultMode = () => {
 
       resetGameStates();
       setIsOngoing(true);
-      openToast(t('game_start'), 'success');
+      openToast('게임 시작!', 'success');
     } catch (e) {
       setError(new Error('게임 시작에 실패했습니다.'));
     }
@@ -84,8 +85,8 @@ const DefaultMode = () => {
       setAppleGame(emptyGame);
       setIsOngoing(false);
 
-      openToast(t('game_end'), 'success');
-      // openModal({ children: <GameResult score={score} reStart={startGame} /> });
+      openToast('게임 종료!', 'success');
+      openModal({ children: <GameResult score={score} reStart={startGame} /> });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }

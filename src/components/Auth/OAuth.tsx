@@ -5,7 +5,6 @@ import { useSetRecoilState } from 'recoil';
 
 import GoogleSingIn from '@assets/images/google.png';
 import KaKaoSingIn from '@assets/images/kakao.png';
-import * as Styled from '@components/ui/AuthForm/Auth.style';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
@@ -21,7 +20,7 @@ interface OAuthContainerProps {
   oAuthOnSuccess: () => Promise<MemberType>;
 }
 
-const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
+const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   const { t } = useTranslation();
   const [popup, setPopup] = useState<boolean>(false);
 
@@ -48,7 +47,7 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
 
     if (event.data.type === 'oAuthSuccess') {
       const { member, accessToken } = await oAuthOnSuccess();
-      openToast(t('login_success'), 'success');
+      openToast('로그인 성공!', 'success');
       setUserState(() => ({
         member,
         accessToken,
@@ -56,7 +55,7 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     }
 
     if (event.data.type === 'oAuthError') {
-      openToast(t('login_fail'), 'error');
+      openToast('로그인 실패', 'error');
     }
   };
 
@@ -71,23 +70,42 @@ const OAuthContainer = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   }, [popup]);
 
   return (
-    <Styled.SocialLoginImgContainer>
-      <Styled.SocialLoginDiv
-        onClick={() =>
-          openOAuthDialog({ url: PATH.GOOGLE, name: 'Login with Google' })
-        }
-      >
-        <img src={GoogleSingIn} alt={'구글 로그인'} />
-      </Styled.SocialLoginDiv>
-      <Styled.SocialLoginDiv
-        onClick={() =>
-          openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
-        }
-      >
-        <img src={KaKaoSingIn} alt={'카카오 로그인'} />
-      </Styled.SocialLoginDiv>
-    </Styled.SocialLoginImgContainer>
+    <div className={'flex h-full flex-col items-center justify-evenly'}>
+      <div className={'flex w-full flex-col items-center gap-4'}>
+        <span className={'font-semibold text-primary'}>나는 몇 등일까?</span>
+        <div
+          className={
+            'mx-auto w-1/2 rounded-xl border-2 border-primary px-4 py-2 text-center'
+          }
+        >
+          <span>??? 등</span>
+        </div>
+      </div>
+      <div className={'flex flex-col items-center'}>
+        <span className={'mt-2 text-xs text-gray-400 '}>
+          간편하게 시작하기!
+        </span>
+        <div className={'mt-6 flex justify-center gap-12'}>
+          <div
+            className={'h-12 w-12 cursor-pointer rounded-full shadow-xl'}
+            onClick={() =>
+              openOAuthDialog({ url: PATH.GOOGLE, name: 'Login with Google' })
+            }
+          >
+            <img src={GoogleSingIn} alt={'구글 로그인'} />
+          </div>
+          <div
+            className={'h-12 w-12 cursor-pointer rounded-full shadow-xl'}
+            onClick={() =>
+              openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
+            }
+          >
+            <img src={KaKaoSingIn} alt={'카카오 로그인'} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default OAuthContainer;
+export default OAuth;

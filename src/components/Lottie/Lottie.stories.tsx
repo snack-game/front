@@ -27,7 +27,5 @@ const lottieOptions: LottieOptionTypes = {
 export const Default: Story = {
   args: {
     lottieOptions,
-    width: 400,
-    height: 400,
   },
 };

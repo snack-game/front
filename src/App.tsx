@@ -6,7 +6,7 @@ import { inject } from '@vercel/analytics';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
-import Toast from '@components/ui/Toast/Toast';
+import Toast from '@components/Toast/Toast';
 
 import PATH from '@constants/path.constant';
 
@@ -19,8 +19,6 @@ const AppleGamePage = lazy(
 );
 
 const RankingPage = lazy(() => import('@pages//games/AppleGame/RankingPage'));
-
-const UserPage = lazy(() => import('@pages/user/UserPage'));
 
 const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
 
@@ -40,9 +38,6 @@ const App = () => {
 
             {/*RANKING*/}
             <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
-
-            {/*User*/}
-            <Route path={PATH.USER} element={<UserPage />} />
 
             {/*OAuth*/}
             <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />

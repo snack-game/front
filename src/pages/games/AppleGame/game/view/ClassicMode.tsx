@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import GameResult from '@components/ui/GameResult/GameResult';
-import AppleGameController from '@game/controller/AppleGameController';
-import Apple from '@game/model/apple';
-import { AppleGame } from '@game/model/appleGame';
-import PlainApple from '@game/model/plainApple';
-import AppleGameHUD from '@game/view/AppleGameHUD';
+import GameResult from '@pages/games/AppleGame/components/GameResult';
+import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
+import Apple from '@pages/games/AppleGame/game/model/apple';
+import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
+import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
+import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
@@ -55,7 +55,7 @@ const ClassicMode = () => {
       setScore(0);
       setIsOngoing(true);
       setRemainingTime(defaultTime);
-      openToast(t('game_start'), 'success');
+      openToast('게임 시작!', 'success');
     } catch (e) {
       setError(new Error('게임 시작에 실패했습니다.'));
     }
@@ -69,7 +69,7 @@ const ClassicMode = () => {
     try {
       setAppleGame(emptyGame);
       setIsOngoing(false);
-      openToast(t('game_end'), 'success');
+      openToast('게임 종료!', 'success');
 
       openModal({
         children: <GameResult score={score} reStart={startGame} />,

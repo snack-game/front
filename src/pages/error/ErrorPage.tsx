@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ErrorImage from '@assets/images/error.png';
 import { FallbackProps } from '@components/base/ErrorBoundary';
 import Button from '@components/Button/Button';
-import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
+import SnackRainContainer from '@components/SnackRain/SnackRainContainer';
 
 import PATH from '@constants/path.constant';
 
@@ -43,7 +43,7 @@ const ErrorPage = ({
           alt={'에러 이미지'}
         />
         <span>{message}</span>
-        <Link to={PATH.HOME}>
+        <Link to={PATH.MAIN}>
           <Button>돌아가기</Button>
         </Link>
       </div>

@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
+import SnackRainContainer from '@components/SnackRain/SnackRainContainer';
 import Spacing from '@components/Spacing/Spacing';
-import SnackRainContainer from '@components/ui/SnackRain/SnackRainContainer';
 import BlogSection from '@pages/main/components/BlogSection';
 import HeroSection from '@pages/main/components/HeroSection';
 import TeamSection from '@pages/main/components/TeamSection';
