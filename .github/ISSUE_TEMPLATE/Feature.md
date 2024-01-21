@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: 버그, 발생한 이슈 등
+name: Feature
+about: 새로운 기능을 추가합니다.
 title: '[Feature] '
 labels: Feature
 assignees: ''
