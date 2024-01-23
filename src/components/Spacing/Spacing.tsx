@@ -5,11 +5,13 @@ type Direction = 'horizontal' | 'vertical';
 interface SpacingProps {
   direction?: Direction;
   size: number;
+  className?: string;
 }
 
 export default memo(function Spacing({
   size,
   direction = 'vertical',
+  className,
   ...props
 }: SpacingProps) {
   return (
@@ -17,6 +19,7 @@ export default memo(function Spacing({
       style={{
         [direction === 'vertical' ? 'height' : 'width']: size + 'rem',
       }}
+      className={className && className}
       {...props}
     />
   );
