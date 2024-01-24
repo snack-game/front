@@ -11,7 +11,7 @@ const Footer = () => {
             <span className="ml-3 text-xl">Snack Game</span>
           </span>
           <p className="mt-4 text-xs text-gray-500 sm:ml-4 sm:mt-0 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:pl-4">
-            © 2023 Snack Game — @dev-dong-su, @0cil, @Hwanvely
+            © 2023 Snack Game — @dev-dong-su, @0cil, @Hwanvely, @nijuy
           </p>
         </div>
         <Link className={'text-xs text-gray-500'} to={PATH.POLICY}>
