@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import ChilImage from '@assets/images/0chil.jpg';
 import DongSuImage from '@assets/images/dongsu.webp';
 import HwanImage from '@assets/images/hwan.jpg';
+import YujinImage from '@assets/images/nijuy.jpg';
 import Spacing from '@components/Spacing/Spacing';
 
 const teamInfoList = [
@@ -29,6 +30,13 @@ const teamInfoList = [
     position: 'Back-End Developer',
     intro: '생각을 개발로\n구체화 시키는 것을 즐깁니다.',
     githubUrl: 'https://github.com/Hwanvely',
+  },
+  {
+    imgSrc: YujinImage,
+    name: 'nijuy',
+    position: 'Front-End Developer',
+    intro: '기록을 통해 성장하는 개발자\n고라니와 SF 소설을 좋아합니다. 📚',
+    githubUrl: 'https://github.com/nijuy',
   },
 ];
 
