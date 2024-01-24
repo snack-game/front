@@ -62,14 +62,14 @@ const Carousel = ({ items, selected, setSelected }: CarouselProps) => {
 const CarouselItem = ({ title, image, isSelected, onClick }: CarouselItem) => {
   return (
     <div
-      className={`h-[150px] w-[200px] cursor-pointer rounded-md bg-white p-4 shadow-lg ${
+      className={`h-[150px] w-[200px] cursor-pointer rounded-md bg-white p-2 shadow-lg ${
         isSelected
           ? 'scale-100 border-2 border-primary duration-300'
           : 'scale-75 border-2 border-primary-dark duration-300'
       }`}
       onClick={onClick}
     >
-      <img src={image} alt={title} className={'h-full w-full object-cover'} />
+      <img src={image} alt={title} className={'h-full w-full object-contain'} />
     </div>
   );
 };
