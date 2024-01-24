@@ -83,9 +83,7 @@ const Header = ({ children, className }: HeaderProps) => {
           >
             <Spacing size={2} />
             <div className={'flex flex-col items-start gap-6 px-4 lg:hidden'}>
-              {children}
-
-              {userInfo.accessToken ? (
+              {userInfo.accessToken && (
                 <div
                   className={
                     'cursor-pointer font-medium text-gray-400 hover:text-primary hover:underline'
@@ -94,15 +92,17 @@ const Header = ({ children, className }: HeaderProps) => {
                 >
                   {userInfo.member.name} 님
                 </div>
+              )}
+              
+              {children}
+
+              {userInfo.accessToken ? (
+                <Button onClick={handleLogout} className={'w-full'}>
+                  로그아웃
+                </Button>
               ) : (
                 <Button onClick={handleLogin} className={'w-full'}>
                   Login
-                </Button>
-              )}
-
-              {userInfo.accessToken && (
-                <Button onClick={handleLogout} className={'w-full'}>
-                  로그아웃
                 </Button>
               )}
             </div>
