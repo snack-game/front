@@ -13,7 +13,7 @@ export default {
       },
 
       fontFamily: {
-        dovemayo: ['DovemayoGothic', 'sans-serif'],
+        sans: ['DovemayoGothic', 'sans-serif'],
       },
     },
   },
