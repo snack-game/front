@@ -1,16 +1,6 @@
 import { css } from '@emotion/react';
 
-import Font from './assets/fonts/Dovemayo_gothic.woff2';
-
 export const globalStyles = (theme: string) => css`
-  @font-face {
-    font-family: 'Dovemayo_gothic';
-    src: url(${Font}) format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
   html,
   body,
   div,
@@ -105,7 +95,6 @@ export const globalStyles = (theme: string) => css`
   * {
     margin: 0;
     padding: 0;
-    font-family: Dovemayo_gothic, sans-serif;
   }
 
   body {
