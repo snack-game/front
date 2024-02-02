@@ -2,8 +2,7 @@ name: Deploy CI
 on:
   push:
     branches: [master]
-  pull_request:
-    types: [opened, synchronize, reopened]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
