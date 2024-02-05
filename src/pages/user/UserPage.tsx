@@ -3,8 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/Error/RetryError';
 import Footer from '@components/Footer/Footer';
-import Header from '@components/Header/Header';
-import Spacing from '@components/Spacing/Spacing';
+import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
 
 import UserInfo from './components/UserInfo';
 
@@ -14,8 +13,7 @@ const UserPage = () => {
       <Helmet>
         <title>Snack Game || My Info</title>
       </Helmet>
-      <Header className={'fixed'} />
-      <Spacing size={4} />
+      <AppleGameHeader />
       <div className="flex flex-col">
         <QueryBoundary errorFallback={RetryError}>
           <UserInfo />
