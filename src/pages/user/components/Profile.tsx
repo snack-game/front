@@ -1,3 +1,4 @@
+import EditIcon from '@assets/icon/edit.svg?react';
 import DefaultImage from '@assets/images/kakao.png';
 
 const Profile = () => {
@@ -11,7 +12,9 @@ const Profile = () => {
         />
         <button
           className={`absolute right-2 top-32 h-8 w-8 rounded-full border bg-white`}
-        ></button>
+        >
+          <EditIcon className="mx-auto" />
+        </button>
       </div>
       <span className={`text-2xl`}>레벨</span>
       <span className={`text-lg`}>팀 이름</span>
