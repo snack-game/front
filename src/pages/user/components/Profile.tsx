@@ -1,3 +1,4 @@
+import CameraIcon from '@assets/icon/camera.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
 import DefaultImage from '@assets/images/kakao.png';
 import Button from '@components/Button/Button';
@@ -24,13 +25,20 @@ const Profile = ({
           className={`absolute left-2 top-2 mb-4 w-40 rounded-full`}
           src={DefaultImage}
         />
-        {!isEditing && (
+        {!isEditing ? (
           <button
             className={`absolute right-2 top-32 h-8 w-8 rounded-full border bg-white`}
             onClick={onClickEdit}
           >
             <EditIcon className="mx-auto" />
           </button>
+        ) : (
+          <label
+            className={`absolute left-2 top-2 h-40 w-40 cursor-pointer rounded-full bg-black bg-opacity-50`}
+          >
+            <input className="hidden" type="file" />
+            <CameraIcon className="mx-auto h-full" />
+          </label>
         )}
       </div>
 
