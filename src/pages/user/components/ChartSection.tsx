@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const HistoryChart = () => {
+const ChartSection = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const tabOption = ['탭 0', '탭 1'];
 
@@ -33,4 +33,4 @@ const HistoryChart = () => {
   );
 };
 
-export default HistoryChart;
+export default ChartSection;

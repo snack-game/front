@@ -4,8 +4,7 @@ import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/Error/RetryError';
 import Footer from '@components/Footer/Footer';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
-
-import UserInfo from './components/UserInfo';
+import UserInfo from '@pages/user/components/UserInfo';
 
 const UserPage = () => {
   return (

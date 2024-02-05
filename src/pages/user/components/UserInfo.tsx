@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
 import Spacing from '@components/Spacing/Spacing';
-
-import HistoryChart from './HistoryChart';
-import Profile from './Profile';
+import ChartSection from '@pages/user/components/ChartSection';
+import ProfileSection from '@pages/user/components/ProfileSection';
 
 const UserInfo = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -26,14 +25,14 @@ const UserInfo = () => {
       className={`relative mx-auto flex w-full max-w-7xl flex-col items-center`}
     >
       <div className={`h-52 w-full bg-rose-100`}></div>
-      <Profile
+      <ProfileSection
         isEditing={isEditing}
         onClickEdit={onClickEdit}
         onClickDone={onClickDone}
         onClickClose={onClickClose}
       />
       <Spacing size={16} />
-      {!isEditing && <HistoryChart />}
+      {!isEditing && <ChartSection />}
     </div>
   );
 };

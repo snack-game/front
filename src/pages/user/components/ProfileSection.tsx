@@ -11,7 +11,7 @@ interface ProfileProps {
   onClickClose: () => void;
 }
 
-const Profile = ({
+const ProfileSection = ({
   isEditing,
   onClickEdit,
   onClickDone,
@@ -68,7 +68,7 @@ const Profile = ({
             >
               닫기
             </Button>
-            <Button onClick={onClickDone} className="bg-[#22C55E]">
+            <Button onClick={onClickDone} className="bg-[#22c55e]">
               확인
             </Button>
           </div>
@@ -83,4 +83,4 @@ const Profile = ({
   );
 };
 
-export default Profile;
+export default ProfileSection;
