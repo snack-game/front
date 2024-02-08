@@ -13,7 +13,6 @@ export interface MemberType {
     guest?: boolean;
     type?: AuthType;
   };
-  accessToken?: string;
 }
 
 export interface ACToken {

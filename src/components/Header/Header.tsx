@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
+import authApi from '@api/auth.api';
 import Hamburger from '@assets/icon/hamburger.svg?react';
 import Auth from '@components/Auth/Auth';
 import Button from '@components/Button/Button';
@@ -32,8 +33,9 @@ const Header = ({ children, className }: HeaderProps) => {
     openModal({ children: <Auth /> });
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     resetUser();
+    await authApi.logOut();
     openToast('로그아웃 성공!', 'success');
     navigate(PATH.MAIN, { replace: true });
   };
