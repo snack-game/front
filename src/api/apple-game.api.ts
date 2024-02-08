@@ -13,10 +13,7 @@ const appleGameApi = {
     gameRefresh: '/v2/sessions',
   },
 
-  gameStart: async (accessToken: string | void): Promise<goldModeType> => {
-    if (accessToken)
-      api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
+  gameStart: async (): Promise<goldModeType> => {
     const { data } = await api.post(appleGameApi.endPoint.game);
 
     return {

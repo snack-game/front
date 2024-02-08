@@ -39,9 +39,9 @@ export const useGoldModeStart = () => {
   });
 
   const gameStart = async () => {
-    if (!userStateValue.accessToken) {
-      const { accessToken }: MemberType = await guestMutation.mutateAsync();
-      return await gameStartMutation.mutateAsync(accessToken);
+    if (!userStateValue.member.id) {
+      await guestMutation.mutateAsync();
+      return await gameStartMutation.mutateAsync();
     } else {
       return await gameStartMutation.mutateAsync();
     }
