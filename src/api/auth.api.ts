@@ -1,5 +1,5 @@
 import api from '@api/index';
-import { ACToken, MemberType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 const authApi = {
   endPoint: {
