@@ -1,25 +1,31 @@
 import axios from 'axios';
 
-import { ATOM_KEY } from '@constants/atom.constant';
+import authApi from './auth.api';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  const serializedUserState = localStorage.getItem(ATOM_KEY.USER_PERSIST);
-  let accessToken;
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response) {
+      const { action } = error.response.data;
 
-  if (serializedUserState) {
-    const parsedUserState = JSON.parse(serializedUserState);
-    accessToken = parsedUserState?.userState?.accessToken;
-  }
-
-  if (accessToken) {
-    config.headers['Authorization'] = `Bearer ${accessToken}`;
-  }
-
-  return config;
-});
+      switch (action) {
+        case 'REISSUE': {
+          await authApi.tokenReIssue();
+          api.request(error.config);
+          break;
+        }
+      }
+    }
+    // 처리되지 않은 오류는 그대로 반환
+    return Promise.reject(error);
+  },
+);
 
 export default api;

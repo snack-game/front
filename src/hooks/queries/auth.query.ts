@@ -22,10 +22,9 @@ const useMemberOnSuccess = () => {
   const setUserState = useSetRecoilState(userState);
   const { closeModal } = useModal();
 
-  return ({ accessToken, member }: MemberType) => {
+  return ({ member }: MemberType) => {
     setUserState(() => ({
       member,
-      accessToken,
     }));
     openToast(t('login_success'), 'success');
     closeModal();

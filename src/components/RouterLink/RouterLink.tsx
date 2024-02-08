@@ -18,7 +18,6 @@ const RouterLink = ({
   onClick,
   isActivated = false,
 }: RouterLinkProps) => {
-  console.log(isActivated);
   return (
     <Link
       className={`flex font-medium underline-offset-4 transition-colors duration-200 

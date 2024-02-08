@@ -13,5 +13,4 @@ export interface MemberType {
     guest?: boolean;
     type?: AuthType;
   };
-  accessToken?: string;
 }
