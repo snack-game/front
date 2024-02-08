@@ -13,13 +13,7 @@ const membersApi = {
   },
 
   integrateMember: async (): Promise<MemberType> => {
-    const { data } = await api.post(
-      membersApi.endPoint.integrateMember,
-      {},
-      {
-        withCredentials: true,
-      },
-    );
+    const { data } = await api.post(membersApi.endPoint.integrateMember, {});
     return data;
   },
 };

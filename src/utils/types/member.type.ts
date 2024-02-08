@@ -15,3 +15,7 @@ export interface MemberType {
   };
   accessToken?: string;
 }
+
+export interface ACToken {
+  accessToken: string;
+}

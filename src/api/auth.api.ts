@@ -1,5 +1,5 @@
 import api from '@api/index';
-import { MemberType } from '@utils/types/member.type';
+import { ACToken, MemberType } from '@utils/types/member.type';
 
 const authApi = {
   endPoint: {
@@ -7,6 +7,7 @@ const authApi = {
     register: '/members',
     guest: '/tokens/guest',
     social: '/tokens/social',
+    tokenReIssue: 'tokens/me',
   },
 
   login: async ({ member }: MemberType): Promise<MemberType> => {
@@ -32,15 +33,13 @@ const authApi = {
   },
 
   social: async (): Promise<MemberType> => {
-    const { data } = await api.post(
-      authApi.endPoint.social,
-      {},
-      {
-        withCredentials: true,
-      },
-    );
+    const { data } = await api.post(authApi.endPoint.social, {});
 
     return { accessToken: data.accessToken, member: data.member };
+  },
+
+  tokenReIssue: async (): Promise<void> => {
+    await api.patch(authApi.endPoint.tokenReIssue, {});
   },
 };
 
