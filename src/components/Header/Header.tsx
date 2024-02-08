@@ -61,7 +61,7 @@ const Header = ({ children, className }: HeaderProps) => {
         </div>
 
         <div className="mr-3 hidden flex-1 items-center justify-end space-x-4 lg:flex">
-          {userInfo.accessToken ? (
+          {userInfo.member.id ? (
             <div
               className={
                 'cursor-pointer text-sm text-primary-deep-dark hover:text-primary hover:underline'
@@ -83,7 +83,7 @@ const Header = ({ children, className }: HeaderProps) => {
           >
             <Spacing size={2} />
             <div className={'flex flex-col items-start gap-6 px-4 lg:hidden'}>
-              {userInfo.accessToken && (
+              {userInfo.member.id && (
                 <div
                   className={
                     'cursor-pointer font-medium text-gray-400 hover:text-primary hover:underline'
@@ -93,10 +93,10 @@ const Header = ({ children, className }: HeaderProps) => {
                   {userInfo.member.name} 님
                 </div>
               )}
-              
+
               {children}
 
-              {userInfo.accessToken ? (
+              {userInfo.member.id ? (
                 <Button onClick={handleLogout} className={'w-full'}>
                   로그아웃
                 </Button>
