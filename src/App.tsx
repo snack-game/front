@@ -1,14 +1,18 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { inject } from '@vercel/analytics';
+import { useResetRecoilState } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
+import { resetUserState } from '@utils/atoms/member.atom';
 
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
+import useLocalStorage from '@hooks/useLocalStorage';
 
 inject();
 
@@ -27,6 +31,33 @@ const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
 const ErrorPage = lazy(() => import('@pages/error/ErrorPage'));
 
 const App = () => {
+  const resetUser = useResetRecoilState(resetUserState);
+  const { storageValue, deleteStorageValue } = useLocalStorage<string>({
+    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
+  });
+  const { deleteStorageValue: deleteUserPersistState } =
+    useLocalStorage<string>({
+      key: 'userPersistState',
+    });
+
+  useEffect(() => {
+    const checkUserExpired = () => {
+      if (!storageValue) return;
+
+      const currentTime = Date.now();
+      const oneMonthInMilliseconds = 30 * 24 * 60 * 60 * 1000;
+      const expireTime = parseInt(storageValue, 10);
+
+      if (expireTime && currentTime - expireTime > oneMonthInMilliseconds) {
+        resetUser();
+        deleteUserPersistState();
+        deleteStorageValue();
+      }
+    };
+
+    checkUserExpired();
+  }, []);
+
   return (
     <>
       <ErrorBoundary fallback={ErrorPage}>
