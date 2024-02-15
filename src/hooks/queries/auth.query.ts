@@ -9,6 +9,8 @@ import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
 import { ServerError } from '@constants/api.constant';
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
+import useLocalStorage from '@hooks/useLocalStorage';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
@@ -21,11 +23,15 @@ const useMemberOnSuccess = () => {
   const openToast = useToast();
   const setUserState = useSetRecoilState(userState);
   const { closeModal } = useModal();
+  const { setStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
+  });
 
   return ({ member }: MemberType) => {
     setUserState(() => ({
       member,
     }));
+    setStorageValue(Date.now());
     openToast(t('login_success'), 'success');
     closeModal();
   };

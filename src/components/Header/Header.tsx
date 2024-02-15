@@ -12,7 +12,9 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import Spacing from '@components/Spacing/Spacing';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
+import useLocalStorage from '@hooks/useLocalStorage';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
@@ -28,6 +30,9 @@ const Header = ({ children, className }: HeaderProps) => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const { deleteStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
+  });
 
   const handleLogin = () => {
     openModal({ children: <Auth /> });
@@ -37,6 +42,7 @@ const Header = ({ children, className }: HeaderProps) => {
     resetUser();
     await authApi.logOut();
     openToast('로그아웃 성공!', 'success');
+    deleteStorageValue();
     navigate(PATH.MAIN, { replace: true });
   };
 
