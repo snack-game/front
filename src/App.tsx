@@ -42,6 +42,8 @@ const App = () => {
 
   useEffect(() => {
     const checkUserExpired = () => {
+      if (!storageValue) return;
+
       const currentTime = Date.now();
       const oneMonthInMilliseconds = 30 * 24 * 60 * 60 * 1000;
       const expireTime = parseInt(storageValue, 10);
