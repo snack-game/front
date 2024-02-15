@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import { AxiosError } from 'axios';
 
 import membersApi from '@api/members.api';
 
-import { ServerError } from '@constants/api.constant';
+import { QUERY_KEY, ServerError } from '@constants/api.constant';
 import useToast from '@hooks/useToast';
 
 export const useChangeUserName = () => {
@@ -40,4 +40,17 @@ export const useIntegrateMember = () => {
   return useMutation({
     mutationFn: membersApi.integrateMember,
   });
+};
+
+export const useGetMemberProfile = () => {
+  const { data } = useQuery(
+    QUERY_KEY.USER_PROFILE,
+    membersApi.getMemberProfile,
+    {
+      suspense: true,
+      useErrorBoundary: true,
+    },
+  );
+
+  return data;
 };
