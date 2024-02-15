@@ -14,3 +14,11 @@ export interface MemberType {
     type?: AuthType;
   };
 }
+
+export interface MemberProfileType {
+  id?: number;
+  name?: string;
+  group: GroupType | null;
+  guest?: boolean;
+  type?: AuthType;
+}
