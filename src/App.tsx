@@ -7,7 +7,6 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
-import UserPage from '@pages/user/UserPage';
 
 import PATH from '@constants/path.constant';
 
@@ -26,6 +25,8 @@ const PolicyPage = lazy(() => import('@pages/policy/Policy'));
 const OAuthPage = lazy(() => import('@pages/oauth/OAuthPage'));
 
 const ErrorPage = lazy(() => import('@pages/error/ErrorPage'));
+
+const UserPage = lazy(() => import('@pages/user/UserPage'));
 
 const App = () => {
   return (
