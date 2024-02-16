@@ -46,7 +46,7 @@ const ProfileSection = ({
 
   const handleClickDone = async () => {
     await changeUserName.mutateAsync(newName);
-    setUserState((prev) => ({ ...prev, name: newName }));
+    setUserState((prev) => ({ member: { ...prev.member, name: newName } }));
     queryClient.invalidateQueries(QUERY_KEY.USER_PROFILE);
     onClickDone();
   };
