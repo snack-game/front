@@ -101,7 +101,7 @@ const ProfileSection = ({
             <Button
               disabled={!nameValid}
               onClick={handleClickDone}
-              className="bg-[#22c55e] disabled:bg-slate-600"
+              className="bg-button-enabled disabled:bg-button-disabled"
             >
               확인
             </Button>
