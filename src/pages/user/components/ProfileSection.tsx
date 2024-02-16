@@ -1,10 +1,21 @@
+import { useQueryClient } from 'react-query';
+
+import { useSetRecoilState } from 'recoil';
+
 import CameraIcon from '@assets/icon/camera.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
 import DefaultImage from '@assets/images/kakao.png';
 import Button from '@components/Button/Button';
+import { userState } from '@utils/atoms/member.atom';
+import { MemberProfileType } from '@utils/types/member.type';
 
-interface ProfileProps {
-  // 프로필 정보 속성 추가 예정
+import { QUERY_KEY } from '@constants/api.constant';
+import { NAME_REGEXP } from '@constants/regexp.constant';
+import { useChangeUserName } from '@hooks/queries/members.query';
+import useInput from '@hooks/useInput';
+
+interface ProfileSectionProps {
+  profile: MemberProfileType;
   isEditing: boolean;
   onClickEdit: () => void;
   onClickDone: () => void;
@@ -12,11 +23,34 @@ interface ProfileProps {
 }
 
 const ProfileSection = ({
+  profile,
   isEditing,
   onClickEdit,
   onClickDone,
   onClickClose,
-}: ProfileProps) => {
+}: ProfileSectionProps) => {
+  const {
+    value: newName,
+    handleChangeValue: handleNameChange,
+    valid: nameValid,
+  } = useInput<string>({
+    initialValue: profile.name || '',
+    isInvalid: (name) => NAME_REGEXP.test(name),
+  });
+
+  const setUserState = useSetRecoilState(userState);
+
+  const queryClient = useQueryClient();
+
+  const changeUserName = useChangeUserName();
+
+  const handleClickDone = async () => {
+    await changeUserName.mutateAsync(newName);
+    setUserState((prev) => ({ ...prev, name: newName }));
+    queryClient.invalidateQueries(QUERY_KEY.USER_PROFILE);
+    onClickDone();
+  };
+
   return (
     <div className={`absolute top-32 flex flex-col items-center`}>
       <div className="relative">
@@ -47,14 +81,10 @@ const ProfileSection = ({
         <>
           <div className="my-10 flex flex-col items-end gap-y-4">
             <label>
-              팀 이름
-              <input
-                className={`ml-2 rounded-lg border border-primary bg-transparent focus:outline-none`}
-              />
-            </label>
-            <label>
               유저 이름
               <input
+                value={newName}
+                onChange={handleNameChange}
                 className={`ml-2 rounded-lg border border-primary bg-transparent focus:outline-none`}
               />
             </label>
@@ -68,15 +98,21 @@ const ProfileSection = ({
             >
               닫기
             </Button>
-            <Button onClick={onClickDone} className="bg-[#22c55e]">
+            <Button
+              disabled={!nameValid}
+              onClick={handleClickDone}
+              className="bg-[#22c55e] disabled:bg-slate-600"
+            >
               확인
             </Button>
           </div>
         </>
       ) : (
         <>
-          <span className={`text-lg`}>팀 이름</span>
-          <span className={`text-xl`}>유저 이름</span>
+          {profile.group && (
+            <span className={`text-lg`}>{profile.group.name}</span>
+          )}
+          <span className={`text-xl`}>{profile.name}</span>
         </>
       )}
     </div>

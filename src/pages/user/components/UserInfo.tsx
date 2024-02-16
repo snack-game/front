@@ -4,7 +4,10 @@ import Spacing from '@components/Spacing/Spacing';
 import ChartSection from '@pages/user/components/ChartSection';
 import ProfileSection from '@pages/user/components/ProfileSection';
 
+import { useGetMemberProfile } from '@hooks/queries/members.query';
+
 const UserInfo = () => {
+  const profile = useGetMemberProfile();
   const [isEditing, setIsEditing] = useState(false);
 
   const onClickEdit = () => {
@@ -13,7 +16,6 @@ const UserInfo = () => {
 
   const onClickDone = () => {
     setIsEditing(false);
-    // 프로필 수정 요청
   };
 
   const onClickClose = () => {
@@ -26,6 +28,7 @@ const UserInfo = () => {
     >
       <div className={`h-52 w-full bg-rose-100`}></div>
       <ProfileSection
+        profile={profile}
         isEditing={isEditing}
         onClickEdit={onClickEdit}
         onClickDone={onClickDone}
