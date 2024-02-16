@@ -54,7 +54,7 @@ const ProfileSection = ({
   return (
     <div className={`absolute top-32 flex flex-col items-center`}>
       <div className="relative">
-        <div className={`h-44 w-44 rounded-full bg-rose-200`}></div>
+        <div className={`h-44 w-44 rounded-full bg-game`}></div>
         <img
           className={`absolute left-2 top-2 mb-4 w-40 rounded-full`}
           src={DefaultImage}
@@ -76,16 +76,18 @@ const ProfileSection = ({
         )}
       </div>
 
-      <span className={`text-2xl`}>레벨</span>
+      {/* 레벨 */}
+      <span className={`text-2xl`}>{``}</span>
+
       {isEditing ? (
         <>
           <div className="my-10 flex flex-col items-end gap-y-4">
             <label>
-              유저 이름
+              이름
               <input
                 value={newName}
                 onChange={handleNameChange}
-                className={`ml-2 rounded-lg border border-primary bg-transparent focus:outline-none`}
+                className={`ml-2 rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none`}
               />
             </label>
           </div>
@@ -94,7 +96,7 @@ const ProfileSection = ({
             <Button
               onClick={onClickClose}
               style={`border`}
-              className={`hover:bg-white hover:text-slate-950`}
+              className={`bg-white hover:bg-white hover:text-black`}
             >
               닫기
             </Button>

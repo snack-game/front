@@ -26,16 +26,19 @@ const UserInfo = () => {
     <div
       className={`relative mx-auto flex w-full max-w-7xl flex-col items-center`}
     >
-      <div className={`h-52 w-full bg-rose-100`}></div>
-      <ProfileSection
-        profile={profile}
-        isEditing={isEditing}
-        onClickEdit={onClickEdit}
-        onClickDone={onClickDone}
-        onClickClose={onClickClose}
-      />
-      <Spacing size={16} />
-      {!isEditing && <ChartSection />}
+      <div
+        className={`mt-52 flex h-fit w-full flex-col items-center rounded-xl bg-game pb-24`}
+      >
+        <ProfileSection
+          profile={profile}
+          isEditing={isEditing}
+          onClickEdit={onClickEdit}
+          onClickDone={onClickDone}
+          onClickClose={onClickClose}
+        />
+        <Spacing size={16} />
+        {!isEditing && <ChartSection />}
+      </div>
     </div>
   );
 };
