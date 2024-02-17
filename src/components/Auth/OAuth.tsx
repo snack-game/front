@@ -8,7 +8,9 @@ import KaKaoSingIn from '@assets/images/kakao.png';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
+import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 interface DialogProps {
@@ -23,6 +25,9 @@ interface OAuthContainerProps {
 const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   const { t } = useTranslation();
   const [popup, setPopup] = useState<boolean>(false);
+  const { setStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
+  });
 
   const setUserState = useSetRecoilState(userState);
   const openToast = useToast();
@@ -46,12 +51,12 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     if (event.origin !== window.location.origin) return;
 
     if (event.data.type === 'oAuthSuccess') {
-      const { member, accessToken } = await oAuthOnSuccess();
+      const { member } = await oAuthOnSuccess();
       openToast('로그인 성공!', 'success');
       setUserState(() => ({
         member,
-        accessToken,
       }));
+      setStorageValue(Date.now());
     }
 
     if (event.data.type === 'oAuthError') {
