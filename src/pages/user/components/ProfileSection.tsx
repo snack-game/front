@@ -112,9 +112,11 @@ const ProfileSection = ({
       ) : (
         <>
           {profile.group && (
-            <span className={`text-lg`}>{profile.group.name}</span>
+            <span className={`text-lg text-primary-deep-dark`}>
+              {profile.group.name}
+            </span>
           )}
-          <span className={`text-xl`}>{profile.name}</span>
+          <span className={`text-xl text-primary`}>{profile.name}</span>
         </>
       )}
     </div>
