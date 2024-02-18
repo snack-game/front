@@ -8,6 +8,7 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
+import UserPage from '@pages/user/UserPage';
 import { resetUserState } from '@utils/atoms/member.atom';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
@@ -73,6 +74,9 @@ const App = () => {
             <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
 
             <Route path={PATH.POLICY} element={<PolicyPage />} />
+
+            {/* User */}
+            <Route path={PATH.USER} element={<UserPage />} />
 
             {/*OAuth*/}
             <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
