@@ -85,7 +85,7 @@ const Header = ({ children, className }: HeaderProps) => {
 
         {isToggleOpen && (
           <motion.div
-            className={'w-full'}
+            className={'w-full lg:w-0'}
             initial={{ opacity: 0, scaleY: 0 }}
             animate={{ opacity: 1, scaleY: 1 }}
           >
