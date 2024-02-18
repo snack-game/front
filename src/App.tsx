@@ -51,7 +51,6 @@ const App = () => {
       const expireTime = parseInt(storageValue, 10);
 
       if (expireTime && currentTime - expireTime > oneMonthInMilliseconds) {
-        console.log(`만료 유저`);
         resetUser();
         deleteUserPersistState();
         deleteStorageValue();
