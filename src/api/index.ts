@@ -14,12 +14,20 @@ api.interceptors.response.use(
   async (error) => {
     if (error.response) {
       const { action } = error.response.data;
+      const originalRequest = error.config;
+      if (!originalRequest._retry) {
+        // _retry 플래그를 사용하여 무한 재시도 방지
+        originalRequest._retry = true;
 
-      switch (action) {
-        case 'REISSUE': {
-          await authApi.tokenReIssue();
-          api.request(error.config);
-          break;
+        switch (action) {
+          case 'REISSUE': {
+            await authApi.tokenReIssue();
+            return api.request(originalRequest);
+          }
+          case null: {
+            await authApi.logOut();
+            break;
+          }
         }
       }
     }
