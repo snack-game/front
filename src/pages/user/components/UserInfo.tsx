@@ -24,10 +24,12 @@ const UserInfo = () => {
 
   return (
     <div
-      className={`relative mx-auto flex w-full max-w-7xl flex-col items-center`}
+      className={'relative mx-auto flex w-full max-w-7xl flex-col items-center'}
     >
       <div
-        className={`mt-52 flex h-fit w-full flex-col items-center rounded-xl bg-game pb-24`}
+        className={
+          'mt-52 flex h-fit w-full flex-col items-center rounded-xl bg-game pb-24'
+        }
       >
         <ProfileSection
           profile={profile}

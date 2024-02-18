@@ -89,19 +89,21 @@ const ProfileSection = ({
   };
 
   return (
-    <div className={`absolute top-32 flex flex-col items-center`}>
-      <div className="relative">
-        <div className={`h-44 w-44 rounded-full bg-game`}></div>
+    <div className={'absolute top-32 flex flex-col items-center'}>
+      <div className={'relative'}>
+        <div className={'h-44 w-44 rounded-full bg-game'}></div>
         <img
-          className={`absolute left-2 top-2 mb-4 w-40 rounded-full`}
+          className={'absolute left-2 top-2 mb-4 w-40 rounded-full'}
           src={DefaultImage}
         />
         {!isEditing ? (
           <button
-            className={`absolute right-2 top-32 h-8 w-8 rounded-full border bg-white`}
+            className={
+              'absolute right-2 top-32 h-8 w-8 rounded-full border bg-white'
+            }
             onClick={onClickEdit}
           >
-            <EditIcon className="mx-auto" />
+            <EditIcon className={'mx-auto'} />
           </button>
         ) : (
           <></>
@@ -109,45 +111,51 @@ const ProfileSection = ({
       </div>
 
       {/* 레벨 */}
-      <span className={`text-2xl`}>{``}</span>
+      <span className={'text-2xl'}>{``}</span>
 
       {isEditing ? (
         <>
-          <div className="my-10">
-            <label className="flex gap-2 text-lg">
+          <div className={'my-10'}>
+            <label className={'flex gap-2 text-lg'}>
               이름
-              <div className="flex grow flex-col gap-1">
+              <div className={'flex grow flex-col gap-1'}>
                 <input
                   value={newName}
                   onChange={handleNameChange}
-                  className={`grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none`}
+                  className={
+                    'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
+                  }
                 />
-                <span className="mb-4 px-1 text-sm text-slate-500">
+                <span className={'mb-4 px-1 text-sm text-slate-500'}>
                   이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.
                 </span>
               </div>
             </label>
 
-            <label className="flex gap-2 text-lg">
+            <label className={'flex gap-2 text-lg'}>
               그룹
-              <div className="flex grow flex-col gap-1">
+              <div className={'flex grow flex-col gap-1'}>
                 <input
-                  list={`group-list`}
+                  list={'group-list'}
                   value={newGroup}
                   onChange={handleGroupChange}
                   spellCheck={false}
-                  className={`grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none`}
+                  className={
+                    'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
+                  }
                 />
-                <span className="px-1 text-sm text-slate-500">
+                <span className={'px-1 text-sm text-slate-500'}>
                   그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.
                 </span>
               </div>
             </label>
             {data && (
-              <datalist id={`group-list`}>
+              <datalist id={'group-list'}>
                 {data.map((candidate) => (
                   <option
-                    className="cursor-pointer rounded-lg px-2 py-1 hover:bg-slate-100"
+                    className={
+                      'cursor-pointer rounded-lg px-2 py-1 hover:bg-slate-100'
+                    }
                     key={candidate}
                     value={candidate}
                   ></option>
@@ -156,18 +164,20 @@ const ProfileSection = ({
             )}
           </div>
 
-          <div className={`flex gap-2`}>
+          <div className={'flex gap-2'}>
             <Button
               onClick={onClickClose}
-              style={`border`}
-              className={`bg-white hover:bg-white hover:text-black`}
+              style={'border'}
+              className={'bg-white hover:bg-white hover:text-black'}
             >
               닫기
             </Button>
             <Button
               disabled={!nameValid || !groupValid}
               onClick={handleClickDone}
-              className="bg-button-enabled disabled:bg-button-disabled disabled:opacity-100"
+              className={
+                'bg-button-enabled disabled:bg-button-disabled disabled:opacity-100'
+              }
             >
               확인
             </Button>
@@ -176,11 +186,11 @@ const ProfileSection = ({
       ) : (
         <>
           {profile.group && (
-            <span className={`text-lg text-primary-deep-dark`}>
+            <span className={'text-lg text-primary-deep-dark'}>
               {profile.group.name}
             </span>
           )}
-          <span className={`text-xl text-primary`}>{profile.name}</span>
+          <span className={'text-xl text-primary'}>{profile.name}</span>
         </>
       )}
     </div>

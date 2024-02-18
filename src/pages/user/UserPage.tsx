@@ -15,7 +15,7 @@ const UserPage = () => {
       </Helmet>
       <Header className={'fixed'} />
       <Spacing size={4} />
-      <div className="flex flex-col">
+      <div className={'flex flex-col'}>
         <QueryBoundary errorFallback={RetryError}>
           <UserInfo />
         </QueryBoundary>
