@@ -43,8 +43,15 @@ const ProfileSection = ({
     initialValue: profile.name || '',
     isInvalid: (name) => NAME_REGEXP.test(name),
   });
-  const [newGroup, setNewGroup] = useState<string>(profile.group?.name ?? '');
-  const groupValid = GROUP_CHANGE_REGEXP.test(newGroup);
+  const {
+    value: newGroup,
+    handleChangeValue: handleGroupChange,
+    valid: groupValid,
+    setFieldValue,
+  } = useInput<string>({
+    initialValue: profile.group?.name || '',
+    isInvalid: (group) => GROUP_CHANGE_REGEXP.test(group),
+  });
 
   const debounceValue = useDebounce({
     target: newGroup,
@@ -61,13 +68,6 @@ const ProfileSection = ({
 
   const changeUserName = useChangeUserName();
   const changeGroupName = useChangeGroupName();
-
-  const handleGroupChange = (
-    event: ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLOptionElement>,
-  ) => {
-    const target = event.target as HTMLInputElement | HTMLOptionElement;
-    setNewGroup(target.value);
-  };
 
   const handleClickDone = async () => {
     if (profile.name !== newName) {
@@ -158,6 +158,9 @@ const ProfileSection = ({
                     }
                     key={candidate}
                     value={candidate}
+                    onClick={() => {
+                      setFieldValue(candidate);
+                    }}
                   ></option>
                 ))}
               </datalist>
