@@ -122,11 +122,17 @@ const ProfileSection = ({
                 <input
                   value={newName}
                   onChange={handleNameChange}
+                  spellCheck={false}
                   className={
                     'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
                   }
                 />
-                <span className={'mb-4 px-1 text-sm text-slate-500'}>
+
+                <span
+                  className={`${
+                    nameValid && 'invisible'
+                  } mb-4 px-1 text-sm text-rose-500`}
+                >
                   이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.
                 </span>
               </div>
@@ -144,7 +150,11 @@ const ProfileSection = ({
                     'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
                   }
                 />
-                <span className={'px-1 text-sm text-slate-500'}>
+                <span
+                  className={`${
+                    groupValid && 'invisible'
+                  } px-1 text-sm text-rose-500`}
+                >
                   그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.
                 </span>
               </div>
