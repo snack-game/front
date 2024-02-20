@@ -81,7 +81,7 @@ const Hero = ({ selected }: HeroProps) => {
 
   return (
     <motion.div
-      className="mx-auto mt-16 flex w-full max-w-7xl flex-col-reverse items-center justify-between p-2 lg:mt-0 lg:flex-row"
+      className="mx-auto mt-16 flex w-full max-w-7xl flex-col-reverse items-center justify-around p-2 lg:mt-0 lg:flex-row"
       key={selected}
     >
       <motion.div
