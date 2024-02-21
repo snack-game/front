@@ -3,6 +3,8 @@ export const QUERY_KEY = {
 
   TOTAL_RANKING: 'totalRanking',
   USER_RANKING: 'userRanking',
+
+  USER_PROFILE: 'userProfile',
 };
 
 export interface ServerError {

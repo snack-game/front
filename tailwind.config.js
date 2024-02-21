@@ -10,6 +10,9 @@ export default {
         'primary-deep-dark': '#482e19',
 
         game: '#FFEDD5',
+
+        'button-disabled': '#939393',
+        'button-enabled': '#22c55e',
       },
 
       fontFamily: {

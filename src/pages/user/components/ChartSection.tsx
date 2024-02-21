@@ -9,11 +9,11 @@ const ChartSection = () => {
   };
 
   return (
-    <div className={`h-56 w-4/5`}>
-      <div className={`flex gap-2`}>
+    <div className={'w-4/5 rounded-md bg-white px-4 py-2'}>
+      <div>
         {tabOption.map((tab, index) => (
           <span
-            className={`cursor-pointer text-lg ${
+            className={`mr-4 cursor-pointer text-lg ${
               currentTab === index ? 'text-primary' : 'text-[#6B7280]'
             }`}
             key={tab}
@@ -25,10 +25,7 @@ const ChartSection = () => {
           </span>
         ))}
       </div>
-
-      <div className={`mt-2 h-52 w-full rounded-md bg-game`}>
-        {currentTab}번째 탭 조회중
-      </div>
+      {currentTab}번째 탭 조회중
     </div>
   );
 };

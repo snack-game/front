@@ -4,7 +4,10 @@ import Spacing from '@components/Spacing/Spacing';
 import ChartSection from '@pages/user/components/ChartSection';
 import ProfileSection from '@pages/user/components/ProfileSection';
 
+import { useGetMemberProfile } from '@hooks/queries/members.query';
+
 const UserInfo = () => {
+  const profile = useGetMemberProfile();
   const [isEditing, setIsEditing] = useState(false);
 
   const onClickEdit = () => {
@@ -13,7 +16,6 @@ const UserInfo = () => {
 
   const onClickDone = () => {
     setIsEditing(false);
-    // 프로필 수정 요청
   };
 
   const onClickClose = () => {
@@ -22,17 +24,25 @@ const UserInfo = () => {
 
   return (
     <div
-      className={`relative mx-auto flex w-full max-w-7xl flex-col items-center`}
+      className={'relative mx-auto flex w-full max-w-7xl flex-col items-center'}
     >
-      <div className={`h-52 w-full bg-rose-100`}></div>
-      <ProfileSection
-        isEditing={isEditing}
-        onClickEdit={onClickEdit}
-        onClickDone={onClickDone}
-        onClickClose={onClickClose}
-      />
-      <Spacing size={16} />
-      {!isEditing && <ChartSection />}
+      <div
+        className={
+          'mt-52 flex h-fit w-full flex-col items-center rounded-xl bg-game pb-24'
+        }
+      >
+        {profile && (
+          <ProfileSection
+            profile={profile}
+            isEditing={isEditing}
+            onClickEdit={onClickEdit}
+            onClickDone={onClickDone}
+            onClickClose={onClickClose}
+          />
+        )}
+        <Spacing size={16} />
+        {!isEditing && <ChartSection />}
+      </div>
     </div>
   );
 };
