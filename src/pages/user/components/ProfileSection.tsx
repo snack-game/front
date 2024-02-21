@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { useSetRecoilState } from 'recoil';
@@ -178,22 +177,23 @@ const ProfileSection = ({
           </div>
 
           <div className={'flex gap-2'}>
-            <Button
+            <button
               onClick={onClickClose}
-              style={'border'}
-              className={'bg-white hover:bg-white hover:text-black'}
+              className={
+                'rounded-md border bg-white px-4 py-1 hover:bg-white hover:text-black '
+              }
             >
               닫기
-            </Button>
-            <Button
+            </button>
+            <button
               disabled={!nameValid || !groupValid}
               onClick={handleClickDone}
               className={
-                'bg-button-enabled disabled:bg-button-disabled disabled:opacity-100'
+                'rounded-md bg-button-enabled px-4 py-1 text-white disabled:cursor-not-allowed disabled:bg-button-disabled disabled:opacity-100'
               }
             >
               확인
-            </Button>
+            </button>
           </div>
         </>
       ) : (
