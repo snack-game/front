@@ -31,13 +31,15 @@ const UserInfo = () => {
           'mt-52 flex h-fit w-full flex-col items-center rounded-xl bg-game pb-24'
         }
       >
-        <ProfileSection
-          profile={profile}
-          isEditing={isEditing}
-          onClickEdit={onClickEdit}
-          onClickDone={onClickDone}
-          onClickClose={onClickClose}
-        />
+        {profile && (
+          <ProfileSection
+            profile={profile}
+            isEditing={isEditing}
+            onClickEdit={onClickEdit}
+            onClickDone={onClickDone}
+            onClickClose={onClickClose}
+          />
+        )}
         <Spacing size={16} />
         {!isEditing && <ChartSection />}
       </div>
