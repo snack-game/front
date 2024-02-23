@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import retryError from '@components/Error/RetryError';
+import Footer from '@components/Footer/Footer';
 import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
 import DefaultMode from '@pages/games/AppleGame/game/view/DefaultMode';
@@ -23,6 +24,7 @@ const AppleGamePage = () => {
           <DefaultMode />
         </ErrorBoundary>
       </div>
+      <Footer />
     </>
   );
 };

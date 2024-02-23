@@ -4,7 +4,7 @@ import PATH from '@constants/path.constant';
 
 const Footer = () => {
   return (
-    <footer className="body-font mx-auto mt-24 w-full max-w-7xl text-gray-600">
+    <footer className="body-font mx-auto w-full max-w-7xl text-gray-600">
       <div className="container mx-auto flex flex-col items-center px-5 py-8 lg:flex-row lg:justify-evenly">
         <div className={'flex'}>
           <span className="title-font flex items-center justify-center font-medium text-primary md:justify-start">
