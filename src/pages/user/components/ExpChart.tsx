@@ -1,0 +1,42 @@
+import { Doughnut } from 'react-chartjs-2';
+
+import { Chart as ChartJS, ArcElement } from 'chart.js';
+
+import { StatusType } from '@utils/types/member.type';
+
+ChartJS.register(ArcElement);
+
+const ExpChart = ({ status }: { status: StatusType }) => {
+  const { level, exp } = status;
+
+  const INITIAL_EXP_THRESHOLD = 200;
+  const NEXT_THRESHOLD_RATIO = 1.2;
+
+  const bg_game = 'rgb(251, 146, 60)';
+  const bg_primary = 'rgb(255, 237, 213)';
+
+  const data = {
+    datasets: [
+      {
+        data: calculateData(),
+        backgroundColor: [bg_game, bg_primary],
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  function calculateData() {
+    const currentRatio =
+      (exp / (INITIAL_EXP_THRESHOLD * NEXT_THRESHOLD_RATIO ** level)) * 100;
+
+    return [currentRatio, 100 - currentRatio];
+  }
+
+  return (
+    <div className="h-44 w-44">
+      <Doughnut data={data} />
+    </div>
+  );
+};
+
+export default ExpChart;
