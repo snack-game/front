@@ -4,22 +4,22 @@ import { Chart as ChartJS, ArcElement } from 'chart.js';
 
 import { StatusType } from '@utils/types/member.type';
 
+import { TIER_COLOR, PRIMARY_COLOR } from '@constants/tier.constant';
+
 ChartJS.register(ArcElement);
 
 const ExpChart = ({ status }: { status: StatusType }) => {
   const { level, exp } = status;
+  const tier = Math.floor(level / 10);
 
   const INITIAL_EXP_THRESHOLD = 200;
   const NEXT_THRESHOLD_RATIO = 1.2;
-
-  const bg_game = 'rgb(251, 146, 60)';
-  const bg_primary = 'rgb(255, 237, 213)';
 
   const data = {
     datasets: [
       {
         data: calculateData(),
-        backgroundColor: [bg_game, bg_primary],
+        backgroundColor: [TIER_COLOR[tier], PRIMARY_COLOR],
         borderWidth: 0,
       },
     ],
