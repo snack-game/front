@@ -21,10 +21,9 @@ export interface StatusType {
 }
 
 export interface MemberProfileType {
-  id?: number;
-  name?: string;
-  status?: StatusType;
+  id: number;
+  name: string;
+  status: StatusType;
+  type: AuthType;
   group: GroupType | null;
-  guest?: boolean;
-  type?: AuthType;
 }
