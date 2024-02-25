@@ -109,8 +109,7 @@ const ProfileSection = ({
         )}
       </div>
 
-      {/* 레벨 */}
-      <span className={'text-2xl'}>{``}</span>
+      <span className={'text-xl'}>레벨 {profile.status?.level}</span>
 
       {isEditing ? (
         <>
@@ -203,7 +202,7 @@ const ProfileSection = ({
               {profile.group.name}
             </span>
           )}
-          <span className={'text-xl text-primary'}>{profile.name}</span>
+          <span className={'text-2xl text-primary'}>{profile.name}</span>
         </>
       )}
     </div>
