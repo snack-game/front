@@ -9,11 +9,8 @@ import { TIER_COLOR, PRIMARY_COLOR } from '@constants/tier.constant';
 ChartJS.register(ArcElement);
 
 const ExpChart = ({ status }: { status: StatusType }) => {
-  const { level, exp } = status;
+  const { level, exp, maximumExp } = status;
   const tier = Math.floor(level / 10);
-
-  const INITIAL_EXP_THRESHOLD = 200;
-  const NEXT_THRESHOLD_RATIO = 1.2;
 
   const data = {
     datasets: [
@@ -26,9 +23,7 @@ const ExpChart = ({ status }: { status: StatusType }) => {
   };
 
   function calculateData() {
-    const currentRatio =
-      (exp / (INITIAL_EXP_THRESHOLD * NEXT_THRESHOLD_RATIO ** level)) * 100;
-
+    const currentRatio = (exp / maximumExp) * 100;
     return [currentRatio, 100 - currentRatio];
   }
 
