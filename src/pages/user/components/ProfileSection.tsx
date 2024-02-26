@@ -197,11 +197,8 @@ const ProfileSection = ({
         </>
       ) : (
         <>
-          <span className={'text-xl text-primary-deep-dark'}>
-            레벨 {profile.status.level}
-          </span>
           {profile.group && (
-            <span className={'text-lg text-primary-deep-dark'}>
+            <span className={'mt-6 text-lg text-primary-deep-dark'}>
               {profile.group.name}
             </span>
           )}

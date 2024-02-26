@@ -28,8 +28,14 @@ const ExpChart = ({ status }: { status: StatusType }) => {
   }
 
   return (
-    <div className="h-44 w-44">
+    <div className="flex h-44 w-44 justify-center">
       <Doughnut data={data} />
+      <div
+        className={`absolute bottom-[-16px] z-10 flex h-10 w-10 items-center justify-center rounded-full text-xl text-white drop-shadow`}
+        style={{ backgroundColor: TIER_COLOR[tier] }}
+      >
+        {level}
+      </div>
     </div>
   );
 };
