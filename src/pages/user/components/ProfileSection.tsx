@@ -19,6 +19,8 @@ import { useChangeUserName } from '@hooks/queries/members.query';
 import useDebounce from '@hooks/useDebounce';
 import useInput from '@hooks/useInput';
 
+import ExpChart from './ExpChart';
+
 interface ProfileSectionProps {
   profile: MemberProfileType;
   isEditing: boolean;
@@ -90,11 +92,12 @@ const ProfileSection = ({
   return (
     <div className={'absolute top-32 flex flex-col items-center'}>
       <div className={'relative'}>
-        <div className={'h-44 w-44 rounded-full bg-game'}></div>
+        <ExpChart status={profile.status} />
         <img
           className={'absolute left-2 top-2 mb-4 w-40 rounded-full'}
           src={DefaultImage}
         />
+
         {!isEditing ? (
           <button
             className={
@@ -108,10 +111,6 @@ const ProfileSection = ({
           <></>
         )}
       </div>
-
-      {/* 레벨 */}
-      <span className={'text-2xl'}>{``}</span>
-
       {isEditing ? (
         <>
           <div className={'my-10'}>
@@ -199,11 +198,11 @@ const ProfileSection = ({
       ) : (
         <>
           {profile.group && (
-            <span className={'text-lg text-primary-deep-dark'}>
+            <span className={'mt-6 text-lg text-primary-deep-dark'}>
               {profile.group.name}
             </span>
           )}
-          <span className={'text-xl text-primary'}>{profile.name}</span>
+          <span className={'text-2xl text-primary'}>{profile.name}</span>
         </>
       )}
     </div>

@@ -15,10 +15,16 @@ export interface MemberType {
   };
 }
 
+export interface StatusType {
+  level: number;
+  exp: number;
+  maximumExp: number;
+}
+
 export interface MemberProfileType {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
+  status: StatusType;
+  type: AuthType;
   group: GroupType | null;
-  guest?: boolean;
-  type?: AuthType;
 }
