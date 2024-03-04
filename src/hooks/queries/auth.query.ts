@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
 
+import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 
@@ -60,7 +60,7 @@ export const useMemberAuth = ({ apiMethod }: useMemberAuthProps) => {
     mutationFn: apiMethod,
     onSuccess,
     onError: useOnError(),
-    useErrorBoundary: memberErrorBoundary,
+    throwOnError: memberErrorBoundary,
   });
 };
 
@@ -69,7 +69,7 @@ export const useGuest = () => {
     mutationFn: authApi.guest,
     onSuccess: useMemberOnSuccess(),
     onError: useOnError(),
-    useErrorBoundary: memberErrorBoundary,
+    throwOnError: memberErrorBoundary,
   });
 };
 
