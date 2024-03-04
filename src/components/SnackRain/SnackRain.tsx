@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import { SnackRainManager } from '@utils/snackRainManager';
 
 import useCanvas from '@hooks/useCanvas';
@@ -19,13 +17,7 @@ const SnackRain = ({ offsetWidth, offsetHeight }: SnackRainProps) => {
 
   const canvasRef = useCanvas({ offsetWidth, offsetHeight, animationFrame });
 
-  return <StyledCanvas ref={canvasRef}></StyledCanvas>;
+  return <canvas ref={canvasRef} className='fixed w-screen h-full'></canvas>;
 };
 
 export default SnackRain;
-
-const StyledCanvas = styled.canvas`
-  position: fixed;
-  width: 100vw;
-  height: 100%;
-`;
