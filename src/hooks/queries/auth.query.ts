@@ -27,9 +27,9 @@ const useMemberOnSuccess = () => {
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
   });
 
-  return ({ member }: MemberType) => {
+  return (member: MemberType) => {
     setUserState(() => ({
-      member,
+      ...member,
     }));
     setStorageValue(Date.now());
     openToast(t('login_success'), 'success');

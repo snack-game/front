@@ -6,19 +6,17 @@ export interface GroupType {
 export type AuthType = 'SOCIAL' | 'GUEST' | 'SELF';
 
 export interface MemberType {
-  member: {
-    id?: number;
-    name?: string;
-    group: GroupType | null;
-    guest?: boolean;
-    type?: AuthType;
-  };
+  id?: number;
+  name?: string;
+  group: GroupType | null;
+  guest?: boolean;
+  type?: AuthType;
 }
 
 export interface StatusType {
   level: number;
   exp: number;
-  maximumExp: number;
+  maxExp: number;
 }
 
 export interface MemberProfileType {

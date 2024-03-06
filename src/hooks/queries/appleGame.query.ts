@@ -37,7 +37,7 @@ export const useGoldModeStart = () => {
   });
 
   const gameStart = async () => {
-    if (!userStateValue.member.id) {
+    if (!userStateValue.id) {
       await guestMutation.mutateAsync();
       return await gameStartMutation.mutateAsync();
     } else {

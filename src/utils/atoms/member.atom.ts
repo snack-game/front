@@ -12,10 +12,8 @@ const { persistAtom: persistAtomUser } = recoilPersist({
 export const userState = atom<MemberType>({
   key: ATOM_KEY.USER,
   default: {
-    member: {
-      name: '',
-      group: null,
-    },
+    name: '',
+    group: null,
   },
   effects_UNSTABLE: [persistAtomUser],
 });

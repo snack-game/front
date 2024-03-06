@@ -34,7 +34,7 @@ const GameResult = ({ score, reStart }: GameResultProps) => {
           재시작!
         </Button>
       </div>
-      {userStateValue.member.type === 'GUEST' && (
+      {userStateValue.type === 'GUEST' && (
         <OAuth oAuthOnSuccess={onOAuthSuccess} />
       )}
     </div>

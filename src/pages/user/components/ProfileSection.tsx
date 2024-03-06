@@ -77,12 +77,10 @@ const ProfileSection = ({
       await changeGroupName.mutateAsync(newGroup);
     }
 
-    setUserState((prev) => ({
-      member: {
-        ...prev.member,
-        name: newName,
-        group: { name: newGroup },
-      },
+    setUserState((prevInfo) => ({
+      ...prevInfo,
+      name: newName,
+      group: { name: newGroup },
     }));
     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
     onClickDone();
