@@ -89,7 +89,7 @@ const ProfileSection = ({
   return (
     <div className={'absolute top-32 flex flex-col items-center'}>
       <div className={'relative'}>
-        <ExpChart status={profile.status} />
+        {profile.status && <ExpChart status={profile.status} />}
         <img
           className={'absolute left-2 top-2 mb-4 w-40 rounded-full'}
           src={DefaultImage}
