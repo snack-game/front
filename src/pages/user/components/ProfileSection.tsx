@@ -6,7 +6,7 @@ import EditIcon from '@assets/icon/edit.svg?react';
 import DefaultImage from '@assets/images/profile_image.png';
 import Button from '@components/Button/Button';
 import { userState } from '@utils/atoms/member.atom';
-import { MemberProfileType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 import { QUERY_KEY } from '@constants/api.constant';
 import { GROUP_CHANGE_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
@@ -21,7 +21,7 @@ import useInput from '@hooks/useInput';
 import ExpChart from './ExpChart';
 
 interface ProfileSectionProps {
-  profile: MemberProfileType;
+  profile: MemberType;
   isEditing: boolean;
   onClickEdit: () => void;
   onClickDone: () => void;
