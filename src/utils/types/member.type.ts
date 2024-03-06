@@ -11,11 +11,11 @@ export interface MemberType {
   group: GroupType | null;
   guest?: boolean;
   type?: AuthType;
-  status: StatusType;
+  status?: StatusType;
 }
 
 export interface StatusType {
   level: number;
   exp: number;
-  maximumExp: number;
+  maxExp: number;
 }
