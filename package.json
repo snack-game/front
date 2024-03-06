@@ -15,6 +15,8 @@
   "dependencies": {
     "@storybook/addon-styling-webpack": "^0.0.5",
     "@storybook/addon-themes": "^7.6.6",
+    "@tanstack/react-query": "^5.24.7",
+    "@tanstack/react-query-devtools": "^5.24.7",
     "@testing-library/dom": "^9.3.1",
     "@types/styled-components": "^5.1.26",
     "@vercel/analytics": "^1.1.1",
@@ -37,7 +39,6 @@
     "react-hooks-testing-library": "^0.6.0",
     "react-hot-toast": "^2.4.1",
     "react-i18next": "^13.5.0",
-    "react-query": "^3.39.3",
     "react-router-dom": "^6.11.2",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0"
@@ -53,7 +54,7 @@
     "@storybook/react-vite": "^7.6.6",
     "@storybook/test": "^7.6.6",
     "@svgr/core": "^8.1.0",
-    "@tanstack/eslint-plugin-query": "^4.29.9",
+    "@tanstack/eslint-plugin-query": "^4.38.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.2",

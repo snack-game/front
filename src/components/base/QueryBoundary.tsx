@@ -1,5 +1,6 @@
 import { ComponentType, ReactNode, Suspense } from 'react';
-import { useQueryErrorResetBoundary } from 'react-query';
+
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 import Loading from '@components/Loading/Loading';
 

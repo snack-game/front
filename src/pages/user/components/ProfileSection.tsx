@@ -1,5 +1,4 @@
-import { useQueryClient } from 'react-query';
-
+import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
 import CameraIcon from '@assets/icon/camera.svg?react';
@@ -85,7 +84,7 @@ const ProfileSection = ({
         group: { name: newGroup },
       },
     }));
-    queryClient.invalidateQueries(QUERY_KEY.USER_PROFILE);
+    queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
     onClickDone();
   };
 

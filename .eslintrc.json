@@ -10,7 +10,8 @@
     "plugin:react/recommended",
     "plugin:import/typescript",
     "plugin:import/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
@@ -18,11 +19,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "import"
-  ],
+  "plugins": ["react", "@typescript-eslint", "import"],
   "settings": {
     "react": {
       "version": "detect"
@@ -33,19 +30,14 @@
       }
     },
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     }
   },
   "rules": {
     "react/no-unknown-property": [
       "error",
       {
-        "ignore": [
-          "css"
-        ]
+        "ignore": ["css"]
       }
     ],
     "import/order": [
@@ -55,11 +47,7 @@
           "builtin",
           "external",
           "internal",
-          [
-            "parent",
-            "sibling",
-            "index"
-          ],
+          ["parent", "sibling", "index"],
           "type",
           "unknown"
         ],
@@ -80,10 +68,7 @@
             "position": "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": [
-          "react",
-          "unknown"
-        ],
+        "pathGroupsExcludedImportTypes": ["react", "unknown"],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
@@ -94,11 +79,7 @@
     "import/no-unresolved": [
       2,
       {
-        "ignore": [
-          ".png$",
-          ".webp$",
-          ".jpg$"
-        ]
+        "ignore": [".png$", ".webp$", ".jpg$"]
       }
     ],
     "@typescript-eslint/no-non-null-assertion": "off",
