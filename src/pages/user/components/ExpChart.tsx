@@ -9,7 +9,7 @@ import { TIER_COLOR, PRIMARY_COLOR } from '@constants/tier.constant';
 ChartJS.register(ArcElement);
 
 const ExpChart = ({ status }: { status: StatusType }) => {
-  const { level, exp, maximumExp } = status;
+  const { level, exp, maxExp } = status;
   const tier = Math.floor(level / 10);
 
   const data = {
@@ -23,7 +23,7 @@ const ExpChart = ({ status }: { status: StatusType }) => {
   };
 
   function calculateData() {
-    const currentRatio = (exp / maximumExp) * 100;
+    const currentRatio = (exp / maxExp) * 100;
     return [currentRatio, 100 - currentRatio];
   }
 

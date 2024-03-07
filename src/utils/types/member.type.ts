@@ -18,7 +18,7 @@ export interface MemberType {
 export interface StatusType {
   level: number;
   exp: number;
-  maximumExp: number;
+  maxExp: number;
 }
 
 export interface MemberProfileType {
