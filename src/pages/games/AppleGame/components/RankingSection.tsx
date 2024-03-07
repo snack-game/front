@@ -19,7 +19,7 @@ const RankingSection = () => {
     <div className={'mx-auto w-full max-w-4xl'}>
       {topRanking && <TopRanking topRanking={topRanking} />}
       {otherRanking && <OtherRanking otherRanking={otherRanking} />}
-      {userInfo.member.id && <UserRanking />}
+      {userInfo.id && <UserRanking />}
     </div>
   );
 };

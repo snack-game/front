@@ -1,5 +1,5 @@
 import api from '@api/index';
-import { MemberProfileType, MemberType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 const membersApi = {
   endPoint: {
@@ -18,7 +18,7 @@ const membersApi = {
     return data;
   },
 
-  getMemberProfile: async (): Promise<MemberProfileType> => {
+  getMemberProfile: async (): Promise<MemberType> => {
     const { data } = await api.get(membersApi.endPoint.getMemberProfile);
     return data;
   },

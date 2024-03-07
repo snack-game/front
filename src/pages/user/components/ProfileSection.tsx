@@ -6,7 +6,7 @@ import EditIcon from '@assets/icon/edit.svg?react';
 import DefaultImage from '@assets/images/profile_image.png';
 import Button from '@components/Button/Button';
 import { userState } from '@utils/atoms/member.atom';
-import { MemberProfileType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 import { QUERY_KEY } from '@constants/api.constant';
 import { GROUP_CHANGE_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
@@ -21,7 +21,7 @@ import useInput from '@hooks/useInput';
 import ExpChart from './ExpChart';
 
 interface ProfileSectionProps {
-  profile: MemberProfileType;
+  profile: MemberType;
   isEditing: boolean;
   onClickEdit: () => void;
   onClickDone: () => void;
@@ -77,12 +77,10 @@ const ProfileSection = ({
       await changeGroupName.mutateAsync(newGroup);
     }
 
-    setUserState((prev) => ({
-      member: {
-        ...prev.member,
-        name: newName,
-        group: { name: newGroup },
-      },
+    setUserState((prevInfo) => ({
+      ...prevInfo,
+      name: newName,
+      group: { name: newGroup },
     }));
     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
     onClickDone();
@@ -91,7 +89,7 @@ const ProfileSection = ({
   return (
     <div className={'absolute top-32 flex flex-col items-center'}>
       <div className={'relative'}>
-        <ExpChart status={profile.status} />
+        {profile.status && <ExpChart status={profile.status} />}
         <img
           className={'absolute left-2 top-2 mb-4 w-40 rounded-full'}
           src={DefaultImage}

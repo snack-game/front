@@ -11,36 +11,37 @@ const authApi = {
     tokenReIssue: 'tokens/me',
   },
 
-  login: async ({ member }: MemberType): Promise<MemberType> => {
+  login: async (member: MemberType): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.login, {
       name: member.name,
     });
-    return { member: data.member };
+
+    return data.member ? { ...data.member } : data;
   },
 
   logOut: async (): Promise<void> => {
     await api.delete(authApi.endPoint.logOut);
   },
 
-  register: async ({ member }: MemberType): Promise<MemberType> => {
+  register: async (member: MemberType): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.register, {
       name: member.name,
       group: member.group?.name,
     });
 
-    return { member: data.member };
+    return data.member ? { ...data.member } : data;
   },
 
   guest: async (): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.guest);
 
-    return { member: data.member };
+    return data.member ? { ...data.member } : data;
   },
 
   social: async (): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.social, {});
 
-    return { member: data.member };
+    return data.member ? { ...data.member } : data;
   },
 
   tokenReIssue: async (): Promise<void> => {
