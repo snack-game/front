@@ -26,6 +26,23 @@ export const useChangeUserName = () => {
   });
 };
 
+export const useChangeUserImage = () => {
+  const openToast = useToast();
+
+  return useMutation({
+    mutationFn: membersApi.changeMemberImage,
+    onSuccess: () => {
+      openToast('이미지 변경 완료!', 'success');
+    },
+    onError: useOnError(),
+    throwOnError: (error: AxiosError<ServerError>) => {
+      if (!error.response) throw error;
+
+      return error.response?.status >= 500;
+    },
+  });
+};
+
 const useOnError = () => {
   const openToast = useToast();
 

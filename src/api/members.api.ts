@@ -7,6 +7,7 @@ const membersApi = {
     changeMemberName: '/members/me/name',
     integrateMember: '/members/me/integrate',
     getMemberProfile: '/members/me',
+    changeMemberImage: '/members/me/profile-image',
   },
 
   changeMemberName: async (name: string): Promise<void> => {
@@ -21,6 +22,17 @@ const membersApi = {
   getMemberProfile: async (): Promise<MemberType> => {
     const { data } = await api.get(membersApi.endPoint.getMemberProfile);
     return data;
+  },
+
+  changeMemberImage: async (profileImage: File) => {
+    const formData = new FormData();
+    formData.append('profileImage', profileImage);
+
+    await api.put(membersApi.endPoint.changeMemberImage, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
 };
 
