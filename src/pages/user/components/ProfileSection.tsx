@@ -91,8 +91,8 @@ const ProfileSection = ({
       <div className={'relative'}>
         {profile.status && <ExpChart status={profile.status} />}
         <img
-          className={'absolute left-2 top-2 mb-4 w-40 rounded-full'}
-          src={DefaultImage}
+          className={'absolute left-2 top-2 mb-4 w-40 h-40 rounded-full object-cover'}
+          src={profile.profileImage}
         />
 
         {!isEditing ? (
