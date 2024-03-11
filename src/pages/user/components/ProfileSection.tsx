@@ -1,9 +1,10 @@
+import { useState } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
 import CameraIcon from '@assets/icon/camera.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
-import DefaultImage from '@assets/images/profile_image.png';
 import Button from '@components/Button/Button';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
@@ -14,7 +15,10 @@ import {
   useChangeGroupName,
   useGetGroupsNames,
 } from '@hooks/queries/groups.query';
-import { useChangeUserName } from '@hooks/queries/members.query';
+import {
+  useChangeUserImage,
+  useChangeUserName,
+} from '@hooks/queries/members.query';
 import useDebounce from '@hooks/useDebounce';
 import useInput from '@hooks/useInput';
 
@@ -35,6 +39,9 @@ const ProfileSection = ({
   onClickDone,
   onClickClose,
 }: ProfileSectionProps) => {
+  const [newImageFile, setNewImageFile] = useState<File | null>(null);
+  const [newImage, setNewImage] = useState<string | null>(null);
+
   const {
     value: newName,
     handleChangeValue: handleNameChange,
@@ -68,6 +75,7 @@ const ProfileSection = ({
 
   const changeUserName = useChangeUserName();
   const changeGroupName = useChangeGroupName();
+  const changeUserImage = useChangeUserImage();
 
   const handleClickDone = async () => {
     if (profile.name !== newName) {
@@ -75,6 +83,9 @@ const ProfileSection = ({
     }
     if (profile.group?.name !== newGroup) {
       await changeGroupName.mutateAsync(newGroup);
+    }
+    if (newImageFile !== null) {
+      await changeUserImage.mutateAsync(newImageFile);
     }
 
     setUserState((prevInfo) => ({
@@ -86,13 +97,22 @@ const ProfileSection = ({
     onClickDone();
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files !== null) {
+      setNewImageFile(event.target.files[0]);
+      setNewImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+
   return (
     <div className={'absolute top-32 flex flex-col items-center'}>
       <div className={'relative'}>
         {profile.status && <ExpChart status={profile.status} />}
         <img
-          className={'absolute left-2 top-2 mb-4 w-40 h-40 rounded-full object-cover'}
-          src={profile.profileImage}
+          className={
+            'absolute left-2 top-2 mb-4 h-40 w-40 rounded-full object-cover'
+          }
+          src={newImage || profile.profileImage}
         />
 
         {!isEditing ? (
@@ -105,7 +125,17 @@ const ProfileSection = ({
             <EditIcon className={'mx-auto'} />
           </button>
         ) : (
-          <></>
+          <label
+            className={`absolute left-2 top-2 h-40 w-40 cursor-pointer rounded-full bg-black bg-opacity-50`}
+          >
+            <input
+              className="hidden"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+            <CameraIcon className="mx-auto h-full" />
+          </label>
         )}
       </div>
       {isEditing ? (
@@ -174,7 +204,10 @@ const ProfileSection = ({
 
           <div className={'flex gap-2'}>
             <button
-              onClick={onClickClose}
+              onClick={() => {
+                setNewImage(null);
+                onClickClose();
+              }}
               className={
                 'rounded-md border bg-white px-4 py-1 hover:bg-white hover:text-black '
               }
