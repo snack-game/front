@@ -9,6 +9,7 @@ export interface MemberType {
   id?: number;
   name?: string;
   group: GroupType | null;
+  profileImage?: string;
   guest?: boolean;
   type?: AuthType;
   status?: StatusType;
