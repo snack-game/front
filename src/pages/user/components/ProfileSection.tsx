@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
-import CameraIcon from '@assets/icon/camera.svg?react';
-import EditIcon from '@assets/icon/edit.svg?react';
 import Button from '@components/Button/Button';
 import Input from '@components/Input/Input';
 import { userState } from '@utils/atoms/member.atom';
@@ -23,6 +21,7 @@ import {
 import useDebounce from '@hooks/useDebounce';
 import useInput from '@hooks/useInput';
 
+import EditImage from './EditImage';
 import ExpChart from './ExpChart';
 
 interface ProfileSectionProps {
@@ -115,30 +114,13 @@ const ProfileSection = ({
           }
           src={newImage || profile.profileImage}
         />
-
-        {!isEditing ? (
-          <button
-            className={
-              'absolute right-2 top-32 h-8 w-8 rounded-full border bg-white'
-            }
-            onClick={onClickEdit}
-          >
-            <EditIcon className={'mx-auto'} />
-          </button>
-        ) : (
-          <label
-            className={`absolute left-2 top-2 h-40 w-40 cursor-pointer rounded-full bg-black bg-opacity-50`}
-          >
-            <input
-              className="hidden"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-            <CameraIcon className="mx-auto h-full" />
-          </label>
-        )}
+        <EditImage
+          isEditing={isEditing}
+          onClickEdit={onClickEdit}
+          onChangeFile={handleFileChange}
+        />
       </div>
+
       {isEditing ? (
         <>
           <div className={'my-10'}>
