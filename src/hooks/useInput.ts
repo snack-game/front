@@ -5,7 +5,17 @@ interface useInputProps<T> {
   isInvalid?: (value: T) => boolean;
 }
 
-const useInput = <T>({ initialValue, isInvalid }: useInputProps<T>) => {
+export interface useInputResult<T> {
+  value: T;
+  handleChangeValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  valid: boolean;
+  setFieldValue: (value: T) => void;
+}
+
+const useInput = <T>({
+  initialValue,
+  isInvalid,
+}: useInputProps<T>): useInputResult<T> => {
   const [valid, setValid] = useState<boolean>(
     isInvalid ? isInvalid(initialValue) : true,
   );

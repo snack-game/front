@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
-import Button from '@components/Button/Button';
-import Input from '@components/Input/Input';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
@@ -22,6 +20,7 @@ import useDebounce from '@hooks/useDebounce';
 import useInput from '@hooks/useInput';
 
 import EditImage from './EditImage';
+import EditInfo from './EditInfo';
 import ExpChart from './ExpChart';
 
 interface ProfileSectionProps {
@@ -42,26 +41,18 @@ const ProfileSection = ({
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImage, setNewImage] = useState<string | null>(null);
 
-  const {
-    value: newName,
-    handleChangeValue: handleNameChange,
-    valid: nameValid,
-  } = useInput<string>({
+  const newName = useInput<string>({
     initialValue: profile.name || '',
     isInvalid: (name) => NAME_REGEXP.test(name),
   });
-  const {
-    value: newGroup,
-    handleChangeValue: handleGroupChange,
-    valid: groupValid,
-    setFieldValue,
-  } = useInput<string>({
+
+  const newGroup = useInput<string>({
     initialValue: profile.group?.name || '',
     isInvalid: (group) => GROUP_CHANGE_REGEXP.test(group),
   });
 
   const debounceValue = useDebounce({
-    target: newGroup,
+    target: newGroup.value,
     delay: 300,
   });
   const { data } = useGetGroupsNames({
@@ -78,11 +69,11 @@ const ProfileSection = ({
   const changeUserImage = useChangeUserImage();
 
   const handleClickDone = async () => {
-    if (profile.name !== newName) {
-      await changeUserName.mutateAsync(newName);
+    if (profile.name !== newName.value) {
+      await changeUserName.mutateAsync(newName.value);
     }
-    if (profile.group?.name !== newGroup) {
-      await changeGroupName.mutateAsync(newGroup);
+    if (profile.group?.name !== newGroup.value) {
+      await changeGroupName.mutateAsync(newGroup.value);
     }
     if (newImageFile !== null) {
       await changeUserImage.mutateAsync(newImageFile);
@@ -90,8 +81,8 @@ const ProfileSection = ({
 
     setUserState((prevInfo) => ({
       ...prevInfo,
-      name: newName,
-      group: { name: newGroup },
+      name: newName.value,
+      group: { name: newGroup.value },
     }));
     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
     onClickDone();
@@ -122,69 +113,18 @@ const ProfileSection = ({
       </div>
 
       {isEditing ? (
-        <>
-          <div className={'my-10'}>
-            <Input
-              fieldLabel={'이름'}
-              value={newName}
-              onChange={handleNameChange}
-              valid={nameValid}
-              errorMessage={
-                '이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.'
-              }
-            />
-
-            <Input
-              fieldLabel={'그룹'}
-              value={newGroup}
-              onChange={handleGroupChange}
-              list={'group-list'}
-              valid={groupValid}
-              errorMessage={
-                '그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.'
-              }
-            />
-            {data && (
-              <datalist id={'group-list'}>
-                {data.map((candidate) => (
-                  <option
-                    className={
-                      'cursor-pointer rounded-lg px-2 py-1 hover:bg-slate-100'
-                    }
-                    key={candidate}
-                    value={candidate}
-                    onClick={() => {
-                      setFieldValue(candidate);
-                    }}
-                  ></option>
-                ))}
-              </datalist>
-            )}
-          </div>
-
-          <div className={'flex gap-2'}>
-            <button
-              onClick={() => {
-                setNewImage(null);
-                onClickClose();
-              }}
-              className={
-                'rounded-md border bg-white px-4 py-1 hover:bg-white hover:text-black '
-              }
-            >
-              닫기
-            </button>
-            <button
-              disabled={!nameValid || !groupValid}
-              onClick={handleClickDone}
-              className={
-                'rounded-md bg-button-enabled px-4 py-1 text-white disabled:cursor-not-allowed disabled:bg-button-disabled disabled:opacity-100'
-              }
-            >
-              확인
-            </button>
-          </div>
-        </>
+        <EditInfo
+          newName={newName}
+          newGroup={newGroup}
+          groupSearchResult={data}
+          onClickDone={handleClickDone}
+          onClickClose={() => {
+            setNewImage(null);
+            newName.setFieldValue(profile.name || '');
+            newGroup.setFieldValue(profile.group?.name || '');
+            onClickClose();
+          }}
+        />
       ) : (
         <>
           <span className={'mt-6 text-lg text-primary-deep-dark'}>
