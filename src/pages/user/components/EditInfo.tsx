@@ -1,4 +1,5 @@
 import Input from '@components/Input/Input';
+import Spacing from '@components/Spacing/Spacing';
 
 import { useInputResult } from '@hooks/useInput';
 
@@ -27,6 +28,7 @@ const EditInfo = ({
           valid={newName.valid}
           errorMessage={'이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
         />
+        <Spacing size={1} />
         <Input
           fieldLabel={'그룹'}
           value={newGroup.value}
