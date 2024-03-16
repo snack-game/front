@@ -12,31 +12,28 @@ const EditImage = ({
   onClickEdit,
   onChangeFile,
 }: EditImageProps) => {
+  if (isEditing) {
+    return (
+      <label
+        className={`absolute left-2 top-2 h-40 w-40 cursor-pointer rounded-full bg-black bg-opacity-50`}
+      >
+        <input
+          className="hidden"
+          type="file"
+          accept="image/*"
+          onChange={onChangeFile}
+        />
+        <CameraIcon className="mx-auto h-full" />
+      </label>
+    );
+  }
   return (
-    <>
-      {isEditing ? (
-        <label
-          className={`absolute left-2 top-2 h-40 w-40 cursor-pointer rounded-full bg-black bg-opacity-50`}
-        >
-          <input
-            className="hidden"
-            type="file"
-            accept="image/*"
-            onChange={onChangeFile}
-          />
-          <CameraIcon className="mx-auto h-full" />
-        </label>
-      ) : (
-        <button
-          className={
-            'absolute right-2 top-32 h-8 w-8 rounded-full border bg-white'
-          }
-          onClick={onClickEdit}
-        >
-          <EditIcon className={'mx-auto'} />
-        </button>
-      )}
-    </>
+    <button
+      className={'absolute right-2 top-32 h-8 w-8 rounded-full border bg-white'}
+      onClick={onClickEdit}
+    >
+      <EditIcon className={'mx-auto'} />
+    </button>
   );
 };
 
