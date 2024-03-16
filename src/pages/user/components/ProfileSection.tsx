@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import CameraIcon from '@assets/icon/camera.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
 import Button from '@components/Button/Button';
+import Input from '@components/Input/Input';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
@@ -141,49 +142,26 @@ const ProfileSection = ({
       {isEditing ? (
         <>
           <div className={'my-10'}>
-            <label className={'flex gap-2 text-lg'}>
-              이름
-              <div className={'flex grow flex-col gap-1'}>
-                <input
-                  value={newName}
-                  onChange={handleNameChange}
-                  spellCheck={false}
-                  className={
-                    'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
-                  }
-                />
+            <Input
+              fieldLabel={'이름'}
+              value={newName}
+              onChange={handleNameChange}
+              valid={nameValid}
+              errorMessage={
+                '이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.'
+              }
+            />
 
-                <span
-                  className={`${
-                    nameValid && 'invisible'
-                  } mb-4 px-1 text-sm text-rose-500`}
-                >
-                  이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.
-                </span>
-              </div>
-            </label>
-
-            <label className={'flex gap-2 text-lg'}>
-              그룹
-              <div className={'flex grow flex-col gap-1'}>
-                <input
-                  list={'group-list'}
-                  value={newGroup}
-                  onChange={handleGroupChange}
-                  spellCheck={false}
-                  className={
-                    'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
-                  }
-                />
-                <span
-                  className={`${
-                    groupValid && 'invisible'
-                  } px-1 text-sm text-rose-500`}
-                >
-                  그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.
-                </span>
-              </div>
-            </label>
+            <Input
+              fieldLabel={'그룹'}
+              value={newGroup}
+              onChange={handleGroupChange}
+              list={'group-list'}
+              valid={groupValid}
+              errorMessage={
+                '그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.'
+              }
+            />
             {data && (
               <datalist id={'group-list'}>
                 {data.map((candidate) => (
