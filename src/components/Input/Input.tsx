@@ -4,7 +4,7 @@ interface InputProps {
   fieldLabel?: string;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  list?: string;
+  dataListId?: string;
   valid?: boolean;
   errorMessage?: string;
 }
@@ -13,7 +13,7 @@ const Input = ({
   fieldLabel,
   value,
   onChange,
-  list,
+  dataListId,
   valid,
   errorMessage,
 }: InputProps) => {
@@ -25,7 +25,7 @@ const Input = ({
           value={value}
           onChange={onChange}
           spellCheck={false}
-          list={list}
+          list={dataListId}
           className={
             'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
           }

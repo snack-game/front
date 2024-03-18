@@ -33,7 +33,7 @@ const EditInfo = ({
           fieldLabel={'그룹'}
           value={newGroup.value}
           onChange={newGroup.handleChangeValue}
-          list={'group-list'}
+          dataListId={'group-list'}
           valid={newGroup.valid}
           errorMessage={'그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
         />
