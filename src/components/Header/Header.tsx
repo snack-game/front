@@ -35,7 +35,9 @@ const Header = ({ children, className }: HeaderProps) => {
   });
 
   const handleLogin = () => {
-    openModal({ children: <Auth /> });
+    openModal({
+      children: <Auth />,
+    });
   };
 
   const handleLogout = async () => {
