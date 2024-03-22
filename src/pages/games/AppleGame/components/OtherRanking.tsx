@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 
+import { Level } from '@components/Level/Level';
 import { RankingType } from '@utils/types/common.type';
 
 interface OtherRankingProps {
@@ -33,9 +34,14 @@ const OtherRanking = ({ otherRanking }: OtherRankingProps) => {
                   <span className={'text-xs'}>
                     {rank.owner.group && rank.owner.group.name}
                   </span>
-                  <span className={'text-lg text-primary'}>
-                    {rank.owner.name}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className={'text-lg text-primary'}>
+                      {rank.owner.name}
+                    </span>
+                    {rank.owner.status?.level !== undefined && (
+                      <Level level={rank.owner.status.level} />
+                    )}
+                  </div>
                 </div>
               </td>
               <td className={'text-center'}>{rank.score}</td>
