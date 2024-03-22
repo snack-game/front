@@ -1,9 +1,22 @@
 import { Level } from '@components/Level/Level';
 
-import { useGetUserRanking } from '@hooks/queries/ranking.query';
+import {
+  useGetSeasonRankingMe,
+  useGetUserRanking,
+} from '@hooks/queries/ranking.query';
 
-const UserRanking = () => {
-  const userRanking = useGetUserRanking();
+interface UserRankingProps {
+  season: number;
+}
+
+const UserRanking = ({ season }: UserRankingProps) => {
+  let userRanking;
+
+  if (season === 0) {
+    userRanking = useGetUserRanking();
+  } else {
+    userRanking = useGetSeasonRankingMe(season);
+  }
 
   return (
     <div className="fixed bottom-5 left-1/2 w-[90%] -translate-x-1/2 rounded-full border-2 border-primary bg-primary-light px-6 py-3 text-primary-deep-dark lg:w-1/3">

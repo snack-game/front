@@ -18,10 +18,10 @@ const OtherRanking = ({ otherRanking }: OtherRankingProps) => {
         </tr>
       </thead>
       <motion.tbody>
-        {otherRanking.map((rank) => {
+        {otherRanking.map((rank, index) => {
           return (
             <motion.tr
-              key={rank.owner.name}
+              key={`rank-${index}-${rank.owner.name}`}
               className={'h-24 border-b-2 border-b-gray-200 font-semibold'}
               initial={{ y: -40, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}

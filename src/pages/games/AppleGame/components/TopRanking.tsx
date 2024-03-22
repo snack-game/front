@@ -28,7 +28,7 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
       {topRanking.map((top, index) => {
         return (
           <div
-            key={top.rank}
+            key={`top-rank-${top.owner.name}`}
             className={`flex flex-col items-center gap-4 font-semibold text-primary-deep-dark
             ${index == 0 && 'order-2 -mt-12'}
             ${index == 1 && 'order-1'}
