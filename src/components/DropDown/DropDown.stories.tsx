@@ -38,6 +38,6 @@ export const Default: Story = {
         },
       },
     ],
-    mainContent: '응가',
+    initalOption: 0,
   },
 };
