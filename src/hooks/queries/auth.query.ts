@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useMutation } from 'react-query';
 
+import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 
@@ -27,9 +27,9 @@ const useMemberOnSuccess = () => {
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
   });
 
-  return ({ member }: MemberType) => {
+  return (member: MemberType) => {
     setUserState(() => ({
-      member,
+      ...member,
     }));
     setStorageValue(Date.now());
     openToast(t('login_success'), 'success');
@@ -60,7 +60,7 @@ export const useMemberAuth = ({ apiMethod }: useMemberAuthProps) => {
     mutationFn: apiMethod,
     onSuccess,
     onError: useOnError(),
-    useErrorBoundary: memberErrorBoundary,
+    throwOnError: memberErrorBoundary,
   });
 };
 
@@ -69,7 +69,7 @@ export const useGuest = () => {
     mutationFn: authApi.guest,
     onSuccess: useMemberOnSuccess(),
     onError: useOnError(),
-    useErrorBoundary: memberErrorBoundary,
+    throwOnError: memberErrorBoundary,
   });
 };
 

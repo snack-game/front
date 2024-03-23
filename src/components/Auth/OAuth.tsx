@@ -51,10 +51,10 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     if (event.origin !== window.location.origin) return;
 
     if (event.data.type === 'oAuthSuccess') {
-      const { member } = await oAuthOnSuccess();
+      const member = await oAuthOnSuccess();
       openToast('로그인 성공!', 'success');
       setUserState(() => ({
-        member,
+        ...member,
       }));
       setStorageValue(Date.now());
     }

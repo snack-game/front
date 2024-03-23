@@ -1,4 +1,3 @@
-import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
@@ -25,20 +24,9 @@ const ErrorPage = ({
       </Helmet>
       <SnackRainContainer />
 
-      <div
-        css={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1.5rem',
-        }}
-      >
+      <div className='flex flex-col items-center gap-6'>
         <img
-          css={{
-            margin: 'auto',
-            width: '80px',
-            height: '80px',
-          }}
+          className='m-auto w-20 h-20'
           src={ErrorImage}
           alt={'에러 이미지'}
         />

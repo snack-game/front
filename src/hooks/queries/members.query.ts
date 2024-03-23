@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery } from 'react-query';
 
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import membersApi from '@api/members.api';
@@ -18,7 +18,24 @@ export const useChangeUserName = () => {
       openToast(t('member_change_name'), 'success');
     },
     onError: useOnError(),
-    useErrorBoundary: (error: AxiosError<ServerError>) => {
+    throwOnError: (error: AxiosError<ServerError>) => {
+      if (!error.response) throw error;
+
+      return error.response?.status >= 500;
+    },
+  });
+};
+
+export const useChangeUserImage = () => {
+  const openToast = useToast();
+
+  return useMutation({
+    mutationFn: membersApi.changeMemberImage,
+    onSuccess: () => {
+      openToast('이미지 변경 완료!', 'success');
+    },
+    onError: useOnError(),
+    throwOnError: (error: AxiosError<ServerError>) => {
       if (!error.response) throw error;
 
       return error.response?.status >= 500;
@@ -43,14 +60,10 @@ export const useIntegrateMember = () => {
 };
 
 export const useGetMemberProfile = () => {
-  const { data } = useQuery(
-    QUERY_KEY.USER_PROFILE,
-    membersApi.getMemberProfile,
-    {
-      suspense: true,
-      useErrorBoundary: true,
-    },
-  );
+  const { data } = useSuspenseQuery({
+    queryKey: [QUERY_KEY.USER_PROFILE],
+    queryFn: membersApi.getMemberProfile,
+  });
 
   return data;
 };

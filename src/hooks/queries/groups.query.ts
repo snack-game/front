@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery } from 'react-query';
 
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import groupsApi from '@api/groups.api';
@@ -17,14 +17,11 @@ export const useGetGroupsNames = ({
   startWidth,
   enabled,
 }: useGetGroupsNamesProps) => {
-  const { isLoading, data } = useQuery<string[], AxiosError>(
-    [QUERY_KEY.GROUPS_NAMES, startWidth],
-    () => groupsApi.getGroupsNames(startWidth),
-    {
-      useErrorBoundary: true,
-      enabled,
-    },
-  );
+  const { isLoading, data } = useQuery<string[], AxiosError>({
+    queryKey: [QUERY_KEY.GROUPS_NAMES, startWidth],
+    queryFn: () => groupsApi.getGroupsNames(startWidth),
+    enabled,
+  });
 
   return { isLoading, data };
 };
@@ -43,7 +40,7 @@ export const useChangeGroupName = () => {
 
       openToast(error.response.data.messages, 'error');
     },
-    useErrorBoundary: (error: AxiosError<ServerError>) => {
+    throwOnError: (error: AxiosError<ServerError>) => {
       if (!error.response) throw error;
 
       return error.response?.status >= 500;

@@ -10,15 +10,15 @@ const UserInfo = () => {
   const profile = useGetMemberProfile();
   const [isEditing, setIsEditing] = useState(false);
 
-  const onClickEdit = () => {
+  const handleClickEdit = () => {
     setIsEditing(true);
   };
 
-  const onClickDone = () => {
+  const handleClickDone = () => {
     setIsEditing(false);
   };
 
-  const onClickClose = () => {
+  const handleClickClose = () => {
     setIsEditing(false);
   };
 
@@ -35,9 +35,9 @@ const UserInfo = () => {
           <ProfileSection
             profile={profile}
             isEditing={isEditing}
-            onClickEdit={onClickEdit}
-            onClickDone={onClickDone}
-            onClickClose={onClickClose}
+            onClickEdit={handleClickEdit}
+            onClickDone={handleClickDone}
+            onClickClose={handleClickClose}
           />
         )}
         <Spacing size={16} />
