@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Spacing from '@components/Spacing/Spacing';
 import ChartSection from '@pages/user/components/ChartSection';
+import GuestToMember from '@pages/user/components/GuestToMember';
 import ProfileSection from '@pages/user/components/ProfileSection';
 
 import { useGetMemberProfile } from '@hooks/queries/members.query';
@@ -41,6 +42,7 @@ const UserInfo = () => {
           />
         )}
         <Spacing size={16} />
+        {profile.type === 'GUEST' && <GuestToMember />}
         {!isEditing && <ChartSection />}
       </div>
     </div>
