@@ -10,8 +10,11 @@ const membersApi = {
     changeMemberImage: '/members/me/profile-image',
   },
 
-  changeMemberName: async (name: string): Promise<void> => {
-    return await api.put(membersApi.endPoint.changeMemberName, { name });
+  changeMemberName: async (name: string): Promise<MemberType> => {
+    const { data } = await api.put(membersApi.endPoint.changeMemberName, {
+      name,
+    });
+    return data;
   },
 
   integrateMember: async (): Promise<MemberType> => {
@@ -24,15 +27,20 @@ const membersApi = {
     return data;
   },
 
-  changeMemberImage: async (profileImage: File) => {
+  changeMemberImage: async (profileImage: File): Promise<MemberType> => {
     const formData = new FormData();
     formData.append('profileImage', profileImage);
 
-    await api.put(membersApi.endPoint.changeMemberImage, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    const { data } = await api.put(
+      membersApi.endPoint.changeMemberImage,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    });
+    );
+    return data;
   },
 };
 
