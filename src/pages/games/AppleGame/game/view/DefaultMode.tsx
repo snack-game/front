@@ -29,7 +29,6 @@ const DefaultMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
-  const { t } = useTranslation();
 
   const { gameStart } = useGoldModeStart();
   const { checkMoves } = useGoldModeCheck();

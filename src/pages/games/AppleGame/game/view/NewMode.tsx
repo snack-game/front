@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import GameResult from '@pages/games/AppleGame/components/GameResult';
 import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
+import { goldModAppleType } from '@pages/games/AppleGame/game/game.type';
 import Apple from '@pages/games/AppleGame/game/model/apple';
 import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
+import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
 import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
 import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
 
@@ -12,7 +13,7 @@ import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-const ClassicMode = () => {
+const NewMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
@@ -29,14 +30,30 @@ const ClassicMode = () => {
 
   const generateApples = async () => {
     const apples = [];
+    const totalApples = defaultRows * defaultColumns;
+
+    const goldenAppleIndex = Math.floor(Math.random() * totalApples);
+
+    let index = 0;
+
     for (let i = 0; i < defaultRows; i++) {
       for (let j = 0; j < defaultColumns; j++) {
-        apples.push(
-          new PlainApple({
-            coordinates: { y: i, x: j },
-            appleNumber: Math.floor(Math.random() * 9) + 1,
-          }),
-        );
+        if (index === goldenAppleIndex) {
+          apples.push(
+            new GoldenApple({
+              coordinates: { y: i, x: j },
+              appleNumber: Math.floor(Math.random() * 9) + 1,
+            }),
+          );
+        } else {
+          apples.push(
+            new PlainApple({
+              coordinates: { y: i, x: j },
+              appleNumber: Math.floor(Math.random() * 9) + 1,
+            }),
+          );
+        }
+        index++;
       }
     }
     return apples;
@@ -61,10 +78,17 @@ const ClassicMode = () => {
   };
 
   const onRemove = async (removedApples: Apple[]) => {
+    if (removedApples.some((apple) => apple instanceof GoldenApple)) {
+      const response = await generateApples();
+      if (response) {
+        appleGame.updateApples(response);
+      }
+    }
+
     setScore(appleGame.getScore());
   };
 
-  const endGame = () => {
+  const endGame = async () => {
     try {
       setAppleGame(emptyGame);
       setIsOngoing(false);
@@ -111,4 +135,4 @@ const ClassicMode = () => {
   );
 };
 
-export default ClassicMode;
+export default NewMode;
