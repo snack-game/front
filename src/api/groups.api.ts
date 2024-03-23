@@ -1,3 +1,5 @@
+import { MemberType } from '@utils/types/member.type';
+
 import api from './index';
 
 const groupsApi = {
@@ -16,7 +18,7 @@ const groupsApi = {
     return data;
   },
 
-  changeGroupName: async (group: string) => {
+  changeGroupName: async (group: string): Promise<MemberType> => {
     const { data } = await api.put(groupsApi.endPoint.changeName, {
       group,
     });
