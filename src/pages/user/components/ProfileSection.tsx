@@ -113,11 +113,13 @@ const ProfileSection = ({
           }
           src={newImage || profile.profileImage}
         />
-        <EditImage
-          isEditing={isEditing}
-          onClickEdit={onClickEdit}
-          onChangeFile={handleFileChange}
-        />
+        {profile.type !== 'GUEST' && (
+          <EditImage
+            isEditing={isEditing}
+            onClickEdit={onClickEdit}
+            onChangeFile={handleFileChange}
+          />
+        )}
       </div>
 
       {isEditing ? (
