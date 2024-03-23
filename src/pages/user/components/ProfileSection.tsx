@@ -68,6 +68,13 @@ const ProfileSection = ({
   const changeGroupName = useChangeGroupName();
   const changeUserImage = useChangeUserImage();
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files !== null) {
+      setNewImageFile(event.target.files[0]);
+      setNewImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+
   const handleProfileChange = async () => {
     let newProfile = undefined;
 
@@ -94,13 +101,6 @@ const ProfileSection = ({
     }
 
     onClickDone();
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files !== null) {
-      setNewImageFile(event.target.files[0]);
-      setNewImage(URL.createObjectURL(event.target.files[0]));
-    }
   };
 
   return (
