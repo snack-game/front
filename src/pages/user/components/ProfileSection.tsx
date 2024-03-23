@@ -55,36 +55,44 @@ const ProfileSection = ({
     target: newGroup.value,
     delay: 300,
   });
+
   const { data } = useGetGroupsNames({
     startWidth: debounceValue,
     enabled: !!debounceValue,
   });
 
   const setUserState = useSetRecoilState(userState);
-
   const queryClient = useQueryClient();
 
   const changeUserName = useChangeUserName();
   const changeGroupName = useChangeGroupName();
   const changeUserImage = useChangeUserImage();
 
-  const handleClickDone = async () => {
+  const handleProfileChange = async () => {
+    let newProfile = undefined;
+
     if (profile.name !== newName.value) {
-      await changeUserName.mutateAsync(newName.value);
+      newProfile = await changeUserName.mutateAsync(newName.value);
     }
     if (profile.group?.name !== newGroup.value) {
-      await changeGroupName.mutateAsync(newGroup.value);
+      newProfile = await changeGroupName.mutateAsync(newGroup.value);
     }
     if (newImageFile !== null) {
-      await changeUserImage.mutateAsync(newImageFile);
+      newProfile = await changeUserImage.mutateAsync(newImageFile);
+      setNewImageFile(null);
     }
 
-    setUserState((prevInfo) => ({
-      ...prevInfo,
-      name: newName.value,
-      group: { name: newGroup.value },
-    }));
-    queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
+    return newProfile;
+  };
+
+  const handleClickDone = async () => {
+    const newProfile = await handleProfileChange();
+
+    if (newProfile) {
+      setUserState({ ...newProfile });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
+    }
+
     onClickDone();
   };
 
