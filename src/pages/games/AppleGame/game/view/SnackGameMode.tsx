@@ -18,12 +18,12 @@ const SnackGameMode = () => {
   const openToast = useToast();
   const { openModal } = useModal();
 
-  const emptyGame = new SnackGame({ row: 0, column: 0, apples: [] });
+  const emptyGame = new SnackGame({ row: 0, column: 0, snacks: [] });
   const defaultTime = 120;
   const defaultRows = 10;
   const defaultColumns = 5;
 
-  const [appleGame, setAppleGame] = useState(emptyGame);
+  const [snackGame, setSnackGame] = useState(emptyGame);
   const [isOngoing, setIsOngoing] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(defaultTime);
@@ -42,14 +42,14 @@ const SnackGameMode = () => {
           apples.push(
             new GoldenSnack({
               coordinates: { y: i, x: j },
-              appleNumber: Math.floor(Math.random() * 9) + 1,
+              snackNumber: Math.floor(Math.random() * 9) + 1,
             }),
           );
         } else {
           apples.push(
             new NewPlainApple({
               coordinates: { y: i, x: j },
-              appleNumber: Math.floor(Math.random() * 9) + 1,
+              snackNumber: Math.floor(Math.random() * 9) + 1,
             }),
           );
         }
@@ -61,11 +61,11 @@ const SnackGameMode = () => {
 
   const startGame = async () => {
     try {
-      setAppleGame(
+      setSnackGame(
         new SnackGame({
           row: defaultRows,
           column: defaultColumns,
-          apples: await generateApples(),
+          snacks: await generateApples(),
         }),
       );
       setScore(0);
@@ -81,16 +81,16 @@ const SnackGameMode = () => {
     if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
       const response = await generateApples();
       if (response) {
-        appleGame.updateApples(response);
+        snackGame.updateSnacks(response);
       }
     }
 
-    setScore(appleGame.getScore());
+    setScore(snackGame.getScore());
   };
 
   const endGame = async () => {
     try {
-      setAppleGame(emptyGame);
+      setSnackGame(emptyGame);
       setIsOngoing(false);
       openToast('게임 종료!', 'success');
 
@@ -129,7 +129,7 @@ const SnackGameMode = () => {
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}
-        appleGame={appleGame}
+        snackGame={snackGame}
       />
     </>
   );

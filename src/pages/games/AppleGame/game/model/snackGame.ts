@@ -2,7 +2,7 @@ import Snack from './snack';
 
 export class SnackGame {
   public score = 0;
-  protected apples: Snack[] = [];
+  protected snacks: Snack[] = [];
   protected row: number;
   protected column: number;
   protected borderOffset = 10;
@@ -10,68 +10,68 @@ export class SnackGame {
   constructor({
     row,
     column,
-    apples,
+    snacks,
   }: {
     row: number;
     column: number;
-    apples: Snack[];
+    snacks: Snack[];
   }) {
     this.row = row;
     this.column = column;
-    this.apples = apples;
+    this.snacks = snacks;
   }
 
-  removeApples() {
-    const applesInDragArea = this.apples.filter((apple) =>
-      apple.getIsSelected(),
+  removeSnacks() {
+    const snacksInDragArea = this.snacks.filter((snack) =>
+      snack.getIsSelected(),
     );
-    const sum = applesInDragArea
+    const sum = snacksInDragArea
       .map((it) => it.getNumber())
       .reduce((previous, current) => previous + current, 0);
 
-    if (sum === 10) {
-      this.apples.map((apple) => {
-        apple.setIsSelected(false);
+    if (sum > 10) {
+      this.snacks.map((snack) => {
+        snack.setIsSelected(false);
       });
     }
 
     if (sum == 10) {
-      this.score += applesInDragArea.length;
-      this.apples = this.apples.filter(
-        (apple) => !applesInDragArea.includes(apple),
+      this.score += snacksInDragArea.length;
+      this.snacks = this.snacks.filter(
+        (snack) => !snacksInDragArea.includes(snack),
       );
-      return applesInDragArea;
+      return snacksInDragArea;
     }
     return [];
   }
 
-  updateApples(apples: Snack[]) {
-    this.apples = apples;
+  updateSnacks(snacks: Snack[]) {
+    this.snacks = snacks;
   }
 
-  updateApplePosition(offsetWidth: number, offsetHeight: number) {
+  updateSnackPosition(offsetWidth: number, offsetHeight: number) {
     const availableWidth = (offsetWidth - this.borderOffset * 2) / this.column;
     const availableHeight = (offsetHeight - this.borderOffset * 2) / this.row;
 
-    const appleRadius = Math.floor(
+    const snackRadius = Math.floor(
       Math.min(availableWidth, availableHeight) * 0.4,
     );
-    const appleXOffSet = Math.floor(
-      availableWidth / 2 - appleRadius + this.borderOffset,
+    const snackXOffSet = Math.floor(
+      availableWidth / 2 - snackRadius + this.borderOffset,
     );
-    const appleYOffSet = Math.floor(
-      availableHeight / 2 - appleRadius + this.borderOffset,
+    const snackYOffSet = Math.floor(
+      availableHeight / 2 - snackRadius + this.borderOffset,
     );
 
-    this.apples.forEach((apple) => {
-      const coordinateX = apple.getCoordinates().x;
-      const coordinateY = apple.getCoordinates().y;
+    this.snacks.forEach((snack) => {
+      const coordinateX = snack.getCoordinates().x;
+      const coordinateY = snack.getCoordinates().y;
 
-      const positionX = coordinateX * availableWidth + appleXOffSet;
-      const positionY = coordinateY * availableHeight + appleYOffSet;
+      const positionX = coordinateX * availableWidth + snackXOffSet;
+      const positionY = coordinateY * availableHeight + snackYOffSet;
 
-      apple.setPosition({ x: positionX, y: positionY });
-      apple.setRadius(appleRadius);
+      snack.setPosition({ x: positionX, y: positionY });
+      snack.setRadius(snackRadius);
     });
   }
 
@@ -83,7 +83,7 @@ export class SnackGame {
     return this.score;
   }
 
-  getApples() {
-    return this.apples;
+  getSnacks() {
+    return this.snacks;
   }
 }

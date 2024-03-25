@@ -9,13 +9,13 @@ import { useCanvasOffset } from '@hooks/useCanvasOffset';
 import useError from '@hooks/useError';
 
 import { Click } from '../model/click';
-import NewApple from '../model/snack';
+import Snack from '../model/snack';
 import { SnackGame } from '../model/snackGame';
 
-interface AppleGameProps {
+interface SnackGameProps {
   isOngoing: boolean;
-  appleGame: SnackGame;
-  onRemove: (removedApples: NewApple[]) => Promise<void>;
+  snackGame: SnackGame;
+  onRemove: (removedApples: Snack[]) => Promise<void>;
   startGame?: () => Promise<void>;
 }
 
@@ -26,49 +26,29 @@ interface EventListenerInfo {
 
 const SnackGameController = ({
   isOngoing,
-  appleGame,
+  snackGame,
   onRemove,
   startGame,
-}: AppleGameProps) => {
+}: SnackGameProps) => {
   const setError = useError();
   const { canvasBaseRef, offsetWidth, offsetHeight, offsetLeft, offsetTop } =
     useCanvasOffset();
 
   const click = useMemo(() => new Click(), []);
-  const [fallingApples, setFallingApples] = useState<NewApple[]>([]);
   const [particles, setParticles] = useState<Particle[]>([]);
 
   const animationFrame = (ctx: CanvasRenderingContext2D) => {
-    appleGame.getApples().forEach((apple) => {
-      apple.drawApple(ctx);
+    snackGame.getSnacks().forEach((snack) => {
+      snack.drawSnack(ctx);
 
-      if (apple.getIsSelected()) apple.highlightBorder(ctx);
+      if (snack.getIsSelected()) snack.highlightBorder(ctx);
     });
 
-    fallingApples.forEach((apple) => {
-      apple.drawApple(ctx);
-    });
-
+    // 파티클 렌더링
     particles.forEach((it) => {
       it.update();
       it.drawParticle(ctx);
-    });
-
-    fallingApples.forEach((apple) => {
-      const { x: velocityX, y: velocityY } = apple.getVelocity();
-      const { x: positionX, y: positionY } = apple.getPosition();
-
-      apple.setVelocity({ x: velocityX, y: velocityY - 0.5 });
-
-      const newPositionX = positionX + velocityX;
-      const newPositionY = positionY - velocityY;
-
-      apple.setPosition({ x: newPositionX, y: newPositionY });
-
-      if (positionY > apple.getRadius() * appleGame.getColumn() * 3) {
-        setFallingApples([]);
-        setParticles([]);
-      }
+      if (it.size <= 0) setParticles([]);
     });
   };
 
@@ -82,19 +62,20 @@ const SnackGameController = ({
     event.preventDefault();
     click.onMouseDown(event, offsetLeft, offsetTop);
 
-    const apples = appleGame.getApples();
-    apples.forEach((apple) => {
+    const apples = snackGame.getSnacks();
+    apples.forEach((snack) => {
       const { x, y } = click.getClickedPosition();
-      if (apple.isClicked(x, y)) {
-        apple.setIsSelected(true);
+      if (snack.isClicked(x, y)) {
+        snack.setIsSelected(!snack.getIsSelected());
       }
     });
   };
 
   const handleMouseUp = async () => {
     try {
-      const removedApples = appleGame.removeApples();
-      setFallingApples((prev) => [...prev, ...removedApples]);
+      const removedApples = snackGame.removeSnacks();
+      if (removedApples.length === 0) return;
+
       removedApples.forEach((apple) => {
         for (let i = 0; i < 5; i++) {
           particles.push(
@@ -107,19 +88,19 @@ const SnackGameController = ({
       });
       await onRemove(removedApples);
 
-      appleGame.updateApplePosition(offsetWidth, offsetHeight);
+      snackGame.updateSnackPosition(offsetWidth, offsetHeight);
     } catch (e) {
       setError(new Error('이벤트가 실패했습니다.'));
     }
   };
 
   useEffect(() => {
-    appleGame.updateApplePosition(offsetWidth, offsetHeight);
+    snackGame.updateSnackPosition(offsetWidth, offsetHeight);
   }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
-    appleGame.updateApplePosition(offsetWidth, offsetHeight);
-  }, [appleGame]);
+    snackGame.updateSnackPosition(offsetWidth, offsetHeight);
+  }, [snackGame]);
 
   useEffect(() => {
     const eventListeners: EventListenerInfo[] = [
@@ -144,7 +125,7 @@ const SnackGameController = ({
     }
   }, [
     canvasRef.current,
-    appleGame,
+    snackGame,
     offsetWidth,
     offsetHeight,
     offsetLeft,

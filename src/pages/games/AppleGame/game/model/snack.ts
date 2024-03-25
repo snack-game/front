@@ -1,6 +1,6 @@
 export interface SnackPropType {
   coordinates: { y: number; x: number };
-  appleNumber: number;
+  snackNumber: number;
 }
 
 abstract class Snack {
@@ -8,17 +8,26 @@ abstract class Snack {
   private position = { x: 0, y: 0 };
   private velocity = { x: Math.random() * 4 - 2, y: 0 };
   private radius = 0;
-  private appleNumber: number;
+  private snackNumber: number;
   private image = new Image();
   private isSelected = false;
+  private toDelete = false;
 
-  constructor({ coordinates, appleNumber }: SnackPropType) {
+  constructor({ coordinates, snackNumber }: SnackPropType) {
     this.coordinates = coordinates;
-    this.appleNumber = appleNumber;
+    this.snackNumber = snackNumber;
   }
 
   getIsSelected(): boolean {
     return this.isSelected;
+  }
+
+  getToDelete() {
+    return this.toDelete;
+  }
+
+  setToDelete(toDelete: boolean): void {
+    this.toDelete = toDelete;
   }
 
   setIsSelected(isSelected: boolean): void {
@@ -42,7 +51,7 @@ abstract class Snack {
   }
 
   getNumber(): number {
-    return this.appleNumber;
+    return this.snackNumber;
   }
 
   getRadius(): number {
@@ -69,7 +78,7 @@ abstract class Snack {
     return distance <= this.radius;
   }
 
-  drawApple(ctx: CanvasRenderingContext2D) {
+  drawSnack(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(
       this.image,
       this.position.x,
@@ -85,7 +94,7 @@ abstract class Snack {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(
-      String(this.appleNumber),
+      String(this.snackNumber),
       this.position.x + this.radius,
       this.position.y + this.radius + this.radius / 3,
     );

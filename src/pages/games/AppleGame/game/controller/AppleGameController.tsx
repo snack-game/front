@@ -34,7 +34,6 @@ const AppleGameController = ({
     useCanvasOffset();
 
   const drag = useMemo(() => new Drag(), []);
-  const [fallingApples, setFallingApples] = useState<Apple[]>([]);
   const [particles, setParticles] = useState<Particle[]>([]);
 
   const animationFrame = (ctx: CanvasRenderingContext2D) => {
@@ -49,30 +48,10 @@ const AppleGameController = ({
       if (isDrawing) apple.highlightBorder(ctx, x, y, width, height);
     });
 
-    fallingApples.forEach((apple) => {
-      apple.drawApple(ctx);
-    });
-
     particles.forEach((it) => {
       it.update();
       it.drawParticle(ctx);
-    });
-
-    fallingApples.forEach((apple) => {
-      const { x: velocityX, y: velocityY } = apple.getVelocity();
-      const { x: positionX, y: positionY } = apple.getPosition();
-
-      apple.setVelocity({ x: velocityX, y: velocityY - 0.5 });
-
-      const newPositionX = positionX + velocityX;
-      const newPositionY = positionY - velocityY;
-
-      apple.setPosition({ x: newPositionX, y: newPositionY });
-
-      if (positionY > apple.getRadius() * appleGame.getColumn() * 3) {
-        setFallingApples([]);
-        setParticles([]);
-      }
+      if (it.size <= 0) setParticles([]);
     });
   };
 
@@ -95,7 +74,6 @@ const AppleGameController = ({
   const handleMouseUp = async () => {
     try {
       const removedApples = appleGame.removeApples();
-      setFallingApples((prev) => [...prev, ...removedApples]);
       removedApples.forEach((apple) => {
         for (let i = 0; i < 5; i++) {
           particles.push(
@@ -130,23 +108,17 @@ const AppleGameController = ({
     ];
 
     if (canvasRef.current) {
-      eventListeners.forEach(
-        (listener) =>
-          canvasRef.current?.addEventListener(
-            listener.event,
-            listener.handler,
-            {
-              passive: false,
-            },
-          ),
+      eventListeners.forEach((listener) =>
+        canvasRef.current?.addEventListener(listener.event, listener.handler, {
+          passive: false,
+        }),
       );
       return () => {
-        eventListeners.forEach(
-          (listener) =>
-            canvasRef.current?.removeEventListener(
-              listener.event,
-              listener.handler,
-            ),
+        eventListeners.forEach((listener) =>
+          canvasRef.current?.removeEventListener(
+            listener.event,
+            listener.handler,
+          ),
         );
       };
     }
@@ -160,7 +132,7 @@ const AppleGameController = ({
   ]);
 
   return (
-    <div ref={canvasBaseRef} className={'bg-game m-auto h-[80%] max-w-7xl'}>
+    <div ref={canvasBaseRef} className={'m-auto h-[80%] max-w-7xl bg-game'}>
       {isOngoing ? (
         <canvas
           ref={canvasRef}

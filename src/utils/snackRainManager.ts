@@ -1,24 +1,4 @@
-import AppleImage from '@assets/images/apple.png';
-import CandyCaneImage from '@assets/images/candy-cane.png';
-import CandyImage from '@assets/images/candy.png';
-import ChocolateImage from '@assets/images/chocolate.png';
-import CookieImage from '@assets/images/cookie.png';
-import JellyImage from '@assets/images/jelly.png';
-import OrangeImage from '@assets/images/orange.png';
-
-const loadedImages = [
-  CandyImage,
-  CandyCaneImage,
-  AppleImage,
-  OrangeImage,
-  JellyImage,
-  CookieImage,
-  ChocolateImage,
-].map((src) => {
-  const img = new Image();
-  img.src = src;
-  return img;
-});
+import { loadedImages } from '@constants/loadImage';
 
 interface Unit {
   x: number;
