@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AnimationItem } from 'lottie-web';
 
-import { GroupType } from '@utils/types/member.type';
+import { GroupType, MemberType } from '@utils/types/member.type';
 
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 
@@ -31,11 +31,7 @@ export type LottieOptionTypes = {
 
 export type RankingType = {
   rank: number;
-  owner: {
-    id: number;
-    name: string;
-    group: GroupType | null;
-  };
+  owner: MemberType;
   score: number;
   message?: string;
 };

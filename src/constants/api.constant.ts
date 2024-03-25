@@ -5,6 +5,9 @@ export const QUERY_KEY = {
   USER_RANKING: 'userRanking',
 
   USER_PROFILE: 'userProfile',
+
+  SEASON_RANKING: 'seasonRanking',
+  SEASON_USER_RANKING: 'seasonUserRanking',
 };
 
 export interface ServerError {
