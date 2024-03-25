@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
@@ -35,7 +35,9 @@ const Header = ({ children, className }: HeaderProps) => {
   });
 
   const handleLogin = () => {
-    openModal({ children: <Auth /> });
+    openModal({
+      children: <Auth />,
+    });
   };
 
   const handleLogout = async () => {
@@ -70,14 +72,14 @@ const Header = ({ children, className }: HeaderProps) => {
 
         <div className="mr-3 hidden flex-1 items-center justify-end space-x-4 lg:flex">
           {userInfo.id ? (
-            <div
+            <Link
               className={
                 'cursor-pointer text-sm text-primary-deep-dark hover:text-primary hover:underline'
               }
-              onClick={handleLogout}
+              to={PATH.USER}
             >
               {userInfo.name} 님
-            </div>
+            </Link>
           ) : (
             <Button onClick={handleLogin}>Login</Button>
           )}
@@ -92,14 +94,14 @@ const Header = ({ children, className }: HeaderProps) => {
             <Spacing size={2} />
             <div className={'flex flex-col items-start gap-6 px-4 lg:hidden'}>
               {userInfo.id && (
-                <div
+                <Link
                   className={
                     'cursor-pointer font-medium text-gray-400 hover:text-primary hover:underline'
                   }
-                  onClick={handleLogout}
+                  to={PATH.USER}
                 >
                   {userInfo.name} 님
-                </div>
+                </Link>
               )}
 
               {children}

@@ -8,12 +8,13 @@ import { modalState } from '@utils/atoms/common.atom';
 import useModal from '@hooks/useModal';
 
 const Modal = () => {
-  const { open, children } = useRecoilValue(modalState);
+  const { open, children, handleOutsideClick } = useRecoilValue(modalState);
 
   const { closeModal } = useModal();
 
   const handleClose = () => {
     closeModal();
+    if (handleOutsideClick) handleOutsideClick();
   };
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const Modal = () => {
       {open && (
         <div
           className={'fixed top-0 z-50 h-screen w-screen bg-gray-500/50'}
-          onClick={closeModal}
+          onClick={handleClose}
         >
           <motion.div
             className={

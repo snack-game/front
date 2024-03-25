@@ -6,16 +6,18 @@ import { ModalType } from '@utils/types/common.type';
 const useModal = () => {
   const setModalState = useSetRecoilState(modalState);
 
-  const openModal = ({ children }: ModalType) => {
+  const openModal = ({ children, handleOutsideClick }: ModalType) => {
     setModalState(() => ({
       children,
       open: true,
+      handleOutsideClick,
     }));
   };
 
   const closeModal = () => {
     setModalState(() => ({
       open: false,
+      handleOutsideClick: undefined,
     }));
   };
 

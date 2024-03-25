@@ -9,6 +9,7 @@ export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 export interface ModalType {
   open?: boolean;
   children?: React.ReactNode;
+  handleOutsideClick?: () => void;
 }
 
 export interface toastStateType {
