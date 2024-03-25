@@ -37,7 +37,6 @@ const AppleGamePage = () => {
 
       <div className={'h-screen'}>
         <AppleGameHeader />
-        <Spacing size={2} />
         <ErrorBoundary fallback={retryError}>{renderGameMode()}</ErrorBoundary>
       </div>
 
