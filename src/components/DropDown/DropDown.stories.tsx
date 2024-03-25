@@ -38,6 +38,6 @@ export const Default: Story = {
         },
       },
     ],
-    initalOption: 0,
+    initialOption: 0,
   },
 };

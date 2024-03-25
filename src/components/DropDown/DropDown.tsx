@@ -13,17 +13,17 @@ export type DropDownOptionType = {
 interface DropDownProps {
   options: DropDownOptionType[];
   className?: string;
-  initalOption?: number;
+  initialOption?: number;
 }
 
 export default function Dropdown({
   options,
   className,
-  initalOption,
+  initialOption,
 }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [mainContentState, setMainContentState] = useState<string>(
-    (initalOption && options[initalOption].name) || options[0].name,
+    (initialOption && options[initialOption].name) || options[0].name,
   );
 
   const handleClickOption = (option: DropDownOptionType) => {

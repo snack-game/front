@@ -31,7 +31,7 @@ const RankingPage = () => {
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
         <Dropdown
-          initalOption={1}
+          initialOption={1}
           options={dropdownOptions}
           className="max-w-[120px]"
         />
