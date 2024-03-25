@@ -10,7 +10,6 @@ export interface MemberType {
   name?: string;
   group: GroupType | null;
   profileImage?: string;
-  guest?: boolean;
   type?: AuthType;
   status?: StatusType;
 }
