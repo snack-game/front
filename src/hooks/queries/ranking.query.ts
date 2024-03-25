@@ -28,3 +28,21 @@ export const useGetUserRanking = () => {
 
   return data;
 };
+
+export const useGetSeasonRanking = (season: number) => {
+  const { data } = useSuspenseQuery<RankingType[], AxiosError>({
+    queryKey: [QUERY_KEY.SEASON_RANKING, season],
+    queryFn: () => rankingApi.seasonRanking(season),
+  });
+
+  return data;
+};
+
+export const useGetSeasonRankingMe = (season: number) => {
+  const { data } = useSuspenseQuery<RankingType, AxiosError>({
+    queryKey: [QUERY_KEY.SEASON_USER_RANKING, season],
+    queryFn: () => rankingApi.seasonRankingMe(season),
+  });
+
+  return data;
+};
