@@ -1,9 +1,9 @@
-export interface NewApplePropType {
+export interface SnackPropType {
   coordinates: { y: number; x: number };
   appleNumber: number;
 }
 
-abstract class NewApple {
+abstract class Snack {
   private coordinates: { y: number; x: number };
   private position = { x: 0, y: 0 };
   private velocity = { x: Math.random() * 4 - 2, y: 0 };
@@ -12,7 +12,7 @@ abstract class NewApple {
   private image = new Image();
   private isSelected = false;
 
-  constructor({ coordinates, appleNumber }: NewApplePropType) {
+  constructor({ coordinates, appleNumber }: SnackPropType) {
     this.coordinates = coordinates;
     this.appleNumber = appleNumber;
   }
@@ -105,4 +105,4 @@ abstract class NewApple {
   }
 }
 
-export default NewApple;
+export default Snack;

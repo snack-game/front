@@ -1,8 +1,8 @@
-import NewApple from './newApple';
+import Snack from './snack';
 
-export class NewAppleGame {
+export class SnackGame {
   public score = 0;
-  protected apples: NewApple[] = [];
+  protected apples: Snack[] = [];
   protected row: number;
   protected column: number;
   protected borderOffset = 10;
@@ -14,7 +14,7 @@ export class NewAppleGame {
   }: {
     row: number;
     column: number;
-    apples: NewApple[];
+    apples: Snack[];
   }) {
     this.row = row;
     this.column = column;
@@ -45,7 +45,7 @@ export class NewAppleGame {
     return [];
   }
 
-  updateApples(apples: NewApple[]) {
+  updateApples(apples: Snack[]) {
     this.apples = apples;
   }
 

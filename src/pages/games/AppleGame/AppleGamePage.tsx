@@ -9,7 +9,8 @@ import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
 import ClassicMode from '@pages/games/AppleGame/game/view/ClassicMode';
 import DefaultMode from '@pages/games/AppleGame/game/view/DefaultMode';
-import NewMode from '@pages/games/AppleGame/game/view/NewMode';
+
+import SnackGameMode from './game/view/SnackGameMode';
 
 type Mode = 'classic' | 'default' | 'practice' | 'new';
 
@@ -21,7 +22,7 @@ const AppleGamePage = () => {
       case 'classic':
         return <ClassicMode />;
       case 'new':
-        return <NewMode />;
+        return <SnackGameMode />;
       case 'default':
       default:
         return <DefaultMode />;

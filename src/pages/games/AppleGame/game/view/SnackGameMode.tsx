@@ -7,18 +7,18 @@ import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-import NewGameModeController from '../controller/NewGameModeController';
-import NewApple from '../model/newApple';
-import { NewAppleGame } from '../model/newAppleGame';
-import { NewGoldenApple } from '../model/newGoldApple';
-import NewPlainApple from '../model/newPlainApple';
+import SnackGameController from '../controller/SnackGameController';
+import { GoldenSnack } from '../model/goldSnack';
+import NewPlainApple from '../model/plainSnack';
+import NewApple from '../model/snack';
+import { SnackGame } from '../model/snackGame';
 
-const NewMode = () => {
+const SnackGameMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
-  const emptyGame = new NewAppleGame({ row: 0, column: 0, apples: [] });
+  const emptyGame = new SnackGame({ row: 0, column: 0, apples: [] });
   const defaultTime = 120;
   const defaultRows = 10;
   const defaultColumns = 5;
@@ -40,7 +40,7 @@ const NewMode = () => {
       for (let j = 0; j < defaultColumns; j++) {
         if (index === goldenAppleIndex) {
           apples.push(
-            new NewGoldenApple({
+            new GoldenSnack({
               coordinates: { y: i, x: j },
               appleNumber: Math.floor(Math.random() * 9) + 1,
             }),
@@ -62,7 +62,7 @@ const NewMode = () => {
   const startGame = async () => {
     try {
       setAppleGame(
-        new NewAppleGame({
+        new SnackGame({
           row: defaultRows,
           column: defaultColumns,
           apples: await generateApples(),
@@ -78,7 +78,7 @@ const NewMode = () => {
   };
 
   const onRemove = async (removedApples: NewApple[]) => {
-    if (removedApples.some((apple) => apple instanceof NewGoldenApple)) {
+    if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
       const response = await generateApples();
       if (response) {
         appleGame.updateApples(response);
@@ -125,7 +125,7 @@ const NewMode = () => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <NewGameModeController
+      <SnackGameController
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}
@@ -135,4 +135,4 @@ const NewMode = () => {
   );
 };
 
-export default NewMode;
+export default SnackGameMode;

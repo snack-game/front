@@ -9,12 +9,12 @@ import { useCanvasOffset } from '@hooks/useCanvasOffset';
 import useError from '@hooks/useError';
 
 import { Click } from '../model/click';
-import NewApple from '../model/newApple';
-import { NewAppleGame } from '../model/newAppleGame';
+import NewApple from '../model/snack';
+import { SnackGame } from '../model/snackGame';
 
 interface AppleGameProps {
   isOngoing: boolean;
-  appleGame: NewAppleGame;
+  appleGame: SnackGame;
   onRemove: (removedApples: NewApple[]) => Promise<void>;
   startGame?: () => Promise<void>;
 }
@@ -24,7 +24,7 @@ interface EventListenerInfo {
   handler: any;
 }
 
-const NewAppleGameController = ({
+const SnackGameController = ({
   isOngoing,
   appleGame,
   onRemove,
@@ -170,4 +170,4 @@ const NewAppleGameController = ({
   );
 };
 
-export default memo(NewAppleGameController);
+export default memo(SnackGameController);
