@@ -16,7 +16,7 @@ const authApi = {
       name: member.name,
     });
 
-    return data.member ? { ...data.member } : data;
+    return data;
   },
 
   logOut: async (): Promise<void> => {
@@ -29,19 +29,19 @@ const authApi = {
       group: member.group?.name,
     });
 
-    return data.member ? { ...data.member } : data;
+    return data;
   },
 
   guest: async (): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.guest);
 
-    return data.member ? { ...data.member } : data;
+    return data;
   },
 
   social: async (): Promise<MemberType> => {
     const { data } = await api.post(authApi.endPoint.social, {});
 
-    return data.member ? { ...data.member } : data;
+    return data;
   },
 
   tokenReIssue: async (): Promise<void> => {
