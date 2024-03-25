@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react';
 
 import GameResult from '@pages/games/AppleGame/components/GameResult';
-import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
-import { goldModAppleType } from '@pages/games/AppleGame/game/game.type';
-import Apple from '@pages/games/AppleGame/game/model/apple';
-import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
-import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
-import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
 import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
+import NewGameModeController from '../controller/NewGameModeController';
+import NewApple from '../model/newApple';
+import { NewAppleGame } from '../model/newAppleGame';
+import { NewGoldenApple } from '../model/newGoldApple';
+import NewPlainApple from '../model/newPlainApple';
+
 const NewMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
-  const emptyGame = new AppleGame({ row: 0, column: 0, apples: [] });
+  const emptyGame = new NewAppleGame({ row: 0, column: 0, apples: [] });
   const defaultTime = 120;
   const defaultRows = 10;
-  const defaultColumns = 18;
+  const defaultColumns = 5;
 
   const [appleGame, setAppleGame] = useState(emptyGame);
   const [isOngoing, setIsOngoing] = useState<boolean>(false);
@@ -40,14 +40,14 @@ const NewMode = () => {
       for (let j = 0; j < defaultColumns; j++) {
         if (index === goldenAppleIndex) {
           apples.push(
-            new GoldenApple({
+            new NewGoldenApple({
               coordinates: { y: i, x: j },
               appleNumber: Math.floor(Math.random() * 9) + 1,
             }),
           );
         } else {
           apples.push(
-            new PlainApple({
+            new NewPlainApple({
               coordinates: { y: i, x: j },
               appleNumber: Math.floor(Math.random() * 9) + 1,
             }),
@@ -62,7 +62,7 @@ const NewMode = () => {
   const startGame = async () => {
     try {
       setAppleGame(
-        new AppleGame({
+        new NewAppleGame({
           row: defaultRows,
           column: defaultColumns,
           apples: await generateApples(),
@@ -77,8 +77,8 @@ const NewMode = () => {
     }
   };
 
-  const onRemove = async (removedApples: Apple[]) => {
-    if (removedApples.some((apple) => apple instanceof GoldenApple)) {
+  const onRemove = async (removedApples: NewApple[]) => {
+    if (removedApples.some((apple) => apple instanceof NewGoldenApple)) {
       const response = await generateApples();
       if (response) {
         appleGame.updateApples(response);
@@ -125,7 +125,7 @@ const NewMode = () => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <AppleGameController
+      <NewGameModeController
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}
