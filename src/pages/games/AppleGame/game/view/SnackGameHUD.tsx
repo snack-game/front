@@ -8,7 +8,7 @@ interface AppleGameHUDProps {
   score: number;
 }
 
-const AppleGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
+const SnackGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
   const totalTime = 120;
   const remainingTimeRatio = (time / totalTime) * 100;
 
@@ -27,7 +27,7 @@ const AppleGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
             {time}
           </div>
           <div
-            className={`h-4 rounded-full bg-primary before:bg-primary-light`}
+            className={`h-4 rounded-full bg-primary before:w-full before:bg-white`}
             style={{
               width: `${remainingTimeRatio}%`,
             }}
@@ -44,4 +44,4 @@ const AppleGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
   );
 };
 
-export default AppleGameHUD;
+export default SnackGameHUD;

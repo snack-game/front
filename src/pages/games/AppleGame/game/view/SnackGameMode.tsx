@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
 import GameResult from '@pages/games/AppleGame/components/GameResult';
-import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
+import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-import SnackGameController from '../controller/SnackGameController';
 import { GoldenSnack } from '../model/goldSnack';
 import NewPlainApple from '../model/plainSnack';
 import NewApple from '../model/snack';
 import { SnackGame } from '../model/snackGame';
+import SnackGameController from '../viewModal/SnackGameController';
 
 const SnackGameMode = () => {
   const setError = useError();
@@ -120,7 +120,7 @@ const SnackGameMode = () => {
 
   return (
     <>
-      <AppleGameHUD
+      <SnackGameHUD
         score={score}
         time={remainingTime}
         handleRefresh={refreshGame}

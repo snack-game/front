@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import GameResult from '@pages/games/AppleGame/components/GameResult';
-import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
 import Apple from '@pages/games/AppleGame/game/model/apple';
 import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
 import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
-import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
+import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
+import AppleGameController from '@pages/games/AppleGame/game/viewModal/AppleGameController';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
@@ -96,7 +95,7 @@ const ClassicMode = () => {
 
   return (
     <>
-      <AppleGameHUD
+      <SnackGameHUD
         score={score}
         time={remainingTime}
         handleRefresh={refreshGame}

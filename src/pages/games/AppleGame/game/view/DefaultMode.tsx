@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
 import GameResult from '@pages/games/AppleGame/components/GameResult';
-import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
 import {
   goldModAppleType,
   scoredAppleRectType,
@@ -13,7 +11,8 @@ import Apple from '@pages/games/AppleGame/game/model/apple';
 import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
 import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
 import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
-import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
+import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
+import AppleGameController from '@pages/games/AppleGame/game/viewModal/AppleGameController';
 
 import {
   useAppleGameRefresh,
@@ -158,7 +157,7 @@ const DefaultMode = () => {
 
   return (
     <QueryBoundary errorFallback={retryError}>
-      <AppleGameHUD
+      <SnackGameHUD
         score={score}
         time={remainingTime}
         handleRefresh={refreshGame}
