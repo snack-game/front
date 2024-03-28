@@ -1,11 +1,13 @@
 import Snack from './snack';
 
 export class SnackGame {
-  public score = 0;
-  protected snacks: Snack[] = [];
-  protected row: number;
-  protected column: number;
-  protected borderOffset = 10;
+  private score = 0;
+  private snacks: Snack[] = [];
+  private row: number;
+  private column: number;
+  private borderOffset = 10;
+  private selectStarted = false;
+  private selectedSnacks: Snack[] = [];
 
   constructor({
     row,
@@ -21,28 +23,90 @@ export class SnackGame {
     this.snacks = snacks;
   }
 
+  caculateSnackClicked(mousePosition: { x: number; y: number }) {
+    const { x, y } = mousePosition;
+
+    this.snacks.forEach((snack) => {
+      if (snack.isClicked(x, y)) {
+        const selected = snack.getIsSelected();
+
+        if (!selected || this.selectedSnacks.length === 0) {
+          this.selectedSnacks.push(snack);
+          snack.setIsSelected(true);
+          this.calculatePossibleSelect();
+        } else {
+          snack.setIsSelected(false);
+          while (this.selectedSnacks.length > 0) {
+            const topSnack = this.selectedSnacks.pop();
+            this.calculatePossibleSelect();
+            topSnack?.setIsSelected(false);
+            if (topSnack === snack) break;
+          }
+        }
+        return;
+      }
+    });
+  }
+
+  calculatePossibleSelect() {
+    // 선택한 Snack의 주변 3x3 영역에 있는 Snack들의 canSelect 상태를 true로 변경.
+    const latestPosition = this.selectedSnacks.at(-1)?.getCoordinates();
+    if (!latestPosition || this.selectedSnacks.length === 0) return;
+
+    this.snacks.forEach((nearSnack) => {
+      nearSnack.setCanSelect(false);
+      const nearPosition = nearSnack.getCoordinates();
+      // 주변 객체 판별 로직 (선택된 객체의 x, y 좌표를 기준으로 +/- 1 범위 내에 있는지 확인)
+      if (
+        nearPosition.x >= latestPosition.x - 1 &&
+        nearPosition.x <= latestPosition.x + 1 &&
+        nearPosition.y >= latestPosition.y - 1 &&
+        nearPosition.y <= latestPosition.y + 1 &&
+        !(
+          nearPosition.x === latestPosition.x &&
+          nearPosition.y === latestPosition.y
+        ) // 선택된 객체 자신은 제외
+      ) {
+        nearSnack.setCanSelect(true);
+      }
+    });
+  }
+
   removeSnacks() {
-    const snacksInDragArea = this.snacks.filter((snack) =>
-      snack.getIsSelected(),
-    );
-    const sum = snacksInDragArea
+    const selectedSnacks = this.snacks.filter((snack) => snack.getIsSelected());
+    const sum = selectedSnacks
       .map((it) => it.getNumber())
       .reduce((previous, current) => previous + current, 0);
 
     if (sum > 10) {
-      this.snacks.map((snack) => {
-        snack.setIsSelected(false);
-      });
+      this.clearCanSelect();
+      this.clearIsSelect();
+      this.selectedSnacks = [];
     }
 
     if (sum == 10) {
-      this.score += snacksInDragArea.length;
+      this.selectedSnacks = [];
+      this.score += selectedSnacks.length;
       this.snacks = this.snacks.filter(
-        (snack) => !snacksInDragArea.includes(snack),
+        (snack) => !selectedSnacks.includes(snack),
       );
-      return snacksInDragArea;
+      this.clearCanSelect();
+
+      return selectedSnacks;
     }
     return [];
+  }
+
+  clearIsSelect() {
+    this.snacks.map((snack) => {
+      snack.setIsSelected(false);
+    });
+  }
+
+  clearCanSelect() {
+    this.snacks.map((snack) => {
+      snack.setCanSelect(false);
+    });
   }
 
   updateSnacks(snacks: Snack[]) {

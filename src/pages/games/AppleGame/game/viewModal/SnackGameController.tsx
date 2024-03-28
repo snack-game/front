@@ -15,7 +15,7 @@ import { SnackGame } from '../model/snackGame';
 interface SnackGameProps {
   isOngoing: boolean;
   snackGame: SnackGame;
-  onRemove: (removedApples: Snack[]) => Promise<void>;
+  onRemove: (removedsnacks: Snack[]) => Promise<void>;
   startGame?: () => Promise<void>;
 }
 
@@ -41,7 +41,7 @@ const SnackGameController = ({
     snackGame.getSnacks().forEach((snack) => {
       snack.drawSnack(ctx);
 
-      if (snack.getIsSelected()) snack.highlightBorder(ctx);
+      if (snack.getIsSelected()) snack.highlightBorder(ctx, 'red');
     });
 
     // 파티클 렌더링
@@ -62,31 +62,27 @@ const SnackGameController = ({
     event.preventDefault();
     click.onMouseDown(event, offsetLeft, offsetTop);
 
-    const apples = snackGame.getSnacks();
-    apples.forEach((snack) => {
-      const { x, y } = click.getClickedPosition();
-      if (snack.isClicked(x, y)) {
-        snack.setIsSelected(!snack.getIsSelected());
-      }
-    });
+    const { x, y } = click.getClickedPosition();
+    snackGame.caculateSnackClicked({ x, y });
   };
 
   const handleMouseUp = async () => {
     try {
-      const removedApples = snackGame.removeSnacks();
-      if (removedApples.length === 0) return;
+      const removedSnacks = snackGame.removeSnacks();
+      if (removedSnacks.length === 0) return;
 
-      removedApples.forEach((apple) => {
+      removedSnacks.forEach((snack) => {
         for (let i = 0; i < 5; i++) {
           particles.push(
             new Particle(
-              apple.getPosition().x + apple.getRadius(),
-              apple.getPosition().y + apple.getRadius(),
+              snack.getPosition().x + snack.getRadius(),
+              snack.getPosition().y + snack.getRadius(),
             ),
           );
         }
       });
-      await onRemove(removedApples);
+
+      await onRemove(removedSnacks);
 
       snackGame.updateSnackPosition(offsetWidth, offsetHeight);
     } catch (e) {
@@ -96,11 +92,7 @@ const SnackGameController = ({
 
   useEffect(() => {
     snackGame.updateSnackPosition(offsetWidth, offsetHeight);
-  }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
-
-  useEffect(() => {
-    snackGame.updateSnackPosition(offsetWidth, offsetHeight);
-  }, [snackGame]);
+  }, [snackGame, offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
     const eventListeners: EventListenerInfo[] = [

@@ -94,11 +94,7 @@ const AppleGameController = ({
 
   useEffect(() => {
     appleGame.updateApplePosition(offsetWidth, offsetHeight);
-  }, [offsetWidth, offsetHeight, offsetLeft, offsetTop]);
-
-  useEffect(() => {
-    appleGame.updateApplePosition(offsetWidth, offsetHeight);
-  }, [appleGame]);
+  }, [appleGame, offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
     const eventListeners: EventListenerInfo[] = [

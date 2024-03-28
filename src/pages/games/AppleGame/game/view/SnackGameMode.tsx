@@ -43,6 +43,7 @@ const SnackGameMode = () => {
             new GoldenSnack({
               coordinates: { y: i, x: j },
               snackNumber: Math.floor(Math.random() * 9) + 1,
+              index,
             }),
           );
         } else {
@@ -50,6 +51,7 @@ const SnackGameMode = () => {
             new NewPlainApple({
               coordinates: { y: i, x: j },
               snackNumber: Math.floor(Math.random() * 9) + 1,
+              index,
             }),
           );
         }
