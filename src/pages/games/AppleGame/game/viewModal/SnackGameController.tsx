@@ -69,7 +69,7 @@ const SnackGameController = ({
   const handleMouseUp = async () => {
     try {
       const removedSnacks = snackGame.removeSnacks();
-      if (removedSnacks.length === 0) return;
+      if (!removedSnacks) return;
 
       removedSnacks.forEach((snack) => {
         for (let i = 0; i < 5; i++) {

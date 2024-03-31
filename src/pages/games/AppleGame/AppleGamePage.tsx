@@ -43,19 +43,19 @@ const AppleGamePage = () => {
       <div className="mx-auto flex w-full max-w-4xl justify-center gap-8 py-10">
         <Button
           onClick={() => setModeState('default')}
-          className={modeState === 'default' ? 'bg-green-400' : ''}
+          className={modeState === 'default' ? 'bg-primary-dark' : ''}
         >
           일반 모드
         </Button>
         <Button
           onClick={() => setModeState('classic')}
-          className={modeState === 'classic' ? 'bg-green-400' : ''}
+          className={modeState === 'classic' ? 'bg-primary-dark' : ''}
         >
           클래식 모드
         </Button>
         <Button
           onClick={() => setModeState('new')}
-          className={modeState === 'new' ? 'bg-green-400' : ''}
+          className={modeState === 'new' ? 'bg-primary-dark' : ''}
         >
           신규 모드
         </Button>

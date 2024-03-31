@@ -14,10 +14,7 @@ export class Click {
   }
 
   getClickedPosition() {
-    const x = Math.min(this.startX);
-    const y = Math.min(this.startY);
-
-    return { x, y };
+    return { x: Math.min(this.startX), y: Math.min(this.startY) };
   }
 
   onMouseDown(
