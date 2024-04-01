@@ -125,7 +125,7 @@ const SnackGameController = ({
   ]);
 
   return (
-    <div ref={canvasBaseRef} className={'m-auto h-[80%] max-w-7xl bg-game'}>
+    <div ref={canvasBaseRef} className={'m-auto h-[80%] max-w-xl bg-game'}>
       {isOngoing ? (
         <canvas
           ref={canvasRef}
