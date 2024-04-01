@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import AwardIcon from '@assets/icon/award.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
@@ -29,12 +28,9 @@ const memberOnlyFeature: FeatureProps[] = [
 
 const GuestToMember = () => {
   const integrateMember = useIntegrateMember();
-  const navigate = useNavigate();
 
   const onOAuthSuccess = async () => {
-    const response = await integrateMember.mutateAsync();
-    navigate(0);
-    return response;
+    return await integrateMember.mutateAsync();
   };
 
   return (
