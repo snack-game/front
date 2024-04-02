@@ -5,12 +5,11 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Button from '@components/Button/Button';
 import retryError from '@components/Error/RetryError';
 import Footer from '@components/Footer/Footer';
-import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
-import ClassicMode from '@pages/games/AppleGame/game/view/appleGameMod/ClassicMode';
-import DefaultMode from '@pages/games/AppleGame/game/view/appleGameMod/DefaultMode';
+import ClassicMode from '@pages/games/AppleGame/game/view/appleGame/ClassicMode';
+import DefaultMode from '@pages/games/AppleGame/game/view/appleGame/DefaultMode';
 
-import SnackGameMode from './game/view/snackGameMod/SnackGameMode';
+import SnackGameMode from './game/view/snackGame/SnackGameMode';
 
 type Mode = 'classic' | 'default' | 'practice' | 'new';
 
