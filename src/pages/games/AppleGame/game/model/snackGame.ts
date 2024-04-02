@@ -6,7 +6,6 @@ export class SnackGame {
   private row: number;
   private column: number;
   private borderOffset = 10;
-  private selectStarted = false;
   private selectedSnacks: Snack[] = [];
 
   constructor({

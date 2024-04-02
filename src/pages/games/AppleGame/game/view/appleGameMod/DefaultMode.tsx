@@ -12,7 +12,6 @@ import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
 import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
 import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
 import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
-import AppleGameController from '@pages/games/AppleGame/game/viewModal/AppleGameController';
 
 import {
   useAppleGameRefresh,
@@ -23,6 +22,8 @@ import {
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
+
+import AppleGameView from './AppleGameView';
 
 const DefaultMode = () => {
   const setError = useError();
@@ -162,7 +163,7 @@ const DefaultMode = () => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <AppleGameController
+      <AppleGameView
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}

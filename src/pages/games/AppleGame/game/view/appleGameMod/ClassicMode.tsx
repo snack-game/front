@@ -5,11 +5,12 @@ import Apple from '@pages/games/AppleGame/game/model/apple';
 import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
 import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
 import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
-import AppleGameController from '@pages/games/AppleGame/game/viewModal/AppleGameController';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
+
+import AppleGameView from './AppleGameView';
 
 const ClassicMode = () => {
   const setError = useError();
@@ -100,7 +101,7 @@ const ClassicMode = () => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <AppleGameController
+      <AppleGameView
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}

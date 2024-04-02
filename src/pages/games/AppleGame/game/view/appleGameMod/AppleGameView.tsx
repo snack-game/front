@@ -23,7 +23,7 @@ interface EventListenerInfo {
   handler: any;
 }
 
-const AppleGameController = ({
+const AppleGameView = ({
   isOngoing,
   appleGame,
   onRemove,
@@ -147,4 +147,4 @@ const AppleGameController = ({
   );
 };
 
-export default memo(AppleGameController);
+export default memo(AppleGameView);

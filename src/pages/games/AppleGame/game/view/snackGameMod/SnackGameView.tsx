@@ -8,9 +8,9 @@ import useCanvas from '@hooks/useCanvas';
 import { useCanvasOffset } from '@hooks/useCanvasOffset';
 import useError from '@hooks/useError';
 
-import { Click } from '../model/click';
-import Snack from '../model/snack';
-import { SnackGame } from '../model/snackGame';
+import { Click } from '../../model/click';
+import Snack from '../../model/snack';
+import { SnackGame } from '../../model/snackGame';
 
 interface SnackGameProps {
   isOngoing: boolean;
@@ -24,7 +24,7 @@ interface EventListenerInfo {
   handler: any;
 }
 
-const SnackGameController = ({
+const SnackGameView = ({
   isOngoing,
   snackGame,
   onRemove,
@@ -143,4 +143,4 @@ const SnackGameController = ({
   );
 };
 
-export default memo(SnackGameController);
+export default memo(SnackGameView);

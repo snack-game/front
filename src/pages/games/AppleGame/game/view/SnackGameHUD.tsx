@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Refresh from '@assets/images/refresh.png';
 
 interface AppleGameHUDProps {

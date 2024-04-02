@@ -7,10 +7,10 @@ import retryError from '@components/Error/RetryError';
 import Footer from '@components/Footer/Footer';
 import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
-import ClassicMode from '@pages/games/AppleGame/game/view/ClassicMode';
-import DefaultMode from '@pages/games/AppleGame/game/view/DefaultMode';
+import ClassicMode from '@pages/games/AppleGame/game/view/appleGameMod/ClassicMode';
+import DefaultMode from '@pages/games/AppleGame/game/view/appleGameMod/DefaultMode';
 
-import SnackGameMode from './game/view/SnackGameMode';
+import SnackGameMode from './game/view/snackGameMod/SnackGameMode';
 
 type Mode = 'classic' | 'default' | 'practice' | 'new';
 

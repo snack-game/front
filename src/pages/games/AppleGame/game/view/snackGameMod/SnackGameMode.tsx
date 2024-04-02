@@ -7,11 +7,11 @@ import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-import { GoldenSnack } from '../model/goldSnack';
-import NewPlainApple from '../model/plainSnack';
-import NewApple from '../model/snack';
-import { SnackGame } from '../model/snackGame';
-import SnackGameController from '../viewModal/SnackGameController';
+import SnackGameView from './SnackGameView';
+import { GoldenSnack } from '../../model/goldSnack';
+import NewPlainApple from '../../model/plainSnack';
+import NewApple from '../../model/snack';
+import { SnackGame } from '../../model/snackGame';
 
 const SnackGameMode = () => {
   const setError = useError();
@@ -127,7 +127,7 @@ const SnackGameMode = () => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <SnackGameController
+      <SnackGameView
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}
