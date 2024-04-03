@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
+import Button from '@components/Button/Button';
 import retryError from '@components/Error/RetryError';
 import Footer from '@components/Footer/Footer';
-import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
-import DefaultMode from '@pages/games/AppleGame/game/view/DefaultMode';
+import ClassicMode from '@pages/games/AppleGame/game/view/appleGame/ClassicMode';
+import DefaultMode from '@pages/games/AppleGame/game/view/appleGame/DefaultMode';
+
+import SnackGameMode from './game/view/snackGame/SnackGameMode';
+
+type Mode = 'classic' | 'default' | 'practice' | 'new';
 
 const AppleGamePage = () => {
+  const [modeState, setModeState] = useState<Mode>('default');
+
+  const renderGameMode = () => {
+    switch (modeState) {
+      case 'classic':
+        return <ClassicMode />;
+      case 'new':
+        return <SnackGameMode />;
+      case 'default':
+      default:
+        return <DefaultMode />;
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -17,13 +36,30 @@ const AppleGamePage = () => {
 
       <div className={'h-screen'}>
         <AppleGameHeader />
-
-        <Spacing size={2} />
-
-        <ErrorBoundary fallback={retryError}>
-          <DefaultMode />
-        </ErrorBoundary>
+        <ErrorBoundary fallback={retryError}>{renderGameMode()}</ErrorBoundary>
       </div>
+
+      <div className="mx-auto flex w-full max-w-4xl justify-center gap-8 py-10">
+        <Button
+          onClick={() => setModeState('default')}
+          className={modeState === 'default' ? 'bg-primary-dark' : ''}
+        >
+          일반 모드
+        </Button>
+        <Button
+          onClick={() => setModeState('classic')}
+          className={modeState === 'classic' ? 'bg-primary-dark' : ''}
+        >
+          클래식 모드
+        </Button>
+        <Button
+          onClick={() => setModeState('new')}
+          className={modeState === 'new' ? 'bg-primary-dark' : ''}
+        >
+          신규 모드
+        </Button>
+      </div>
+
       <Footer />
     </>
   );
