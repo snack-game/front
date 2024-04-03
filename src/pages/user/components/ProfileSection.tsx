@@ -107,6 +107,11 @@ const ProfileSection = ({
     <div className={'absolute top-32 flex flex-col items-center'}>
       <div className={'relative'}>
         {profile.status && <ExpChart status={profile.status} />}
+        <div
+          className={
+            'absolute left-2 top-2 mb-4 h-40 w-40 rounded-full bg-white'
+          }
+        />
         <img
           className={
             'absolute left-2 top-2 mb-4 h-40 w-40 rounded-full object-cover'
