@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useSuspenseQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import membersApi from '@api/members.api';
@@ -54,8 +58,13 @@ const useOnError = () => {
 };
 
 export const useIntegrateMember = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: membersApi.integrateMember,
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
+    },
   });
 };
 
