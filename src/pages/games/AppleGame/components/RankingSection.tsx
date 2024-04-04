@@ -33,7 +33,7 @@ const RankingSection = ({ season }: RankingSectionProps) => {
     <div className={'mx-auto w-full max-w-4xl'}>
       {topRanking && <TopRanking topRanking={topRanking} />}
       {otherRanking && <OtherRanking otherRanking={otherRanking} />}
-      {userInfo.id && <UserRanking season={season} />}
+      {userInfo.type !== 'GUEST' && <UserRanking season={season} />}
     </div>
   );
 };
