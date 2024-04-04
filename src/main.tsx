@@ -25,6 +25,7 @@ const queryClient = new QueryClient({
 
 const Root = () => {
   useEffect(() => {
+    if (!import.meta.env.VITE_GA_TRACKING_ID) return;
     ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
   }, []);
 
