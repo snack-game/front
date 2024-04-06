@@ -1,12 +1,13 @@
 import Input from '@components/Input/Input';
 import Spacing from '@components/Spacing/Spacing';
 
+import { useGetGroupsNames } from '@hooks/queries/groups.query';
+import useDebounce from '@hooks/useDebounce';
 import { useInputResult } from '@hooks/useInput';
 
 interface EditInfoProps {
   newName: useInputResult<string>;
   newGroup: useInputResult<string>;
-  groupSearchResult: string[] | undefined;
   onClickClose: () => void;
   onClickDone: () => void;
 }
@@ -14,10 +15,19 @@ interface EditInfoProps {
 const EditInfo = ({
   newName,
   newGroup,
-  groupSearchResult,
   onClickClose,
   onClickDone,
 }: EditInfoProps) => {
+  const debounceValue = useDebounce({
+    target: newGroup.value,
+    delay: 300,
+  });
+
+  const { data: groupSearchResult } = useGetGroupsNames({
+    startWidth: debounceValue,
+    enabled: !!debounceValue,
+  });
+
   return (
     <>
       <div className={'my-10'}>
