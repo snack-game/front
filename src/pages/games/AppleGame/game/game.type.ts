@@ -26,3 +26,8 @@ export interface checkMoveType {
   sessionId: number;
   rects: scoredAppleRectType[];
 }
+
+export interface gameEndType {
+  score: number;
+  percentile: number;
+}
