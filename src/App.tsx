@@ -94,8 +94,8 @@ const App = () => {
               }
             />
           </Routes>
+          <Modal />
         </Suspense>
-        <Modal />
         <Toast />
       </ErrorBoundary>
     </>
