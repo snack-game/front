@@ -22,6 +22,7 @@
     "@vercel/analytics": "^1.1.1",
     "axios": "^1.4.0",
     "chart.js": "^4.4.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "framer-motion": "^10.17.0",
     "i18next": "^23.7.8",
     "i18next-browser-languagedetector": "^7.2.0",
