@@ -8,15 +8,11 @@ import { MemberType } from '@utils/types/member.type';
 
 import { QUERY_KEY } from '@constants/api.constant';
 import { GROUP_CHANGE_REGEXP, NAME_REGEXP } from '@constants/regexp.constant';
-import {
-  useChangeGroupName,
-  useGetGroupsNames,
-} from '@hooks/queries/groups.query';
+import { useChangeGroupName } from '@hooks/queries/groups.query';
 import {
   useChangeUserImage,
   useChangeUserName,
 } from '@hooks/queries/members.query';
-import useDebounce from '@hooks/useDebounce';
 import useInput from '@hooks/useInput';
 
 import EditImage from './EditImage';
@@ -49,16 +45,6 @@ const ProfileSection = ({
   const newGroup = useInput<string>({
     initialValue: profile.group?.name || '',
     isInvalid: (group) => GROUP_CHANGE_REGEXP.test(group),
-  });
-
-  const debounceValue = useDebounce({
-    target: newGroup.value,
-    delay: 300,
-  });
-
-  const { data } = useGetGroupsNames({
-    startWidth: debounceValue,
-    enabled: !!debounceValue,
   });
 
   const setUserState = useSetRecoilState(userState);
@@ -131,7 +117,6 @@ const ProfileSection = ({
         <EditInfo
           newName={newName}
           newGroup={newGroup}
-          groupSearchResult={data}
           onClickDone={handleClickDone}
           onClickClose={() => {
             setNewImage(null);
