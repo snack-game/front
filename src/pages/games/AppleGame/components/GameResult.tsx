@@ -36,7 +36,7 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
   return (
     <div className={'flex h-full w-full flex-col justify-evenly'}>
       <div className={'mx-auto flex flex-col items-center gap-4 font-semibold'}>
-        <p>최종점수: {score}점</p>
+        <p className="text-6xl text-primary">{score}점</p>
 
         {userStateValue.type !== 'GUEST' && (
           <>
