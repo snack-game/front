@@ -1,5 +1,6 @@
 import {
   checkMoveType,
+  gameEndType,
   goldModeType,
 } from '@pages/games/AppleGame/game/game.type';
 
@@ -39,8 +40,12 @@ const appleGameApi = {
     };
   },
 
-  gameEnd: async (sessionId: number): Promise<void> => {
-    await api.put(`${appleGameApi.endPoint.gameEnd}/${sessionId}/end`);
+  gameEnd: async (sessionId: number): Promise<gameEndType> => {
+    const { data } = await api.put(
+      `${appleGameApi.endPoint.gameEnd}/${sessionId}/end`,
+    );
+
+    return { ...data };
   },
 
   gameRefresh: async (sessionId: number): Promise<goldModeType> => {

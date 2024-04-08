@@ -32,7 +32,7 @@ const EditImage = ({
       className={'absolute right-2 top-32 h-8 w-8 rounded-full border bg-white'}
       onClick={onClickEdit}
     >
-      <EditIcon className={'mx-auto'} />
+      <EditIcon className={'mx-auto h-[14px] w-[14px] text-[#939393]'} />
     </button>
   );
 };

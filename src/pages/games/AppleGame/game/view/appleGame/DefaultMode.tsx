@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
 import GameResult from '@pages/games/AppleGame/components/GameResult';
-import AppleGameController from '@pages/games/AppleGame/game/controller/AppleGameController';
 import {
   goldModAppleType,
   scoredAppleRectType,
@@ -13,7 +11,7 @@ import Apple from '@pages/games/AppleGame/game/model/apple';
 import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
 import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
 import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
-import AppleGameHUD from '@pages/games/AppleGame/game/view/AppleGameHUD';
+import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
 
 import {
   useAppleGameRefresh,
@@ -25,11 +23,12 @@ import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
+import AppleGameView from './AppleGameView';
+
 const DefaultMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
-  const { t } = useTranslation();
 
   const { gameStart } = useGoldModeStart();
   const { checkMoves } = useGoldModeCheck();
@@ -80,13 +79,21 @@ const DefaultMode = () => {
   const endGame = async () => {
     try {
       await checkMoves(sessionId, removedRects);
-      await gameEnd.mutateAsync(sessionId);
+      const { percentile } = await gameEnd.mutateAsync(sessionId);
 
       setAppleGame(emptyGame);
       setIsOngoing(false);
 
       openToast('게임 종료!', 'success');
-      openModal({ children: <GameResult score={score} reStart={startGame} /> });
+      openModal({
+        children: (
+          <GameResult
+            score={score}
+            percentile={percentile}
+            reStart={startGame}
+          />
+        ),
+      });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }
@@ -159,12 +166,12 @@ const DefaultMode = () => {
 
   return (
     <QueryBoundary errorFallback={retryError}>
-      <AppleGameHUD
+      <SnackGameHUD
         score={score}
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <AppleGameController
+      <AppleGameView
         isOngoing={isOngoing}
         startGame={startGame}
         onRemove={onRemove}

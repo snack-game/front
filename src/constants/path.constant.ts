@@ -17,8 +17,8 @@ const PATH = {
   FEED_BACK:
     'https://docs.google.com/forms/d/e/1FAIpQLScYLV4AQccEoAlcSo1fC9_1-7gC3KYR1lnOGJ7Xtqm5DPBbHg/viewform?usp=sharing',
 
-  GOOGLE: 'https://api.snackga.me/oauth2/authorization/google',
-  KAKAO: 'https://api.snackga.me/oauth2/authorization/kakao',
+  GOOGLE: '/oauth2/authorization/google',
+  KAKAO: '/oauth2/authorization/kakao',
 
   OAUTH_SUCCESS: '/oauth/success',
   OAUTH_FAILURE: '/oauth/failure',

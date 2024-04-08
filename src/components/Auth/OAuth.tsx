@@ -33,6 +33,7 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   const openToast = useToast();
 
   const openOAuthDialog = ({ url, name }: DialogProps) => {
+    const oAuthURL = import.meta.env.VITE_API_URL + url;
     const width = 600;
     const height = 800;
 
@@ -40,7 +41,7 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     const top = (window.screen.height - height) / 2;
 
     window.open(
-      url,
+      oAuthURL,
       name,
       `menubar=no,toolbar=no,status=no,width=${width},height=${height},left=${left},top=${top}`,
     );

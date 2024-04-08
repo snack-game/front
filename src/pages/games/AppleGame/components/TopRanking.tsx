@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import First from '@assets/images/first.png';
 import Second from '@assets/images/second.png';
 import Third from '@assets/images/third.png';
+import { Level } from '@components/Level/Level';
 import { RankingType } from '@utils/types/common.type';
 
 interface TopRankingProps {
@@ -27,7 +28,7 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
       {topRanking.map((top, index) => {
         return (
           <div
-            key={top.rank}
+            key={`top-rank-${top.owner.name}`}
             className={`flex flex-col items-center gap-4 font-semibold text-primary-deep-dark
             ${index == 0 && 'order-2 -mt-12'}
             ${index == 1 && 'order-1'}
@@ -46,6 +47,9 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
                   </span>
                 )}
                 <span className={'text-xl text-primary'}>{top.owner.name}</span>
+                {top.owner.status?.level !== undefined && (
+                  <Level level={top.owner.status.level} />
+                )}
               </div>
               <span>{top.score + '점'}</span>
             </div>
