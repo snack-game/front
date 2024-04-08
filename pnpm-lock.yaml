@@ -32,6 +32,9 @@ dependencies:
   chart.js:
     specifier: ^4.4.1
     version: 4.4.2
+  chartjs-plugin-datalabels:
+    specifier: ^2.2.0
+    version: 2.2.0(chart.js@4.4.2)
   framer-motion:
     specifier: ^10.17.0
     version: 10.18.0(react-dom@18.2.0)(react@18.2.0)
@@ -5330,6 +5333,14 @@ packages:
     engines: {pnpm: '>=8'}
     dependencies:
       '@kurkle/color': 0.3.2
+    dev: false
+
+  /chartjs-plugin-datalabels@2.2.0(chart.js@4.4.2):
+    resolution: {integrity: sha512-14ZU30lH7n89oq+A4bWaJPnAG8a7ZTk7dKf48YAzMvJjQtjrgg5Dpk9f+LbjCF6bpx3RAGTeL13IXpKQYyRvlw==}
+    peerDependencies:
+      chart.js: '>=3.0.0'
+    dependencies:
+      chart.js: 4.4.2
     dev: false
 
   /check-error@1.0.3:

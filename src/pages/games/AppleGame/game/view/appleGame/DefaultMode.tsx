@@ -79,13 +79,21 @@ const DefaultMode = () => {
   const endGame = async () => {
     try {
       await checkMoves(sessionId, removedRects);
-      await gameEnd.mutateAsync(sessionId);
+      const { percentile } = await gameEnd.mutateAsync(sessionId);
 
       setAppleGame(emptyGame);
       setIsOngoing(false);
 
       openToast('게임 종료!', 'success');
-      openModal({ children: <GameResult score={score} reStart={startGame} /> });
+      openModal({
+        children: (
+          <GameResult
+            score={score}
+            percentile={percentile}
+            reStart={startGame}
+          />
+        ),
+      });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
     }
