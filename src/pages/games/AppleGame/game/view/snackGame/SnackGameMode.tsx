@@ -8,10 +8,10 @@ import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import SnackGameView from './SnackGameView';
-import { GoldenSnack } from '../../model/goldSnack';
-import NewPlainApple from '../../model/plainSnack';
-import NewApple from '../../model/snack';
-import { SnackGame } from '../../model/snackGame';
+import { GoldenSnack } from '../../model/snackGame/goldSnack';
+import NewPlainApple from '../../model/snackGame/plainSnack';
+import NewApple from '../../model/snackGame/snack';
+import { SnackGame } from '../../model/snackGame/snackGame';
 
 const SnackGameMode = () => {
   const setError = useError();

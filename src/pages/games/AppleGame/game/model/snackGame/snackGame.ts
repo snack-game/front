@@ -1,12 +1,12 @@
 import Snack from './snack';
 
 export class SnackGame {
-  private score = 0;
-  private snacks: Snack[] = [];
-  private row: number;
-  private column: number;
-  private borderOffset = 10;
-  private selectedSnacks: Snack[] = [];
+  protected score = 0;
+  protected snacks: Snack[] = [];
+  protected row: number;
+  protected column: number;
+  protected borderOffset = 10;
+  protected selectedSnacks: Snack[] = [];
 
   constructor({
     row,

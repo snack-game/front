@@ -7,10 +7,10 @@ import {
   goldModAppleType,
   scoredAppleRectType,
 } from '@pages/games/AppleGame/game/game.type';
-import Apple from '@pages/games/AppleGame/game/model/apple';
-import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
-import { GoldenApple } from '@pages/games/AppleGame/game/model/goldenApple';
-import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
+import Apple from '@pages/games/AppleGame/game/model/appleGame/apple';
+import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame/appleGame';
+import { GoldenApple } from '@pages/games/AppleGame/game/model/appleGame/goldenApple';
+import PlainApple from '@pages/games/AppleGame/game/model/appleGame/plainApple';
 import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
 
 import {

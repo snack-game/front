@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import GameResult from '@pages/games/AppleGame/components/GameResult';
-import Apple from '@pages/games/AppleGame/game/model/apple';
-import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame';
-import PlainApple from '@pages/games/AppleGame/game/model/plainApple';
+import Apple from '@pages/games/AppleGame/game/model/appleGame/apple';
+import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame/appleGame';
+import PlainApple from '@pages/games/AppleGame/game/model/appleGame/plainApple';
 import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
 
 import useError from '@hooks/useError';
