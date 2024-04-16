@@ -10,8 +10,9 @@ import ClassicMode from '@pages/games/AppleGame/game/view/appleGame/ClassicMode'
 import DefaultMode from '@pages/games/AppleGame/game/view/appleGame/DefaultMode';
 
 import SnackGameMode from './game/view/snackGame/SnackGameMode';
+import SnackGameModeB from './game/view/snackGame/SnackGameModeB';
 
-type Mode = 'classic' | 'default' | 'practice' | 'new';
+type Mode = 'classic' | 'default' | 'practice' | 'new' | 'new_mode_b';
 
 const AppleGamePage = () => {
   const [modeState, setModeState] = useState<Mode>('default');
@@ -23,8 +24,9 @@ const AppleGamePage = () => {
       case 'new':
         return <SnackGameMode />;
       case 'default':
-      default:
         return <DefaultMode />;
+      case 'new_mode_b':
+        return <SnackGameModeB />;
     }
   };
 
@@ -57,6 +59,12 @@ const AppleGamePage = () => {
           className={modeState === 'new' ? 'bg-primary-dark' : ''}
         >
           신규 모드
+        </Button>
+        <Button
+          onClick={() => setModeState('new_mode_b')}
+          className={modeState === 'new_mode_b' ? 'bg-primary-dark' : ''}
+        >
+          신규 모드 B
         </Button>
       </div>
 

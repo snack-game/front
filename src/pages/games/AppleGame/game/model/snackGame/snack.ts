@@ -94,6 +94,13 @@ abstract class Snack {
     return distance <= this.radius;
   }
 
+  distanceTo(other: Snack): number {
+    return Math.sqrt(
+      (this.coordinates.x - other.coordinates.x) ** 2 +
+        (this.coordinates.y - other.coordinates.y) ** 2,
+    );
+  }
+
   drawSnack(ctx: CanvasRenderingContext2D) {
     if (this.canSelect || this.isSelected) {
       ctx.globalAlpha = 0.5;

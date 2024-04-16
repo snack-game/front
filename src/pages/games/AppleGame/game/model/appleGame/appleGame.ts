@@ -1,4 +1,4 @@
-import Apple from '@pages/games/AppleGame/game/model/apple';
+import Apple from '@pages/games/AppleGame/game/model/appleGame/apple';
 
 export class AppleGame {
   public score = 0;

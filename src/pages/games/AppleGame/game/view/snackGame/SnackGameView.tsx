@@ -1,20 +1,21 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import Button from '@components/Button/Button';
-import { Particle } from '@pages/games/AppleGame/game/model/particle';
+import { Particle } from '@pages/games/AppleGame/game/model/common/particle';
 import { MouseEventType } from '@utils/types/common.type';
 
 import useCanvas from '@hooks/useCanvas';
 import { useCanvasOffset } from '@hooks/useCanvasOffset';
 import useError from '@hooks/useError';
 
-import { Click } from '../../model/click';
-import Snack from '../../model/snack';
-import { SnackGame } from '../../model/snackGame';
+import { Click } from '../../model/common/click';
+import Snack from '../../model/snackGame/snack';
+import { SnackGame } from '../../model/snackGame/snackGame';
+import { SnackGameB } from '../../model/snackGame/snackGameB';
 
 interface SnackGameProps {
   isOngoing: boolean;
-  snackGame: SnackGame;
+  snackGame: SnackGame | SnackGameB;
   onRemove: (removedsnacks: Snack[]) => Promise<void>;
   startGame?: () => Promise<void>;
 }
