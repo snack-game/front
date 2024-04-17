@@ -70,6 +70,10 @@ abstract class Snack {
     return this.snackNumber;
   }
 
+  setNumber(snackNumber: number) {
+    this.snackNumber = snackNumber;
+  }
+
   getRadius(): number {
     return this.radius;
   }
