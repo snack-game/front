@@ -9,10 +9,19 @@ import AppleGameHeader from '@pages/games/AppleGame/components/AppleGameHeader';
 import ClassicMode from '@pages/games/AppleGame/game/view/appleGame/ClassicMode';
 import DefaultMode from '@pages/games/AppleGame/game/view/appleGame/DefaultMode';
 
+import SnackGameModC from './game/view/snackGame/SnackGameModC';
+import SnackGameModD from './game/view/snackGame/SnackGameModD';
 import SnackGameMode from './game/view/snackGame/SnackGameMode';
 import SnackGameModeB from './game/view/snackGame/SnackGameModeB';
 
-type Mode = 'classic' | 'default' | 'practice' | 'new' | 'new_mode_b';
+type Mode =
+  | 'classic'
+  | 'default'
+  | 'practice'
+  | 'new'
+  | 'new_mode_b'
+  | 'new_mode_c'
+  | 'new_mode_d';
 
 const AppleGamePage = () => {
   const [modeState, setModeState] = useState<Mode>('default');
@@ -27,6 +36,10 @@ const AppleGamePage = () => {
         return <DefaultMode />;
       case 'new_mode_b':
         return <SnackGameModeB />;
+      case 'new_mode_c':
+        return <SnackGameModC />;
+      case 'new_mode_d':
+        return <SnackGameModD />;
     }
   };
 
@@ -41,7 +54,7 @@ const AppleGamePage = () => {
         <ErrorBoundary fallback={retryError}>{renderGameMode()}</ErrorBoundary>
       </div>
 
-      <div className="mx-auto flex w-full max-w-4xl justify-center gap-8 py-10">
+      <div className="flex w-full max-w-4xl flex-wrap justify-center gap-8 py-10">
         <Button
           onClick={() => setModeState('default')}
           className={modeState === 'default' ? 'bg-primary-dark' : ''}
@@ -65,6 +78,18 @@ const AppleGamePage = () => {
           className={modeState === 'new_mode_b' ? 'bg-primary-dark' : ''}
         >
           신규 모드 B
+        </Button>
+        <Button
+          onClick={() => setModeState('new_mode_c')}
+          className={modeState === 'new_mode_c' ? 'bg-primary-dark' : ''}
+        >
+          신규 모드 C
+        </Button>
+        <Button
+          onClick={() => setModeState('new_mode_d')}
+          className={modeState === 'new_mode_d' ? 'bg-primary-dark' : ''}
+        >
+          신규 모드 D
         </Button>
       </div>
 
