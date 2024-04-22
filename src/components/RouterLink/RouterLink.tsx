@@ -20,7 +20,7 @@ const RouterLink = ({
   onClick,
   isActivated = false,
 }: RouterLinkProps) => {
-  const defaultStyle = `flex font-medium underline-offset-4 transition-colors duration-200 ${
+  const defaultLinkClass = `flex font-medium underline-offset-4 transition-colors duration-200 ${
     hover &&
     'hover:border-b-2 hover:border-b-primary hover:font-bold hover:text-primary'
   } ${isActivated ? 'text-primary' : 'text-gray-400'}
@@ -28,7 +28,7 @@ const RouterLink = ({
 
   return (
     <Link
-      className={twMerge(defaultStyle, className)}
+      className={twMerge(defaultLinkClass, className)}
       to={to}
       onClick={onClick}
     >
