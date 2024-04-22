@@ -1,3 +1,4 @@
+import Button from '@components/Button/Button';
 import Input from '@components/Input/Input';
 import Spacing from '@components/Spacing/Spacing';
 
@@ -66,23 +67,22 @@ const EditInfo = ({
       </div>
 
       <div className={'flex gap-2'}>
-        <button
+        <Button
           onClick={onClickClose}
-          className={
-            'rounded-md border bg-white px-4 py-1 hover:bg-white hover:text-black '
-          }
+          className={'border bg-white hover:bg-white hover:text-black '}
+          style="border"
         >
           닫기
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={!newName.valid || !newGroup.valid}
           onClick={onClickDone}
           className={
-            'rounded-md bg-button-enabled px-4 py-1 text-white disabled:cursor-not-allowed disabled:bg-button-disabled disabled:opacity-100'
+            'bg-button-enabled disabled:bg-button-disabled disabled:opacity-100'
           }
         >
           확인
-        </button>
+        </Button>
       </div>
     </>
   );

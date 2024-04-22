@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { twMerge } from 'tailwind-merge';
 
 import authApi from '@api/auth.api';
 import Hamburger from '@assets/icon/hamburger.svg?react';
@@ -53,7 +54,7 @@ const Header = ({ children, className }: HeaderProps) => {
   };
 
   return (
-    <header className={`z-50 w-full bg-white shadow-md ${className}`}>
+    <header className={twMerge('z-50 w-full bg-white shadow-md', className)}>
       <div className="container relative mx-auto flex max-w-7xl flex-col items-center justify-between p-4 lg:flex-row lg:justify-between xl:px-0">
         <div className={'flex w-full items-center justify-between lg:flex-1'}>
           <RouterLink to={'/'} hover={false}>

@@ -42,7 +42,8 @@
     "react-i18next": "^13.5.0",
     "react-router-dom": "^6.11.2",
     "recoil": "^0.7.7",
-    "recoil-persist": "^5.1.0"
+    "recoil-persist": "^5.1.0",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.6",

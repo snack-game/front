@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { motion } from 'framer-motion';
+import { twMerge } from 'tailwind-merge';
 
 type Size = 'md' | 'lg';
 
@@ -40,9 +41,11 @@ const Button = ({
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-md disabled:pointer-events-none disabled:opacity-50 
-      ${completeButtonClass}
-      ${className && className}`}
+      className={twMerge(
+        'rounded-md disabled:pointer-events-none disabled:opacity-50',
+        completeButtonClass,
+        className,
+      )}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
