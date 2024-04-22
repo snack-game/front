@@ -24,7 +24,7 @@ type Mode =
   | 'new_mode_d';
 
 const AppleGamePage = () => {
-  const [modeState, setModeState] = useState<Mode>('default');
+  const [modeState, setModeState] = useState<Mode>('new_mode_d');
 
   const renderGameMode = () => {
     switch (modeState) {
@@ -50,35 +50,10 @@ const AppleGamePage = () => {
       </Helmet>
 
       <div className={'h-screen'}>
-        <AppleGameHeader />
         <ErrorBoundary fallback={retryError}>{renderGameMode()}</ErrorBoundary>
       </div>
 
-      <div className="flex w-full max-w-4xl flex-wrap justify-center gap-8 py-10">
-        <Button
-          onClick={() => setModeState('default')}
-          className={modeState === 'default' ? 'bg-primary-dark' : ''}
-        >
-          일반 모드
-        </Button>
-        <Button
-          onClick={() => setModeState('classic')}
-          className={modeState === 'classic' ? 'bg-primary-dark' : ''}
-        >
-          클래식 모드
-        </Button>
-        <Button
-          onClick={() => setModeState('new')}
-          className={modeState === 'new' ? 'bg-primary-dark' : ''}
-        >
-          신규 모드
-        </Button>
-        <Button
-          onClick={() => setModeState('new_mode_b')}
-          className={modeState === 'new_mode_b' ? 'bg-primary-dark' : ''}
-        >
-          신규 모드 B
-        </Button>
+      {/* <div className="flex w-full max-w-4xl flex-wrap justify-center gap-8 py-10">
         <Button
           onClick={() => setModeState('new_mode_c')}
           className={modeState === 'new_mode_c' ? 'bg-primary-dark' : ''}
@@ -91,9 +66,7 @@ const AppleGamePage = () => {
         >
           신규 모드 D
         </Button>
-      </div>
-
-      <Footer />
+      </div> */}
     </>
   );
 };

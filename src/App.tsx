@@ -8,6 +8,7 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
+import GameLayout from '@pages/GameLayout';
 import { resetUserState } from '@utils/atoms/member.atom';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
@@ -68,23 +69,25 @@ const App = () => {
             {/*Main*/}
             <Route path={PATH.MAIN} element={<MainPage />} />
 
-            {/*Game*/}
-            <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+            <Route element={<GameLayout />}>
+              {/*Game*/}
+              <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
-            {/*RANKING*/}
-            <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
+              {/*RANKING*/}
+              <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
 
-            <Route path={PATH.POLICY} element={<PolicyPage />} />
+              <Route path={PATH.POLICY} element={<PolicyPage />} />
 
-            {/* User */}
-            <Route path={PATH.USER} element={<UserPage />} />
+              {/* User */}
+              <Route path={PATH.USER} element={<UserPage />} />
 
-            {/*OAuth*/}
-            <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
-            <Route
-              path={PATH.OAUTH_FAILURE}
-              element={<ErrorPage message={'소셜 로그인에 실패했습니다.'} />}
-            />
+              {/*OAuth*/}
+              <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
+              <Route
+                path={PATH.OAUTH_FAILURE}
+                element={<ErrorPage message={'소셜 로그인에 실패했습니다.'} />}
+              />
+            </Route>
 
             {/*Error*/}
             <Route
