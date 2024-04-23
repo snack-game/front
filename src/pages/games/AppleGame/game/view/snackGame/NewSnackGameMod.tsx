@@ -11,15 +11,19 @@ import SnackGameView from './SnackGameView';
 import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
-import { SnackGameB } from '../../model/snackGame/snackGameB';
+import { SnackGame } from '../../model/snackGame/snackGame';
 
-const SnackGameModeB = () => {
+interface NewSnackGameMod {
+  snackGameLogic: typeof SnackGame;
+}
+
+const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
-  const emptyGame = new SnackGameB({ row: 0, column: 0, snacks: [] });
   const defaultTime = 120;
+  const emptyGame = new snackGameLogic({ row: 0, column: 0, snacks: [] });
   const defaultRows = 10;
   const defaultColumns = 5;
 
@@ -64,7 +68,7 @@ const SnackGameModeB = () => {
   const startGame = async () => {
     try {
       setSnackGame(
-        new SnackGameB({
+        new snackGameLogic({
           row: defaultRows,
           column: defaultColumns,
           snacks: await generateApples(),
@@ -137,4 +141,4 @@ const SnackGameModeB = () => {
   );
 };
 
-export default SnackGameModeB;
+export default NewSnackGameMod;
