@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import { motion, Variants } from 'framer-motion';
 
 import ComingSoonImage from '@assets/images/main.png';
-import AppleGameLottie from '@assets/lottie/apple-game.json';
 import Button from '@components/Button/Button';
 import Lottie from '@components/Lottie/Lottie';
-import { LottieOptionTypes } from '@utils/types/common.type';
+import { lottieOptions } from '@utils/commonFuc';
 
 import PATH from '@constants/path.constant';
 
@@ -27,12 +26,6 @@ const variants: Variants = {
       staggerChildren: 0.2,
     },
   },
-};
-
-const lottieOptions: LottieOptionTypes = {
-  animationData: AppleGameLottie,
-  autoplay: true,
-  loop: true,
 };
 
 const heroContents = [

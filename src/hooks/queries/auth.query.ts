@@ -32,7 +32,7 @@ const useMemberOnSuccess = () => {
       ...member,
     }));
     setStorageValue(Date.now());
-    openToast(t('login_success'), 'success');
+    openToast('로그인 성공!', 'success');
     closeModal();
   };
 };
