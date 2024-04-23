@@ -71,8 +71,10 @@ export const AuthPage = () => {
     }
   };
 
-  const handleGuestLogin = async () => {
-    await guestMutation.mutateAsync();
+  const handleGuestLogin = () => {
+    guestMutation.mutateAsync().then(() => {
+      navigate(PATH.APPLE_GAME, { replace: true });
+    });
   };
 
   useEffect(() => {
