@@ -96,22 +96,24 @@ export const AuthPage = () => {
         </div>
         <div className="mx-auto my-12 flex w-5/6  flex-col items-center justify-end gap-4">
           <div
-            className="flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-[#FEE500]"
+            className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-[#FEE500]"
             onClick={() =>
               openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
             }
           >
             <KakakoIcon className="h-10 w-10" />
-            <span className="text-sm">카카오 로그인</span>
+            <span className="w-20  text-center text-sm">카카오 로그인</span>
           </div>
           <div
-            className="flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-white"
+            className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-white"
             onClick={() =>
               openOAuthDialog({ url: PATH.GOOGLE, name: 'Login with Google' })
             }
           >
             <GoogleIcon className="h-10 w-10" />
-            <span className="text-sm text-[#6B7280]">구글 로그인</span>
+            <span className="w-20 text-center text-sm text-[#6B7280]">
+              구글 로그인
+            </span>
           </div>
           <div className="text-gray-400" onClick={handleGuestLogin}>
             게스트로 시작하기
