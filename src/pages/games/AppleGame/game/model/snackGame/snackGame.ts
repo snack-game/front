@@ -22,6 +22,12 @@ export class SnackGame {
     this.snacks = snacks;
   }
 
+  setSnackGame(row: number, column: number, snacks: Snack[]) {
+    this.row = row;
+    this.column = column;
+    this.snacks = snacks;
+  }
+
   isSnackNearby(selectedSnack: Snack, targetSnack: Snack): boolean {
     const selectedPos = selectedSnack.getCoordinates();
     const targetPos = targetSnack.getCoordinates();

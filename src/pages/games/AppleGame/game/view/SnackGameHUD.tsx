@@ -11,7 +11,7 @@ const SnackGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
   const remainingTimeRatio = (time / totalTime) * 100;
 
   return (
-    <div className="mx-auto my-4 flex w-full max-w-xl flex-col gap-2">
+    <div className="mx-auto mb-4 flex w-full max-w-xl flex-col gap-2 pt-2">
       <div
         className={
           'flex items-center justify-around text-xl text-primary-deep-dark'
