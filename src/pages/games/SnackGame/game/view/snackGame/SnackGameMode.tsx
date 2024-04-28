@@ -129,7 +129,6 @@ const SnackGameMode = () => {
       />
       <SnackGameView
         isOngoing={isOngoing}
-        startGame={startGame}
         onRemove={onRemove}
         snackGame={snackGame}
       />
