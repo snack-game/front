@@ -20,8 +20,8 @@ inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
-const AppleGamePage = lazy(
-  () => import('@pages/games/SnackGame/game/AppleGamePage'),
+const SnackGamePage = lazy(
+  () => import('@pages/games/SnackGame/game/SnackGamePage'),
 );
 
 const RankingPage = lazy(
@@ -83,7 +83,7 @@ const App = () => {
 
             <Route element={<GameLayout />}>
               {/*Game*/}
-              <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+              <Route path={PATH.APPLE_GAME} element={<SnackGamePage />} />
 
               {/*RANKING*/}
               <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />

@@ -5,7 +5,7 @@ import retryError from '@components/Error/RetryError';
 
 import NewSnackGameMod from './view/snackGame/NewSnackGameMod';
 
-const AppleGamePage = () => {
+const SnackGamePage = () => {
   return (
     <>
       <Helmet>
@@ -21,4 +21,4 @@ const AppleGamePage = () => {
   );
 };
 
-export default AppleGamePage;
+export default SnackGamePage;
