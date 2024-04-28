@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import GameResult from '@pages/games/AppleGame/components/GameResult';
-import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
+import GameResult from '@pages/games/SnackGame/components/GameResult';
+import SnackGameHUD from '@pages/games/SnackGame/game/view/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
@@ -13,13 +13,17 @@ import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
 
-const SnackGameMode = () => {
+interface NewSnackGameMod {
+  snackGameLogic: typeof SnackGame;
+}
+
+const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
-  const emptyGame = new SnackGame({ row: 0, column: 0, snacks: [] });
   const defaultTime = 120;
+  const emptyGame = new snackGameLogic({ row: 0, column: 0, snacks: [] });
   const defaultRows = 10;
   const defaultColumns = 5;
 
@@ -64,7 +68,7 @@ const SnackGameMode = () => {
   const startGame = async () => {
     try {
       setSnackGame(
-        new SnackGame({
+        new snackGameLogic({
           row: defaultRows,
           column: defaultColumns,
           snacks: await generateApples(),
@@ -137,4 +141,4 @@ const SnackGameMode = () => {
   );
 };
 
-export default SnackGameMode;
+export default NewSnackGameMod;

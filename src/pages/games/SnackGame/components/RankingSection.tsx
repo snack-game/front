@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 
-import OtherRanking from '@pages/games/AppleGame/components/OtherRanking';
-import TopRanking from '@pages/games/AppleGame/components/TopRanking';
+import OtherRanking from '@pages/games/SnackGame/components/OtherRanking';
+import TopRanking from '@pages/games/SnackGame/components/TopRanking';
 import { userState } from '@utils/atoms/member.atom';
 
 import {

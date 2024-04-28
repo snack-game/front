@@ -21,10 +21,10 @@ inject();
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
 const AppleGamePage = lazy(
-  () => import('@pages/games/AppleGame/AppleGamePage'),
+  () => import('@pages/games/SnackGame/AppleGamePage'),
 );
 
-const RankingPage = lazy(() => import('@pages/games/AppleGame/RankingPage'));
+const RankingPage = lazy(() => import('@pages/games/SnackGame/RankingPage'));
 
 const PolicyPage = lazy(() => import('@pages/policy/Policy'));
 
