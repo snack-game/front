@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import GameResult from '@pages/games/SnackGame/components/GameResult';
-import SnackGameHUD from '@pages/games/SnackGame/game/view/SnackGameHUD';
+import GameResult from '@pages/games/SnackGame/game/components/GameResult';
+import SnackGameHUD from '@pages/games/SnackGame/game/components/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';

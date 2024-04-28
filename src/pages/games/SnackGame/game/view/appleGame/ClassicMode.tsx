@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import GameResult from '@pages/games/SnackGame/components/GameResult';
+import GameResult from '@pages/games/SnackGame/game/components/GameResult';
 import Apple from '@pages/games/SnackGame/game/model/appleGame/apple';
 import { AppleGame } from '@pages/games/SnackGame/game/model/appleGame/appleGame';
 import PlainApple from '@pages/games/SnackGame/game/model/appleGame/plainApple';
-import SnackGameHUD from '@pages/games/SnackGame/game/view/SnackGameHUD';
+import SnackGameHUD from '@pages/games/SnackGame/game/components/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';

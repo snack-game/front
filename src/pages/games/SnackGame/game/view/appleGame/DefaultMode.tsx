@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
-import GameResult from '@pages/games/SnackGame/components/GameResult';
+import GameResult from '@pages/games/SnackGame/game/components/GameResult';
 import {
   goldModAppleType,
   scoredAppleRectType,
@@ -11,7 +11,7 @@ import Apple from '@pages/games/SnackGame/game/model/appleGame/apple';
 import { AppleGame } from '@pages/games/SnackGame/game/model/appleGame/appleGame';
 import { GoldenApple } from '@pages/games/SnackGame/game/model/appleGame/goldenApple';
 import PlainApple from '@pages/games/SnackGame/game/model/appleGame/plainApple';
-import SnackGameHUD from '@pages/games/SnackGame/game/view/SnackGameHUD';
+import SnackGameHUD from '@pages/games/SnackGame/game/components/SnackGameHUD';
 
 import {
   useAppleGameRefresh,

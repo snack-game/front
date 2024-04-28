@@ -5,9 +5,9 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Button from '@components/Button/Button';
 import retryError from '@components/Error/RetryError';
 
-import { SnackGameC } from './game/model/snackGame/snackGameC';
-import { SnackGameD } from './game/model/snackGame/snackGameD';
-import NewSnackGameMod from './game/view/snackGame/NewSnackGameMod';
+import { SnackGameC } from './model/snackGame/snackGameC';
+import { SnackGameD } from './model/snackGame/snackGameD';
+import NewSnackGameMod from './view/snackGame/NewSnackGameMod';
 
 type Mode = 'default' | 'inf';
 

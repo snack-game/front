@@ -5,7 +5,7 @@ import Dropdown, { DropDownOptionType } from '@components/DropDown/DropDown';
 import Footer from '@components/Footer/Footer';
 import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/SnackGame/components/AppleGameHeader';
-import RankingSection from '@pages/games/SnackGame/components/RankingSection';
+import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
 
 const RankingPage = () => {
   const [selectedSeason, setSelectedSeason] = useState<number>(1);
