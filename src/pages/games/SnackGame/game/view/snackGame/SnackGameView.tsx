@@ -1,6 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import Button from '@components/Button/Button';
 import { Particle } from '@pages/games/SnackGame/game/model/common/particle';
 import { MouseEventType } from '@utils/types/common.type';
 
@@ -11,13 +10,11 @@ import useError from '@hooks/useError';
 import { Click } from '../../model/common/click';
 import Snack from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
-import { SnackGameB } from '../../model/snackGame/snackGameB';
 
 interface SnackGameProps {
   isOngoing: boolean;
-  snackGame: SnackGame | SnackGameB;
+  snackGame: SnackGame;
   onRemove: (removedsnacks: Snack[]) => Promise<void>;
-  startGame?: () => Promise<void>;
 }
 
 interface EventListenerInfo {
@@ -25,12 +22,7 @@ interface EventListenerInfo {
   handler: any;
 }
 
-const SnackGameView = ({
-  isOngoing,
-  snackGame,
-  onRemove,
-  startGame,
-}: SnackGameProps) => {
+const SnackGameView = ({ isOngoing, snackGame, onRemove }: SnackGameProps) => {
   const setError = useError();
   const { canvasBaseRef, offsetWidth, offsetHeight, offsetLeft, offsetTop } =
     useCanvasOffset();
@@ -92,6 +84,7 @@ const SnackGameView = ({
   };
 
   useEffect(() => {
+    console.log('asd');
     snackGame.updateSnackPosition(offsetWidth, offsetHeight);
   }, [snackGame, offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
@@ -127,18 +120,12 @@ const SnackGameView = ({
 
   return (
     <div ref={canvasBaseRef} className={'m-auto h-[80%] max-w-xl bg-game'}>
-      {isOngoing ? (
+      {isOngoing && (
         <canvas
           ref={canvasRef}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
         ></canvas>
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          <Button onClick={startGame} size="lg">
-            게임시작!
-          </Button>
-        </div>
       )}
     </div>
   );

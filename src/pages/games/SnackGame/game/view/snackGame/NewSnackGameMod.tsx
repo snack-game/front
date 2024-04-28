@@ -12,22 +12,27 @@ import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
+import { SnackGameC } from '../../model/snackGame/snackGameInf';
+import { SnackGameD } from '../../model/snackGame/snackGameMobile';
 
-interface NewSnackGameMod {
-  snackGameLogic: typeof SnackGame;
-}
+type SnackGameMod = 'default' | 'inf';
 
-const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
+const snackGameMods = {
+  default: SnackGameD,
+  inf: SnackGameC,
+};
+
+const NewSnackGameMod = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
   const defaultTime = 120;
-  const emptyGame = new snackGameLogic({ row: 0, column: 0, snacks: [] });
   const defaultRows = 10;
   const defaultColumns = 5;
 
-  const [snackGame, setSnackGame] = useState(emptyGame);
+  const [snackGameMod, setSnackGameMod] = useState<SnackGameMod>('default');
+  const [snackGame, setSnackGame] = useState<SnackGame | null>(null);
   const [isOngoing, setIsOngoing] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(defaultTime);
@@ -65,10 +70,12 @@ const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
     return apples;
   };
 
-  const startGame = async () => {
+  const startGame = async (snackGameMod: SnackGameMod) => {
+    setSnackGameMod(snackGameMod);
+
     try {
       setSnackGame(
-        new snackGameLogic({
+        new snackGameMods[snackGameMod]({
           row: defaultRows,
           column: defaultColumns,
           snacks: await generateApples(),
@@ -84,24 +91,32 @@ const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
   };
 
   const onRemove = async (removedApples: NewApple[]) => {
-    if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
-      const response = await generateApples();
-      if (response) {
-        snackGame.updateSnacks(response);
-      }
-    }
+    try {
+      if (!snackGame) throw Error;
 
-    setScore(snackGame.getScore());
+      if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
+        const response = await generateApples();
+        if (response) {
+          snackGame.updateSnacks(response);
+        }
+      }
+
+      setScore(snackGame.getScore());
+    } catch (e) {
+      setError(new Error('게임 진행 중 오류가 발생했습니다.'));
+    }
   };
 
   const endGame = async () => {
     try {
-      setSnackGame(emptyGame);
+      setSnackGame(null);
       setIsOngoing(false);
       openToast('게임 종료!', 'success');
 
       openModal({
-        children: <GameResult score={score} reStart={startGame} />,
+        children: (
+          <GameResult score={score} reStart={() => startGame(snackGameMod)} />
+        ),
       });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
@@ -109,7 +124,7 @@ const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
   };
 
   const refreshGame = async () => {
-    return await startGame();
+    return await startGame(snackGameMod);
   };
 
   useEffect(() => {
@@ -131,12 +146,26 @@ const NewSnackGameMod = ({ snackGameLogic }: NewSnackGameMod) => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <SnackGameView
-        isOngoing={isOngoing}
-        startGame={startGame}
-        onRemove={onRemove}
-        snackGame={snackGame}
-      />
+      {snackGame && (
+        <SnackGameView
+          isOngoing={isOngoing}
+          onRemove={onRemove}
+          snackGame={snackGame}
+        />
+      )}
+      {!isOngoing && (
+        <div className="mx-auto flex h-[80%] w-full max-w-xl flex-col justify-center bg-game">
+          <div
+            onClick={() => startGame('default')}
+            className="mx-auto w-[60%] border border-primary"
+          >
+            D모드
+          </div>
+          <div onClick={() => startGame('inf')} className="w-full ">
+            C모드
+          </div>
+        </div>
+      )}
     </>
   );
 };
