@@ -84,7 +84,6 @@ const SnackGameView = ({ isOngoing, snackGame, onRemove }: SnackGameProps) => {
   };
 
   useEffect(() => {
-    console.log('asd');
     snackGame.updateSnackPosition(offsetWidth, offsetHeight);
   }, [snackGame, offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
