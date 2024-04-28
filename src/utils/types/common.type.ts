@@ -45,3 +45,10 @@ export interface canvasOffsetType {
   offsetLeft: number;
   offsetTop: number;
 }
+
+export interface GameHistoryResponse {
+  session_id: number;
+  memberId: number;
+  score: number;
+  updatedAt: string;
+}
