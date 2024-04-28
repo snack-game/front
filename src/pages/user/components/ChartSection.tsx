@@ -1,31 +1,42 @@
 import { useState } from 'react';
 
-const ChartSection = () => {
-  const [currentTab, setCurrentTab] = useState(0);
-  const tabOption = ['탭 0', '탭 1'];
+import Spacing from '@components/Spacing/Spacing';
 
-  const onClick = (tabIndex: number) => {
-    setCurrentTab(tabIndex);
-  };
+import { useGetGameHistory } from '@hooks/queries/history.query';
+
+import { HistoryLineChart } from './HistoryLineChart';
+
+type ViewType = 'DATE' | 'SESSION';
+interface TabInfo {
+  name: string;
+  by: ViewType;
+}
+
+const ChartSection = () => {
+  const TAB_OPTIONS: TabInfo[] = [
+    { name: '일주일간 최고 점수', by: 'DATE' },
+    { name: '최근 점수', by: 'SESSION' },
+  ];
+  const [currentTab, setCurrentTab] = useState<ViewType>('DATE');
+  const data = useGetGameHistory(currentTab);
 
   return (
     <div className={'w-4/5 rounded-md bg-white px-4 py-2'}>
       <div>
-        {tabOption.map((tab, index) => (
+        {TAB_OPTIONS.map(({ name, by }) => (
           <span
             className={`mr-4 cursor-pointer text-lg ${
-              currentTab === index ? 'text-primary' : 'text-[#6B7280]'
+              currentTab === by ? 'text-primary' : 'text-[#6B7280]'
             }`}
-            key={tab}
-            onClick={() => {
-              onClick(index);
-            }}
+            key={name}
+            onClick={() => setCurrentTab(by)}
           >
-            {tab}
+            {name}
           </span>
         ))}
       </div>
-      {currentTab}번째 탭 조회중
+      <Spacing size={2} />
+      <HistoryLineChart history={data} />
     </div>
   );
 };
