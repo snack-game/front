@@ -21,7 +21,7 @@ export default {
 
       boxShadow: {
         navigation:
-          '0px 0px 4px 0px rgba(0, 0, 0, 0.10), 2px 4px 12px 0px rgba(0, 0, 0, 0.10)',
+          '0px 0px 4px 0px rgba(0, 0, 0, 0.4), 2px 4px 12px 0px rgba(0, 0, 0, 0.1)',
       },
     },
   },

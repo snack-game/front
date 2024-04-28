@@ -154,14 +154,17 @@ const NewSnackGameMod = () => {
         />
       )}
       {!isOngoing && (
-        <div className="mx-auto flex h-[80%] w-full max-w-xl flex-col justify-center bg-game">
+        <div className="mx-auto flex h-[80%] w-full max-w-xl flex-col justify-center gap-10 bg-game">
           <div
             onClick={() => startGame('default')}
-            className="mx-auto w-[60%] border border-primary"
+            className="mx-auto h-[20%] w-[80%] rounded-md border bg-white shadow-md"
           >
             D모드
           </div>
-          <div onClick={() => startGame('inf')} className="w-full ">
+          <div
+            onClick={() => startGame('inf')}
+            className="mx-auto h-[20%] w-[80%] rounded-md border bg-white shadow-md"
+          >
             C모드
           </div>
         </div>
