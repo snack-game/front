@@ -8,6 +8,8 @@ export const QUERY_KEY = {
 
   SEASON_RANKING: 'seasonRanking',
   SEASON_USER_RANKING: 'seasonUserRanking',
+
+  GAME_HISTORY: 'gameHistory',
 };
 
 export interface ServerError {
