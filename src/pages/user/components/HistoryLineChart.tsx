@@ -76,5 +76,12 @@ export const HistoryLineChart = ({
     },
   };
 
+  if (history.length < 3)
+    return (
+      <p className="mb-8 whitespace-pre-line text-center">
+        {`아직은 데이터가 충분하지 않아요.
+        더 많은 게임을 즐기고 기록을 확인해보세요!`}
+      </p>
+    );
   return <Line data={data} options={options} />;
 };
