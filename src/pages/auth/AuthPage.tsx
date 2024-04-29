@@ -63,7 +63,7 @@ export const AuthPage = () => {
         ...member,
       }));
       setStorageValue(Date.now());
-      navigate(PATH.APPLE_GAME, { replace: true });
+      navigate(PATH.SNACK_GAME, { replace: true });
     }
 
     if (event.data.type === 'oAuthError') {
@@ -73,7 +73,7 @@ export const AuthPage = () => {
 
   const handleGuestLogin = () => {
     guestMutation.mutateAsync().then(() => {
-      navigate(PATH.APPLE_GAME, { replace: true });
+      navigate(PATH.SNACK_GAME, { replace: true });
     });
   };
 

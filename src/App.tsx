@@ -20,11 +20,13 @@ inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
-const AppleGamePage = lazy(
-  () => import('@pages/games/AppleGame/AppleGamePage'),
+const SnackGamePage = lazy(
+  () => import('@pages/games/SnackGame/game/SnackGamePage'),
 );
 
-const RankingPage = lazy(() => import('@pages/games/AppleGame/RankingPage'));
+const RankingPage = lazy(
+  () => import('@pages/games/SnackGame/ranking/RankingPage'),
+);
 
 const PolicyPage = lazy(() => import('@pages/policy/Policy'));
 
@@ -81,10 +83,10 @@ const App = () => {
 
             <Route element={<GameLayout />}>
               {/*Game*/}
-              <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+              <Route path={PATH.SNACK_GAME} element={<SnackGamePage />} />
 
               {/*RANKING*/}
-              <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
+              <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
 
               <Route path={PATH.POLICY} element={<PolicyPage />} />
 

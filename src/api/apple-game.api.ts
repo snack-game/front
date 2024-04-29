@@ -2,7 +2,7 @@ import {
   checkMoveType,
   gameEndType,
   goldModeType,
-} from '@pages/games/AppleGame/game/game.type';
+} from '@pages/games/SnackGame/game/game.type';
 
 import api from './index';
 

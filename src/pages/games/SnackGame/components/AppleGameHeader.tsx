@@ -14,18 +14,18 @@ const AppleGameHeader = () => {
     <Header>
       <Header.ListItem>
         <RouterLink
-          to={PATH.APPLE_GAME}
+          to={PATH.SNACK_GAME}
           className={'items-center'}
-          isActivated={location == PATH.APPLE_GAME}
+          isActivated={location == PATH.SNACK_GAME}
         >
           <GameIcon className={'mr-4 h-6 w-6'} />
           <span>게임</span>
         </RouterLink>
       </Header.ListItem>
       <RouterLink
-        to={PATH.APPLE_GAME_RANKING}
+        to={PATH.SNACK_GAME_RANKING}
         className={'items-center'}
-        isActivated={location == PATH.APPLE_GAME_RANKING}
+        isActivated={location == PATH.SNACK_GAME_RANKING}
       >
         <RankingIcon className={'mr-4 h-6 w-6'} />
         <span>랭킹</span>
