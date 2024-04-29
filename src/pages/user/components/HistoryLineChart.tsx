@@ -42,6 +42,7 @@ export const HistoryLineChart = ({
         borderWidth: 2,
         pointBackgroundColor: '#EF8B5A',
         pointRadius: 0,
+        pointHoverRadius: 0,
         tension: 0.4,
       },
     ],
