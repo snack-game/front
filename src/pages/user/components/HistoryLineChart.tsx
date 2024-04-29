@@ -52,6 +52,7 @@ export const HistoryLineChart = ({
       x: {
         grid: { display: false },
         offset: true,
+        ticks: { display: false },
       },
     },
     plugins: {
@@ -61,15 +62,15 @@ export const HistoryLineChart = ({
         caretPadding: 12,
 
         backgroundColor: '#FFFFFF',
-        bodyColor: '#000000',
         borderWidth: 2,
         borderColor: '#EF8B5A',
         cornerRadius: 10,
 
+        titleColor: '#000000',
+        titleAlign: 'center',
+        bodyColor: '#000000',
+        bodyAlign: 'center',
         displayColors: false,
-        callbacks: {
-          title: () => '',
-        },
       },
       datalabels: {
         display: false,
