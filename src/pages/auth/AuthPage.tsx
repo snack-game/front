@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import GoogleIcon from '@assets/icon/google.svg?react';
 import KakakoIcon from '@assets/icon/kakao.svg?react';
@@ -28,6 +28,7 @@ export const AuthPage = () => {
   const { setStorageValue } = useLocalStorage({
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
   });
+  const userStateValue = useRecoilValue(userState);
 
   const setUserState = useSetRecoilState(userState);
   const openToast = useToast();
@@ -78,6 +79,9 @@ export const AuthPage = () => {
   };
 
   useEffect(() => {
+    if (userStateValue.id) {
+      navigate(PATH.SNACK_GAME, { replace: true });
+    }
     if (!popup) return;
 
     window.addEventListener('message', OAuthListener, false);
