@@ -41,7 +41,8 @@ export const HistoryLineChart = ({
         borderColor: '#EF8B5A',
         borderWidth: 2,
         pointBackgroundColor: '#EF8B5A',
-        pointRadius: 4,
+        pointRadius: 0,
+        tension: 0.4,
       },
     ],
   };
@@ -73,6 +74,10 @@ export const HistoryLineChart = ({
       datalabels: {
         display: false,
       },
+    },
+    interaction: {
+      intersect: false,
+      mode: 'index',
     },
   };
 
