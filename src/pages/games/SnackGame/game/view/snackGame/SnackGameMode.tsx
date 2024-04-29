@@ -1,42 +1,61 @@
 import { useEffect, useState } from 'react';
 
-import GameResult from '@pages/games/AppleGame/components/GameResult';
-import Apple from '@pages/games/AppleGame/game/model/appleGame/apple';
-import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame/appleGame';
-import PlainApple from '@pages/games/AppleGame/game/model/appleGame/plainApple';
-import SnackGameHUD from '@pages/games/AppleGame/game/view/SnackGameHUD';
+import GameResult from '@pages/games/SnackGame/game/components/GameResult';
+import SnackGameHUD from '@pages/games/SnackGame/game/components/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-import AppleGameView from './AppleGameView';
+import SnackGameView from './SnackGameView';
+import { GoldenSnack } from '../../model/snackGame/goldSnack';
+import NewPlainApple from '../../model/snackGame/plainSnack';
+import NewApple from '../../model/snackGame/snack';
+import { SnackGame } from '../../model/snackGame/snackGame';
 
-const ClassicMode = () => {
+const SnackGameMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
-  const emptyGame = new AppleGame({ row: 0, column: 0, apples: [] });
+  const emptyGame = new SnackGame({ row: 0, column: 0, snacks: [] });
   const defaultTime = 120;
   const defaultRows = 10;
-  const defaultColumns = 18;
+  const defaultColumns = 5;
 
-  const [appleGame, setAppleGame] = useState(emptyGame);
+  const [snackGame, setSnackGame] = useState(emptyGame);
   const [isOngoing, setIsOngoing] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(defaultTime);
 
   const generateApples = async () => {
     const apples = [];
+    const totalApples = defaultRows * defaultColumns;
+
+    const goldenAppleIndex = Math.floor(Math.random() * totalApples);
+
+    let index = 0;
+
     for (let i = 0; i < defaultRows; i++) {
       for (let j = 0; j < defaultColumns; j++) {
-        apples.push(
-          new PlainApple({
-            coordinates: { y: i, x: j },
-            appleNumber: Math.floor(Math.random() * 9) + 1,
-          }),
-        );
+        if (index === goldenAppleIndex) {
+          apples.push(
+            new GoldenSnack({
+              coordinates: { y: i, x: j },
+              snackNumber: Math.floor(Math.random() * 9) + 1,
+              index,
+            }),
+          );
+        } else {
+          apples.push(
+            new NewPlainApple({
+              coordinates: { y: i, x: j },
+              snackNumber: Math.floor(Math.random() * 9) + 1,
+              index,
+            }),
+          );
+        }
+        index++;
       }
     }
     return apples;
@@ -44,11 +63,11 @@ const ClassicMode = () => {
 
   const startGame = async () => {
     try {
-      setAppleGame(
-        new AppleGame({
+      setSnackGame(
+        new SnackGame({
           row: defaultRows,
           column: defaultColumns,
-          apples: await generateApples(),
+          snacks: await generateApples(),
         }),
       );
       setScore(0);
@@ -60,13 +79,20 @@ const ClassicMode = () => {
     }
   };
 
-  const onRemove = async (removedApples: Apple[]) => {
-    setScore(appleGame.getScore());
+  const onRemove = async (removedApples: NewApple[]) => {
+    if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
+      const response = await generateApples();
+      if (response) {
+        snackGame.updateSnacks(response);
+      }
+    }
+
+    setScore(snackGame.getScore());
   };
 
-  const endGame = () => {
+  const endGame = async () => {
     try {
-      setAppleGame(emptyGame);
+      setSnackGame(emptyGame);
       setIsOngoing(false);
       openToast('게임 종료!', 'success');
 
@@ -101,14 +127,13 @@ const ClassicMode = () => {
         time={remainingTime}
         handleRefresh={refreshGame}
       />
-      <AppleGameView
+      <SnackGameView
         isOngoing={isOngoing}
-        startGame={startGame}
         onRemove={onRemove}
-        appleGame={appleGame}
+        snackGame={snackGame}
       />
     </>
   );
 };
 
-export default ClassicMode;
+export default SnackGameMode;

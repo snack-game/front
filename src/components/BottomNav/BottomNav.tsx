@@ -12,19 +12,19 @@ export const BottomNav = () => {
 
   return (
     <div className="fixed bottom-0 z-[999] flex w-full justify-center">
-      <div className="shadow-navigation flex h-16 w-full max-w-3xl items-center justify-around rounded-t-2xl bg-white text-gray-500">
+      <div className="flex h-16 w-full max-w-3xl items-center justify-around rounded-t-2xl bg-white text-gray-500 shadow-navigation">
         <RouterLink
-          to={PATH.APPLE_GAME}
+          to={PATH.SNACK_GAME}
           className={'flex-col items-center justify-between'}
-          isActivated={location == PATH.APPLE_GAME}
+          isActivated={location == PATH.SNACK_GAME}
         >
           <GameIcon className={'h-6 w-6'} />
           <span>게임</span>
         </RouterLink>
         <RouterLink
-          to={PATH.APPLE_GAME_RANKING}
+          to={PATH.SNACK_GAME_RANKING}
           className={'flex-col items-center justify-between'}
-          isActivated={location == PATH.APPLE_GAME_RANKING}
+          isActivated={location == PATH.SNACK_GAME_RANKING}
         >
           <RankingIcon className={'h-6 w-6'} />
           <span>랭킹</span>

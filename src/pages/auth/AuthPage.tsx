@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import GoogleIcon from '@assets/icon/google.svg?react';
 import KakakoIcon from '@assets/icon/kakao.svg?react';
@@ -28,6 +28,7 @@ export const AuthPage = () => {
   const { setStorageValue } = useLocalStorage({
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
   });
+  const userStateValue = useRecoilValue(userState);
 
   const setUserState = useSetRecoilState(userState);
   const openToast = useToast();
@@ -63,7 +64,7 @@ export const AuthPage = () => {
         ...member,
       }));
       setStorageValue(Date.now());
-      navigate(PATH.APPLE_GAME, { replace: true });
+      navigate(PATH.SNACK_GAME, { replace: true });
     }
 
     if (event.data.type === 'oAuthError') {
@@ -73,11 +74,14 @@ export const AuthPage = () => {
 
   const handleGuestLogin = () => {
     guestMutation.mutateAsync().then(() => {
-      navigate(PATH.APPLE_GAME, { replace: true });
+      navigate(PATH.SNACK_GAME, { replace: true });
     });
   };
 
   useEffect(() => {
+    if (userStateValue.id) {
+      navigate(PATH.SNACK_GAME, { replace: true });
+    }
     if (!popup) return;
 
     window.addEventListener('message', OAuthListener, false);

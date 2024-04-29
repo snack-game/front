@@ -1,21 +1,20 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import Button from '@components/Button/Button';
-import Apple from '@pages/games/AppleGame/game/model/appleGame/apple';
-import { AppleGame } from '@pages/games/AppleGame/game/model/appleGame/appleGame';
-import { Drag } from '@pages/games/AppleGame/game/model/common/drag';
-import { Particle } from '@pages/games/AppleGame/game/model/common/particle';
+import { Particle } from '@pages/games/SnackGame/game/model/common/particle';
 import { MouseEventType } from '@utils/types/common.type';
 
 import useCanvas from '@hooks/useCanvas';
 import { useCanvasOffset } from '@hooks/useCanvasOffset';
 import useError from '@hooks/useError';
 
-interface AppleGameProps {
+import { Click } from '../../model/common/click';
+import Snack from '../../model/snackGame/snack';
+import { SnackGame } from '../../model/snackGame/snackGame';
+
+interface SnackGameProps {
   isOngoing: boolean;
-  appleGame: AppleGame;
-  onRemove: (removedApples: Apple[]) => Promise<void>;
-  startGame?: () => Promise<void>;
+  snackGame: SnackGame;
+  onRemove: (removedsnacks: Snack[]) => Promise<void>;
 }
 
 interface EventListenerInfo {
@@ -23,31 +22,22 @@ interface EventListenerInfo {
   handler: any;
 }
 
-const AppleGameView = ({
-  isOngoing,
-  appleGame,
-  onRemove,
-  startGame,
-}: AppleGameProps) => {
+const SnackGameView = ({ isOngoing, snackGame, onRemove }: SnackGameProps) => {
   const setError = useError();
   const { canvasBaseRef, offsetWidth, offsetHeight, offsetLeft, offsetTop } =
     useCanvasOffset();
 
-  const drag = useMemo(() => new Drag(), []);
+  const click = useMemo(() => new Click(), []);
   const [particles, setParticles] = useState<Particle[]>([]);
 
   const animationFrame = (ctx: CanvasRenderingContext2D) => {
-    const { x, y, width, height } = drag.getDragArea();
-    const isDrawing = drag.getIsDrawing();
+    snackGame.getSnacks().forEach((snack) => {
+      snack.drawSnack(ctx);
 
-    if (isDrawing) drag.drawDragArea(ctx);
-
-    appleGame.getApples().forEach((apple) => {
-      apple.drawApple(ctx);
-
-      if (isDrawing) apple.highlightBorder(ctx, x, y, width, height);
+      if (snack.getIsSelected()) snack.highlightBorder(ctx, 'red');
     });
 
+    // 파티클 렌더링
     particles.forEach((it) => {
       it.update();
       it.drawParticle(ctx);
@@ -63,43 +53,43 @@ const AppleGameView = ({
 
   const handleMouseDown = (event: MouseEventType) => {
     event.preventDefault();
-    drag.onMouseDown(event, offsetLeft, offsetTop);
-  };
+    click.onMouseDown(event, offsetLeft, offsetTop);
 
-  const handleMouseMove = (event: MouseEventType) => {
-    event.preventDefault();
-    drag.onMouseMove(event, offsetLeft, offsetTop);
+    const { x, y } = click.getClickedPosition();
+    snackGame.caculateSnackClicked({ x, y });
   };
 
   const handleMouseUp = async () => {
     try {
-      const removedApples = appleGame.removeApples();
-      removedApples.forEach((apple) => {
+      const removedSnacks = snackGame.removeSnacks();
+      if (!removedSnacks) return;
+
+      removedSnacks.forEach((snack) => {
         for (let i = 0; i < 5; i++) {
           particles.push(
             new Particle(
-              apple.getPosition().x + apple.getRadius(),
-              apple.getPosition().y + apple.getRadius(),
+              snack.getPosition().x + snack.getRadius(),
+              snack.getPosition().y + snack.getRadius(),
             ),
           );
         }
       });
-      await onRemove(removedApples);
-      drag.onMouseUp();
-      appleGame.updateApplePosition(offsetWidth, offsetHeight);
+
+      await onRemove(removedSnacks);
+
+      snackGame.updateSnackPosition(offsetWidth, offsetHeight);
     } catch (e) {
       setError(new Error('이벤트가 실패했습니다.'));
     }
   };
 
   useEffect(() => {
-    appleGame.updateApplePosition(offsetWidth, offsetHeight);
-  }, [appleGame, offsetWidth, offsetHeight, offsetLeft, offsetTop]);
+    snackGame.updateSnackPosition(offsetWidth, offsetHeight);
+  }, [snackGame, offsetWidth, offsetHeight, offsetLeft, offsetTop]);
 
   useEffect(() => {
     const eventListeners: EventListenerInfo[] = [
       { event: 'touchstart', handler: handleMouseDown },
-      { event: 'touchmove', handler: handleMouseMove },
       { event: 'touchend', handler: handleMouseUp },
     ];
 
@@ -120,7 +110,7 @@ const AppleGameView = ({
     }
   }, [
     canvasRef.current,
-    appleGame,
+    snackGame,
     offsetWidth,
     offsetHeight,
     offsetLeft,
@@ -128,23 +118,19 @@ const AppleGameView = ({
   ]);
 
   return (
-    <div ref={canvasBaseRef} className={'m-auto h-[80%] max-w-7xl bg-game'}>
-      {isOngoing ? (
+    <div
+      ref={canvasBaseRef}
+      className={'mx-auto mb-20  h-[75%] w-full max-w-xl'}
+    >
+      {isOngoing && (
         <canvas
           ref={canvasRef}
           onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
         ></canvas>
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          <Button onClick={startGame} size="lg">
-            게임시작!
-          </Button>
-        </div>
       )}
     </div>
   );
 };
 
-export default memo(AppleGameView);
+export default memo(SnackGameView);

@@ -5,7 +5,7 @@ export class SnackGame {
   protected snacks: Snack[] = [];
   protected row: number;
   protected column: number;
-  protected borderOffset = 10;
+  protected borderOffset = 0;
   protected selectedSnacks: Snack[] = [];
 
   constructor({
@@ -99,18 +99,14 @@ export class SnackGame {
   }
 
   updateSnackPosition(offsetWidth: number, offsetHeight: number) {
-    const availableWidth = (offsetWidth - this.borderOffset * 2) / this.column;
-    const availableHeight = (offsetHeight - this.borderOffset * 2) / this.row;
+    const availableWidth = offsetWidth / this.column;
+    const availableHeight = offsetHeight / this.row;
 
     const snackRadius = Math.floor(
       Math.min(availableWidth, availableHeight) * 0.4,
     );
-    const snackXOffSet = Math.floor(
-      availableWidth / 2 - snackRadius + this.borderOffset,
-    );
-    const snackYOffSet = Math.floor(
-      availableHeight / 2 - snackRadius + this.borderOffset,
-    );
+    const snackXOffSet = Math.floor(availableWidth / 2 - snackRadius);
+    const snackYOffSet = Math.floor(availableHeight / 2 - snackRadius);
 
     this.snacks.forEach((snack) => {
       const coordinateX = snack.getCoordinates().x;
