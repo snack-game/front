@@ -21,7 +21,7 @@ const ChartSection = () => {
   const data = useGetGameHistory(currentTab);
 
   return (
-    <div className={'w-4/5 rounded-md bg-white px-4 py-2'}>
+    <div className={'w-full bg-white px-4 py-2'}>
       <div>
         {TAB_OPTIONS.map(({ name, by }) => (
           <span
