@@ -47,7 +47,7 @@ export interface canvasOffsetType {
 }
 
 export interface GameHistoryResponse {
-  session_id: number;
+  sessionId: number;
   memberId: number;
   score: number;
   updatedAt: string;
