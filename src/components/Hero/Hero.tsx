@@ -34,7 +34,7 @@ const heroContents = [
     desc: '드래그 영역의 숫자 합이 10이 되도록 사과를 떨궈주세요!\n황금사과를 통해 판을 초기화하고 고득점을 노려보아요!',
     leftContent: (
       <>
-        <Link to={PATH.APPLE_GAME}>
+        <Link to={PATH.SNACK_GAME}>
           <Button size={'lg'} className={'w-full'}>
             바로가기!
           </Button>

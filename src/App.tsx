@@ -83,10 +83,10 @@ const App = () => {
 
             <Route element={<GameLayout />}>
               {/*Game*/}
-              <Route path={PATH.APPLE_GAME} element={<SnackGamePage />} />
+              <Route path={PATH.SNACK_GAME} element={<SnackGamePage />} />
 
               {/*RANKING*/}
-              <Route path={PATH.APPLE_GAME_RANKING} element={<RankingPage />} />
+              <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
 
               <Route path={PATH.POLICY} element={<PolicyPage />} />
 

@@ -9,8 +9,8 @@ const PATH = {
   NOT_FOUND_ERROR: '*',
   POLICY: '/policy',
 
-  APPLE_GAME: '/apple-game',
-  APPLE_GAME_RANKING: '/apple-game/ranking',
+  SNACK_GAME: '/snack-game',
+  SNACK_GAME_RANKING: '/snack-game/ranking',
 
   BLOG: 'https://blog.snackga.me/',
 
