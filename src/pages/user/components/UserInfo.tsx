@@ -73,7 +73,7 @@ const UserInfo = () => {
         )}
         <Spacing size={16} />
         {profile.type === 'GUEST' && <GuestToMember />}
-        {/* {!isEditing && <ChartSection />} */}
+        {!isEditing && <ChartSection />}
       </div>
     </div>
   );
