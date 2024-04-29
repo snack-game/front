@@ -74,6 +74,13 @@ const NewSnackGameMod = () => {
     setSnackGameMod(snackGameMod);
 
     try {
+      const selectedFont = new FontFace(
+        'Dovemayo_gothic',
+        'url("/fonts/Dovemayo_gothic.woff2")',
+      );
+      await selectedFont.load();
+      document.fonts.add(selectedFont);
+
       setSnackGame(
         new snackGameMods[snackGameMod]({
           row: defaultRows,
@@ -86,6 +93,7 @@ const NewSnackGameMod = () => {
       setRemainingTime(defaultTime);
       openToast('게임 시작!', 'success');
     } catch (e) {
+      console.log(e);
       setError(new Error('게임 시작에 실패했습니다.'));
     }
   };
