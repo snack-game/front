@@ -22,19 +22,18 @@ const ChartSection = () => {
 
   return (
     <div className={'w-full bg-white px-4 py-2'}>
-      <div>
-        {TAB_OPTIONS.map(({ name, by }) => (
-          <span
-            className={`mr-4 cursor-pointer text-lg ${
-              currentTab === by ? 'text-primary' : 'text-[#6B7280]'
-            }`}
-            key={name}
-            onClick={() => setCurrentTab(by)}
-          >
-            {name}
-          </span>
-        ))}
-      </div>
+      {TAB_OPTIONS.map(({ name, by }) => (
+        <span
+          className={`mr-4 cursor-pointer text-lg ${
+            currentTab === by ? 'text-primary' : 'text-[#6B7280]'
+          }`}
+          key={name}
+          onClick={() => setCurrentTab(by)}
+        >
+          {name}
+        </span>
+      ))}
+
       <Spacing size={2} />
       <HistoryLineChart history={data} />
     </div>
