@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'DovemayoGothic';
-    src: url('./src/assets/fonts/Dovemayo_gothic.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'DovemayoGothic';
+  src: url('/fonts/Dovemayo_gothic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-    @apply bg-primary-light;
+  @apply bg-primary-light;
 }
 
 @tailwind base;

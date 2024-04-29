@@ -12,7 +12,7 @@ const SnackGamePage = () => {
         <title>Snack Game || Apple Game</title>
       </Helmet>
 
-      <div className={'h-screen'}>
+      <div className={'h-screen bg-game'}>
         <ErrorBoundary fallback={retryError}>
           <NewSnackGameMod />
         </ErrorBoundary>
