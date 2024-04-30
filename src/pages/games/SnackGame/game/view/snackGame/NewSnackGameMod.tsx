@@ -86,7 +86,6 @@ const NewSnackGameMod = () => {
       setRemainingTime(defaultTime);
       openToast('게임 시작!', 'success');
     } catch (e) {
-      console.log(e);
       setError(new Error('게임 시작에 실패했습니다.'));
     }
   };
