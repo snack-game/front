@@ -5,7 +5,7 @@ export class SnackGame {
   protected snacks: Snack[] = [];
   protected row: number;
   protected column: number;
-  protected borderOffset = 0;
+  protected borderOffset = 10;
   protected selectedSnacks: Snack[] = [];
 
   constructor({

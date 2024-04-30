@@ -120,7 +120,7 @@ const SnackGameView = ({ isOngoing, snackGame, onRemove }: SnackGameProps) => {
   return (
     <div
       ref={canvasBaseRef}
-      className={'mx-auto mb-20  h-[75%] w-full max-w-xl'}
+      className={'max-w-xl mx-auto mb-20  h-[75%] w-full'}
     >
       {isOngoing && (
         <canvas

@@ -122,10 +122,9 @@ abstract class Snack {
 
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
-    ctx.font = `${this.radius}px Dovemayo_gothic`;
+    ctx.font = `${this.radius}px DovemayoGothic`;
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
     ctx.fillText(
       String(this.snackNumber),
       this.position.x + this.radius,

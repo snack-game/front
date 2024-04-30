@@ -1,4 +1,4 @@
-import GoldenAppleImage from '@assets/images/golden_apple.png';
+import GoldenAppleImage from '@assets/images/golden_snack.png';
 
 import Snack, { SnackPropType } from './snack';
 
