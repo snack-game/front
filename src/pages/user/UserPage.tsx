@@ -36,8 +36,6 @@ const UserPage = () => {
       <Helmet>
         <title>Snack Game || My Info</title>
       </Helmet>
-      <Header className={'fixed'} />
-      <Spacing size={4} />
 
       {userInfo.id && (
         <div className={'flex flex-col'}>
@@ -46,8 +44,6 @@ const UserPage = () => {
           </QueryBoundary>
         </div>
       )}
-
-      <Footer />
     </>
   );
 };
