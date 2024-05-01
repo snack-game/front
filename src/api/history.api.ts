@@ -9,7 +9,7 @@ const historyApi = {
 
   getGameHistory: async (by: string): Promise<GameHistoryResponse[]> => {
     const { data } = await api.get(`${historyApi.endPoint.gameHistory}${by}`);
-    return data;
+    return data.reverse();
   },
 };
 
