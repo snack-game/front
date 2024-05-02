@@ -48,20 +48,14 @@ const UserInfo = () => {
   };
 
   return (
-    <div
-      className={'relative mx-auto flex w-full max-w-7xl flex-col items-center'}
-    >
+    <div className="relative mt-20 h-full pt-20">
       <button
-        className="absolute right-0 top-44 z-10 mr-2 text-gray-400"
+        className="absolute right-0 top-14 z-10 mr-2 text-gray-400"
         onClick={handleLogout}
       >
         로그아웃
       </button>
-      <div
-        className={
-          'mt-52 flex h-fit w-full flex-col items-center rounded-xl bg-game pb-24'
-        }
-      >
+      <div className={'flex h-full flex-col items-center bg-game pb-20'}>
         {profile && (
           <ProfileSection
             profile={profile}
@@ -71,7 +65,7 @@ const UserInfo = () => {
             onClickClose={handleClickClose}
           />
         )}
-        <Spacing size={16} />
+        <Spacing size={14} />
         {profile.type === 'GUEST' && <GuestToMember />}
         {!isEditing && <ChartSection />}
       </div>

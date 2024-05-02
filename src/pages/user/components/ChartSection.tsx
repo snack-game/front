@@ -33,7 +33,6 @@ const ChartSection = () => {
           {name}
         </span>
       ))}
-
       <Spacing size={2} />
       <HistoryLineChart history={data} />
     </div>

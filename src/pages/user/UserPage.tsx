@@ -38,7 +38,7 @@ const UserPage = () => {
       </Helmet>
 
       {userInfo.id && (
-        <div className={'flex flex-col'}>
+        <div className={'flex h-[100dvh] flex-col'}>
           <QueryBoundary errorFallback={RetryError}>
             <UserInfo />
           </QueryBoundary>
