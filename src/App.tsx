@@ -36,6 +36,8 @@ const ErrorPage = lazy(() => import('@pages/error/ErrorPage'));
 
 const UserPage = lazy(() => import('@pages/user/UserPage'));
 
+const SettingPage = lazy(() => import('@pages/user/setting/SettingPage'));
+
 const App = () => {
   const resetUser = useResetRecoilState(resetUserState);
   const { storageValue, deleteStorageValue } = useLocalStorage<string>({
@@ -92,6 +94,8 @@ const App = () => {
 
               {/* User */}
               <Route path={PATH.USER} element={<UserPage />} />
+
+              <Route path={PATH.SETTING} element={<SettingPage />} />
             </Route>
 
             {/*Error*/}
