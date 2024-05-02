@@ -28,6 +28,7 @@ const ExpChart = ({ status }: { status: StatusType }) => {
         display: false,
       },
     },
+    events: [],
   };
 
   function calculateData() {
