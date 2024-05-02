@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState } from 'recoil';
 
 import authApi from '@api/auth.api';
+import TopBar from '@components/TopBar/TopBar';
 import { resetUserState } from '@utils/atoms/member.atom';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
@@ -29,20 +30,23 @@ const SettingPage = () => {
   };
 
   return (
-    <div>
-      <List title={'계정 관리'}>
-        <List.Item onClick={handleLogout}> 로그아웃 </List.Item>
-      </List>
-      <List title={'앱 정보'}>
-        <List.Item
-          onClick={() => {
-            navigate(PATH.POLICY);
-          }}
-        >
-          개인정보처리방침
-        </List.Item>
-      </List>
-    </div>
+    <>
+      <TopBar title="설정" backUrl={PATH.USER} />
+      <div>
+        <List title={'계정 관리'}>
+          <List.Item onClick={handleLogout}> 로그아웃 </List.Item>
+        </List>
+        <List title={'앱 정보'}>
+          <List.Item
+            onClick={() => {
+              navigate(PATH.POLICY);
+            }}
+          >
+            개인정보처리방침
+          </List.Item>
+        </List>
+      </div>
+    </>
   );
 };
 

@@ -94,9 +94,10 @@ const App = () => {
 
               {/* User */}
               <Route path={PATH.USER} element={<UserPage />} />
-
-              <Route path={PATH.SETTING} element={<SettingPage />} />
             </Route>
+
+            {/*Setting*/}
+            <Route path={PATH.SETTING} element={<SettingPage />} />
 
             {/*Error*/}
             <Route
