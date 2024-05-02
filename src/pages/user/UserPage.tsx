@@ -7,9 +7,6 @@ import { useRecoilValue } from 'recoil';
 import Auth from '@components/Auth/Auth';
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/Error/RetryError';
-import Footer from '@components/Footer/Footer';
-import Header from '@components/Header/Header';
-import Spacing from '@components/Spacing/Spacing';
 import UserInfo from '@pages/user/components/UserInfo';
 import { userState } from '@utils/atoms/member.atom';
 
