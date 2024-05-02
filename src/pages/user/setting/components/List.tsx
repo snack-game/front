@@ -20,12 +20,10 @@ const ListRoot = ({
   children: React.ReactNode;
 }) => {
   return (
-    <>
-      <div className="border-b-[1px] border-gray-200 px-4 py-3">
-        <div className="text-md flex h-10 items-center">{title}</div>
-        <ul className="flex flex-col gap-4"> {children} </ul>
-      </div>
-    </>
+    <div className="border-b-[1px] border-gray-200 px-4 py-3">
+      <div className="text-md flex h-10 items-center">{title}</div>
+      <ul className="flex flex-col gap-4"> {children} </ul>
+    </div>
   );
 };
 
