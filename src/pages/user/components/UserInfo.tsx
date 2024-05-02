@@ -55,7 +55,7 @@ const UserInfo = () => {
       >
         로그아웃
       </button>
-      <div className={'flex h-full flex-col items-center bg-game pb-20'}>
+      <div className={'flex min-h-full flex-col items-center bg-game pb-20'}>
         {profile && (
           <ProfileSection
             profile={profile}
@@ -67,7 +67,7 @@ const UserInfo = () => {
         )}
         <Spacing size={14} />
         {profile.type === 'GUEST' && <GuestToMember />}
-        {!isEditing && <ChartSection />}
+        {profile.type !== 'GUEST' && !isEditing && <ChartSection />}
       </div>
     </div>
   );

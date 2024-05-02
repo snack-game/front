@@ -35,8 +35,8 @@ const GuestToMember = () => {
 
   return (
     <div className="mb-8 w-4/5 rounded-md bg-white px-4 pb-12 pt-8 text-center">
-      <p className="text-primary-deep-dark">
-        회원으로 전환하면 더 많은 기능을 사용할 수 있어요!
+      <p className="whitespace-pre-line text-primary-deep-dark">
+        {`회원으로 전환하면\n더 많은 기능을 사용할 수 있어요!`}
       </p>
       <div className="md:flex md:justify-around">
         {memberOnlyFeature.map((feature) => (
