@@ -90,7 +90,7 @@ const ProfileSection = ({
   };
 
   return (
-    <div className={'absolute top-32 flex flex-col items-center'}>
+    <div className={'absolute top-0 flex flex-col items-center'}>
       <div className={'relative'}>
         {profile.status && <ExpChart status={profile.status} />}
         <div

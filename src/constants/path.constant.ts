@@ -6,6 +6,7 @@ const PATH = {
   AUTH: '/auth',
   TEAM: '/team',
   USER: '/user',
+  SETTING: '/user/setting',
   NOT_FOUND_ERROR: '*',
   POLICY: '/policy',
 

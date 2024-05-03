@@ -52,3 +52,5 @@ export interface GameHistoryResponse {
   score: number;
   updatedAt: string;
 }
+
+export type HistoryViewType = 'DATE' | 'SESSION';

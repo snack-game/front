@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import AwardIcon from '@assets/icon/award.svg?react';
+import ChartIcon from '@assets/icon/chart.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
 import GroupIcon from '@assets/icon/group.svg?react';
 import OAuth from '@components/Auth/OAuth';
@@ -24,6 +25,11 @@ const memberOnlyFeature: FeatureProps[] = [
     name: '랭킹 진입',
     description: '다른 유저들과\n순위를 겨룰 수 있어요',
   },
+  {
+    svg: <ChartIcon />,
+    name: '전적 조회',
+    description: '과거 게임 점수를\n그래프로 조회할 수 있어요',
+  },
 ];
 
 const GuestToMember = () => {
@@ -35,8 +41,8 @@ const GuestToMember = () => {
 
   return (
     <div className="mb-8 w-4/5 rounded-md bg-white px-4 pb-12 pt-8 text-center">
-      <p className="text-primary-deep-dark">
-        회원으로 전환하면 더 많은 기능을 사용할 수 있어요!
+      <p className="whitespace-pre-line text-primary-deep-dark">
+        {`회원으로 전환하면\n더 많은 기능을 사용할 수 있어요!`}
       </p>
       <div className="md:flex md:justify-around">
         {memberOnlyFeature.map((feature) => (
@@ -58,7 +64,7 @@ interface FeatureProps {
 const Feature = ({ svg, name, description }: FeatureProps) => {
   return (
     <div className="mt-8 flex flex-col items-center gap-4">
-      <div className="mb-2 h-[64px] w-[64px] text-primary">{svg}</div>
+      <div className="text-primary">{svg}</div>
       <p className="text-lg font-semibold text-primary">{name}</p>
       <p className="whitespace-pre-line text-center text-primary-deep-dark">
         {description}
