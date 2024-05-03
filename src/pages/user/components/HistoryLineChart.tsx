@@ -10,7 +10,9 @@ import {
   Tooltip,
 } from 'chart.js';
 
-import { GameHistoryResponse } from '@utils/types/common.type';
+import { HistoryViewType } from '@utils/types/common.type';
+
+import { useGetGameHistory } from '@hooks/queries/history.query';
 
 ChartJS.defaults.font.family = 'DovemayoGothic';
 ChartJS.defaults.font.size = 18;
@@ -23,10 +25,12 @@ ChartJS.register(
 );
 
 export const HistoryLineChart = ({
-  history,
+  currentTab,
 }: {
-  history: GameHistoryResponse[];
+  currentTab: HistoryViewType;
 }) => {
+  const history = useGetGameHistory(currentTab);
+
   const scores: number[] = history.map((round) => round.score);
   const labels: string[] = history.map((round) => {
     const [, month, day] = round.updatedAt.split('-');

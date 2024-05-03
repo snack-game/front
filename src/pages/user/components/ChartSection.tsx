@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
+import QueryBoundary from '@components/base/QueryBoundary';
+import RetryError from '@components/Error/RetryError';
 import Spacing from '@components/Spacing/Spacing';
-
-import { useGetGameHistory } from '@hooks/queries/history.query';
+import { HistoryViewType } from '@utils/types/common.type';
 
 import { HistoryLineChart } from './HistoryLineChart';
 
-type ViewType = 'DATE' | 'SESSION';
 interface TabInfo {
   name: string;
-  by: ViewType;
+  by: HistoryViewType;
 }
 
 const ChartSection = () => {
@@ -17,8 +17,7 @@ const ChartSection = () => {
     { name: '일주일간 최고 점수', by: 'DATE' },
     { name: '최근 점수', by: 'SESSION' },
   ];
-  const [currentTab, setCurrentTab] = useState<ViewType>('DATE');
-  const data = useGetGameHistory(currentTab);
+  const [currentTab, setCurrentTab] = useState<HistoryViewType>('DATE');
 
   return (
     <div className={'w-full bg-white px-4 py-2'}>
@@ -34,7 +33,9 @@ const ChartSection = () => {
         </span>
       ))}
       <Spacing size={2} />
-      <HistoryLineChart history={data} />
+      <QueryBoundary errorFallback={RetryError}>
+        <HistoryLineChart currentTab={currentTab} />
+      </QueryBoundary>
     </div>
   );
 };
