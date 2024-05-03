@@ -26,7 +26,7 @@ const SettingPage = () => {
     await authApi.logOut();
     openToast('로그아웃 성공!', 'success');
     deleteStorageValue();
-    navigate(PATH.MAIN, { replace: true });
+    navigate(PATH.AUTH, { replace: true });
   };
 
   return (
