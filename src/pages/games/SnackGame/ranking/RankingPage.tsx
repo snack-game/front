@@ -17,12 +17,10 @@ const RankingPage = () => {
       name: '전체',
       onClick: () => setSelectedSeason(0),
     },
-    ...seasonData.map((season) => {
-      return {
-        name: season.name,
-        onClick: () => setSelectedSeason(season.id),
-      };
-    }),
+    ...seasonData.map((season) => ({
+      name: season.name,
+      onClick: () => setSelectedSeason(season.id),
+    })),
   ];
 
   const [selectedSeason, setSelectedSeason] = useState<number>(latestSeason);
