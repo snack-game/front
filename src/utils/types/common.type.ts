@@ -37,6 +37,13 @@ export type RankingType = {
   message?: string;
 };
 
+export type SeasonType = {
+  id: number;
+  name: string;
+  startedAt: string;
+  endedAt: string | null;
+};
+
 export type MouseEventType = React.MouseEvent<HTMLCanvasElement> | TouchEvent;
 
 export interface canvasOffsetType {
