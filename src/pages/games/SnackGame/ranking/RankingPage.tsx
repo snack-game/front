@@ -7,19 +7,25 @@ import Spacing from '@components/Spacing/Spacing';
 import AppleGameHeader from '@pages/games/SnackGame/components/AppleGameHeader';
 import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
 
-const RankingPage = () => {
-  const [selectedSeason, setSelectedSeason] = useState<number>(1);
+import { useGetSeasons } from '@hooks/queries/ranking.query';
 
+const RankingPage = () => {
+  const seasonData = useGetSeasons();
+  const latestSeason = seasonData.slice(-1)[0].id;
   const dropdownOptions: DropDownOptionType[] = [
     {
       name: '전체',
       onClick: () => setSelectedSeason(0),
     },
-    {
-      name: '시즌 1',
-      onClick: () => setSelectedSeason(1),
-    },
+    ...seasonData.map((season) => {
+      return {
+        name: season.name,
+        onClick: () => setSelectedSeason(season.id),
+      };
+    }),
   ];
+
+  const [selectedSeason, setSelectedSeason] = useState<number>(latestSeason);
 
   return (
     <>
@@ -31,7 +37,7 @@ const RankingPage = () => {
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
         <Dropdown
-          initialOption={1}
+          initialOption={latestSeason}
           options={dropdownOptions}
           className="max-w-[120px]"
         />
