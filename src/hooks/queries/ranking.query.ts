@@ -2,7 +2,7 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import rankingApi from '@api/ranking.api';
-import { RankingType } from '@utils/types/common.type';
+import { RankingType, SeasonType } from '@utils/types/common.type';
 
 import { QUERY_KEY, ServerError } from '@constants/api.constant';
 
@@ -47,6 +47,16 @@ export const useGetSeasonRankingMe = (season: number) => {
 
       return error.response?.status >= 500;
     },
+  });
+
+  return data;
+};
+
+export const useGetSeasons = () => {
+  const { data } = useSuspenseQuery<SeasonType[], AxiosError<ServerError>>({
+    queryKey: [QUERY_KEY.SEASONS],
+    queryFn: () => rankingApi.seasons(),
+    staleTime: 1000 * 60 * 60 * 24 * 30,
   });
 
   return data;
