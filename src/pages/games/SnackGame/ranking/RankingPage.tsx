@@ -31,7 +31,6 @@ const RankingPage = () => {
         <title>Snack Game || Ranking</title>
       </Helmet>
 
-      <AppleGameHeader />
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
         <Dropdown
@@ -42,7 +41,6 @@ const RankingPage = () => {
       </div>
       <Spacing size={8} />
       <RankingSection season={selectedSeason} />
-      <Footer />
     </>
   );
 };
