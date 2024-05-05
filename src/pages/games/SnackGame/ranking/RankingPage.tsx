@@ -11,7 +11,7 @@ import { useGetSeasons } from '@hooks/queries/ranking.query';
 
 const RankingPage = () => {
   const seasonData = useGetSeasons();
-  const latestSeason = seasonData.slice(-1)[0].id;
+  const latestSeason = seasonData[seasonData.length - 1].id;
   const dropdownOptions: DropDownOptionType[] = [
     {
       name: '전체',
