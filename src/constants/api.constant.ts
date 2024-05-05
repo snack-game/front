@@ -8,6 +8,7 @@ export const QUERY_KEY = {
 
   SEASON_RANKING: 'seasonRanking',
   SEASON_USER_RANKING: 'seasonUserRanking',
+  SEASONS: 'seasons',
 
   GAME_HISTORY: 'gameHistory',
 };

@@ -1,5 +1,5 @@
 import api from '@api/index';
-import { RankingType } from '@utils/types/common.type';
+import { RankingType, SeasonType } from '@utils/types/common.type';
 
 const rankingApi = {
   endPoint: {
@@ -8,6 +8,8 @@ const rankingApi = {
 
     seasonRanking: '/rankings',
     seasonRankingMe: '/rankings',
+
+    seasons: '/seasons',
   },
 
   headers: {
@@ -36,6 +38,11 @@ const rankingApi = {
     const { data } = await api.get(
       `${rankingApi.endPoint.seasonRankingMe}/${season}/me?by=BEST_SCORE`,
     );
+    return data;
+  },
+
+  seasons: async (): Promise<SeasonType[]> => {
+    const { data } = await api.get(rankingApi.endPoint.seasons);
     return data;
   },
 };
