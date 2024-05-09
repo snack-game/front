@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
+import { hotjar } from 'react-hotjar';
 import { Route, Routes } from 'react-router-dom';
 
 import { inject } from '@vercel/analytics';
@@ -12,6 +13,7 @@ import { AuthPage } from '@pages/auth/AuthPage';
 import GameLayout from '@pages/GameLayout';
 import { resetUserState } from '@utils/atoms/member.atom';
 
+import { HJID, HJSV } from '@constants/common.constant';
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -64,6 +66,9 @@ const App = () => {
     };
 
     checkUserExpired();
+    if (process.env.NODE_ENV !== 'development') {
+      hotjar.initialize({ id: HJID, sv: HJSV });
+    }
   }, []);
 
   return (
