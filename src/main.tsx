@@ -33,7 +33,9 @@ const Root = () => {
       ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
 
       hotjar.initialize({ id: HJID, sv: HJSV });
+    }
 
+    if (import.meta.env.VITE_NODE_ENV !== 'development') {
       Sentry.init({
         dsn: import.meta.env.VITE_SENTRY_DNS,
         integrations: [
