@@ -4,7 +4,7 @@ import { Chart as ChartJS, ArcElement, ChartOptions } from 'chart.js';
 
 import { StatusType } from '@utils/types/member.type';
 
-import { TIER_COLOR, PRIMARY_COLOR } from '@constants/tier.constant';
+import { PRIMARY_COLOR, TIER_COLOR } from '@constants/common.constant';
 
 ChartJS.register(ArcElement);
 

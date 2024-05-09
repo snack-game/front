@@ -10,7 +10,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { StatusType } from '@utils/types/member.type';
 
-import { TIER_COLOR } from '@constants/tier.constant';
+import { TIER_COLOR } from '@constants/common.constant';
 
 import type { ChartOptions, Plugin } from 'chart.js';
 
