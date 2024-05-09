@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import ReactGA from 'react-ga4';
 import { HelmetProvider } from 'react-helmet-async';
+import { hotjar } from 'react-hotjar';
 import { BrowserRouter } from 'react-router-dom';
 
+import * as Sentry from '@sentry/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
+
+import { HJID, HJSV } from '@constants/common.constant';
 
 import App from './App';
 
@@ -25,8 +29,27 @@ const queryClient = new QueryClient({
 
 const Root = () => {
   useEffect(() => {
-    if (!import.meta.env.VITE_GA_TRACKING_ID) return;
-    ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
+    if (import.meta.env.VITE_NODE_ENV === 'production') {
+      ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
+
+      hotjar.initialize({ id: HJID, sv: HJSV });
+
+      Sentry.init({
+        dsn: import.meta.env.VITE_SENTRY_DNS,
+        integrations: [
+          Sentry.browserTracingIntegration(),
+          Sentry.replayIntegration(),
+        ],
+
+        // Performance Monitoring
+        tracesSampleRate: 1.0,
+        tracePropagationTargets: ['localhost', /^https:\/\/api.snackga.me/],
+
+        // Session Replay
+        replaysSessionSampleRate: 0.1,
+        replaysOnErrorSampleRate: 1.0,
+      });
+    }
   }, []);
 
   ReactGA.send({
