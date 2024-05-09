@@ -38,6 +38,7 @@ const Root = () => {
     if (import.meta.env.VITE_NODE_ENV !== 'development') {
       Sentry.init({
         dsn: import.meta.env.VITE_SENTRY_DNS,
+        environment: import.meta.env.VITE_NODE_ENV,
         integrations: [
           Sentry.browserTracingIntegration(),
           Sentry.replayIntegration(),

@@ -43,7 +43,7 @@ class ErrorBoundary extends Component<
     Sentry.withScope((scope) => {
       scope.setLevel('error');
       Sentry.captureMessage(
-        `🚨 ${import.meta.env.VITE_NODE_ENV} 에러: [${error.name}] ${window.location.href}\n${error.message}`,
+        `[🚨 ${import.meta.env.VITE_NODE_ENV}에러 ${error.name}]: ${window.location.href}`,
       );
     });
   }
