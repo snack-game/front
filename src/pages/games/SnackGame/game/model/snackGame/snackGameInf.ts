@@ -14,12 +14,17 @@ export class SnackGameInf extends SnackGame {
           snack.setNumber(Math.floor(Math.random() * 9) + 1);
         }
       });
+      this.selectedSnacks = [];
+      this.clearIsSelect();
+      this.setCanSelect();
+
+      return selectedSnacks;
     }
 
-    this.selectedSnacks = [];
-    this.clearIsSelect();
-    this.setCanSelect();
-
-    return selectedSnacks;
+    if (sum > 10) {
+      this.selectedSnacks = [];
+      this.clearIsSelect();
+      this.setCanSelect();
+    }
   }
 }
