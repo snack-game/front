@@ -14,12 +14,12 @@ import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
-import { SnackGameC } from '../../model/snackGame/snackGameInf';
-import { SnackGameD } from '../../model/snackGame/snackGameMobile';
+import { SnackGameInf } from '../../model/snackGame/snackGameInf';
+import { SnackGameDefualt } from '../../model/snackGame/snackGameMobile';
 
 const snackGameMods = {
-  default: SnackGameD,
-  inf: SnackGameC,
+  default: SnackGameDefualt,
+  inf: SnackGameInf,
 };
 
 const NewSnackGameMod = () => {

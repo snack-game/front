@@ -1,7 +1,7 @@
 import Snack from './snack';
 import { SnackGame } from './snackGame';
 
-export class SnackGameD extends SnackGame {
+export class SnackGameDefualt extends SnackGame {
   getSelectedDirection(latestSnack: Snack, targetSnack: Snack) {
     const snackCoord = targetSnack.getCoordinates();
     const latestSnackCoord = latestSnack.getCoordinates();

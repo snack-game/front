@@ -62,7 +62,7 @@ export class SnackGame {
         if (topSnack === snack) break;
       }
     } else {
-      if (this.selectedSnacks.length === 0 || snack.getCanSelect()) {
+      if (snack.getCanSelect()) {
         snack.setIsSelected(true);
         this.selectedSnacks.push(snack);
       }
@@ -76,6 +76,10 @@ export class SnackGame {
     );
     if (clickedSnack) {
       this.updateSelectedSnacks(clickedSnack);
+
+      if (this.selectedSnacks.length === 0) {
+        this.setCanSelect();
+      }
     }
   }
 
@@ -91,11 +95,18 @@ export class SnackGame {
         (snack) => !this.selectedSnacks.includes(snack),
       );
 
-      this.clearSelectedAndCanSelect();
+      this.selectedSnacks = [];
+      this.clearIsSelect();
+      this.setCanSelect();
+
       return selectedSnacks;
     }
 
-    if (sum > 10) this.clearSelectedAndCanSelect();
+    if (sum > 10) {
+      this.selectedSnacks = [];
+      this.clearIsSelect();
+      this.setCanSelect();
+    }
   }
 
   updateSnackPosition(offsetWidth: number, offsetHeight: number) {
@@ -120,20 +131,20 @@ export class SnackGame {
     });
   }
 
-  clearSelectedAndCanSelect() {
-    this.selectedSnacks.forEach((snack) => snack.setIsSelected(false));
-    this.clearCanSelect();
-    this.selectedSnacks = [];
-  }
-
   clearIsSelect() {
-    this.snacks.map((snack) => {
+    this.snacks.forEach((snack) => {
       snack.setIsSelected(false);
     });
   }
 
+  setCanSelect() {
+    this.snacks.forEach((snack) => {
+      snack.setCanSelect(true);
+    });
+  }
+
   clearCanSelect() {
-    this.snacks.map((snack) => {
+    this.snacks.forEach((snack) => {
       snack.setCanSelect(false);
     });
   }
