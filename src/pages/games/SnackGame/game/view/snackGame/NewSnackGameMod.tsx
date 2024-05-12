@@ -8,14 +8,14 @@ import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import SnackGameView from './SnackGameView';
+import { GameStart } from '../../components/GameStart';
+import { SnackGameMod } from '../../game.type';
 import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
 import { SnackGameC } from '../../model/snackGame/snackGameInf';
 import { SnackGameD } from '../../model/snackGame/snackGameMobile';
-
-type SnackGameMod = 'default' | 'inf';
 
 const snackGameMods = {
   default: SnackGameD,
@@ -141,11 +141,13 @@ const NewSnackGameMod = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <SnackGameHUD
-        score={score}
-        time={remainingTime}
-        handleRefresh={refreshGame}
-      />
+      {isOngoing && (
+        <SnackGameHUD
+          score={score}
+          time={remainingTime}
+          handleRefresh={refreshGame}
+        />
+      )}
       {snackGame && (
         <SnackGameView
           isOngoing={isOngoing}
@@ -153,22 +155,7 @@ const NewSnackGameMod = () => {
           snackGame={snackGame}
         />
       )}
-      {!isOngoing && (
-        <div className="mx-auto mb-20 flex h-[75%] w-full max-w-xl flex-col justify-center gap-10">
-          <div
-            onClick={() => startGame('default')}
-            className="mx-auto h-[20%] w-[60%] rounded-md border bg-white shadow-md"
-          >
-            D모드
-          </div>
-          <div
-            onClick={() => startGame('inf')}
-            className="mx-auto h-[20%] w-[60%] rounded-md border bg-white shadow-md"
-          >
-            C모드
-          </div>
-        </div>
-      )}
+      {!isOngoing && <GameStart startGame={startGame} />}
     </div>
   );
 };
