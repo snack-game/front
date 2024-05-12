@@ -1,4 +1,4 @@
-import { TIER_COLOR } from '@constants/tier.constant';
+import { TIER_COLOR } from '@constants/common.constant';
 
 interface LevelProps {
   level: number;

@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { inject } from '@vercel/analytics';
 import { useResetRecoilState } from 'recoil';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
@@ -15,8 +14,6 @@ import { resetUserState } from '@utils/atoms/member.atom';
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
-
-inject();
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 

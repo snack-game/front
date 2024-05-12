@@ -1,5 +1,7 @@
 import { Component, ComponentType, PropsWithChildren } from 'react';
 
+import * as Sentry from '@sentry/react';
+
 export interface FallbackProps {
   error?: Error;
   resetErrorBoundary?: () => void;
@@ -35,6 +37,19 @@ class ErrorBoundary extends Component<
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { error };
+  }
+
+  componentDidCatch(error: Error): void {
+    Sentry.withScope((scope) => {
+      scope.setLevel('error');
+      Sentry.captureMessage(
+        `[🚨 ${import.meta.env.VITE_NODE_ENV}에러 ${error.name}]: ${window.location.href}`,
+      );
+
+      Sentry.captureException(error, {
+        mechanism: { handled: !!this.props.fallback },
+      });
+    });
   }
 
   render() {

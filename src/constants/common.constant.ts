@@ -1,3 +1,5 @@
+export const TOAST_ID = 'toast';
+
 export const PRIMARY_COLOR = 'rgba(255, 237, 213, 1)';
 
 export const TIER_COLOR = [
@@ -10,3 +12,6 @@ export const TIER_COLOR = [
   'rgba(223, 164, 225, 1)',
   'rgba(239, 191, 191, 1)',
 ];
+
+export const HJID = 4963723;
+export const HJSV = 6;
