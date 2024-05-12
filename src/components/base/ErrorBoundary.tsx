@@ -45,6 +45,10 @@ class ErrorBoundary extends Component<
       Sentry.captureMessage(
         `[🚨 ${import.meta.env.VITE_NODE_ENV}에러 ${error.name}]: ${window.location.href}`,
       );
+
+      Sentry.captureException(error, {
+        mechanism: { handled: !!this.props.fallback },
+      });
     });
   }
 
