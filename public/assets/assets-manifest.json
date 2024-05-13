@@ -1,0 +1,68 @@
+{
+  "bundles": [
+    {
+      "name": "default",
+      "assets": []
+    },
+    {
+      "name": "common",
+      "assets": [
+        {
+          "alias": [
+            "common/common-sprite/common-sprite.json"
+          ],
+          "src": [
+            "common/common-sprite/common-sprite@1x.json",
+            "common/common-sprite/common-sprite@0.5x.json"
+          ],
+          "data": {
+            "tags": {
+              "tps": true,
+              "m": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "game",
+      "assets": [
+        {
+          "alias": [
+            "game/game-sprite/game-sprite.json"
+          ],
+          "src": [
+            "game/game-sprite/game-sprite@1x.json",
+            "game/game-sprite/game-sprite@0.5x.json"
+          ],
+          "data": {
+            "tags": {
+              "tps": true,
+              "m": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "preload",
+      "assets": [
+        {
+          "alias": [
+            "preload/preload-sprite/preload-sprite.json"
+          ],
+          "src": [
+            "preload/preload-sprite/preload-sprite@1x.json",
+            "preload/preload-sprite/preload-sprite@0.5x.json"
+          ],
+          "data": {
+            "tags": {
+              "tps": true,
+              "m": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
