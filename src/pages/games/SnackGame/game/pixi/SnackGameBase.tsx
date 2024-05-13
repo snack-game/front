@@ -1,8 +1,6 @@
-import { RefObject, memo, useEffect, useRef } from 'react';
+import { memo, useRef } from 'react';
 
 import { Application } from 'pixi.js';
-
-import useError from '@hooks/useError';
 
 import usePixiCanvas from './hook/usePixiCanvas';
 

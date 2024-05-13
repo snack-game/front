@@ -23,7 +23,7 @@ export class LargeButton extends FancyButton {
     const opts = { ...defaultLargeButtonOptions, ...options };
 
     const defaultView = new NineSliceSprite({
-      texture: Texture.from('button-large'),
+      texture: Texture.from('large-button'),
       leftWidth: 36,
       topHeight: 42,
       rightWidth: 36,
@@ -33,7 +33,7 @@ export class LargeButton extends FancyButton {
     });
 
     const pressedView = new NineSliceSprite({
-      texture: Texture.from('button-large-press'),
+      texture: Texture.from('large-button-press'),
       leftWidth: 36,
       topHeight: 42,
       rightWidth: 36,
