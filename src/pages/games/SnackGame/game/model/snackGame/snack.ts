@@ -16,6 +16,10 @@ abstract class Snack {
   private toDelete = false;
   private canSelect = true;
 
+  private scale = 1;
+  private scaleTarget = 1.2;
+  private scaleSpeed = 0.02;
+
   constructor({ coordinates, snackNumber, index }: SnackPropType) {
     this.coordinates = coordinates;
     this.snackNumber = snackNumber;
