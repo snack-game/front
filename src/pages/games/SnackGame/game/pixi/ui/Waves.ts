@@ -1,3 +1,4 @@
+import gsap from 'gsap';
 import { Container, Graphics, Texture, Sprite } from 'pixi.js';
 
 /** 여러 Wave를 렌더링할 수 있는 UI 입니다.  */
@@ -87,9 +88,13 @@ export class Wave extends Container {
     }
 
     for (let i = 0; i < this.maxPoints; i++) {
-      const point = new Point(this.gap * i, this.centerY);
+      const point = new Point(this.gap * i, this.centerY, i);
       this.addChild(point);
       this.points.push(point);
+    }
+
+    for (const point of this.points) {
+      point.update();
     }
   }
 
@@ -110,8 +115,6 @@ export class Wave extends Container {
 
       prevX = point.x;
       prevY = point.y;
-
-      point.update();
     }
     this.wave.lineTo(prevX, prevY);
     this.wave.lineTo(this.width, this.height);
@@ -124,24 +127,24 @@ export class Wave extends Container {
 
 /** 파도 효과를 위한 꼭지점 역할을 하는 요소입니다.  */
 class Point extends Graphics {
-  private speed: number;
-  private cur: number;
-  private max: number;
-  private fieldY: number;
+  private delay: number;
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, delay: number) {
     super();
 
     this.x = x;
     this.y = y;
-    this.fieldY = y; // 기본 Y 중심
-    this.speed = 0.1;
-    this.cur = 0;
-    this.max = Math.random() * 30 + 20;
+    this.delay = delay;
   }
 
   public update() {
-    this.cur += this.speed;
-    this.y = this.fieldY + Math.sin(this.cur) * this.max;
+    gsap.to(this, {
+      y: '+=20', // y 위치를 20만큼 아래로
+      repeat: -1, // 무한 반복
+      yoyo: true, // 다시 위로
+      duration: 1 + Math.random(), // 랜덤한 지속시간으로 자연스러운 움직임 생성
+      ease: 'sine.inOut', // Sine 웨이브 이징
+      delay: this.delay * 0.1,
+    });
   }
 }

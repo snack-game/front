@@ -42,8 +42,10 @@ export class LoadScreen extends Container {
   public resize(width: number, height: number) {
     this.message.x = width * 0.5;
     this.message.y = height * 0.7;
+
     this.snackGameLogo.x = width * 0.5;
     this.snackGameLogo.y = height * 0.5;
+
     this.waves.x = 0;
     this.waves.y = height;
     this.waves.width = width;

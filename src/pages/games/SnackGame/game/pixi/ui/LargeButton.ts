@@ -49,7 +49,7 @@ export class LargeButton extends FancyButton {
     });
 
     this.messageLabel = new Label(opts.text, {
-      fill: 0x4a4a4a,
+      fill: 0xffffff,
       align: 'center',
     });
     this.messageLabel.y = -13;
@@ -69,7 +69,7 @@ export class LargeButton extends FancyButton {
     this.messageLabel.y = -13;
   }
 
-  /** Show the component */
+  /** 버튼 표시 애니메이션 */
   public async show(animated = true) {
     gsap.killTweensOf(this.pivot);
     this.visible = true;
@@ -82,7 +82,7 @@ export class LargeButton extends FancyButton {
     this.interactiveChildren = true;
   }
 
-  /** Hide the component */
+  /** 버튼 숨김 애니메이션 */
   public async hide(animated = true) {
     this.interactiveChildren = false;
     gsap.killTweensOf(this.pivot);
