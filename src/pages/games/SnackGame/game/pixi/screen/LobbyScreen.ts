@@ -1,45 +1,45 @@
 import gsap from 'gsap';
 import { Container, Text } from 'pixi.js';
 
-import { app } from '../SnackGameBase';
+import { LargeButton } from '../ui/LargeButton';
 
 export class LobbyScreen extends Container {
-  public static assetBundles = ['game'];
+  public static assetBundles = ['common'];
 
-  private message: Text;
-
-  private base: Container;
+  /** 기본 모드 시작 버튼 */
+  private defaultModButton: LargeButton;
+  /** 무한 모드 시작 버튼 */
+  private infModButton: LargeButton;
 
   constructor() {
     super();
 
-    this.base = new Container();
-    this.addChild(this.base);
+    this.defaultModButton = new LargeButton({ text: '기본 모드' });
+    this.addChild(this.defaultModButton);
 
-    this.message = new Text({
-      text: '로비 화면',
-      style: {
-        fill: 0x00000,
-        fontFamily: 'DovemayoGothic',
-        align: 'center',
-      },
-    });
-    this.message.anchor.set(0.5);
-    this.addChild(this.message);
+    this.infModButton = new LargeButton({ text: '무한 모드' });
+    this.addChild(this.infModButton);
   }
 
-  /** Resize the screen, fired whenever window size changes  */
+  /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
-    this.message.x = width * 0.5;
-    this.message.y = height * 0.5;
+    this.defaultModButton.x = width * 0.5;
+    this.defaultModButton.y = height * 0.6;
+    this.defaultModButton.width = width * 0.5;
+    this.defaultModButton.height = height * 0.1;
 
-    this.base.width = width;
-    this.base.height = height;
+    this.infModButton.x = width * 0.5;
+    this.infModButton.y = height * 0.75;
+    this.infModButton.width = width * 0.5;
+    this.infModButton.height = height * 0.1;
   }
 
-  /** Show screen with animations */
+  /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async show() {
-    gsap.killTweensOf(this.message);
-    this.message.alpha = 1;
+    this.defaultModButton.hide(false);
+    this.infModButton.hide(false);
+
+    await this.defaultModButton.show();
+    await this.infModButton.show();
   }
 }

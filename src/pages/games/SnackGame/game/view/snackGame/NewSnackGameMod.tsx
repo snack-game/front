@@ -14,8 +14,8 @@ import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
-import { SnackGameDefualt } from '../../model/snackGame/SnackGameDefualt';
 import { SnackGameInf } from '../../model/snackGame/snackGameInf';
+import { SnackGameDefualt } from '../../model/snackGame/snackGameMobile';
 
 const snackGameMods = {
   default: SnackGameDefualt,

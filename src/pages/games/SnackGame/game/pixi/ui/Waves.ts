@@ -1,11 +1,13 @@
 import { Container, Graphics, Texture, Sprite } from 'pixi.js';
 
+/** 여러 Wave를 렌더링할 수 있는 UI 입니다.  */
 export class Waves extends Container {
   private waves: Wave[] = [];
 
   constructor() {
     super();
 
+    /** wave 색상들 */
     const colors = [0xdb7b2d, 0xfb923c, 0xffedd5];
 
     for (const color of colors) {
@@ -15,12 +17,14 @@ export class Waves extends Container {
     }
   }
 
+  // wave 들의 width 설정
   public set width(value: number) {
     for (const wave of this.waves) {
       wave.width = value;
     }
   }
 
+  // wave 들의 hegith 설정
   public set height(value: number) {
     for (const wave of this.waves) {
       wave.height = value;
@@ -28,6 +32,7 @@ export class Waves extends Container {
   }
 }
 
+/** 단일 Wave UI 입니다.  */
 export class Wave extends Container {
   private color: number;
   private base: Sprite;
@@ -68,6 +73,7 @@ export class Wave extends Container {
     this.base.height = value;
   }
 
+  /** Wave UI에 width가 설정되면 Point들의 렌더링 위치를 조정하고 추가합니다. */
   public rebuildPoints() {
     this.base.width = this.width;
     this.base.height = this.height;
@@ -87,6 +93,7 @@ export class Wave extends Container {
     }
   }
 
+  /** 렌더링 함수 */
   public renderUpdate() {
     let prevX = this.points[0].x;
     let prevY = this.points[0].y;
@@ -110,11 +117,12 @@ export class Wave extends Container {
     this.wave.lineTo(this.width, this.height);
     this.wave.lineTo(0, this.height);
     this.wave.lineTo(this.points[0].x, this.points[0].y);
-    this.wave.fill({ alpha: 0.5, color: this.color });
+    this.wave.fill({ alpha: 0.3, color: this.color });
     this.wave.closePath;
   }
 }
 
+/** 파도 효과를 위한 꼭지점 역할을 하는 요소입니다.  */
 class Point extends Graphics {
   private speed: number;
   private cur: number;

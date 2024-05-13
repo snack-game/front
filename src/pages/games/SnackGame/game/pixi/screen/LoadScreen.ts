@@ -5,9 +5,9 @@ import { app } from '../SnackGameBase';
 import { SnackGameLogo } from '../ui/SnackGameLogo';
 import { Waves } from '../ui/Waves';
 
-/** Screen shown while loading assets */
+/** assets 이 비동기로 로드되는 동안 보여지는 화면입니다. */
 export class LoadScreen extends Container {
-  /** Assets bundles required by this screen */
+  /** 화면에 필요한 assets 번들 리스트 */
   public static assetBundles = ['preload'];
 
   /** 로딩 메시지 */
@@ -38,7 +38,7 @@ export class LoadScreen extends Container {
     this.addChild(this.snackGameLogo);
   }
 
-  /** Resize the screen, fired whenever window size changes  */
+  /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
     this.message.x = width * 0.5;
     this.message.y = height * 0.7;
@@ -49,7 +49,7 @@ export class LoadScreen extends Container {
     this.waves.width = width;
   }
 
-  /** Show screen with animations */
+  /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async show() {
     gsap.killTweensOf(this.message);
     this.message.alpha = 1;
@@ -63,9 +63,8 @@ export class LoadScreen extends Container {
     });
   }
 
-  /** Hide screen with animations */
+  /** Screen이 사라실 때 보여지는 애니메이션 입니다. */
   public async hide() {
-    // Change then hide the loading message
     this.message.text = '로딩 완료!';
     gsap.killTweensOf(this.message);
     gsap.to(this.message, {

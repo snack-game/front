@@ -10,4 +10,6 @@ export const ATOM_KEY = {
 
   THEME: 'themeState',
   DEFAULT_THEME: 'defaultThemeState',
+
+  PIXI: 'pixiState',
 };
