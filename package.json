@@ -13,6 +13,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@pixi/ui": "^2.0.1",
     "@sentry/react": "^7.114.0",
     "@storybook/addon-styling-webpack": "^0.0.5",
     "@storybook/addon-themes": "^7.6.6",
@@ -24,11 +25,13 @@
     "chart.js": "^4.4.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "framer-motion": "^10.17.0",
+    "gsap": "^3.12.5",
     "i18next": "^23.7.8",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.4.2",
     "lottie-web": "^5.12.2",
     "msw": "^1.2.2",
+    "pixi.js": "^8.1.1",
     "polished": "^4.2.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
