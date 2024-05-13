@@ -21,11 +21,11 @@ const SnackGameHUD = ({ time, handleRefresh, score }: AppleGameHUDProps) => {
       </div>
       <div className="mx-auto flex w-[95%] items-center justify-between gap-4">
         <div className="relative w-full">
-          <div className="absolute -top-2 left-0 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-light">
+          <div className="absolute -top-2 left-0 flex  h-8 w-8 items-center justify-center rounded-full bg-primary text-xl text-primary-light shadow-md">
             {time}
           </div>
           <div
-            className={`h-4 rounded-full bg-primary before:w-full before:bg-white`}
+            className={`h-4 rounded-full bg-primary shadow-md before:w-full`}
             style={{
               width: `${remainingTimeRatio}%`,
             }}

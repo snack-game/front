@@ -1,3 +1,5 @@
+export type SnackGameMod = 'default' | 'inf';
+
 export interface goldModAppleType {
   number: number;
   golden: boolean;

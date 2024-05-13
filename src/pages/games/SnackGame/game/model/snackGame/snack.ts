@@ -14,7 +14,7 @@ abstract class Snack {
   private image = new Image();
   private isSelected = false;
   private toDelete = false;
-  private canSelect = false;
+  private canSelect = true;
 
   constructor({ coordinates, snackNumber, index }: SnackPropType) {
     this.coordinates = coordinates;
@@ -106,7 +106,7 @@ abstract class Snack {
   }
 
   drawSnack(ctx: CanvasRenderingContext2D) {
-    if (this.canSelect || this.isSelected) {
+    if (!this.canSelect) {
       ctx.globalAlpha = 0.5;
     }
 
@@ -120,7 +120,6 @@ abstract class Snack {
 
     ctx.globalAlpha = 1;
 
-    ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
     ctx.font = `${this.radius}px DovemayoGothic`;
     ctx.fillStyle = '#ffffff';

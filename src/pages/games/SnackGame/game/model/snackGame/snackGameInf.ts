@@ -1,6 +1,6 @@
 import { SnackGame } from './snackGame';
 
-export class SnackGameC extends SnackGame {
+export class SnackGameInf extends SnackGame {
   removeSnacks() {
     const selectedSnacks = this.snacks.filter((snack) => snack.getIsSelected());
     const sum = this.selectedSnacks
@@ -14,11 +14,17 @@ export class SnackGameC extends SnackGame {
           snack.setNumber(Math.floor(Math.random() * 9) + 1);
         }
       });
+      this.selectedSnacks = [];
+      this.clearIsSelect();
+      this.setCanSelect();
 
-      this.clearSelectedAndCanSelect();
       return selectedSnacks;
     }
 
-    if (sum > 10) this.clearSelectedAndCanSelect();
+    if (sum > 10) {
+      this.selectedSnacks = [];
+      this.clearIsSelect();
+      this.setCanSelect();
+    }
   }
 }
