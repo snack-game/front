@@ -6,6 +6,7 @@ import { app } from '../SnackGameBase';
 import { LargeButton } from '../ui/LargeButton';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
+import { setUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
 
 export class LobbyScreen extends Container {
@@ -27,13 +28,17 @@ export class LobbyScreen extends Container {
     this.addChild(this.waves);
 
     this.defaultModButton = new LargeButton({ text: '기본 모드' });
-    this.defaultModButton.onPress.connect(() =>
-      navigation.showScreen(GameScreen),
-    );
+    this.defaultModButton.onPress.connect(() => {
+      setUrlParam('mode', 'default');
+      navigation.showScreen(GameScreen);
+    });
     this.addChild(this.defaultModButton);
 
     this.infModButton = new LargeButton({ text: '무한 모드' });
-    this.infModButton.onPress.connect(() => navigation.showScreen(GameScreen));
+    this.infModButton.onPress.connect(() => {
+      setUrlParam('mode', 'inf');
+      navigation.showScreen(GameScreen);
+    });
     this.addChild(this.infModButton);
 
     this.snackGameLetter = new SnackGameLetter();
@@ -80,10 +85,11 @@ export class LobbyScreen extends Container {
       delay: 0.5,
     });
 
-    await this.defaultModButton.show();
-    await this.infModButton.show();
+    this.defaultModButton.show();
+    this.infModButton.show();
   }
 
+  /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async hide() {
     this.defaultModButton.hide();
     this.infModButton.hide();
