@@ -1,7 +1,7 @@
 import DefaultModIcon from '@assets/images/defaultmod.png';
 import InfModIcon from '@assets/images/infmod.png';
 
-import { SnackGameMod } from '../game.type';
+import { SnackGameMod } from '../../game.type';
 
 interface GameStartProps {
   startGame: (snackGameMod: SnackGameMod) => Promise<void>;

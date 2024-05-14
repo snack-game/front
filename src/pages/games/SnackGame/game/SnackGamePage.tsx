@@ -3,8 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import retryError from '@components/Error/RetryError';
 
-import SnackGameBase from './pixi/SnackGameBase';
-import NewSnackGameMod from './view/snackGame/NewSnackGameMod';
+import SnackGameBase from './SnackGameBase';
 
 const SnackGamePage = () => {
   return (

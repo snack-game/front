@@ -1,6 +1,6 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import { Particle } from '@pages/games/SnackGame/game/model/common/particle';
+import { Particle } from '@pages/games/SnackGame/game/legacy/model/common/particle';
 import { MouseEventType } from '@utils/types/common.type';
 
 import useCanvas from '@hooks/useCanvas';

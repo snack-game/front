@@ -1,10 +1,10 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import Button from '@components/Button/Button';
-import Apple from '@pages/games/SnackGame/game/model/appleGame/apple';
-import { AppleGame } from '@pages/games/SnackGame/game/model/appleGame/appleGame';
-import { Drag } from '@pages/games/SnackGame/game/model/common/drag';
-import { Particle } from '@pages/games/SnackGame/game/model/common/particle';
+import Apple from '@pages/games/SnackGame/game/legacy/model/appleGame/apple';
+import { AppleGame } from '@pages/games/SnackGame/game/legacy/model/appleGame/appleGame';
+import { Drag } from '@pages/games/SnackGame/game/legacy/model/common/drag';
+import { Particle } from '@pages/games/SnackGame/game/legacy/model/common/particle';
 import { MouseEventType } from '@utils/types/common.type';
 
 import useCanvas from '@hooks/useCanvas';

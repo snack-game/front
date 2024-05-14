@@ -1,38 +1,29 @@
 import { useEffect, useState } from 'react';
 
-import GameResult from '@pages/games/SnackGame/game/components/GameResult';
-import SnackGameHUD from '@pages/games/SnackGame/game/components/SnackGameHUD';
+import GameResult from '@pages/games/SnackGame/game/legacy/components/GameResult';
+import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import SnackGameView from './SnackGameView';
-import { GameStart } from '../../components/GameStart';
-import { SnackGameMod } from '../../game.type';
 import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
 import { SnackGame } from '../../model/snackGame/snackGame';
-import { SnackGameInf } from '../../model/snackGame/snackGameInf';
-import { SnackGameDefualt } from '../../model/snackGame/snackGameMobile';
 
-const snackGameMods = {
-  default: SnackGameDefualt,
-  inf: SnackGameInf,
-};
-
-const NewSnackGameMod = () => {
+const SnackGameMode = () => {
   const setError = useError();
   const openToast = useToast();
   const { openModal } = useModal();
 
+  const emptyGame = new SnackGame({ row: 0, column: 0, snacks: [] });
   const defaultTime = 120;
-  const defaultRows = 8;
+  const defaultRows = 10;
   const defaultColumns = 5;
 
-  const [snackGameMod, setSnackGameMod] = useState<SnackGameMod>('default');
-  const [snackGame, setSnackGame] = useState<SnackGame | null>(null);
+  const [snackGame, setSnackGame] = useState(emptyGame);
   const [isOngoing, setIsOngoing] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(defaultTime);
@@ -70,12 +61,10 @@ const NewSnackGameMod = () => {
     return apples;
   };
 
-  const startGame = async (snackGameMod: SnackGameMod) => {
-    setSnackGameMod(snackGameMod);
-
+  const startGame = async () => {
     try {
       setSnackGame(
-        new snackGameMods[snackGameMod]({
+        new SnackGame({
           row: defaultRows,
           column: defaultColumns,
           snacks: await generateApples(),
@@ -91,32 +80,24 @@ const NewSnackGameMod = () => {
   };
 
   const onRemove = async (removedApples: NewApple[]) => {
-    try {
-      if (!snackGame) throw Error;
-
-      if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
-        const response = await generateApples();
-        if (response) {
-          snackGame.updateSnacks(response);
-        }
+    if (removedApples.some((apple) => apple instanceof GoldenSnack)) {
+      const response = await generateApples();
+      if (response) {
+        snackGame.updateSnacks(response);
       }
-
-      setScore(snackGame.getScore());
-    } catch (e) {
-      setError(new Error('게임 진행 중 오류가 발생했습니다.'));
     }
+
+    setScore(snackGame.getScore());
   };
 
   const endGame = async () => {
     try {
-      setSnackGame(null);
+      setSnackGame(emptyGame);
       setIsOngoing(false);
       openToast('게임 종료!', 'success');
 
       openModal({
-        children: (
-          <GameResult score={score} reStart={() => startGame(snackGameMod)} />
-        ),
+        children: <GameResult score={score} reStart={startGame} />,
       });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
@@ -124,7 +105,7 @@ const NewSnackGameMod = () => {
   };
 
   const refreshGame = async () => {
-    return await startGame(snackGameMod);
+    return await startGame();
   };
 
   useEffect(() => {
@@ -140,24 +121,19 @@ const NewSnackGameMod = () => {
   }, [isOngoing, remainingTime]);
 
   return (
-    <div className="flex h-full w-full flex-col">
-      {isOngoing && (
-        <SnackGameHUD
-          score={score}
-          time={remainingTime}
-          handleRefresh={refreshGame}
-        />
-      )}
-      {snackGame && (
-        <SnackGameView
-          isOngoing={isOngoing}
-          onRemove={onRemove}
-          snackGame={snackGame}
-        />
-      )}
-      {!isOngoing && <GameStart startGame={startGame} />}
-    </div>
+    <>
+      <SnackGameHUD
+        score={score}
+        time={remainingTime}
+        handleRefresh={refreshGame}
+      />
+      <SnackGameView
+        isOngoing={isOngoing}
+        onRemove={onRemove}
+        snackGame={snackGame}
+      />
+    </>
   );
 };
 
-export default NewSnackGameMod;
+export default SnackGameMode;
