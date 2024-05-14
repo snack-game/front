@@ -1,10 +1,12 @@
 import gsap from 'gsap';
 import { Container, Text } from 'pixi.js';
 
+import { GameScreen } from './GameScreen';
 import { app } from '../SnackGameBase';
 import { LargeButton } from '../ui/LargeButton';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
+import { navigation } from '../util/navigation';
 
 export class LobbyScreen extends Container {
   public static assetBundles = ['common'];
@@ -25,9 +27,13 @@ export class LobbyScreen extends Container {
     this.addChild(this.waves);
 
     this.defaultModButton = new LargeButton({ text: '기본 모드' });
+    this.defaultModButton.onPress.connect(() =>
+      navigation.showScreen(GameScreen),
+    );
     this.addChild(this.defaultModButton);
 
     this.infModButton = new LargeButton({ text: '무한 모드' });
+    this.infModButton.onPress.connect(() => navigation.showScreen(GameScreen));
     this.addChild(this.infModButton);
 
     this.snackGameLetter = new SnackGameLetter();
@@ -51,7 +57,7 @@ export class LobbyScreen extends Container {
     this.waves.width = width;
 
     this.snackGameLetter.x = width / 2;
-    this.snackGameLetter.y = -200;
+    this.snackGameLetter.y = -150;
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
@@ -61,9 +67,9 @@ export class LobbyScreen extends Container {
 
     gsap.to(this.snackGameLetter, {
       y: app.renderer.height * 0.3,
-      duration: 1.5,
+      duration: 1,
       ease: 'bounce.out',
-      delay: 0.5,
+      delay: 0.3,
     });
 
     gsap.to(this.waves, {
@@ -76,5 +82,24 @@ export class LobbyScreen extends Container {
 
     await this.defaultModButton.show();
     await this.infModButton.show();
+  }
+
+  public async hide() {
+    this.defaultModButton.hide();
+    this.infModButton.hide();
+
+    gsap.to(this.waves, {
+      y: app.renderer.height,
+      duration: 0.5,
+      ease: 'quad.out',
+      delay: 0.5,
+    });
+
+    await gsap.to(this.snackGameLetter, {
+      width: 0,
+      height: 0,
+      duration: 0.5,
+      ease: 'back.in',
+    });
   }
 }
