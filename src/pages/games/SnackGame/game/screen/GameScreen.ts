@@ -1,8 +1,9 @@
 import gsap from 'gsap';
 import { Container, Text, Ticker } from 'pixi.js';
 
-import { SnackGame } from '../snackGame/SnackGame';
+import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
+import { GameEffects } from '../ui/GameEffect';
 import { Timer } from '../ui/Timer';
 import { getUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
@@ -16,6 +17,8 @@ export class GameScreen extends Container {
   public readonly timer: Timer;
 
   public readonly gameContainer: Container;
+
+  public readonly vfx?: GameEffects;
   /** Set to true when gameplay is finished */
   private finished = false;
 
@@ -29,7 +32,11 @@ export class GameScreen extends Container {
     this.addChild(this.gameContainer);
 
     this.snackGame = new SnackGame();
+    this.snackGame.onPop = this.onPop.bind(this);
     this.gameContainer.addChild(this.snackGame);
+
+    this.vfx = new GameEffects(this);
+    this.addChild(this.vfx);
   }
 
   public prepare() {
@@ -52,6 +59,11 @@ export class GameScreen extends Container {
   public update(time: Ticker) {
     this.snackGame.update(time.deltaMS);
     this.timer.updateTime(this.snackGame.timer.getTimeRemaining());
+  }
+
+  /** Fired when a piece is poped out fro the board */
+  private onPop(data: SnackGameOnPopData) {
+    this.vfx?.onPop(data);
   }
 
   /** Pause gameplay - automatically fired when a popup is presented */
@@ -81,7 +93,7 @@ export class GameScreen extends Container {
     this.gameContainer.y = div + this.snackGame.board.getHeight() * 0.5 + 20;
 
     this.timer.x = centerX;
-    this.timer.y = 30;
+    this.timer.y = div - 30;
   }
 
   /** Show screen with animations */

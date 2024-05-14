@@ -65,9 +65,10 @@ export function snackGameCreateGrid(rows = 6, columns = 6, types: SnackType[]) {
   /**
    * SnackType이 1보다 길다면 기믹을 가진 스낵이 존재함을 의미합니다.
    * 해당 기믹 스낵이 생성될 위치를 미리 계산합니다.
+   * type은 1부터 시작하며 1은 기본 스낵 2부터는 기믹 스낵 입니다.
    */
   if (types.length > 1) {
-    for (let i = 1; i < types.length; i++) {
+    for (let i = 2; i <= types.length; i++) {
       // TODO 기믹을 가진 스낵이 중복된 위치를 가지지 못 하도록 해야합니다.
       const randomRow = Math.floor(Math.random() * rows);
       const randomColumn = Math.floor(Math.random() * columns);
@@ -80,7 +81,7 @@ export function snackGameCreateGrid(rows = 6, columns = 6, types: SnackType[]) {
     const types = [];
 
     for (let c = 0; c < columns; c++) {
-      let currentType = 0;
+      let currentType = 1;
       const position: SnackGamePosition = { row: r, column: c };
 
       for (const gimmick of gimmickSnackIndex) {

@@ -71,7 +71,7 @@ export class SnackGameBoard {
 
     for (let i = 0; i < snacks.length; i++) {
       const name = snacks[i];
-      const type = i;
+      const type = i + 1;
 
       this.commonTypes.push(type);
       this.typesMap[type] = name;
@@ -146,7 +146,7 @@ export class SnackGameBoard {
    * @param position 팝될 스낵의 그리드 위치
    * @param causedBySpecial 팝이 특수 효과로 인해 발생했는지 여부
    */
-  public async popsnack(position: SnackGamePosition) {
+  public async popSnack(position: SnackGamePosition) {
     const snack = this.getSnackByPosition(position);
     const type = snackGameGetSnackType(this.grid, position);
     if (!type || !snack) return;
@@ -167,22 +167,6 @@ export class SnackGameBoard {
     // 이 스낵과 관련된 특수 효과를 트리거
     // await this.snackGame.special.trigger(type, position);
   }
-
-  /**
-   * 스낵을 일괄 팝
-   * @param positions 팝될 위치 목록
-   * @param causedBySpecial 특수 효과로 인해 발생했는지 여부
-   */
-  // public async popsnacks(
-  //   positions: SnackGamePosition[],
-  //   causedBySpecial = false,
-  // ) {
-  //   const animPromises = [];
-  //   for (const position of positions) {
-  //     animPromises.push(this.popsnack(position, causedBySpecial));
-  //   }
-  //   await Promise.all(animPromises);
-  // }
 
   /**
    * 그리드 위치로 스낵 스프라이트 찾기
@@ -223,6 +207,31 @@ export class SnackGameBoard {
   /** 선택된 스낵 배열 반환 */
   public getSelectedSnacks() {
     return this.selectedSnacks;
+  }
+
+  /** 선택되 스낵의 숫자 총합 */
+  public getSeletedSnacksSum() {
+    let total = 0;
+    for (const snack of this.selectedSnacks) {
+      total += snack.snackNum;
+    }
+
+    return total;
+  }
+
+  /** 선택된 스낵들 clear */
+  public clearAllSelectedSnacks() {
+    for (const snack of this.selectedSnacks) {
+      snack.isSelected = false;
+    }
+    this.selectedSnacks = [];
+  }
+
+  /** 선택된 스낵들을 모두 pop */
+  public popAllSelectedSnacks() {
+    for (const snack of this.selectedSnacks) {
+      this.popSnack(snack.getGridPosition());
+    }
   }
 
   /** 보드의 시각적 너비 가져오기 */

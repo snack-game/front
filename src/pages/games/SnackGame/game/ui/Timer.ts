@@ -25,8 +25,8 @@ export class Timer extends Container {
     this.addChild(this.cloud);
 
     this.messageLabel = new Label('5:00', {
-      fontSize: 36,
-      fill: 0x000000,
+      fontSize: 32,
+      fill: 0xfb923c,
     });
     this.addChild(this.messageLabel);
   }

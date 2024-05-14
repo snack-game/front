@@ -13,9 +13,24 @@ export class SnackGameActions {
     this.snackGame = SnackGame;
   }
 
+  /** Snack 객체에게 onPointerDown이벤트 시 실행할 콜백을 넘깁니다. */
   public actionTap(position: SnackGamePosition) {
     if (!this.snackGame.isPlaying()) return;
+    this.updateSelectedSnacks(position);
 
+    const sum = this.snackGame.board.getSeletedSnacksSum();
+
+    if (sum > 10) {
+      this.snackGame.board.clearAllSelectedSnacks();
+    }
+
+    if (sum === 10) {
+      this.snackGame.board.popAllSelectedSnacks();
+      this.snackGame.board.clearAllSelectedSnacks();
+    }
+  }
+
+  updateSelectedSnacks(position: SnackGamePosition) {
     const snack = this.snackGame.board.getSnackByPosition(position);
     const selectedSnack = this.snackGame.board.getSelectedSnacks();
     if (!snack || snack.isLocked()) return;
