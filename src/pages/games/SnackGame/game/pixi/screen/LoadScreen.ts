@@ -60,7 +60,7 @@ export class LoadScreen extends Container {
       y: app.renderer.height * 0.1,
       height: app.renderer.height * 0.9,
       duration: 1,
-      ease: 'quad.in',
+      ease: 'quad.out',
       delay: 0.2,
     });
   }

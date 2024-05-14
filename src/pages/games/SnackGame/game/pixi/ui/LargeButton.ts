@@ -13,10 +13,10 @@ const defaultLargeButtonOptions = {
 type LargeButtonOptions = typeof defaultLargeButtonOptions;
 
 /**
- * The big rectangle button, with a label, idle and pressed states
+ * 큰 사각형 버튼입니다.
  */
 export class LargeButton extends FancyButton {
-  /** The buttoon message displayed */
+  /** 버튼 내부 메시지 라벨 */
   private messageLabel: Label;
 
   constructor(options: Partial<LargeButtonOptions> = {}) {
@@ -50,6 +50,7 @@ export class LargeButton extends FancyButton {
 
     this.messageLabel = new Label(opts.text, {
       fill: 0xffffff,
+      fontWeight: 'bold',
       align: 'center',
     });
     this.messageLabel.y = -13;

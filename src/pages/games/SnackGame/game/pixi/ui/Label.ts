@@ -8,8 +8,7 @@ const defaultLabelStyle: Partial<TextStyleOptions> = {
 export type LabelOptions = typeof defaultLabelStyle;
 
 /**
- * A Text extension pre-formatted for this app, starting centered by default,
- * because it is the most common use in the app.
+ * 간단한 라벨 UI
  */
 export class Label extends Text {
   constructor(
