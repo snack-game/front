@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { Container, Text, Ticker } from 'pixi.js';
+import { Container, Ticker } from 'pixi.js';
 
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
@@ -43,7 +43,7 @@ export class GameScreen extends Container {
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
-      tileSize: 50,
+      tileSize: 55,
       duration: 120,
       mode: getUrlParam('mode') as SnackGameMode,
     });
@@ -93,7 +93,7 @@ export class GameScreen extends Container {
     this.gameContainer.y = div + this.snackGame.board.getHeight() * 0.5 + 20;
 
     this.timer.x = centerX;
-    this.timer.y = div - 30;
+    this.timer.y = div - 100;
   }
 
   /** Show screen with animations */

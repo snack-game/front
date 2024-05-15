@@ -4,10 +4,7 @@ import { Container } from 'pixi.js';
 import { PopExplosion } from './PopExplosion';
 import { GameScreen } from '../screen/GameScreen';
 import { Snack } from '../snackGame/Snack';
-import {
-  SnackGameOnPopData,
-  SnackGameOnMatchData,
-} from '../snackGame/SnackGame';
+import { SnackGameOnPopData } from '../snackGame/SnackGame';
 import { registerCustomEase, earthquake } from '../util/animation';
 import { waitFor } from '../util/asyncUtils';
 import { pool } from '../util/pool';

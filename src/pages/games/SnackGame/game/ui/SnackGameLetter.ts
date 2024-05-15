@@ -3,9 +3,9 @@ import { Container, Sprite } from 'pixi.js';
 import { Cloud } from './Cloud';
 
 export class SnackGameLetter extends Container {
-  /** Inner container for components, for animation purposes */
+  /** 애니메이션이 구동될 컨테이너 컴포넌트 */
   private container: Container;
-  /** sprite image */
+  /** 구름 이미지 */
   private image: Sprite;
   /** 구름 효과 */
   private cloud: Cloud;

@@ -67,6 +67,7 @@ export class SnackGame {
         this.selectedSnacks.push(snack);
       }
     }
+
     this.calculatePossibleSelect();
   }
 

@@ -234,6 +234,21 @@ export class SnackGameBoard {
     }
   }
 
+  /** 모든 스낵이 선택 가능하게  */
+  public setAllSnackCanSelect() {
+    for (const snack of this.snacks) {
+      snack.setCanSelect(true);
+    }
+  }
+
+  /** 모든 스낵기 선택 불가능하게 */
+  public setAllSnackCanSelectFalse() {
+    for (const snack of this.snacks) {
+      if (snack.isSelected) continue; // 이미 선택된 스낵은 건너뜁니다.
+      snack.setCanSelect(false);
+    }
+  }
+
   /** 보드의 시각적 너비 가져오기 */
   public getWidth() {
     return this.tileSize * this.columns;

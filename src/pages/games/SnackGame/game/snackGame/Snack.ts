@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { Container, FederatedPointerEvent, Sprite, Texture } from 'pixi.js';
+import { Container, Sprite, Texture } from 'pixi.js';
 
 import { SnackGamePosition } from './SnackGameUtil';
 import { Label } from '../ui/Label';
@@ -129,9 +129,30 @@ export class Snack extends Container {
     this.visible = false;
   }
 
+  /** 렌더링시 수행되는 함수 */
   public renderUpdate() {
     if (this.paused) return;
     this.highlight.visible = this.isSelected;
+
+    if (!this.canSelect && !this.isSelected) {
+      this.alpha = 0.5;
+    } else {
+      this.alpha = 1;
+    }
+
+    if (this.isSelected) {
+      gsap.to(this, {
+        rotation: 0.2,
+        ease: 'elastic',
+        duration: 0.5,
+      });
+    } else {
+      gsap.to(this, {
+        rotation: 0,
+        ease: 'elastic',
+        duration: 0.5,
+      });
+    }
   }
 
   /** 모든 현재 트윈 종료 및 제거 */
@@ -184,5 +205,10 @@ export class Snack extends Container {
   /** isSelected 조작 함수 */
   public setIsSelected(selected: boolean) {
     this.isSelected = selected;
+  }
+
+  /** cansSelect 조작 함수 */
+  public setCanSelect(canSelect: boolean) {
+    this.canSelect = canSelect;
   }
 }

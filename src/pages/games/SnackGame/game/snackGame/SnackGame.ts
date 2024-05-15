@@ -54,10 +54,6 @@ export class SnackGame extends Container {
   public onMatch?: (data: SnackGameOnMatchData) => void;
   /** 보드에서 조각이 팝될 때 발생 */
   public onPop?: (data: SnackGameOnPopData) => void;
-  /** 게임이 그리드를 자동 처리하기 시작할 때 발생 */
-  public onProcessStart?: () => void;
-  /** 게임이 그리드 자동 처리를 완료하면 발생 */
-  public onProcessComplete?: () => void;
   /** 게임 시간이 만료되면 발생 */
   public onTimesUp?: () => void;
 
