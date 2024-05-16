@@ -94,8 +94,8 @@ export class Snack extends Container {
     this.numberLabel.text = opts.snackNum;
     this.paused = false;
     this.isSelected = false;
-    this.visible = true;
-    this.alpha = 1;
+    this.visible = false;
+    this.alpha = 0;
     this.type = opts.type;
     this.name = opts.name;
     this.image.alpha = 1;

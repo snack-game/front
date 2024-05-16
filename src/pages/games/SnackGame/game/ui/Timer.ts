@@ -1,34 +1,64 @@
-import { Container } from 'pixi.js';
+import gsap from 'gsap';
+import { Container, Graphics } from 'pixi.js';
 
-import { Cloud } from './Cloud';
 import { Label } from './Label';
+import { Waves } from './Waves';
 
 /**
  * 게임 플레이 중에 표시되는 게임 타이머, 남은 시간이 10초 미만일 때 빨간색으로 깜빡이기 시작함.
  */
 export class Timer extends Container {
+  /** 애니메이션을 위한 컴포넌트 컨테이너 */
+  private readonly container: Container;
   /** 표시되는 남은 시간 */
   private readonly messageLabel: Label;
-
-  private cloud: Cloud;
+  /** 파도 효과 */
+  private readonly waves: Waves;
+  /** 애니메이션 컨테이너 원형 마스크 */
+  private readonly circle: Graphics;
+  /** 배경 색상을 위한 그래픽 컴포넌트 */
+  private readonly background: Graphics;
+  /** 숨김시 false */
+  private showing = true;
 
   constructor() {
     super();
 
-    this.cloud = new Cloud({
-      color: 0xfff7ec,
-      width: 100,
-      height: 30,
-      circleSize: 40,
-    });
-    this.addChild(this.cloud);
+    this.background = new Graphics();
+    this.background.circle(0, 0, 50);
+    this.background.fill(0xfff7ec);
+    this.addChild(this.background);
+
+    this.circle = new Graphics();
+    this.circle.circle(0, 0, 50);
+    this.circle.fill(0xffffff);
+    this.addChild(this.circle);
+
+    this.container = new Container();
+    this.container.mask = this.circle;
+    this.addChild(this.container);
+
+    this.waves = new Waves([0xea4141, 0xff7979]);
+    this.waves.x = -100;
+    this.container.addChild(this.waves);
 
     this.messageLabel = new Label('5:00', {
       fontSize: 32,
       fontFamily: 'DovemayoGothic',
       fill: 0xfb923c,
     });
-    this.addChild(this.messageLabel);
+    this.container.addChild(this.messageLabel);
+  }
+
+  // waves width 설정
+  public set width(value: number) {
+    this.waves.width = value;
+    this.waves.x = -value / 2;
+  }
+
+  // waves hegith 설정
+  public set height(value: number) {
+    this.waves.height = value;
   }
 
   /**
@@ -53,5 +83,40 @@ export class Timer extends Container {
     } else {
       this.messageLabel.tint = 0xffffff;
     }
+  }
+
+  /** 컴포넌트 노출 */
+  public async show(animated = true) {
+    if (this.showing) return;
+    this.showing = true;
+    gsap.killTweensOf(this.container.scale);
+    this.visible = true;
+    if (animated) {
+      this.container.scale.set(0);
+      await gsap.to(this.container.scale, {
+        x: 1,
+        y: 1,
+        duration: 0.3,
+        ease: 'back.out',
+      });
+    } else {
+      this.container.scale.set(1);
+    }
+  }
+
+  /** 컴포넌트 제거*/
+  public async hide(animated = true) {
+    if (!this.showing) return;
+    this.showing = false;
+    gsap.killTweensOf(this.container.scale);
+    if (animated) {
+      await gsap.to(this.container.scale, {
+        x: 0,
+        y: 0,
+        duration: 0.3,
+        ease: 'back.in',
+      });
+    }
+    this.visible = false;
   }
 }

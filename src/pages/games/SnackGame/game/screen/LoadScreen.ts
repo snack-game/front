@@ -20,7 +20,7 @@ export class LoadScreen extends Container {
   constructor() {
     super();
 
-    this.waves = new Waves();
+    this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
     this.addChild(this.waves);
 
     this.message = new Text({

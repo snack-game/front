@@ -1,6 +1,5 @@
-import { Snack } from './Snack';
 import { SnackGame } from './SnackGame';
-import { SnackGamePosition, snackGameGetSnackType } from './SnackGameUtil';
+import { SnackGamePosition } from './SnackGameUtil';
 
 export class SnackGameActions {
   /** 스낵게임 인스턴스 */
@@ -83,7 +82,7 @@ export class SnackGameActions {
           row: posX,
           column: posY,
         });
-        if (snack && !snack.isSelected) {
+        if (snack) {
           snack.setCanSelect(true); // 가장 가까운 스낵을 선택 가능하게
           break; // 가장 가까운 스낵을 찾으면 루프 종료
         }

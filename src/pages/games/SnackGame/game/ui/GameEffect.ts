@@ -5,6 +5,7 @@ import { PopExplosion } from './PopExplosion';
 import { GameScreen } from '../screen/GameScreen';
 import { Snack } from '../snackGame/Snack';
 import { SnackGameOnPopData } from '../snackGame/SnackGame';
+import { app } from '../SnackGameBase';
 import { registerCustomEase, earthquake } from '../util/animation';
 import { waitFor } from '../util/asyncUtils';
 import { pool } from '../util/pool';
@@ -59,6 +60,9 @@ export class GameEffects extends Container {
     const position = this.toLocal(data.snack.getGlobalPosition());
     this.playPopExplosion(position);
 
+    const x = this.game.timer.x + randomRange(-20, 20);
+    const y = this.game.timer.y - 55;
+
     const snack = pool.get(Snack);
     snack.setup({
       name: data.snack.name,
@@ -67,11 +71,34 @@ export class GameEffects extends Container {
       size: this.game.snackGame.board.tileSize,
       interactive: false,
     });
+    snack.visible = true;
     snack.position.copyFrom(position);
     this.addChild(snack);
-    await this.playFlyToCauldron(snack);
+    await this.playFlyToCauldron(snack, { x, y });
     this.removeChild(snack);
     pool.giveBack(snack);
+  }
+
+  /** 게임 시작 전 스낵이 위치를 찾아가는 애니메이션 */
+  public async animationBeforStart(snack: Snack) {
+    const position = this.toLocal(snack.getGlobalPosition());
+
+    const copySnack = pool.get(Snack);
+    copySnack.setup({
+      name: snack.name,
+      snackNum: snack.snackNum,
+      type: snack.type,
+      size: this.game.snackGame.board.tileSize,
+      interactive: false,
+    });
+    copySnack.visible = true;
+    copySnack.position.x = this.game.timer.x;
+    copySnack.position.y = this.game.timer.y;
+    this.addChild(copySnack);
+    await this.playFlyToCauldron(copySnack, { x: position.x, y: position.y });
+    snack.visible = true;
+    this.removeChild(copySnack);
+    pool.giveBack(copySnack);
   }
 
   /** a, b 사이의 거리 계산 */
@@ -81,12 +108,9 @@ export class GameEffects extends Container {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  /** 조각을 복사하여 원래 위치에서 솥으로 날아가게 함 */
-  public async playFlyToCauldron(snack: Snack) {
-    const x = this.game.timer.x + randomRange(-20, 20);
-    const y = this.game.timer.y - 55;
-    const to = { x, y };
-    const distance = this.getDistance(snack.x, snack.y, x, y);
+  /** 조각을 복사하여 원래 위치에서 목표 지점으로 날아가게 함 */
+  public async playFlyToCauldron(snack: Snack, to: { x: number; y: number }) {
+    const distance = this.getDistance(snack.x, snack.y, to.x, to.y);
 
     gsap.killTweensOf(snack);
     gsap.killTweensOf(snack.scale);
@@ -113,7 +137,7 @@ export class GameEffects extends Container {
   }
 
   /** 주어진 위치에서 짧은 폭발 효과 재생 */
-  private async playPopExplosion(position: { x: number; y: number }) {
+  public async playPopExplosion(position: { x: number; y: number }) {
     const explosion = pool.get(PopExplosion);
     explosion.x = position.x;
     explosion.y = position.y;

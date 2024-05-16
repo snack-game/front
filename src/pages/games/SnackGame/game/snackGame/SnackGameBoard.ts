@@ -104,7 +104,7 @@ export class SnackGameBoard {
   /**
    * 특정 그리드 위치에 새 스낵 생성
    * @param position 새 스낵이 붙을 그리드 위치
-   * @param type 새 스낵의 유형
+   * @param snackType 새 스낵의 유형
    */
   public createSnack(position: SnackGamePosition, snackType: SnackType) {
     const name = this.typesMap[snackType];

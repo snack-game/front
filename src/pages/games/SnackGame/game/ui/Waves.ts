@@ -5,11 +5,8 @@ import { Container, Graphics, Texture, Sprite } from 'pixi.js';
 export class Waves extends Container {
   private waves: Wave[] = [];
 
-  constructor() {
+  constructor(colors: number[]) {
     super();
-
-    /** wave 색상들 */
-    const colors = [0xdb7b2d, 0xfb923c, 0xffedd5];
 
     for (const color of colors) {
       const wave = new Wave(color);
