@@ -4,6 +4,7 @@ import { Container } from 'pixi.js';
 import { Cloud } from './Cloud';
 import { Label } from './Label';
 import { registerCustomEase } from '../util/animation';
+import { sfx } from '../util/audio';
 
 /** Custom ease curve for showing up countdown labels in a way that they slow down in the middle of the animation */
 const easeMidSlowMotion = registerCustomEase(
@@ -94,6 +95,7 @@ export class BeforGameStart extends Container {
 
   /** Show up the countdown and play "Ready?" animation */
   public async show() {
+    sfx.play('common/sfx-start.mp3', { speed: 0.8, volume: 0.5 });
     gsap.killTweensOf(this.container.scale);
     gsap.killTweensOf(this.container);
     this.visible = true;

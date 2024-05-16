@@ -1,5 +1,6 @@
 import { SnackGame } from './SnackGame';
 import { SnackGamePosition } from './SnackGameUtil';
+import { sfx } from '../util/audio';
 
 export class SnackGameActions {
   /** 스낵게임 인스턴스 */
@@ -17,6 +18,8 @@ export class SnackGameActions {
    */
   public actionTap(position: SnackGamePosition) {
     if (!this.snackGame.isPlaying()) return;
+    sfx.play('common/sfx-select.mp3');
+
     this.updateSelectedSnacks(position);
 
     const sum = this.snackGame.board.getSeletedSnacksSum();
@@ -26,6 +29,7 @@ export class SnackGameActions {
     }
 
     if (sum === 10) {
+      sfx.play('common/sfx-match.mp3', { speed: 1.2, volume: 0.5 });
       this.snackGame.board.popAllSelectedSnacks();
       this.snackGame.board.clearAllSelectedSnacks();
     }

@@ -8,6 +8,7 @@ import { SnackGameOnPopData } from '../snackGame/SnackGame';
 import { app } from '../SnackGameBase';
 import { registerCustomEase, earthquake } from '../util/animation';
 import { waitFor } from '../util/asyncUtils';
+import { sfx } from '../util/audio';
 import { pool } from '../util/pool';
 import { randomRange } from '../util/random';
 
@@ -134,6 +135,7 @@ export class GameEffects extends Container {
       duration: duration,
       ease: easeJumpToCauldronScale,
     });
+    sfx.play('common/sfx-buble.mp3', { volume: 0.3 });
   }
 
   /** 주어진 위치에서 짧은 폭발 효과 재생 */

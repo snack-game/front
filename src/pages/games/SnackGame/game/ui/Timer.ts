@@ -54,11 +54,22 @@ export class Timer extends Container {
   public set width(value: number) {
     this.waves.width = value;
     this.waves.x = -value / 2;
+    this.waves.y = 50;
   }
 
   // waves hegith 설정
   public set height(value: number) {
-    this.waves.height = value;
+    this.waves.height = value * 2;
+  }
+
+  /** waves 컴포넌트의 포지션 y값을 조금씩 뺍니다. */
+  public async upWavesPosition() {
+    if (this.waves.y < -50) return;
+    gsap.to(this.waves, {
+      y: this.waves.y - 1,
+      duration: 1,
+      ease: 'back.in',
+    });
   }
 
   /**

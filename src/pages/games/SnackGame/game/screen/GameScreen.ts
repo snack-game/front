@@ -8,6 +8,7 @@ import { GameEffects } from '../ui/GameEffect';
 import { Score } from '../ui/Score';
 import { Timer } from '../ui/Timer';
 import { waitFor } from '../util/asyncUtils';
+import { bgm } from '../util/audio';
 import { getUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
 export class GameScreen extends Container {
@@ -80,6 +81,7 @@ export class GameScreen extends Container {
   /** 스낵이 제거될 때 트리거 됩니다. */
   private onPop(data: SnackGameOnPopData) {
     this.vfx?.onPop(data);
+    this.timer.upWavesPosition();
   }
 
   /** 게임을 일시 정지 합니다. */
@@ -123,6 +125,7 @@ export class GameScreen extends Container {
 
   /** 화면 노출 시 애니메이션을 재생합니다. */
   public async show() {
+    bgm.play('common/bgm-game1.mp3', { volume: 0.5 });
     this.score.show();
     this.timer.show();
     await this.beforGameStart.show();

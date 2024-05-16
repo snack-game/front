@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@pixi/sound':
+        specifier: ^6.0.0
+        version: 6.0.0(pixi.js@8.1.1)
       '@pixi/ui':
         specifier: ^2.0.1
         version: 2.0.1(pixi.js@8.1.1)
@@ -1565,6 +1568,11 @@ packages:
 
   '@pixi/runner@7.4.2':
     resolution: {integrity: sha512-LPBpwym4vdyyDY5ucF4INQccaGyxztERyLTY1YN6aqJyyMmnc7iqXlIKt+a0euMBtNoLoxy6MWMvIuZj0JfFPA==}
+
+  '@pixi/sound@6.0.0':
+    resolution: {integrity: sha512-fEaCs2JmyYT1qqouFS3DydSccI35dyYD0pKK2hEbIGVDKUTvl224x0p4qme2YU9l465WRtM7gspLzP5fFf1mxQ==}
+    peerDependencies:
+      pixi.js: ^8.0.0
 
   '@pixi/ui@2.0.1':
     resolution: {integrity: sha512-yGXZuZyf8DY34FWm3JDmsmL6XYouWtsKJFBDZ5K6bFnJYYN/ZolSYcU4rSyOTBA9C1vkmWCX2lQWpEfyPRv91Q==}
@@ -9045,6 +9053,10 @@ snapshots:
   '@pixi/colord@2.9.6': {}
 
   '@pixi/runner@7.4.2': {}
+
+  '@pixi/sound@6.0.0(pixi.js@8.1.1)':
+    dependencies:
+      pixi.js: 8.1.1
 
   '@pixi/ui@2.0.1(pixi.js@8.1.1)':
     dependencies:

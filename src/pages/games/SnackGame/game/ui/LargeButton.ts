@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { NineSliceSprite, Texture } from 'pixi.js';
 
 import { Label } from './Label';
+import { sfx } from '../util/audio';
 
 const defaultLargeButtonOptions = {
   text: '',
@@ -64,6 +65,7 @@ export class LargeButton extends FancyButton {
 
   private handleDown() {
     this.messageLabel.y = -5;
+    sfx.play('common/sfx-tap.mp3');
   }
 
   private handleUp() {

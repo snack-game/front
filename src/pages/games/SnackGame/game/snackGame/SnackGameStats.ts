@@ -37,7 +37,6 @@ export class SnackGameStats {
    * @param data The piece pop data
    */
   public registerPop(data: SnackGameOnPopData) {
-    console.log(this.data);
     const points = 1;
     this.data.score += points;
     this.data.pops += 1;

@@ -6,6 +6,7 @@ import { app } from '../SnackGameBase';
 import { LargeButton } from '../ui/LargeButton';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
+import { bgm } from '../util/audio';
 import { setUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
 
@@ -67,6 +68,8 @@ export class LobbyScreen extends Container {
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async show() {
+    bgm.play('common/bgm-lobby.mp3', { volume: 0.5 });
+
     this.defaultModButton.hide(false);
     this.infModButton.hide(false);
 
