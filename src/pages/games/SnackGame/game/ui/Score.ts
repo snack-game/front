@@ -4,22 +4,22 @@ import { Container } from 'pixi.js';
 import { Cloud } from './Cloud';
 import { Label } from './Label';
 /**
- * The game score that shows during gameplay, with points animation
+ * 게임 플레이 동안 표시되는 게임 점수입니다.
  */
 export class Score extends Container {
-  /** Inner container for animation */
+  /** 애니메이션을 위한 내부 컨테이너 */
   private container: Container;
-  /** The animated cloud background */
+  /** 애니메이션된 구름 배경 */
   private cloud: Cloud;
-  /** The score number displayed */
+  /** 표시되는 점수 숫자 */
   private messageLabel: Label;
-  /** Score currently set */
+  /** 현재 설정된 점수 */
   private points = -1;
-  /** Turns false when hidden */
+  /** 숨겨졌을 때 false가 됩니다 */
   private showing = true;
-  /** Points that will gradually increase until match actual points */
+  /** 실제 점수에 도달할 때까지 점진적으로 증가하는 점수 */
   private animatedPoints = 0;
-  /** Increases with the frequence that score is updated, for changing the sfx playback pitch */
+  /** 점수가 업데이트될 때마다 증가하는 빈도수에 따라 sfx 재생 피치 변경 */
   private intensity = 0;
 
   constructor() {
@@ -46,20 +46,20 @@ export class Score extends Container {
     this.points = 0;
   }
 
-  /** Reset score to 0 */
+  /** 점수를 0으로 리셋합니다 */
   public reset() {
     this.points = 0;
     this.messageLabel.text = '0';
   }
 
-  /** Set the score and play the points animation */
+  /** 점수를 설정하고 점수 애니메이션을 재생합니다 */
   public setScore(value: number) {
     if (this.points === value) return;
     this.points = value;
     this.playPoints();
   }
 
-  /** Show the component */
+  /** 컴포넌트를 표시합니다 */
   public async show(animated = true) {
     if (this.showing) return;
     this.showing = true;
@@ -78,7 +78,7 @@ export class Score extends Container {
     }
   }
 
-  /** Hide the component */
+  /** 컴포넌트를 숨깁니다 */
   public async hide(animated = true) {
     if (!this.showing) return;
     this.showing = false;
@@ -94,7 +94,7 @@ export class Score extends Container {
     this.visible = false;
   }
 
-  /** Play points animation, increasing gradually until reaches actual score */
+  /** 실제 점수에 도달할 때까지 점점 증가하는 점수 애니메이션을 재생합니다 */
   private async playPoints() {
     gsap.killTweensOf(this);
     const diff = this.points - this.animatedPoints;
@@ -114,7 +114,7 @@ export class Score extends Container {
     });
   }
 
-  /** Print currently animated points to the screen and play a sound */
+  /** 현재 애니메이션된 점수를 화면에 표시합니다. */
   private printPoints() {
     const points = Math.round(this.animatedPoints);
     const text = String(points);

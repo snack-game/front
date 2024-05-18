@@ -4,10 +4,10 @@ import { Container, Sprite } from 'pixi.js';
 import { randomRange } from '../util/random';
 
 /**
- * Little explosion effect, that is used mainly for gameplay effects
+ * 주로 게임 플레이 효과에 사용되는 작은 폭발 효과입니다.
  */
 export class PopExplosion extends Container {
-  /** List of animated particles */
+  /** 애니메이션된 입자들의 목록 */
   private particles: Sprite[] = [];
 
   constructor() {
@@ -22,7 +22,7 @@ export class PopExplosion extends Container {
     }
   }
 
-  /** Play the explosion animation */
+  /** 폭발 애니메이션을 재생합니다 */
   public async play() {
     const animPromises = [];
     for (const particle of this.particles) {
@@ -32,7 +32,7 @@ export class PopExplosion extends Container {
     await Promise.all(animPromises);
   }
 
-  /** Play a single explosion particle */
+  /** 단일 폭발 입자를 재생합니다 */
   private async playParticle(particle: Sprite) {
     gsap.killTweensOf(particle);
     gsap.killTweensOf(particle.scale);

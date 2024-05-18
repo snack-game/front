@@ -2,24 +2,24 @@ import { PlayOptions, Sound, sound } from '@pixi/sound';
 import gsap from 'gsap';
 
 /**
- * Handles music background, playing onle one audio file in loop at time,
- * and fade/stop the music if a new one is requested. Also provide volume
- * control for music background only, leaving other sounds volumes unchanged.
+ * 배경 음악을 관리하며, 한 번에 하나의 오디오 파일만 루프로 재생하고,
+ * 새로운 음악이 요청될 때 이전 음악을 페이드 아웃하거나 정지합니다.
+ * 또한, 다른 사운드의 볼륨은 변경하지 않고 배경 음악만의 볼륨 조절 기능을 제공합니다.
  */
 class BGM {
-  /** Alias of the current music being played */
+  /** 현재 재생 중인 음악의 별칭 */
   public currentAlias?: string;
-  /** Current music instance being played */
+  /** 현재 재생 중인 음악 인스턴스 */
   public current?: Sound;
-  /** Current volume set */
+  /** 설정된 현재 볼륨 */
   private volume = 1;
 
-  /** Play a background music, fading out and stopping the previous, if there is one */
+  /** 배경 음악을 재생하며, 이전 음악이 있다면 페이드 아웃 후 정지합니다 */
   public async play(alias: string, options?: PlayOptions) {
-    // Do nothing if the requested music is already being played
+    // 요청된 음악이 이미 재생 중이면 아무 것도 하지 않음
     if (this.currentAlias === alias) return;
 
-    // Fade out then stop current music
+    // 현재 음악을 페이드 아웃 후 정지
     if (this.current) {
       const current = this.current;
       gsap.killTweensOf(current);
@@ -28,10 +28,10 @@ class BGM {
       });
     }
 
-    // Find out the new instance to be played
+    // 재생될 새로운 인스턴스를 찾기
     this.current = sound.find(alias);
 
-    // Play and fade in the new music
+    // 새 음악 재생 및 페이드 인
     this.currentAlias = alias;
     this.current.play({ loop: true, ...options });
     this.current.volume = 0;
@@ -39,12 +39,12 @@ class BGM {
     gsap.to(this.current, { volume: this.volume, duration: 1, ease: 'linear' });
   }
 
-  /** Get background music volume */
+  /** 배경 음악의 볼륨을 가져옵니다 */
   public getVolume() {
     return this.volume;
   }
 
-  /** Set background music volume */
+  /** 배경 음악의 볼륨을 설정합니다 */
   public setVolume(v: number) {
     this.volume = v;
     if (this.current) this.current.volume = this.volume;
@@ -52,38 +52,38 @@ class BGM {
 }
 
 /**
- * Handles short sound special effects, mainly for having its own volume settings.
- * The volume control is only a workaround to make it work only with this type of sound,
- * with a limitation of not controlling volume of currently playing instances - only the new ones will
- * have their volume changed. But because most of sound effects are short sounds, this is generally fine.
+ * 짧은 특수 효과음을 처리합니다. 주로 자체 볼륨 설정이 필요하기 때문입니다.
+ * 볼륨 조절은 이 유형의 사운드만 작동하도록 하는 해결책이며,
+ * 현재 재생 중인 인스턴스의 볼륨은 제어하지 않고 새로운 인스턴스만 볼륨이 변경됩니다.
+ * 하지만 대부분의 효과음이 짧기 때문에 이는 일반적으로 문제가 되지 않습니다.
  */
 class SFX {
-  /** Volume scale for new instances */
+  /** 새 인스턴스의 볼륨 스케일 */
   private volume = 1;
 
-  /** Play an one-shot sound effect */
+  /** 한 번만 재생되는 사운드 효과를 재생합니다 */
   public play(alias: string, options?: PlayOptions) {
     const volume = this.volume * (options?.volume ?? 1);
     sound.play(alias, { ...options, volume });
   }
 
-  /** Set sound effects volume */
+  /** 사운드 효과의 볼륨을 가져옵니다 */
   public getVolume() {
     return this.volume;
   }
 
-  /** Set sound effects volume. Does not affect instances that are currently playing */
+  /** 사운드 효과의 볼륨을 설정합니다. 현재 재생 중인 인스턴스에는 영향을 주지 않습니다 */
   public setVolume(v: number) {
     this.volume = v;
   }
 }
 
-/** Get overall sound volume */
+/** 전체 사운드 볼륨을 가져옵니다 */
 export function getMasterVolume() {
   return sound.volumeAll;
 }
 
-/** Set the overall sound volume, affecting all music and sound effects */
+/** 전체 사운드 볼륨을 설정합니다. 모든 음악과 사운드 효과에 영향을 줍니다 */
 export function setMasterVolume(v: number) {
   sound.volumeAll = v;
   if (!v) {
@@ -92,8 +92,8 @@ export function setMasterVolume(v: number) {
     sound.unmuteAll();
   }
 }
-/** Shared background music controller */
+/** 공유 배경 음악 컨트롤러 */
 export const bgm = new BGM();
 
-/** Shared sound effects controller */
+/** 공유 사운드 효과 컨트롤러 */
 export const sfx = new SFX();

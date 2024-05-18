@@ -54,12 +54,6 @@ class Navigation {
   /** 현재 표시되고 있는 팝업 */
   public currentPopup?: AppScreen;
 
-  /** 기본 로드 화면 설정 */
-  public setBackground(ctor: AppScreenConstructor) {
-    this.background = new ctor();
-    this.addAndShowScreen(this.background);
-  }
-
   /** 화면을 무대에 추가하고, 업데이트 & 크기 조정 함수 연결 */
   private async addAndShowScreen(screen: AppScreen) {
     // 부모가 없으면 네비게이션 컨테이너를 무대에 추가
