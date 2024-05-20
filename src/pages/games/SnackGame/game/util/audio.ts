@@ -92,6 +92,7 @@ export function setMasterVolume(v: number) {
     sound.unmuteAll();
   }
 }
+
 /** 공유 배경 음악 컨트롤러 */
 export const bgm = new BGM();
 
