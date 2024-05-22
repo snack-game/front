@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import retryError from '@components/Error/RetryError';
 
-import NewSnackGameMod from './view/snackGame/NewSnackGameMod';
+import SnackGameBase from './SnackGameBase';
 
 const SnackGamePage = () => {
   return (
@@ -14,7 +14,7 @@ const SnackGamePage = () => {
 
       <div className={'h-screen bg-game'}>
         <ErrorBoundary fallback={retryError}>
-          <NewSnackGameMod />
+          <SnackGameBase />
         </ErrorBoundary>
       </div>
     </>
