@@ -115,12 +115,7 @@ export const AuthPage = () => {
       <div className="h-screen w-screen ">
         <div className="flex h-full flex-col justify-evenly">
           <div className="flex h-full flex-col items-center justify-evenly gap-4 text-3xl text-primary-deep-dark">
-            <img
-              className="w-1/2 "
-              ref={logoRef}
-              src={LogoImage}
-              alt="무한 모드"
-            />
+            <img className="w-1/2 " ref={logoRef} src={LogoImage} alt="logo" />
           </div>
           <div className="mx-auto my-12 flex w-5/6  flex-col items-center justify-end gap-4">
             <div
