@@ -1,15 +1,13 @@
-import AppleImage from '@assets/images/apple.png';
-import CandyImage from '@assets/images/candy.png';
-import ChocolateImage from '@assets/images/chocolate.png';
-import CookieImage from '@assets/images/cookie.png';
-import JellyImage from '@assets/images/jelly.png';
+import DarkOrageSnack from '@assets/images/dark_orange_snack.png';
+import GoldenSnack from '@assets/images/golden_snack.png';
+import OrangSnack from '@assets/images/orange_snack.png';
+import PlainSnack from '@assets/images/snack.png';
 
 export const loadedImages = [
-  CandyImage,
-  AppleImage,
-  JellyImage,
-  CookieImage,
-  ChocolateImage,
+  PlainSnack,
+  GoldenSnack,
+  DarkOrageSnack,
+  OrangSnack,
 ].map((src) => {
   const img = new Image();
   img.src = src;

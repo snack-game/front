@@ -11,6 +11,7 @@ import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { getUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
+
 export class GameScreen extends Container {
   /** 화면에 필요한 에셋 번들 리스트 */
   public static assetBundles = ['game'];
