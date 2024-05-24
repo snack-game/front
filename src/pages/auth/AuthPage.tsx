@@ -23,6 +23,7 @@ interface DialogProps {
 
 export const AuthPage = () => {
   const logoRef = useRef<HTMLImageElement>(null);
+
   const guestMutation = useGuest();
   const navigate = useNavigate();
   const oAuthToken = useSocial();
