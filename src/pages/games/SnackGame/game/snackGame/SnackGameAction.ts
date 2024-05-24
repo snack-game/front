@@ -45,7 +45,16 @@ export class SnackGameActions {
   updateSelectedSnacks(position: SnackGamePosition) {
     const snack = this.snackGame.board.getSnackByPosition(position);
     const selectedSnack = this.snackGame.board.getSelectedSnacks();
-    if (!snack || snack.isLocked() || !snack.canSelect) return;
+    if (!snack || snack.isLocked()) return;
+
+    /** 선택 불가능한 스낵을 선택하면 모든 선택 취소**/
+    if (!snack.canSelect) {
+      while (selectedSnack.length > 0) {
+        const topSnack = selectedSnack.pop();
+        topSnack?.setIsSelected(false);
+      }
+      return;
+    }
 
     if (snack.isSelected) {
       snack.setIsSelected(false);

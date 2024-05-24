@@ -5,7 +5,6 @@ import { PopExplosion } from './PopExplosion';
 import { GameScreen } from '../screen/GameScreen';
 import { Snack } from '../snackGame/Snack';
 import { SnackGameOnPopData } from '../snackGame/SnackGame';
-import { app } from '../SnackGameBase';
 import { registerCustomEase, earthquake } from '../util/animation';
 import { waitFor } from '../util/asyncUtils';
 import { sfx } from '../util/audio';
@@ -75,7 +74,7 @@ export class GameEffects extends Container {
     snack.visible = true;
     snack.position.copyFrom(position);
     this.addChild(snack);
-    await this.playFlyToCauldron(snack, { x, y });
+    await this.playFlyToTarget(snack, { x, y });
     this.removeChild(snack);
     pool.giveBack(snack);
   }
@@ -96,7 +95,7 @@ export class GameEffects extends Container {
     copySnack.position.x = this.game.timer.x;
     copySnack.position.y = this.game.timer.y;
     this.addChild(copySnack);
-    await this.playFlyToCauldron(copySnack, { x: position.x, y: position.y });
+    await this.playFlyToTarget(copySnack, { x: position.x, y: position.y });
     snack.visible = true;
     this.removeChild(copySnack);
     pool.giveBack(copySnack);
@@ -110,7 +109,7 @@ export class GameEffects extends Container {
   }
 
   /** 조각을 복사하여 원래 위치에서 목표 지점으로 날아가게 함 */
-  public async playFlyToCauldron(snack: Snack, to: { x: number; y: number }) {
+  public async playFlyToTarget(snack: Snack, to: { x: number; y: number }) {
     const distance = this.getDistance(snack.x, snack.y, to.x, to.y);
 
     gsap.killTweensOf(snack);

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import AppleGameImage from '@assets/images/apple_game.png';
+import SnackGameImage from '@assets/images/logo-snack-game-letter.png';
 import ComingSoonImage from '@assets/images/main.png';
 import Carousel from '@components/Carousel/Carousel';
 import Hero from '@components/Hero/Hero';
@@ -22,7 +22,7 @@ const HeroSection = () => {
       >
         <Carousel
           items={[
-            { title: 'Apple Game', image: AppleGameImage },
+            { title: 'Snack Game', image: SnackGameImage },
             { title: 'Coming Soon', image: ComingSoonImage },
           ]}
           selected={selected}

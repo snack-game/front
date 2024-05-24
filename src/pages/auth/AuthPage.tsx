@@ -1,13 +1,14 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import gsap from 'gsap';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import GoogleIcon from '@assets/icon/google.svg?react';
 import KakakoIcon from '@assets/icon/kakao.svg?react';
-import Lottie from '@components/Lottie/Lottie';
+import LogoImage from '@assets/images/logo-snack-game-letter.png';
+import SnackRainContainer from '@components/SnackRain/SnackRainContainer';
 import { userState } from '@utils/atoms/member.atom';
-import { lottieOptions } from '@utils/commonFuc';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
@@ -21,6 +22,8 @@ interface DialogProps {
 }
 
 export const AuthPage = () => {
+  const logoRef = useRef<HTMLImageElement>(null);
+
   const guestMutation = useGuest();
   const navigate = useNavigate();
   const oAuthToken = useSocial();
@@ -78,6 +81,21 @@ export const AuthPage = () => {
     });
   };
 
+  const authPageLogoAnimation = (ref: RefObject<HTMLImageElement>) => {
+    if (!ref.current) return;
+    gsap.to(ref.current, {
+      y: 50,
+      yoyo: true,
+      rotate: -2,
+      repeat: -1,
+      duration: 1,
+    });
+  };
+
+  useEffect(() => {
+    authPageLogoAnimation(logoRef);
+  }, [logoRef.current]);
+
   useEffect(() => {
     if (userStateValue.id) {
       navigate(PATH.SNACK_GAME, { replace: true });
@@ -92,38 +110,40 @@ export const AuthPage = () => {
   }, [popup]);
 
   return (
-    <div className="h-screen w-screen bg-game">
-      <div className="flex h-full flex-col justify-evenly">
-        <div className="flex h-full flex-col items-center justify-center gap-4 text-3xl text-primary-deep-dark">
-          <Lottie lottieOptions={lottieOptions} className="max-w-80" />
-          <div>스낵 게임</div>
-        </div>
-        <div className="mx-auto my-12 flex w-5/6  flex-col items-center justify-end gap-4">
-          <div
-            className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-[#FEE500]"
-            onClick={() =>
-              openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
-            }
-          >
-            <KakakoIcon className="h-10 w-10" />
-            <span className="w-20  text-center text-sm">카카오 로그인</span>
+    <>
+      <SnackRainContainer />
+      <div className="h-screen w-screen ">
+        <div className="flex h-full flex-col justify-evenly">
+          <div className="flex h-full flex-col items-center justify-evenly gap-4 text-3xl text-primary-deep-dark">
+            <img className="w-1/2 " ref={logoRef} src={LogoImage} alt="logo" />
           </div>
-          <div
-            className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-white"
-            onClick={() =>
-              openOAuthDialog({ url: PATH.GOOGLE, name: 'Login with Google' })
-            }
-          >
-            <GoogleIcon className="h-10 w-10" />
-            <span className="w-20 text-center text-sm text-[#6B7280]">
-              구글 로그인
-            </span>
-          </div>
-          <div className="text-gray-400" onClick={handleGuestLogin}>
-            게스트로 시작하기
+          <div className="mx-auto my-12 flex w-5/6  flex-col items-center justify-end gap-4">
+            <div
+              className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-[#FEE500]"
+              onClick={() =>
+                openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
+              }
+            >
+              <KakakoIcon className="h-10 w-10" />
+              <span className="w-20  text-center text-sm">카카오 로그인</span>
+            </div>
+            <div
+              className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-white"
+              onClick={() =>
+                openOAuthDialog({ url: PATH.GOOGLE, name: 'Login with Google' })
+              }
+            >
+              <GoogleIcon className="h-10 w-10" />
+              <span className="w-20 text-center text-sm text-[#6B7280]">
+                구글 로그인
+              </span>
+            </div>
+            <div className="text-gray-400" onClick={handleGuestLogin}>
+              게스트로 시작하기
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
