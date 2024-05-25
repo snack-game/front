@@ -17,6 +17,7 @@ export class PopExplosion extends Container {
       const particle = Sprite.from('circle');
       particle.anchor.set(0.5);
       particle.visible = false;
+
       this.particles.push(particle);
       this.addChild(particle);
     }

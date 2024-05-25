@@ -130,7 +130,7 @@ export class GameScreen extends Container {
     this.timer.show();
     await this.beforGameStart.show();
     await waitFor(0.3);
-    this.vfx?.playPopExplosion({ x: this.timer.x, y: this.timer.y });
+    this.vfx?.playPopExplosion({ x: this.score.x, y: this.score.y });
     for (const snack of this.snackGame.board.snacks) {
       this.vfx?.animationBeforStart(snack);
     }

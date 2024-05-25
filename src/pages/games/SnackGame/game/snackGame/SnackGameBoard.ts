@@ -60,7 +60,6 @@ export class SnackGameBoard {
     this.rows = config.rows;
     this.columns = config.columns;
     this.tileSize = 50;
-    console.log(this.tileSize);
     this.snacksMask.width = this.getWidth();
     this.snacksMask.height = this.getHeight();
     this.snacksContainer.visible = true;

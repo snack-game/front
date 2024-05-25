@@ -38,7 +38,7 @@ export class Score extends Container {
 
     this.circle = new Graphics();
     this.circle.circle(0, 0, app.renderer.height * 0.06);
-    this.circle.fill(0xffffff);
+    this.circle.fill(0xfff7ec);
     this.addChild(this.circle);
 
     this.container = new Container();
