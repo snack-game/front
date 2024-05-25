@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { t } from 'i18next';
 import { Container, Text } from 'pixi.js';
 
 import { app } from '../SnackGameBase';
@@ -24,7 +25,7 @@ export class LoadScreen extends Container {
     this.addChild(this.waves);
 
     this.message = new Text({
-      text: '로딩중..',
+      text: t('loading_start'),
       style: {
         fill: 0xffffff,
         fontFamily: 'DovemayoGothic',
@@ -67,7 +68,7 @@ export class LoadScreen extends Container {
 
   /** Screen이 사라실 때 보여지는 애니메이션 입니다. */
   public async hide() {
-    this.message.text = '로딩 완료!';
+    this.message.text = t('loading_end');
     gsap.killTweensOf(this.message);
     gsap.to(this.message, {
       alpha: 0,

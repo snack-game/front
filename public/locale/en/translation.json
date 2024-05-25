@@ -23,10 +23,14 @@
   "auth_google_button": "Login with Google",
   "auth_guest_button": "Start as Guest",
 
+  "loading_start": "Loading..",
+  "loading_end": "Loading Complete!",
+
   "game_gold_mode": "Basic Mode",
   "game_infinite_mode": "Infinite Mode",
 
-  "game_start": "Start Game!",
+  "game_ready": "Ready...",
+  "game_start": "Start!",
   "game_restart": "Retry",
   "game_score": " score",
   "game_end": "Game Over!",

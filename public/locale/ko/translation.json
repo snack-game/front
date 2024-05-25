@@ -23,10 +23,14 @@
   "auth_google_button": "구글 로그인",
   "auth_guest_button": "게스트로 시작하기",
 
+  "loading_start": "로딩중..",
+  "loading_end": "로딩 완료!",
+
   "game_gold_mode": "기본 모드",
   "game_infinite_mode": "무한 모드",
 
-  "game_start": "게임시작!",
+  "game_ready": "준비...",
+  "game_start": "시작!",
   "game_restart": "재시작!",
   "game_score": "점",
   "game_end": "게임 종료!",
