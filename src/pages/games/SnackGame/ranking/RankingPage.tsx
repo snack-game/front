@@ -19,7 +19,7 @@ const RankingPage = () => {
       onClick: () => setSelectedSeason(0),
     },
     ...seasonData.map((season) => ({
-      name: t('rank_season', { season: season.id - 1 }), // TODO: 베타 시즌을 시즌 0으로 띄우는 문제 (별도 처리 필요)
+      name: t('rank_season', { season: season.id - 1 }),
       onClick: () => setSelectedSeason(season.id),
     })),
   ];

@@ -29,8 +29,18 @@ i18next
       ],
       caches: ['localStorage'],
     },
+    postProcess: ['seasonHandler'],
   });
 
-console.log(i18next.language);
+i18next.use({
+  type: 'postProcessor',
+  name: 'seasonHandler',
+  process: (value: string, _: unknown, options: Record<string, any>) => {
+    if (options.season === 0) {
+      return options.lng === 'ko' ? '베타 시즌' : 'Beta Season';
+    }
+    return value.replace('{{season}}', options.season);
+  },
+});
 
 export default i18next;
