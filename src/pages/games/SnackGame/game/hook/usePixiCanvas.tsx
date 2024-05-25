@@ -65,13 +65,13 @@ const usePixiCanvas = ({ canvasBaseRef }: usePixiCanvasProps) => {
           ...pre,
           assetsInit: true, // assets 로딩 성공
         }));
+
+        await navigation.showScreen(LobbyScreen);
       }
     } catch (e) {
       console.log(e);
       setError(new Error('필요 assets 로딩에 실패했습니다.'));
     }
-
-    await navigation.showScreen(LobbyScreen);
   };
 
   const resize = () => {

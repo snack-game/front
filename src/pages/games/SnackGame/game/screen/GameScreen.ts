@@ -1,11 +1,14 @@
 import gsap from 'gsap';
 import { Container, Ticker } from 'pixi.js';
 
+import { PausePopup } from '../popup/PausePopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
 import { BeforGameStart } from '../ui/BeforeGameStart';
 import { GameEffects } from '../ui/GameEffect';
+import { IconButton } from '../ui/IconButton';
 import { Score } from '../ui/Score';
+import { SettingsPopup } from '../ui/SettingPopup';
 import { Timer } from '../ui/Timer';
 import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
@@ -22,17 +25,39 @@ export class GameScreen extends Container {
   public readonly timer: Timer;
   /** 스낵게임 인스턴스를 위한 렌더링 컨테이너 */
   public readonly gameContainer: Container;
+  /** 스낵게임 일시정지 Popup **/
+  public readonly pauseButton: IconButton;
   /** 게임 점수 */
   public readonly score: Score;
   /** 게임 효과 */
   public readonly vfx?: GameEffects;
   /** 게임 시작 전 준비 화면 */
   public readonly beforGameStart: BeforGameStart;
+  /** 설정 버튼 */
+  private settingsButton: IconButton;
   /** 게임 종료시 true가 됩니다. */
   private finished = false;
 
   constructor() {
     super();
+
+    this.settingsButton = new IconButton({
+      image: 'settings',
+      ripple: 'ripple',
+    });
+
+    this.settingsButton.onPress.connect(() =>
+      navigation.presentPopup(SettingsPopup),
+    );
+    this.addChild(this.settingsButton);
+
+    this.pauseButton = new IconButton({
+      image: 'pause',
+      ripple: 'ripple',
+    });
+    this.pauseButton.onPress.connect(() => navigation.presentPopup(PausePopup));
+
+    this.addChild(this.pauseButton);
 
     this.timer = new Timer();
     this.addChild(this.timer);
@@ -66,6 +91,7 @@ export class GameScreen extends Container {
     this.finished = false;
     this.snackGame.setup(snackGameConfig);
     this.score.hide(false);
+    this.pauseButton.hide(false);
     this.timer.hide(false);
     gsap.killTweensOf(this.gameContainer.pivot);
     this.gameContainer.pivot.y = -navigation.height * 0.7;
@@ -122,6 +148,12 @@ export class GameScreen extends Container {
 
     this.beforGameStart.x = centerX;
     this.beforGameStart.y = centerY;
+
+    this.pauseButton.x = 25;
+    this.pauseButton.y = 25;
+
+    this.settingsButton.x = width - 30;
+    this.settingsButton.y = 30;
   }
 
   /** 화면 노출 시 애니메이션을 재생합니다. */
@@ -129,6 +161,7 @@ export class GameScreen extends Container {
     bgm.play('common/bgm-game1.mp3', { volume: 0.5 });
     this.score.show();
     this.timer.show();
+    this.pauseButton.show();
     await this.beforGameStart.show();
     await waitFor(0.3);
     this.vfx?.playPopExplosion({ x: this.timer.x, y: this.timer.y });
@@ -138,5 +171,12 @@ export class GameScreen extends Container {
     await waitFor(0.6);
     await this.beforGameStart.hide();
     this.snackGame.startPlaying();
+  }
+
+  /** Window가 포커스를 잃으면 자동 정지 */
+  public blur() {
+    if (!navigation.currentPopup && this.snackGame.isPlaying()) {
+      navigation.presentPopup(PausePopup);
+    }
   }
 }

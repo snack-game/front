@@ -1,9 +1,11 @@
 import gsap from 'gsap';
-import { Container, Text } from 'pixi.js';
+import { Container } from 'pixi.js';
 
 import { GameScreen } from './GameScreen';
 import { app } from '../SnackGameBase';
+import { IconButton } from '../ui/IconButton';
 import { LargeButton } from '../ui/LargeButton';
+import { SettingsPopup } from '../ui/SettingPopup';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
 import { bgm } from '../util/audio';
@@ -21,9 +23,20 @@ export class LobbyScreen extends Container {
   private waves: Waves;
   /** snack game letter logo */
   private snackGameLetter: SnackGameLetter;
+  /** 설정 버튼 */
+  private settingsButton: IconButton;
 
   constructor() {
     super();
+
+    this.settingsButton = new IconButton({
+      image: 'settings',
+      ripple: 'ripple',
+    });
+    this.settingsButton.onPress.connect(() =>
+      navigation.presentPopup(SettingsPopup),
+    );
+    this.addChild(this.settingsButton);
 
     this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
     this.addChild(this.waves);
@@ -64,6 +77,9 @@ export class LobbyScreen extends Container {
 
     this.snackGameLetter.x = width / 2;
     this.snackGameLetter.y = -150;
+
+    this.settingsButton.x = width - 30;
+    this.settingsButton.y = 30;
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
