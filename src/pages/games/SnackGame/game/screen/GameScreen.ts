@@ -83,7 +83,6 @@ export class GameScreen extends Container {
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
-      tileSize: 55,
       duration: 120,
       mode: getUrlParam('mode') as SnackGameMode,
     });
@@ -108,7 +107,7 @@ export class GameScreen extends Container {
   /** 스낵이 제거될 때 트리거 됩니다. */
   private onPop(data: SnackGameOnPopData) {
     this.vfx?.onPop(data);
-    this.timer.upWavesPosition();
+    this.score.upWavesPosition();
   }
 
   /** 게임을 일시 정지 합니다. */
@@ -135,16 +134,16 @@ export class GameScreen extends Container {
     const centerY = height * 0.5;
 
     this.gameContainer.x = centerX;
-    this.gameContainer.y = div + this.snackGame.board.getHeight() * 0.5 + 20;
+    this.gameContainer.y = div + this.snackGame.board.getHeight() * 0.5;
     this.gameContainer.pivot = 0;
 
     this.timer.x = centerX;
-    this.timer.y = div - 100;
-    this.timer.width = width * 0.3;
-    this.timer.height = height * 0.1;
+    this.timer.y = 10;
 
+    this.score.width = width * 0.3;
+    this.score.height = height * 0.1;
     this.score.x = centerX;
-    this.score.y = 10;
+    this.score.y = div - 80;
 
     this.beforGameStart.x = centerX;
     this.beforGameStart.y = centerY;
@@ -164,7 +163,7 @@ export class GameScreen extends Container {
     this.pauseButton.show();
     await this.beforGameStart.show();
     await waitFor(0.3);
-    this.vfx?.playPopExplosion({ x: this.timer.x, y: this.timer.y });
+    this.vfx?.playPopExplosion({ x: this.score.x, y: this.score.y });
     for (const snack of this.snackGame.board.snacks) {
       this.vfx?.animationBeforStart(snack);
     }

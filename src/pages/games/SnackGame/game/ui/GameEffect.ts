@@ -60,8 +60,8 @@ export class GameEffects extends Container {
     const position = this.toLocal(data.snack.getGlobalPosition());
     this.playPopExplosion(position);
 
-    const x = this.game.timer.x + randomRange(-20, 20);
-    const y = this.game.timer.y - 55;
+    const x = this.game.score.x + randomRange(-20, 20);
+    const y = this.game.score.y - 55;
 
     const snack = pool.get(Snack);
     snack.setup({
@@ -92,8 +92,8 @@ export class GameEffects extends Container {
       interactive: false,
     });
     copySnack.visible = true;
-    copySnack.position.x = this.game.timer.x;
-    copySnack.position.y = this.game.timer.y;
+    copySnack.position.x = this.game.score.x;
+    copySnack.position.y = this.game.score.y;
     this.addChild(copySnack);
     await this.playFlyToTarget(copySnack, { x: position.x, y: position.y });
     snack.visible = true;
