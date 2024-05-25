@@ -59,7 +59,7 @@ export class SnackGameBoard {
   public setup(config: SnackGameConfig) {
     this.rows = config.rows;
     this.columns = config.columns;
-    this.tileSize = config.tileSize;
+    this.tileSize = 50;
     this.snacksMask.width = this.getWidth();
     this.snacksMask.height = this.getHeight();
     this.snacksContainer.visible = true;
@@ -114,7 +114,6 @@ export class SnackGameBoard {
     snack.setup({
       name,
       type: snackType,
-      size: this.snackGame.config.tileSize,
       interactive: true,
       snackNum: Math.floor(Math.random() * 9) + 1,
     });
