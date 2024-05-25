@@ -9,9 +9,9 @@ i18next
   .use(initReactI18next)
   .use(HttpBackend)
   .init({
-    fallbackLng: 'ko-KR',
+    fallbackLng: 'ko',
     backend: {
-      loadPath: './locale/{{lng}}/{{ns}}.json',
+      loadPath: '/locale/{{lng}}/{{ns}}.json',
     },
     keySeparator: false,
     interpolation: {

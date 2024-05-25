@@ -1,0 +1,85 @@
+{
+  "main_title": "Snack Game",
+  "main_desc": "스낵의 숫자 합이 10이 되도록 모아주세요!\n황금스낵을 통해 판을 초기화하고 고득점을 노려보아요!",
+  "main_coming_soon": "At Snack Game, we have a variety of games prepared for you!\nLook forward to the upcoming games as well!",
+  "main_start": "Start Game",
+  "main_feedback": "Send Feedback",
+  "main_blog_button": "Visit Blog",
+
+  "menu_login": "Login",
+  "menu_logout": "Logout",
+
+  "login_title": "Login",
+  "login_oauth": "Start Easily",
+  "login_success": "Login Successful!",
+  "login_fail": "Login Failed!",
+  "login_logout": "Logout Successful!",
+
+  "member_change_name": "Name Change Completed!",
+  "member_change_group": "Group Change Completed!",
+  "member_change_image": "Image Change Completed!",
+
+  "auth_kakao_button": "카카오 로그인",
+  "auth_google_button": "구글 로그인",
+  "auth_guest_button": "게스트로 시작하기",
+
+  "game_gold_mode": "Basic Mode",
+  "game_infinite_mode": "Infinite Mode",
+
+  "game_start": "Start Game!",
+  "game_restart": "Retry",
+  "game_score": " score",
+  "game_end": "Game Over!",
+
+  "game_result_rank": "What's my rank?",
+  "game_result_percentile": "전체 사용자 중 상위 {{percentile}}%의 점수에요!",
+
+  "tutorial_title": "Tutorial!",
+  "tutorial_1": "Welcome to Snack Game!\nLet me explain about the game!",
+  "tutorial_2": "Start the game by pressing the start button!\nIf you're not logged in, you'll be signed in as a guest!",
+  "tutorial_3": "Drag the apples to make their numbers add up to 10!\nThe number of apples doesn't matter!\nThe total game time is 2 minutes!",
+  "tutorial_4": "The golden apple resets the game board!\nUse it strategically for a high score!",
+  "tutorial_5": "If the game isn't going well, you can start a new game!",
+  "tutorial_6": "The tutorial is over!\nJoin the ranking competition and aim for a high score!\nHave fun playing!",
+  "tutorial_next": "Next",
+  "tutorial_prev": "Previous",
+  "tutorial_skip": "Skip",
+  "tutorial_close": "Close",
+
+  "rank": "Rank",
+  "rank_all_season": "All Seasons",
+  "rank_season": "Season {{season}}",
+  "name": "Name",
+  "group": "Group",
+  "score": "Score",
+
+  "team_dongsu": "I love to think positively and\nfind happiness in small things.\n",
+  "team_0chil": "I aim to create a team\nthat moves with a single purpose.\n",
+  "team_hwanvely": "생각을 개발로\n구체화 시키는 것을 즐깁니다.",
+  "team_nijuy": "기록을 통해 성장하는 개발자\n고라니와 SF 소설을 좋아합니다. 📚",
+
+  "user_guest_to_member": "회원으로 전환하면\n더 많은 기능을 사용할 수 있어요!",
+  "user_member_benefit1": "그룹 가입",
+  "user_member_benefit1_desc": "다른 유저들과\n팀을 이룰 수 있어요",
+  "user_member_benefit2": "프로필 수정",
+  "user_member_benefit2_desc": "이름, 그룹, 프로필 이미지를\n자유롭게 수정할 수 있어요",
+  "user_member_benefit3": "랭킹 진입",
+  "user_member_benefit3_desc": "다른 유저들과\n순위를 겨룰 수 있어요",
+  "user_member_benefit4": "전적 조회",
+  "user_member_benefit4_desc": "과거 게임 점수를\n그래프로 조회할 수 있어요",
+  "user_edit_error_message": "2글자 이상, 특수문자를 포함하지 않아야 해요.",
+  "user_graph_week": "일주일간 최고 점수",
+  "user_graph_recent": "Recent Score",
+  "user_graph_lack": "아직은 데이터가 충분하지 않아요.\n더 많은 게임을 즐기고 기록을 확인해보세요!",
+
+  "setting_title": "Setting",
+  "setting_account": "Account",
+  "setting_logout": "Logout",
+  "setting_service": "Service Information",
+  "setting_privacy_policy": "Privacy Policy",
+
+  "save": "Save",
+  "modify": "Modify",
+  "close": "Close",
+  "submit": "Confirm"
+}

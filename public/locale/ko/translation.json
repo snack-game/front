@@ -1,0 +1,85 @@
+{
+  "main_title": "스낵게임",
+  "main_desc": "스낵의 숫자 합이 10이 되도록 모아주세요!\n황금스낵을 통해 판을 초기화하고 고득점을 노려보아요!",
+  "main_coming_soon": "Snack Game에서는 다양한 게임을 준비하고 있어요!\n다가올 게임들도 기대해 주세요!",
+  "main_start": "바로가기!",
+  "main_feedback": "피드백 보내기",
+  "main_blog_button": "바로가기",
+
+  "menu_login": "로그인",
+  "menu_logout": "로그아웃",
+
+  "login_title": "로그인",
+  "login_oauth": "간편하게 시작하기",
+  "login_success": "로그인 성공!",
+  "login_fail": "로그인 실패!",
+  "login_logout": "로그아웃 성공!",
+
+  "member_change_name": "이름 변경 완료!",
+  "member_change_group": "그룹 변경 완료!",
+  "member_change_image": "이미지 변경 완료!",
+
+  "auth_kakao_button": "카카오 로그인",
+  "auth_google_button": "구글 로그인",
+  "auth_guest_button": "게스트로 시작하기",
+
+  "game_gold_mode": "기본 모드",
+  "game_infinite_mode": "무한 모드",
+
+  "game_start": "게임시작!",
+  "game_restart": "재시작!",
+  "game_score": "점",
+  "game_end": "게임 종료!",
+
+  "game_result_rank": "나는 몇 등일까?",
+  "game_result_percentile": "전체 사용자 중 상위 {{percentile}}%의 점수에요!",
+
+  "tutorial_title": "튜토리얼!",
+  "tutorial_1": "Snack Game에 오신 것을 환영합니다!\n게임에 관해 설명드릴게요!",
+  "tutorial_2": "시작 버튼을 통해 게임을 시작하세요!\n로그인이 안되어 있다면 게스트로 자동 로그인 됩니다!",
+  "tutorial_3": "드래그로 사과들의 숫자합을 10으로 만드세요!\n사과의 개수는 상관없어요!\n게임 시간은 총 2분 입니다!",
+  "tutorial_4": "황금사과는 게임판을 새로 갈아줘요!\n전략적으로 사용해서 고득점을 노려봐요!",
+  "tutorial_5": "게임이 잘 안풀리면 새게임을 시작할 수 있어요!",
+  "tutorial_6": "튜토리얼이 끝났습니다!\n랭킹경쟁에 참여하고 고득점을 노려보아요!\n즐거운 게임 되세요!",
+  "tutorial_next": "다음",
+  "tutorial_prev": "이전",
+  "tutorial_skip": "건너뛰기",
+  "tutorial_close": "닫기",
+
+  "rank": "등",
+  "rank_all_season": "전체",
+  "rank_season": "시즌 {{season}}",
+  "name": "이름",
+  "group": "그룹",
+  "score": "점수",
+
+  "team_dongsu": "긍정적으로 생각하기 좋아하고\n작은 일에서 행복을 찾는 삶을좋아합니다.\n",
+  "team_0chil": "하나의 목적으로 움직이는 팀을\n만들고자 합니다.\n",
+  "team_hwanvely": "생각을 개발로\n구체화 시키는 것을 즐깁니다.",
+  "team_nijuy": "기록을 통해 성장하는 개발자\n고라니와 SF 소설을 좋아합니다. 📚",
+
+  "user_guest_to_member": "회원으로 전환하면\n더 많은 기능을 사용할 수 있어요!",
+  "user_member_benefit1": "그룹 가입",
+  "user_member_benefit1_desc": "다른 유저들과\n팀을 이룰 수 있어요",
+  "user_member_benefit2": "프로필 수정",
+  "user_member_benefit2_desc": "이름, 그룹, 프로필 이미지를\n자유롭게 수정할 수 있어요",
+  "user_member_benefit3": "랭킹 진입",
+  "user_member_benefit3_desc": "다른 유저들과\n순위를 겨룰 수 있어요",
+  "user_member_benefit4": "전적 조회",
+  "user_member_benefit4_desc": "과거 게임 점수를\n그래프로 조회할 수 있어요",
+  "user_edit_error_message": "2글자 이상, 특수문자를 포함하지 않아야 해요.",
+  "user_graph_week": "일주일간 최고 점수",
+  "user_graph_recent": "최근 점수",
+  "user_graph_lack": "아직은 데이터가 충분하지 않아요.\n더 많은 게임을 즐기고 기록을 확인해보세요!",
+
+  "setting_title": "설정",
+  "setting_account": "계정 관리",
+  "setting_logout": "로그아웃",
+  "setting_service": "앱 정보",
+  "setting_privacy_policy": "개인정보처리방침",
+
+  "save": "저장",
+  "modify": "수정",
+  "close": "닫기",
+  "submit": "확인"
+}
