@@ -19,7 +19,7 @@ const loadedImages = [First, Second, Third].map((src) => {
 });
 
 const TopRanking = ({ topRanking }: TopRankingProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('ranking');
 
   return (
     <motion.div
@@ -55,7 +55,7 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
                   <Level level={top.owner.status.level} />
                 )}
               </div>
-              <span>{top.score + t('game_score')}</span>
+              <span>{top.score + t('score')}</span>
             </div>
           </div>
         );

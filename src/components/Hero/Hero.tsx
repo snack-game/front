@@ -29,22 +29,22 @@ const variants: Variants = {
 };
 
 const Hero = ({ selected }: HeroProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['landing']);
 
   const heroContents = [
     {
-      title: t('main_title'),
-      desc: t('main_desc'),
+      title: t('title'),
+      desc: t('desc'),
       leftContent: (
         <>
           <Link to={PATH.SNACK_GAME}>
             <Button size={'lg'} className={'w-full'}>
-              <Trans i18nKey={'main_start'}>바로가기!</Trans>
+              <Trans i18nKey={'start'}>바로가기!</Trans>
             </Button>
           </Link>
           <Link to={PATH.FEED_BACK} target={'_blank'}>
             <Button style={'border'} className={'w-full'}>
-              <Trans i18nKey={'main_feedback'}>피드백 보내기</Trans>
+              <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
             </Button>
           </Link>
         </>
@@ -54,11 +54,11 @@ const Hero = ({ selected }: HeroProps) => {
 
     {
       title: 'Coming Soon!',
-      desc: t('main_coming_soon'),
+      desc: t('coming_soon'),
       leftContent: (
         <Link to={PATH.FEED_BACK} target={'_blank'}>
           <Button style={'border'} className={'w-full'}>
-            <Trans i18nKey={'main_feedback'}>피드백 보내기</Trans>
+            <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
           </Button>
         </Link>
       ),

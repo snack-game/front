@@ -29,14 +29,18 @@ export class LobbyScreen extends Container {
     this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
     this.addChild(this.waves);
 
-    this.defaultModButton = new LargeButton({ text: t('game_gold_mode') });
+    this.defaultModButton = new LargeButton({
+      text: t('gold_mode', { ns: 'game' }),
+    });
     this.defaultModButton.onPress.connect(() => {
       setUrlParam('mode', 'default');
       navigation.showScreen(GameScreen);
     });
     this.addChild(this.defaultModButton);
 
-    this.infModButton = new LargeButton({ text: t('game_infinite_mode') });
+    this.infModButton = new LargeButton({
+      text: t('infinite_mode', { ns: 'game' }),
+    });
     this.infModButton.onPress.connect(() => {
       setUrlParam('mode', 'inf');
       navigation.showScreen(GameScreen);

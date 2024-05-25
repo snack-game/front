@@ -25,7 +25,7 @@ export class LoadScreen extends Container {
     this.addChild(this.waves);
 
     this.message = new Text({
-      text: t('loading_start'),
+      text: t('loading_start', { ns: 'game' }),
       style: {
         fill: 0xffffff,
         fontFamily: 'DovemayoGothic',
@@ -68,7 +68,7 @@ export class LoadScreen extends Container {
 
   /** Screen이 사라실 때 보여지는 애니메이션 입니다. */
   public async hide() {
-    this.message.text = t('loading_end');
+    this.message.text = t('loading_end', { ns: 'game' });
     gsap.killTweensOf(this.message);
     gsap.to(this.message, {
       alpha: 0,

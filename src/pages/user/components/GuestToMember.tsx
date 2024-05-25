@@ -13,28 +13,28 @@ import { useIntegrateMember } from '@hooks/queries/members.query';
 const memberOnlyFeature: FeatureProps[] = [
   {
     svg: <GroupIcon />,
-    name: 'user_member_benefit1',
-    description: 'user_member_benefit1_desc',
+    name: 'member_benefit1',
+    description: 'member_benefit1_desc',
   },
   {
     svg: <EditIcon />,
-    name: 'user_member_benefit2',
-    description: 'user_member_benefit2_desc',
+    name: 'member_benefit2',
+    description: 'member_benefit2_desc',
   },
   {
     svg: <AwardIcon />,
-    name: 'user_member_benefit3',
-    description: 'user_member_benefit3_desc',
+    name: 'member_benefit3',
+    description: 'member_benefit3_desc',
   },
   {
     svg: <ChartIcon />,
-    name: 'user_member_benefit4',
-    description: 'user_member_benefit4_desc',
+    name: 'member_benefit4',
+    description: 'member_benefit4_desc',
   },
 ];
 
 const GuestToMember = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('user');
 
   const integrateMember = useIntegrateMember();
 
@@ -45,7 +45,7 @@ const GuestToMember = () => {
   return (
     <div className="mb-8 w-4/5 rounded-md bg-white px-4 pb-12 pt-8 text-center">
       <p className="whitespace-pre-line text-primary-deep-dark">
-        {t('user_guest_to_member')}
+        {t('guest_to_member')}
       </p>
       <div className="md:flex md:justify-around">
         {memberOnlyFeature.map((feature) => (
@@ -65,7 +65,7 @@ interface FeatureProps {
 }
 
 const Feature = ({ svg, name, description }: FeatureProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('user');
 
   return (
     <div className="mt-8 flex flex-col items-center gap-4">

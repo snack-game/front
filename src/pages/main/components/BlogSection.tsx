@@ -10,7 +10,7 @@ import Spacing from '@components/Spacing/Spacing';
 import PATH from '@constants/path.constant';
 
 const BlogSection = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['landing']);
 
   return (
     <section className={'flex w-full flex-col items-center justify-center'}>
@@ -54,7 +54,7 @@ const BlogSection = () => {
           />
         </div>
         <Link to={PATH.BLOG} target="_blank">
-          <Button size={'lg'}>{t('main_blog_button')}</Button>
+          <Button size={'lg'}>{t('blog_button')}</Button>
         </Link>
       </motion.div>
     </section>

@@ -9,17 +9,17 @@ import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSec
 import { useGetSeasons } from '@hooks/queries/ranking.query';
 
 const RankingPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('ranking');
 
   const seasonData = useGetSeasons();
   const latestSeason = seasonData[seasonData.length - 1].id;
   const dropdownOptions: DropDownOptionType[] = [
     {
-      name: t('rank_all_season'),
+      name: t('all_season'),
       onClick: () => setSelectedSeason(0),
     },
     ...seasonData.map((season) => ({
-      name: t('rank_season', { season: season.id - 1 }),
+      name: t('season', { season: season.id - 1 }),
       onClick: () => setSelectedSeason(season.id),
     })),
   ];

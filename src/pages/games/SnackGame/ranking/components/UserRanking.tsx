@@ -12,7 +12,7 @@ interface UserRankingProps {
 }
 
 const UserRanking = ({ season }: UserRankingProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('ranking');
 
   let userRanking;
 
@@ -37,7 +37,7 @@ const UserRanking = ({ season }: UserRankingProps) => {
               </div>
             </div>
             <div>
-              {userRanking?.score} {t('game_score')}
+              {userRanking?.score} {t('score')}
             </div>
             <div>
               {userRanking?.rank} {t('rank')}!

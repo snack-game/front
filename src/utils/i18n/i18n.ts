@@ -9,6 +9,7 @@ i18next
   .use(initReactI18next)
   .use(HttpBackend)
   .init({
+    ns: ['game', 'landing', 'ranking', 'setting', 'translation', 'user'],
     fallbackLng: 'ko',
     backend: {
       loadPath: '/locale/{{lng}}/{{ns}}.json',

@@ -10,15 +10,15 @@ interface OtherRankingProps {
 }
 
 const OtherRanking = ({ otherRanking }: OtherRankingProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('ranking');
 
   return (
     <table className={'mx-auto mt-10 w-full table-fixed lg:mt-24 lg:w-[80%]'}>
       <thead className={'h-10 bg-primary text-primary-light'}>
         <tr>
           <th>#</th>
-          <th className={'w-[40%]'}>{t('name')}</th>
-          <th className={'w-[30%]'}>{t('score')}</th>
+          <th className={'w-[40%]'}>{t('name_column')}</th>
+          <th className={'w-[30%]'}>{t('score_column')}</th>
         </tr>
       </thead>
       <motion.tbody>

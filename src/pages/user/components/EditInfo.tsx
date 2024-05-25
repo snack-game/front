@@ -21,7 +21,7 @@ const EditInfo = ({
   onClickClose,
   onClickDone,
 }: EditInfoProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('user');
 
   const debounceValue = useDebounce({
     target: newGroup.value,
@@ -41,7 +41,7 @@ const EditInfo = ({
         value={newName.value}
         onChange={newName.handleChangeValue}
         valid={newName.valid}
-        errorMessage={t('user_edit_error_message')}
+        errorMessage={t('edit_error_message')}
       />
       <Spacing size={1} />
       <Input
@@ -50,7 +50,7 @@ const EditInfo = ({
         onChange={newGroup.handleChangeValue}
         dataListId={'group-list'}
         valid={newGroup.valid}
-        errorMessage={t('user_edit_error_message')}
+        errorMessage={t('edit_error_message')}
       />
       {groupSearchResult && (
         <datalist id={'group-list'}>

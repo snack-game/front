@@ -14,11 +14,11 @@ interface TabInfo {
 }
 
 const ChartSection = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('user');
 
   const TAB_OPTIONS: TabInfo[] = [
-    { name: 'user_graph_week', by: 'DATE' },
-    { name: 'user_graph_recent', by: 'SESSION' },
+    { name: 'graph_week', by: 'DATE' },
+    { name: 'graph_recent', by: 'SESSION' },
   ];
   const [currentTab, setCurrentTab] = useState<HistoryViewType>('DATE');
 

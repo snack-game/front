@@ -98,7 +98,7 @@ const TeamCard = ({
   intro,
   githubUrl,
 }: TeamCardProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['landing']);
 
   return (
     <div className="p-4 md:w-1/2 lg:min-h-[350px] lg:w-1/4">

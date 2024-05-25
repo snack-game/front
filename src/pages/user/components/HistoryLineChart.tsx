@@ -30,7 +30,7 @@ export const HistoryLineChart = ({
 }: {
   currentTab: HistoryViewType;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('user');
 
   const history = useGetGameHistory(currentTab);
 
@@ -92,9 +92,7 @@ export const HistoryLineChart = ({
 
   if (history.length < 3)
     return (
-      <p className="mb-8 whitespace-pre-line text-center">
-        {t('user_graph_lack')}
-      </p>
+      <p className="mb-8 whitespace-pre-line text-center">{t('graph_lack')}</p>
     );
   return <Line data={data} options={options} />;
 };

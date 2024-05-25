@@ -1,0 +1,21 @@
+{
+  "guest_to_member": "Converting to a member gives you access to more features!",
+  "member_benefit1": "Join Groups",
+  "member_benefit1_desc": "You can form teams with other users",
+  "member_benefit2": "Edit Profile",
+  "member_benefit2_desc": "You can freely modify your name, group, and profile image",
+  "member_benefit3": "Enter Rankings",
+  "member_benefit3_desc": "You can compete in rankings with other users",
+  "member_benefit4": "View Record",
+  "member_benefit4_desc": "You can view past game scores in a graph",
+  "edit_error_message": "Must be more than 2 characters\nand not include special characters.",
+  "graph_week": "Highest Score in a Week",
+  "graph_recent": "Recent Score",
+  "graph_lack": "There isn't enough data yet.\nEnjoy more games and check your records!",
+
+  "name": "Name",
+  "group": "Group",
+
+  "close": "Close",
+  "submit": "Confirm"
+}

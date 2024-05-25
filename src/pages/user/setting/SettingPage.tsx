@@ -16,7 +16,7 @@ import LanguageSelect from './components/LanguageSelect';
 import { List } from './components/List';
 
 const SettingPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('setting');
 
   const openToast = useToast();
   const resetUser = useResetRecoilState(resetUserState);
@@ -35,24 +35,24 @@ const SettingPage = () => {
 
   return (
     <>
-      <TopBar title={t('setting_title')} backUrl={PATH.USER} />
+      <TopBar title={t('title')} backUrl={PATH.USER} />
       <div>
-        <List title={t('setting_account')}>
-          <List.Item onClick={handleLogout}> {t('setting_logout')} </List.Item>
+        <List title={t('account')}>
+          <List.Item onClick={handleLogout}> {t('logout')} </List.Item>
         </List>
-        <List title={t('setting_etc')}>
+        <List title={t('etc')}>
           <List.Item>
-            {t('setting_language')}
+            {t('language')}
             <LanguageSelect />
           </List.Item>
         </List>
-        <List title={t('setting_service')}>
+        <List title={t('service')}>
           <List.Item
             onClick={() => {
               navigate(PATH.POLICY);
             }}
           >
-            {t('setting_privacy_policy')}
+            {t('privacy_policy')}
           </List.Item>
         </List>
       </div>

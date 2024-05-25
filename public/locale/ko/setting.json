@@ -1,0 +1,12 @@
+{
+  "title": "설정",
+  "account": "계정 관리",
+  "logout": "로그아웃",
+  "service": "앱 정보",
+  "privacy_policy": "개인정보처리방침",
+  "etc": "기타 설정",
+  "language": "언어 변경",
+
+  "ko": "한국어",
+  "en": "영어"
+}

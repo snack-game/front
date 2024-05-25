@@ -1,11 +1,4 @@
 {
-  "main_title": "Snack Game",
-  "main_desc": "Gather snacks until their total number equals 10!\nUse the golden snack to reset the board\nand aim for high scores!",
-  "main_coming_soon": "Snack Game is preparing a variety of games.\nPlease look forward to the upcoming games!",
-  "main_start": "Start Game",
-  "main_feedback": "Send Feedback",
-  "main_blog_button": "Visit Blog",
-
   "menu_login": "Login",
   "menu_logout": "Logout",
 
@@ -21,74 +14,5 @@
 
   "auth_kakao_button": "Login with Kakao",
   "auth_google_button": "Login with Google",
-  "auth_guest_button": "Start as Guest",
-
-  "loading_start": "Loading..",
-  "loading_end": "Loading Complete!",
-
-  "game_gold_mode": "Basic Mode",
-  "game_infinite_mode": "Infinite Mode",
-
-  "game_ready": "Ready...",
-  "game_start": "Start!",
-  "game_restart": "Retry",
-  "game_score": " score",
-  "game_end": "Game Over!",
-
-  "game_result_rank": "What's my rank?",
-  "game_result_percentile": "Your score is in the top {{percentile}}% of all users!",
-
-  "tutorial_title": "Tutorial!",
-  "tutorial_1": "Welcome to Snack Game!\nLet me explain about the game!",
-  "tutorial_2": "Start the game by pressing the start button!\nIf you're not logged in, you'll be signed in as a guest!",
-  "tutorial_3": "Drag the apples to make their numbers add up to 10!\nThe number of apples doesn't matter!\nThe total game time is 2 minutes!",
-  "tutorial_4": "The golden apple resets the game board!\nUse it strategically for a high score!",
-  "tutorial_5": "If the game isn't going well, you can start a new game!",
-  "tutorial_6": "The tutorial is over!\nJoin the ranking competition and aim for a high score!\nHave fun playing!",
-  "tutorial_next": "Next",
-  "tutorial_prev": "Previous",
-  "tutorial_skip": "Skip",
-  "tutorial_close": "Close",
-
-  "rank": "Rank",
-  "rank_all_season": "All Seasons",
-  "rank_season": "Season {{season}}",
-  "name": "Name",
-  "group": "Group",
-  "score": "Score",
-
-  "team_dongsu": "I love to think positively and\nfind happiness in small things.\n",
-  "team_0chil": "I aim to create a team\nthat moves with a single purpose.\n",
-  "team_hwanvely": "I enjoy turning ideas into reality\nthrough development.",
-  "team_nijuy": "A developer who grows by\ndocumenting development process\nLoves water deer and SF novels 📚",
-
-  "user_guest_to_member": "Converting to a member gives you access to more features!",
-  "user_member_benefit1": "Join Groups",
-  "user_member_benefit1_desc": "You can form teams with other users",
-  "user_member_benefit2": "Edit Profile",
-  "user_member_benefit2_desc": "You can freely modify your name, group, and profile image",
-  "user_member_benefit3": "Enter Rankings",
-  "user_member_benefit3_desc": "You can compete in rankings with other users",
-  "user_member_benefit4": "View Record",
-  "user_member_benefit4_desc": "You can view past game scores in a graph",
-  "user_edit_error_message": "Must be more than 2 characters\nand not include special characters.",
-  "user_graph_week": "Highest Score in a Week",
-  "user_graph_recent": "Recent Score",
-  "user_graph_lack": "There isn't enough data yet.\nEnjoy more games and check your records!",
-
-  "setting_title": "Setting",
-  "setting_account": "Account",
-  "setting_logout": "Logout",
-  "setting_service": "Service Information",
-  "setting_privacy_policy": "Privacy Policy",
-  "setting_etc": "Other Settings",
-  "setting_language": "Change Language",
-
-  "ko": "Korean",
-  "en": "English",
-
-  "save": "Save",
-  "modify": "Modify",
-  "close": "Close",
-  "submit": "Confirm"
+  "auth_guest_button": "Start as Guest"
 }
