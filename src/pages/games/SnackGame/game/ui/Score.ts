@@ -73,7 +73,6 @@ export class Score extends Container {
 
   /** waves 컴포넌트의 포지션 y값을 조금씩 뺍니다. */
   public async upWavesPosition() {
-    console.log(this.waves.y);
     gsap.to(this.waves, {
       y: this.waves.y - 1,
       duration: 1,
