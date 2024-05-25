@@ -35,7 +35,7 @@ const Input = ({
         />
         {errorMessage && (
           <span
-            className={`${valid && 'invisible'} px-1 text-sm text-rose-500`}
+            className={`${valid && 'invisible'} whitespace-pre-line px-1 text-sm text-rose-500`}
           >
             {t(errorMessage)}
           </span>
