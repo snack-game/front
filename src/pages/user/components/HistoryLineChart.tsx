@@ -1,4 +1,5 @@
 import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 
 import {
   ChartOptions,
@@ -29,6 +30,8 @@ export const HistoryLineChart = ({
 }: {
   currentTab: HistoryViewType;
 }) => {
+  const { t } = useTranslation();
+
   const history = useGetGameHistory(currentTab);
 
   const scores: number[] = history.map((round) => round.score);
@@ -90,8 +93,7 @@ export const HistoryLineChart = ({
   if (history.length < 3)
     return (
       <p className="mb-8 whitespace-pre-line text-center">
-        {`아직은 데이터가 충분하지 않아요.
-        더 많은 게임을 즐기고 기록을 확인해보세요!`}
+        {t('user_graph_lack')}
       </p>
     );
   return <Line data={data} options={options} />;

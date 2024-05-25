@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import AwardIcon from '@assets/icon/award.svg?react';
 import ChartIcon from '@assets/icon/chart.svg?react';
@@ -12,27 +13,29 @@ import { useIntegrateMember } from '@hooks/queries/members.query';
 const memberOnlyFeature: FeatureProps[] = [
   {
     svg: <GroupIcon />,
-    name: '그룹 가입',
-    description: '다른 유저들과\n팀을 이룰 수 있어요',
+    name: 'user_member_benefit1',
+    description: 'user_member_benefit1_desc',
   },
   {
     svg: <EditIcon />,
-    name: '프로필 수정',
-    description: '이름, 그룹, 프로필 이미지를\n자유롭게 수정할 수 있어요',
+    name: 'user_member_benefit2',
+    description: 'user_member_benefit2_desc',
   },
   {
     svg: <AwardIcon />,
-    name: '랭킹 진입',
-    description: '다른 유저들과\n순위를 겨룰 수 있어요',
+    name: 'user_member_benefit3',
+    description: 'user_member_benefit3_desc',
   },
   {
     svg: <ChartIcon />,
-    name: '전적 조회',
-    description: '과거 게임 점수를\n그래프로 조회할 수 있어요',
+    name: 'user_member_benefit4',
+    description: 'user_member_benefit4_desc',
   },
 ];
 
 const GuestToMember = () => {
+  const { t } = useTranslation();
+
   const integrateMember = useIntegrateMember();
 
   const onOAuthSuccess = async () => {
@@ -42,7 +45,7 @@ const GuestToMember = () => {
   return (
     <div className="mb-8 w-4/5 rounded-md bg-white px-4 pb-12 pt-8 text-center">
       <p className="whitespace-pre-line text-primary-deep-dark">
-        {`회원으로 전환하면\n더 많은 기능을 사용할 수 있어요!`}
+        {t('user_guest_to_member')}
       </p>
       <div className="md:flex md:justify-around">
         {memberOnlyFeature.map((feature) => (
@@ -62,12 +65,14 @@ interface FeatureProps {
 }
 
 const Feature = ({ svg, name, description }: FeatureProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="mt-8 flex flex-col items-center gap-4">
       <div className="text-primary">{svg}</div>
-      <p className="text-lg font-semibold text-primary">{name}</p>
+      <p className="text-lg font-semibold text-primary">{t(name)}</p>
       <p className="whitespace-pre-line text-center text-primary-deep-dark">
-        {description}
+        {t(description)}
       </p>
     </div>
   );
