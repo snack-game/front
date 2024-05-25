@@ -12,6 +12,7 @@ import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
+import LanguageSelect from './components/LanguageSelect';
 import { List } from './components/List';
 
 const SettingPage = () => {
@@ -38,6 +39,12 @@ const SettingPage = () => {
       <div>
         <List title={t('setting_account')}>
           <List.Item onClick={handleLogout}> {t('setting_logout')} </List.Item>
+        </List>
+        <List title={t('setting_etc')}>
+          <List.Item>
+            {t('setting_language')}
+            <LanguageSelect />
+          </List.Item>
         </List>
         <List title={t('setting_service')}>
           <List.Item

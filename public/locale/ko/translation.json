@@ -77,6 +77,11 @@
   "setting_logout": "로그아웃",
   "setting_service": "앱 정보",
   "setting_privacy_policy": "개인정보처리방침",
+  "setting_etc": "기타 설정",
+  "setting_language": "언어 변경",
+
+  "ko": "한국어",
+  "en": "영어",
 
   "save": "저장",
   "modify": "수정",
