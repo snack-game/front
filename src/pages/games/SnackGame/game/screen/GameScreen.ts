@@ -1,6 +1,8 @@
 import gsap from 'gsap';
 import { Container, Ticker } from 'pixi.js';
 
+import PATH from '@constants/path.constant';
+
 import { PausePopup } from '../popup/PausePopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
@@ -102,6 +104,14 @@ export class GameScreen extends Container {
     this.snackGame.update(time.deltaMS);
     this.timer.updateTime(this.snackGame.timer.getTimeRemaining());
     this.score.setScore(this.snackGame.stats.getScore());
+
+    if (
+      !navigation.currentPopup &&
+      this.snackGame.isPlaying() &&
+      window.location.pathname !== PATH.SNACK_GAME
+    ) {
+      this.blur();
+    }
   }
 
   /** 스낵이 제거될 때 트리거 됩니다. */
@@ -172,10 +182,15 @@ export class GameScreen extends Container {
     this.snackGame.startPlaying();
   }
 
-  /** Window가 포커스를 잃으면 자동 정지 */
+  /** URL이 변경되면 자동 정지 */
   public blur() {
     if (!navigation.currentPopup && this.snackGame.isPlaying()) {
       navigation.presentPopup(PausePopup);
     }
+  }
+
+  /** GameScreen 제거시 트리거 */
+  public async hide() {
+    console.log('game over');
   }
 }
