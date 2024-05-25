@@ -81,7 +81,7 @@ export class GameScreen extends Container {
   /** 스낵이 제거될 때 트리거 됩니다. */
   private onPop(data: SnackGameOnPopData) {
     this.vfx?.onPop(data);
-    this.timer.upWavesPosition();
+    this.score.upWavesPosition();
   }
 
   /** 게임을 일시 정지 합니다. */
@@ -112,12 +112,12 @@ export class GameScreen extends Container {
     this.gameContainer.pivot = 0;
 
     this.timer.x = centerX;
-    this.timer.y = div - 80;
-    this.timer.width = width * 0.3;
-    this.timer.height = height * 0.1;
+    this.timer.y = 10;
 
+    this.score.width = width * 0.3;
+    this.score.height = height * 0.1;
     this.score.x = centerX;
-    this.score.y = 10;
+    this.score.y = div - 80;
 
     this.beforGameStart.x = centerX;
     this.beforGameStart.y = centerY;
