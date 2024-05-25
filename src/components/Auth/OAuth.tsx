@@ -53,7 +53,7 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
 
     if (event.data.type === 'oAuthSuccess') {
       const member = await oAuthOnSuccess();
-      openToast('로그인 성공!', 'success');
+      openToast(t('login_success'), 'success');
       setUserState(() => ({
         ...member,
       }));
@@ -61,7 +61,7 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     }
 
     if (event.data.type === 'oAuthError') {
-      openToast('로그인 실패', 'error');
+      openToast(t('login_fail'), 'error');
     }
   };
 
@@ -78,18 +78,20 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   return (
     <div className={'flex h-full flex-col items-center justify-evenly'}>
       <div className={'flex w-full flex-col items-center gap-4'}>
-        <span className={'font-semibold text-primary'}>나는 몇 등일까?</span>
+        <span className={'font-semibold text-primary'}>
+          {t('game_result_rank')}
+        </span>
         <div
           className={
             'mx-auto w-1/2 rounded-xl border-2 border-primary px-4 py-2 text-center'
           }
         >
-          <span>??? 등</span>
+          <span>??? {t('rank')}</span>
         </div>
       </div>
       <div className={'flex flex-col items-center'}>
         <span className={'mt-2 text-xs text-gray-400 '}>
-          간편하게 시작하기!
+          {t('login_oauth')}
         </span>
         <div className={'mt-6 flex justify-center gap-12'}>
           <div

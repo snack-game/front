@@ -1,4 +1,4 @@
-import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { motion, Variants } from 'framer-motion';
@@ -28,48 +28,49 @@ const variants: Variants = {
   },
 };
 
-const heroContents = [
-  {
-    title: '사과게임',
-    desc: '드래그 영역의 숫자 합이 10이 되도록 사과를 떨궈주세요!\n황금사과를 통해 판을 초기화하고 고득점을 노려보아요!',
-    leftContent: (
-      <>
-        <Link to={PATH.SNACK_GAME}>
-          <Button size={'lg'} className={'w-full'}>
-            바로가기!
-          </Button>
-        </Link>
+const Hero = ({ selected }: HeroProps) => {
+  const { t } = useTranslation();
+
+  const heroContents = [
+    {
+      title: t('main_title'),
+      desc: t('main_desc'),
+      leftContent: (
+        <>
+          <Link to={PATH.SNACK_GAME}>
+            <Button size={'lg'} className={'w-full'}>
+              <Trans i18nKey={'main_start'}>바로가기!</Trans>
+            </Button>
+          </Link>
+          <Link to={PATH.FEED_BACK} target={'_blank'}>
+            <Button style={'border'} className={'w-full'}>
+              <Trans i18nKey={'main_feedback'}>피드백 보내기</Trans>
+            </Button>
+          </Link>
+        </>
+      ),
+      rightContent: <Lottie lottieOptions={lottieOptions} />,
+    },
+
+    {
+      title: 'Coming Soon!',
+      desc: t('main_coming_soon'),
+      leftContent: (
         <Link to={PATH.FEED_BACK} target={'_blank'}>
           <Button style={'border'} className={'w-full'}>
-            피드백 보내기
+            <Trans i18nKey={'main_feedback'}>피드백 보내기</Trans>
           </Button>
         </Link>
-      </>
-    ),
-    rightContent: <Lottie lottieOptions={lottieOptions} />,
-  },
-
-  {
-    title: 'Coming Soon!',
-    desc: 'Snack Game에서는 다양한 게임을 준비하고 있어요!\n다가올 게임들도 기대해 주세요!',
-    leftContent: (
-      <Link to={PATH.FEED_BACK} target={'_blank'}>
-        <Button style={'border'} className={'w-full'}>
-          피드백 보내기
-        </Button>
-      </Link>
-    ),
-    rightContent: (
-      <img
-        src={ComingSoonImage}
-        alt={'main image'}
-        className={'rounded-full bg-primary-light'}
-      />
-    ),
-  },
-];
-
-const Hero = ({ selected }: HeroProps) => {
+      ),
+      rightContent: (
+        <img
+          src={ComingSoonImage}
+          alt={'main image'}
+          className={'rounded-full bg-primary-light'}
+        />
+      ),
+    },
+  ];
   const { title, desc, rightContent, leftContent } = heroContents[selected];
 
   return (
