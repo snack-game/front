@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useResetRecoilState } from 'recoil';
@@ -14,6 +15,8 @@ import useToast from '@hooks/useToast';
 import { List } from './components/List';
 
 const SettingPage = () => {
+  const { t } = useTranslation();
+
   const openToast = useToast();
   const resetUser = useResetRecoilState(resetUserState);
   const navigate = useNavigate();
@@ -24,25 +27,25 @@ const SettingPage = () => {
   const handleLogout = async () => {
     resetUser();
     await authApi.logOut();
-    openToast('로그아웃 성공!', 'success');
+    openToast(t('login_logout'), 'success');
     deleteStorageValue();
     navigate(PATH.AUTH, { replace: true });
   };
 
   return (
     <>
-      <TopBar title="설정" backUrl={PATH.USER} />
+      <TopBar title={t('setting_title')} backUrl={PATH.USER} />
       <div>
-        <List title={'계정 관리'}>
-          <List.Item onClick={handleLogout}> 로그아웃 </List.Item>
+        <List title={t('setting_account')}>
+          <List.Item onClick={handleLogout}> {t('setting_logout')} </List.Item>
         </List>
-        <List title={'앱 정보'}>
+        <List title={t('setting_service')}>
           <List.Item
             onClick={() => {
               navigate(PATH.POLICY);
             }}
           >
-            개인정보처리방침
+            {t('setting_privacy_policy')}
           </List.Item>
         </List>
       </div>
