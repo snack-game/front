@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
@@ -9,6 +10,8 @@ import Spacing from '@components/Spacing/Spacing';
 import PATH from '@constants/path.constant';
 
 const BlogSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className={'flex w-full flex-col items-center justify-center'}>
       <motion.div
@@ -51,7 +54,7 @@ const BlogSection = () => {
           />
         </div>
         <Link to={PATH.BLOG} target="_blank">
-          <Button size={'lg'}>바로가기</Button>
+          <Button size={'lg'}>{t('main_blog_button')}</Button>
         </Link>
       </motion.div>
     </section>
