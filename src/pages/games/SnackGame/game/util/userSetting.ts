@@ -7,9 +7,8 @@ import {
 import { bgm, setMasterVolume, sfx } from './audio';
 import { storage } from './storage';
 
-// Keys for saved items in storage
 /**
- * Persistent user settings of volumes and game mode.
+ * 볼륨 및 게임 모드의 지속적인 사용자 설정.
  */
 class UserSettings {
   constructor() {
@@ -18,39 +17,39 @@ class UserSettings {
     sfx.setVolume(this.getSfxVolume());
   }
 
-  /** Get overall sound volume */
+  /** 전체 사운드 볼륨을 가져옵니다. */
   public getMasterVolume() {
     return storage.getNumber(KEY_VOLUME_MASTER) ?? 0.5;
   }
 
-  /** Set overall sound volume */
+  /** 전체 사운드 볼륨을 설정합니다. */
   public setMasterVolume(value: number) {
     setMasterVolume(value);
     storage.setNumber(KEY_VOLUME_MASTER, value);
   }
 
-  /** Get background music volume */
+  /** 배경 음악 볼륨을 가져옵니다. */
   public getBgmVolume() {
     return storage.getNumber(KEY_VOLUME_BGM) ?? 1;
   }
 
-  /** Set background music volume */
+  /** 배경 음악 볼륨을 설정합니다. */
   public setBgmVolume(value: number) {
     bgm.setVolume(value);
     storage.setNumber(KEY_VOLUME_BGM, value);
   }
 
-  /** Get sound effects volume */
+  /** 효과음 볼륨을 가져옵니다. */
   public getSfxVolume() {
     return storage.getNumber(KEY_VOLUME_SFX) ?? 1;
   }
 
-  /** Set sound effects volume */
+  /** 효과음 볼륨을 설정합니다. */
   public setSfxVolume(value: number) {
     sfx.setVolume(value);
     storage.setNumber(KEY_VOLUME_SFX, value);
   }
 }
 
-/** SHared user settings instance */
+/** 공유된 사용자 설정 인스턴스 */
 export const userSettings = new UserSettings();

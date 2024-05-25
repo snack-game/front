@@ -11,34 +11,34 @@ import { RoundedBox } from '../ui/RoundedBox';
 import { navigation } from '../util/navigation';
 import { userSettings } from '../util/userSetting';
 
-/** Popup for volume and game mode settings - game mode cannot be changed during gameplay */
+/** 볼륨 설정을 위한 팝업 */
 export class SettingsPopup extends Container {
-  /** The dark semi-transparent background covering current screen */
+  /** 현재 화면을 덮는 어두운 반투명 배경 */
   private bg: Sprite;
-  /** Container for the popup UI components */
+  /** 팝업 UI 구성 요소를 위한 컨테이너 */
   private panel: Container;
-  /** The popup title label */
+  /** 팝업 제목 레이블 */
   private title: Label;
-  /** Button that closes the popup */
+  /** 팝업을 닫는 버튼 */
   private doneButton: LargeButton;
-  /** The panel background */
+  /** 패널 배경 */
   private panelBase: RoundedBox;
-  /** The game build version label */
+  /** 게임 빌드 버전 레이블 */
   private versionLabel: Label;
-  /** Layout that organises the UI components */
+  /** UI 구성 요소를 정리하는 레이아웃 */
   private layout: List;
-  /** Slider that changes the master volume */
+  /** 마스터 볼륨을 변경하는 슬라이더 */
   private masterSlider: VolumeSlider;
-  /** Slider that changes background music volume */
+  /** 배경 음악 볼륨을 변경하는 슬라이더 */
   private bgmSlider: VolumeSlider;
-  /** Slider that changes sound effects volume */
+  /** 효과음 볼륨을 변경하는 슬라이더 */
   private sfxSlider: VolumeSlider;
 
   constructor() {
     super();
 
     this.bg = new Sprite(Texture.WHITE);
-    this.bg.tint = 0x0a0025;
+    this.bg.tint = 0xffedd5;
     this.bg.interactive = true;
     this.addChild(this.bg);
 
@@ -49,7 +49,7 @@ export class SettingsPopup extends Container {
     this.panel.addChild(this.panelBase);
 
     this.title = new Label('설정', {
-      fill: 0xffd579,
+      fill: 0xfb923c,
       fontSize: 50,
     });
     this.title.y = -this.panelBase.boxHeight * 0.5 + 60;
@@ -61,7 +61,7 @@ export class SettingsPopup extends Container {
     this.panel.addChild(this.doneButton);
 
     this.versionLabel = new Label(`게임 버전 ${GAMEVERSION}`, {
-      fill: 0xffffff,
+      fill: 0xfb923c,
       fontSize: 12,
     });
     this.versionLabel.alpha = 0.5;
@@ -92,7 +92,7 @@ export class SettingsPopup extends Container {
     this.layout.addChild(this.sfxSlider);
   }
 
-  /** Resize the popup, fired whenever window size changes */
+  /** 창 크기가 변경될 때마다 팝업 크기 조정 */
   public resize(width: number, height: number) {
     this.bg.width = width;
     this.bg.height = height;
@@ -100,14 +100,14 @@ export class SettingsPopup extends Container {
     this.panel.y = height * 0.5;
   }
 
-  /** Set things up just before showing the popup */
+  /** 팝업을 표시하기 직전에 설정 */
   public prepare() {
     this.masterSlider.value = userSettings.getMasterVolume() * 100;
     this.bgmSlider.value = userSettings.getBgmVolume() * 100;
     this.sfxSlider.value = userSettings.getSfxVolume() * 100;
   }
 
-  /** Present the popup, animated */
+  /** 팝업을 애니메이션과 함께 표시 */
   public async show() {
     if (navigation.currentScreen) {
       navigation.currentScreen.filters = [new BlurFilter({ strength: 4 })];
@@ -120,7 +120,7 @@ export class SettingsPopup extends Container {
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
   }
 
-  /** Dismiss the popup, animated */
+  /** 팝업을 애니메이션과 함께 해제 */
   public async hide() {
     if (navigation.currentScreen) {
       navigation.currentScreen.filters = [];

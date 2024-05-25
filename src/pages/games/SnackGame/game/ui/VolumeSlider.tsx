@@ -4,10 +4,10 @@ import { Graphics } from 'pixi.js';
 import { Label } from './Label';
 
 /**
- * A volume slider component to be used in the Settings popup.
+ * 설정 팝업에서 사용되는 볼륨 슬라이더 구성 요소.
  */
 export class VolumeSlider extends Slider {
-  /** Message displayed for the slider */
+  /** 슬라이더에 표시되는 메시지 */
   public messageLabel: Label;
 
   constructor(label: string, min = -0.1, max = 100, value = 100) {
@@ -17,10 +17,10 @@ export class VolumeSlider extends Slider {
     const border = 4;
     const handleRadius = 14;
     const handleBorder = 4;
-    const meshColor = 0xffd579;
-    const fillColor = 0xff8221;
-    const borderColor = 0xcf4b00;
-    const backgroundColor = 0xcf4b00;
+    const meshColor = 0xff7979;
+    const fillColor = 0xff7979;
+    const borderColor = 0xf96464;
+    const backgroundColor = 0xc85252;
 
     const bg = new Graphics()
       .roundRect(0, 0, width, height, radius)
@@ -64,7 +64,7 @@ export class VolumeSlider extends Slider {
 
     this.messageLabel = new Label(label, {
       align: 'left',
-      fill: 0xffffff,
+      fill: 0xfb923c,
       fontSize: 18,
     });
     this.messageLabel.anchor.x = 0;

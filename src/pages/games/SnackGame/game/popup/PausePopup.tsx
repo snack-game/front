@@ -6,24 +6,24 @@ import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
 import { navigation } from '../util/navigation';
 
-/** Popup that shows up when gameplay is paused */
+/** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
 export class PausePopup extends Container {
-  /** The dark semi-transparent background covering current screen */
+  /** 현재 화면을 덮는 어두운 반투명 배경 */
   private bg: Sprite;
-  /** Container for the popup UI components */
+  /** 팝업 UI 구성 요소를 위한 컨테이너 */
   private panel: Container;
-  /** The popup title label */
+  /** 팝업 제목 레이블 */
   private title: Label;
-  /** Button that closes the popup */
+  /** 팝업을 닫는 버튼 */
   private doneButton: LargeButton;
-  /** The panel background */
+  /** 패널 배경 */
   private panelBase: RoundedBox;
 
   constructor() {
     super();
 
     this.bg = new Sprite(Texture.WHITE);
-    this.bg.tint = 0xffba82;
+    this.bg.tint = 0xffedd5;
     this.bg.interactive = true;
     this.addChild(this.bg);
 
@@ -43,7 +43,7 @@ export class PausePopup extends Container {
     this.panel.addChild(this.doneButton);
   }
 
-  /** Resize the popup, fired whenever window size changes */
+  /** 창 크기가 변경될 때마다 호출되는 팝업 크기 조정 */
   public resize(width: number, height: number) {
     this.bg.width = width;
     this.bg.height = height;
@@ -51,10 +51,10 @@ export class PausePopup extends Container {
     this.panel.y = height * 0.5;
   }
 
-  /** Present the popup, animated */
+  /** 팝업을 애니메이션과 함께 표시 */
   public async show() {
     if (navigation.currentScreen) {
-      navigation.currentScreen.filters = [new BlurFilter(5)];
+      navigation.currentScreen.filters = [new BlurFilter({ strength: 5 })];
     }
     gsap.killTweensOf(this.bg);
     gsap.killTweensOf(this.panel.pivot);
@@ -64,7 +64,7 @@ export class PausePopup extends Container {
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
   }
 
-  /** Dismiss the popup, animated */
+  /** 팝업을 애니메이션과 함께 해제 */
   public async hide() {
     if (navigation.currentScreen) {
       navigation.currentScreen.filters = [];

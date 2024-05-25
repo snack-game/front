@@ -75,11 +75,11 @@ export class LobbyScreen extends Container {
     this.waves.y = height;
     this.waves.width = width;
 
-    this.snackGameLetter.x = width / 2;
-    this.snackGameLetter.y = -150;
+    this.snackGameLetter.x = width * 0.5;
+    this.snackGameLetter.y = height * 0.3;
 
-    this.settingsButton.x = width - 30;
-    this.settingsButton.y = 30;
+    this.settingsButton.x = width - 25;
+    this.settingsButton.y = 25;
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
@@ -88,13 +88,8 @@ export class LobbyScreen extends Container {
 
     this.defaultModButton.hide(false);
     this.infModButton.hide(false);
-
-    gsap.to(this.snackGameLetter, {
-      y: app.renderer.height * 0.3,
-      duration: 1,
-      ease: 'bounce.out',
-      delay: 0.3,
-    });
+    this.settingsButton.hide(false);
+    this.snackGameLetter.hide(false);
 
     gsap.to(this.waves, {
       y: app.renderer.height * 0.85,
@@ -104,27 +99,24 @@ export class LobbyScreen extends Container {
       delay: 0.5,
     });
 
+    this.snackGameLetter.show();
     this.defaultModButton.show();
     this.infModButton.show();
+    this.settingsButton.show();
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async hide() {
     this.defaultModButton.hide();
     this.infModButton.hide();
+    this.snackGameLetter.hide();
+    this.settingsButton.hide(false);
 
     gsap.to(this.waves, {
       y: app.renderer.height,
       duration: 0.5,
       ease: 'quad.out',
       delay: 0.5,
-    });
-
-    await gsap.to(this.snackGameLetter, {
-      width: 0,
-      height: 0,
-      duration: 0.5,
-      ease: 'back.in',
     });
   }
 }

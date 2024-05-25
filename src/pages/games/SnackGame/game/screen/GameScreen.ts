@@ -151,8 +151,8 @@ export class GameScreen extends Container {
     this.pauseButton.x = 25;
     this.pauseButton.y = 25;
 
-    this.settingsButton.x = width - 30;
-    this.settingsButton.y = 30;
+    this.settingsButton.x = width - 25;
+    this.settingsButton.y = 25;
   }
 
   /** 화면 노출 시 애니메이션을 재생합니다. */
