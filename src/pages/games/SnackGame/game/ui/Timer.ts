@@ -3,6 +3,7 @@ import { Container, Graphics } from 'pixi.js';
 
 import { Label } from './Label';
 import { Waves } from './Waves';
+import { app } from '../SnackGameBase';
 
 /**
  * 게임 플레이 중에 표시되는 게임 타이머, 남은 시간이 10초 미만일 때 빨간색으로 깜빡이기 시작함.
@@ -25,12 +26,12 @@ export class Timer extends Container {
     super();
 
     this.background = new Graphics();
-    this.background.circle(0, 0, 50);
+    this.background.circle(0, 0, app.renderer.height * 0.06);
     this.background.fill(0xfff7ec);
     this.addChild(this.background);
 
     this.circle = new Graphics();
-    this.circle.circle(0, 0, 50);
+    this.circle.circle(0, 0, app.renderer.height * 0.06);
     this.circle.fill(0xffffff);
     this.addChild(this.circle);
 
