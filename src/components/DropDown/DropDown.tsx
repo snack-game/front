@@ -36,7 +36,7 @@ export default function Dropdown({
     <div className={className}>
       <div className="relative" onClick={() => setIsOpen(!isOpen)}>
         <motion.div
-          className="flex cursor-pointer justify-around rounded-md bg-primary px-3 py-2 text-white"
+          className="flex w-32 cursor-pointer justify-around rounded-md bg-primary px-3 py-2 text-white"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
