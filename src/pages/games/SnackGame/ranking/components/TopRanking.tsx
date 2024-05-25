@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { motion } from 'framer-motion';
 
 import First from '@assets/images/first.png';
@@ -17,6 +19,8 @@ const loadedImages = [First, Second, Third].map((src) => {
 });
 
 const TopRanking = ({ topRanking }: TopRankingProps) => {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       className={'flex flex-row justify-around'}
@@ -51,7 +55,7 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
                   <Level level={top.owner.status.level} />
                 )}
               </div>
-              <span>{top.score + '점'}</span>
+              <span>{top.score + t('game_score')}</span>
             </div>
           </div>
         );

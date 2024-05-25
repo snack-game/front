@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { motion } from 'framer-motion';
 
 import { Level } from '@components/Level/Level';
@@ -8,13 +10,15 @@ interface OtherRankingProps {
 }
 
 const OtherRanking = ({ otherRanking }: OtherRankingProps) => {
+  const { t } = useTranslation();
+
   return (
     <table className={'mx-auto mt-10 w-full table-fixed lg:mt-24 lg:w-[80%]'}>
       <thead className={'h-10 bg-primary text-primary-light'}>
         <tr>
           <th>#</th>
-          <th className={'w-[40%]'}>이름</th>
-          <th className={'w-[30%]'}>점수</th>
+          <th className={'w-[40%]'}>{t('name')}</th>
+          <th className={'w-[30%]'}>{t('score')}</th>
         </tr>
       </thead>
       <motion.tbody>
