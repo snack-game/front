@@ -271,7 +271,7 @@ importers:
         specifier: ^10.9.1
         version: 10.9.2(@types/node@20.11.24)(typescript@5.3.3)
       typescript:
-        specifier: ^5.0.2
+        specifier: ^5.3.3
         version: 5.3.3
       vite:
         specifier: ^4.3.9
