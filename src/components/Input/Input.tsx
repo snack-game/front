@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface InputProps {
   fieldLabel?: string;
@@ -17,6 +18,8 @@ const Input = ({
   valid,
   errorMessage,
 }: InputProps) => {
+  const { t } = useTranslation();
+
   return (
     <label className={'flex gap-2 text-lg'}>
       {fieldLabel}
@@ -30,9 +33,13 @@ const Input = ({
             'grow rounded-lg border border-primary bg-transparent bg-white px-2 focus:outline-none'
           }
         />
-        <span className={`${valid && 'invisible'} px-1 text-sm text-rose-500`}>
-          {errorMessage}
-        </span>
+        {errorMessage && (
+          <span
+            className={`${valid && 'invisible'} whitespace-pre-line px-1 text-sm text-rose-500`}
+          >
+            {t(errorMessage)}
+          </span>
+        )}
       </div>
     </label>
   );

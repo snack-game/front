@@ -1,0 +1,18 @@
+{
+  "menu_login": "Login",
+  "menu_logout": "Logout",
+
+  "login_title": "Login",
+  "login_oauth": "Start Easily",
+  "login_success": "Login Successful!",
+  "login_fail": "Login Failed!",
+  "login_logout": "Logout Successful!",
+
+  "member_change_name": "Name Change Completed!",
+  "member_change_group": "Group Change Completed!",
+  "member_change_image": "Image Change Completed!",
+
+  "auth_kakao_button": "Login with Kakao",
+  "auth_google_button": "Login with Google",
+  "auth_guest_button": "Start as Guest"
+}

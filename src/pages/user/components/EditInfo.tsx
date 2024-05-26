@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Button from '@components/Button/Button';
 import Input from '@components/Input/Input';
 import Spacing from '@components/Spacing/Spacing';
@@ -19,6 +21,8 @@ const EditInfo = ({
   onClickClose,
   onClickDone,
 }: EditInfoProps) => {
+  const { t } = useTranslation('user');
+
   const debounceValue = useDebounce({
     target: newGroup.value,
     delay: 300,
@@ -33,20 +37,20 @@ const EditInfo = ({
     <>
       <Spacing size={4} />
       <Input
-        fieldLabel={'이름'}
+        fieldLabel={t('name')}
         value={newName.value}
         onChange={newName.handleChangeValue}
         valid={newName.valid}
-        errorMessage={'이름은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
+        errorMessage={t('edit_error_message')}
       />
       <Spacing size={1} />
       <Input
-        fieldLabel={'그룹'}
+        fieldLabel={t('group')}
         value={newGroup.value}
         onChange={newGroup.handleChangeValue}
         dataListId={'group-list'}
         valid={newGroup.valid}
-        errorMessage={'그룹은 2글자 이상, 특수문자를 포함하지 않아야 해요.'}
+        errorMessage={t('edit_error_message')}
       />
       {groupSearchResult && (
         <datalist id={'group-list'}>
@@ -73,7 +77,7 @@ const EditInfo = ({
           style="border"
           size="lg"
         >
-          닫기
+          {t('close')}
         </Button>
         <Button
           disabled={!newName.valid || !newGroup.valid}
@@ -83,7 +87,7 @@ const EditInfo = ({
           }
           size="lg"
         >
-          확인
+          {t('submit')}
         </Button>
       </div>
     </>

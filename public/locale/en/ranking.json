@@ -1,0 +1,11 @@
+{
+  "all_season": "All Seasons",
+  "season": "Season {{season}}",
+
+  "score": "score",
+  "rank": "Rank",
+
+  "name_column": "Name",
+  "score_column": "Score",
+  "group": "Group"
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, RefObject } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import gsap from 'gsap';
@@ -22,6 +23,8 @@ interface DialogProps {
 }
 
 export const AuthPage = () => {
+  const { t } = useTranslation();
+
   const logoRef = useRef<HTMLImageElement>(null);
 
   const guestMutation = useGuest();
@@ -62,7 +65,7 @@ export const AuthPage = () => {
 
     if (event.data.type === 'oAuthSuccess') {
       const member = await onOAuthSuccess();
-      openToast('로그인 성공!', 'success');
+      openToast(t('login_success'), 'success');
       setUserState(() => ({
         ...member,
       }));
@@ -71,7 +74,7 @@ export const AuthPage = () => {
     }
 
     if (event.data.type === 'oAuthError') {
-      openToast('로그인 실패', 'error');
+      openToast(t('login_fail'), 'error');
     }
   };
 
@@ -125,7 +128,9 @@ export const AuthPage = () => {
               }
             >
               <KakakoIcon className="h-10 w-10" />
-              <span className="w-20  text-center text-sm">카카오 로그인</span>
+              <span className="w-20  text-center text-sm">
+                {t('auth_kakao_button')}
+              </span>
             </div>
             <div
               className="mx-4 flex h-10 w-full max-w-52 items-center justify-center gap-4 rounded-xl bg-white"
@@ -135,11 +140,11 @@ export const AuthPage = () => {
             >
               <GoogleIcon className="h-10 w-10" />
               <span className="w-20 text-center text-sm text-[#6B7280]">
-                구글 로그인
+                {t('auth_google_button')}
               </span>
             </div>
             <div className="text-gray-400" onClick={handleGuestLogin}>
-              게스트로 시작하기
+              {t('auth_guest_button')}
             </div>
           </div>
         </div>

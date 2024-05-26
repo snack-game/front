@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/Error/RetryError';
@@ -13,9 +14,11 @@ interface TabInfo {
 }
 
 const ChartSection = () => {
+  const { t } = useTranslation('user');
+
   const TAB_OPTIONS: TabInfo[] = [
-    { name: '일주일간 최고 점수', by: 'DATE' },
-    { name: '최근 점수', by: 'SESSION' },
+    { name: 'graph_week', by: 'DATE' },
+    { name: 'graph_recent', by: 'SESSION' },
   ];
   const [currentTab, setCurrentTab] = useState<HistoryViewType>('DATE');
 
@@ -29,7 +32,7 @@ const ChartSection = () => {
           key={name}
           onClick={() => setCurrentTab(by)}
         >
-          {name}
+          {t(name)}
         </span>
       ))}
       <Spacing size={2} />

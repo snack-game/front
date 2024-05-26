@@ -1,0 +1,21 @@
+{
+  "guest_to_member": "회원으로 전환하면\n더 많은 기능을 사용할 수 있어요!",
+  "member_benefit1": "그룹 가입",
+  "member_benefit1_desc": "다른 유저들과\n팀을 이룰 수 있어요",
+  "member_benefit2": "프로필 수정",
+  "member_benefit2_desc": "이름, 그룹, 프로필 이미지를\n자유롭게 수정할 수 있어요",
+  "member_benefit3": "랭킹 진입",
+  "member_benefit3_desc": "다른 유저들과\n순위를 겨룰 수 있어요",
+  "member_benefit4": "전적 조회",
+  "member_benefit4_desc": "과거 게임 점수를\n그래프로 조회할 수 있어요",
+  "edit_error_message": "2글자 이상, 특수문자를 포함하지 않아야 해요.",
+  "graph_week": "일주일간 최고 점수",
+  "graph_recent": "최근 점수",
+  "graph_lack": "아직은 데이터가 충분하지 않아요.\n더 많은 게임을 즐기고 기록을 확인해보세요!",
+
+  "name": "이름",
+  "group": "그룹",
+
+  "close": "닫기",
+  "submit": "확인"
+}

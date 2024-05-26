@@ -32,11 +32,12 @@ export const useChangeUserName = () => {
 
 export const useChangeUserImage = () => {
   const openToast = useToast();
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: membersApi.changeMemberImage,
     onSuccess: () => {
-      openToast('이미지 변경 완료!', 'success');
+      openToast(t('member_change_image'), 'success');
     },
     onError: useOnError(),
     throwOnError: (error: AxiosError<ServerError>) => {

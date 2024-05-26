@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
@@ -13,29 +14,28 @@ const teamInfoList = [
     imgSrc: DongSuImage,
     name: 'dev-dong-su',
     position: 'Front-End, Game Developer',
-    intro:
-      '긍정적으로 생각하기 좋아하고\n작은 일에서 행복을 찾는 삶을 좋아합니다.',
+    intro: 'team_dongsu',
     githubUrl: 'https://github.com/dev-dong-su',
   },
   {
     imgSrc: ChilImage,
     name: '0chil',
     position: 'Back-End Developer',
-    intro: '하나의 목적으로 움직이는 팀을\n만들고자 합니다.\n',
+    intro: 'team_0chil',
     githubUrl: 'https://github.com/0chil',
   },
   {
     imgSrc: HwanImage,
     name: 'Hwanvely',
     position: 'Back-End Developer',
-    intro: '생각을 개발로\n구체화 시키는 것을 즐깁니다.',
+    intro: 'team_hwanvely',
     githubUrl: 'https://github.com/Hwanvely',
   },
   {
     imgSrc: YujinImage,
     name: 'nijuy',
     position: 'Front-End Developer',
-    intro: '기록을 통해 성장하는 개발자\n고라니와 SF 소설을 좋아합니다. 📚',
+    intro: 'team_nijuy',
     githubUrl: 'https://github.com/nijuy',
   },
 ];
@@ -98,6 +98,8 @@ const TeamCard = ({
   intro,
   githubUrl,
 }: TeamCardProps) => {
+  const { t } = useTranslation(['landing']);
+
   return (
     <div className="p-4 md:w-1/2 lg:min-h-[350px] lg:w-1/4">
       <div className="flex h-full flex-col items-center text-center">
@@ -114,7 +116,7 @@ const TeamCard = ({
             {name}
           </h2>
           <h3 className="mb-3 text-gray-500">{position}</h3>
-          <p className="mb-4 whitespace-pre-wrap">{intro}</p>
+          <p className="mb-4 whitespace-pre-wrap">{t(intro)}</p>
           <Link to={githubUrl} target="_blank">
             <span className="inline-flex h-6 w-6">
               <svg viewBox="0 0 24 24">

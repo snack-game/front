@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { Level } from '@components/Level/Level';
 
 import {
@@ -10,6 +12,8 @@ interface UserRankingProps {
 }
 
 const UserRanking = ({ season }: UserRankingProps) => {
+  const { t } = useTranslation('ranking');
+
   let userRanking;
 
   if (season === 0) {
@@ -32,8 +36,12 @@ const UserRanking = ({ season }: UserRankingProps) => {
                 )}
               </div>
             </div>
-            <div>{userRanking?.score} 점</div>
-            <div>{userRanking?.rank} 등!</div>
+            <div>
+              {userRanking?.score} {t('score')}
+            </div>
+            <div>
+              {userRanking?.rank} {t('rank')}!
+            </div>
           </div>
         </div>
       )}

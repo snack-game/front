@@ -1,0 +1,11 @@
+{
+  "all_season": "전체",
+  "season": "시즌 {{season}}",
+
+  "score": "점",
+  "rank": "등",
+
+  "name_column": "이름",
+  "score_column": "점수",
+  "group": "그룹"
+}

@@ -9,9 +9,10 @@ i18next
   .use(initReactI18next)
   .use(HttpBackend)
   .init({
-    fallbackLng: 'ko-KR',
+    ns: ['game', 'landing', 'ranking', 'setting', 'translation', 'user'],
+    fallbackLng: 'ko',
     backend: {
-      loadPath: './locale/{{lng}}/{{ns}}.json',
+      loadPath: '/locale/{{lng}}/{{ns}}.json',
     },
     keySeparator: false,
     interpolation: {
@@ -31,6 +32,15 @@ i18next
     },
   });
 
-console.log(i18next.language);
+i18next.use({
+  type: 'postProcessor',
+  name: 'seasonHandler',
+  process: (value: string, _: unknown, options: Record<string, any>) => {
+    if (options.season === 0) {
+      return options.lng === 'ko' ? '베타 시즌' : 'Beta Season';
+    }
+    return value.replace('{{season}}', options.season);
+  },
+});
 
 export default i18next;
