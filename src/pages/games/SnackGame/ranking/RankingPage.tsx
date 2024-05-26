@@ -19,7 +19,10 @@ const RankingPage = () => {
       onClick: () => setSelectedSeason(0),
     },
     ...seasonData.map((season) => ({
-      name: t('season', { season: season.id - 1 }),
+      name: t('season', {
+        season: season.id - 1,
+        postProcess: 'seasonHandler',
+      }),
       onClick: () => setSelectedSeason(season.id),
     })),
   ];

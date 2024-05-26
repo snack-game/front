@@ -30,7 +30,6 @@ i18next
       ],
       caches: ['localStorage'],
     },
-    postProcess: ['seasonHandler'],
   });
 
 i18next.use({
