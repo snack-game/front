@@ -1,0 +1,12 @@
+{
+  "title": "Setting",
+  "account": "Account",
+  "logout": "Logout",
+  "service": "Service Information",
+  "privacy_policy": "Privacy Policy",
+  "etc": "Other Settings",
+  "language": "Change Language",
+
+  "ko": "Korean",
+  "en": "English"
+}

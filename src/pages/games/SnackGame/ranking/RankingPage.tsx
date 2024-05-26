@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 
 import Dropdown, { DropDownOptionType } from '@components/DropDown/DropDown';
 import Spacing from '@components/Spacing/Spacing';
@@ -8,15 +9,20 @@ import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSec
 import { useGetSeasons } from '@hooks/queries/ranking.query';
 
 const RankingPage = () => {
+  const { t } = useTranslation('ranking');
+
   const seasonData = useGetSeasons();
   const latestSeason = seasonData[seasonData.length - 1].id;
   const dropdownOptions: DropDownOptionType[] = [
     {
-      name: '전체',
+      name: t('all_season'),
       onClick: () => setSelectedSeason(0),
     },
     ...seasonData.map((season) => ({
-      name: season.name,
+      name: t('season', {
+        season: season.id - 1,
+        postProcess: 'seasonHandler',
+      }),
       onClick: () => setSelectedSeason(season.id),
     })),
   ];

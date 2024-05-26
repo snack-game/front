@@ -1,0 +1,16 @@
+{
+  "loading_start": "Loading..",
+  "loading_end": "Loading Complete!",
+
+  "gold_mode": "Basic Mode",
+  "infinite_mode": "Infinite Mode",
+
+  "ready": "Ready...",
+  "start": "Start!",
+  "restart": "Retry",
+  "score": " score",
+  "end": "Game Over!",
+
+  "result_rank": "What's my rank?",
+  "result_percentile": "Your score is in the top {{percentile}}% of all users!"
+}

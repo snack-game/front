@@ -15,6 +15,8 @@ import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
 
+import '@utils/i18n/i18n';
+
 const MainPage = lazy(() => import('@pages/main/MainPage'));
 
 const SnackGamePage = lazy(

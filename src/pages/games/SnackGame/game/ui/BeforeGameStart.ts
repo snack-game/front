@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { t } from 'i18next';
 import { Container } from 'pixi.js';
 
 import { Cloud } from './Cloud';
@@ -48,7 +49,7 @@ export class BeforGameStart extends Container {
   private async playReadyAnimation() {
     gsap.killTweensOf(this.messageLabel);
     gsap.killTweensOf(this.messageLabel.scale);
-    this.messageLabel.text = '준비...';
+    this.messageLabel.text = t('ready', { ns: 'game' });
     this.messageLabel.scale.set(0);
     this.messageLabel.y = -5;
     await gsap.to(this.messageLabel.scale, {
@@ -75,7 +76,7 @@ export class BeforGameStart extends Container {
       ease: 'sine.in',
     });
     this.messageLabel.y = 0;
-    this.messageLabel.text = '시작!';
+    this.messageLabel.text = t('start', { ns: 'game' });
     this.messageLabel.scale.set(0.8);
     gsap.to(this.messageLabel, { alpha: 1, duration: 0.2, ease: 'linear' });
     gsap.to(this.messageLabel, {

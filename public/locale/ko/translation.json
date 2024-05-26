@@ -1,0 +1,18 @@
+{
+  "menu_login": "로그인",
+  "menu_logout": "로그아웃",
+
+  "login_title": "로그인",
+  "login_oauth": "간편하게 시작하기",
+  "login_success": "로그인 성공!",
+  "login_fail": "로그인 실패!",
+  "login_logout": "로그아웃 성공!",
+
+  "member_change_name": "이름 변경 완료!",
+  "member_change_group": "그룹 변경 완료!",
+  "member_change_image": "이미지 변경 완료!",
+
+  "auth_kakao_button": "카카오 로그인",
+  "auth_google_button": "구글 로그인",
+  "auth_guest_button": "게스트로 시작하기"
+}

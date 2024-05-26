@@ -1,4 +1,5 @@
 import { ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
@@ -25,6 +26,8 @@ interface HeaderProps {
 }
 
 const Header = ({ children, className }: HeaderProps) => {
+  const { t } = useTranslation();
+
   const { openModal } = useModal();
   const openToast = useToast();
   const resetUser = useResetRecoilState(resetUserState);
@@ -44,7 +47,7 @@ const Header = ({ children, className }: HeaderProps) => {
   const handleLogout = async () => {
     resetUser();
     await authApi.logOut();
-    openToast('로그아웃 성공!', 'success');
+    openToast(t('login_logout'), 'success');
     deleteStorageValue();
     navigate(PATH.MAIN, { replace: true });
   };
@@ -82,7 +85,7 @@ const Header = ({ children, className }: HeaderProps) => {
               {userInfo.name} 님
             </Link>
           ) : (
-            <Button onClick={handleLogin}>Login</Button>
+            <Button onClick={handleLogin}>{t('menu_login')}</Button>
           )}
         </div>
 
@@ -109,11 +112,11 @@ const Header = ({ children, className }: HeaderProps) => {
 
               {userInfo.id ? (
                 <Button onClick={handleLogout} className={'w-full'}>
-                  로그아웃
+                  {t('menu_logout')}
                 </Button>
               ) : (
                 <Button onClick={handleLogin} className={'w-full'}>
-                  Login
+                  {t('menu_login')}
                 </Button>
               )}
             </div>

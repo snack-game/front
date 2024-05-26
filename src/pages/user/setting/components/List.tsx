@@ -6,7 +6,10 @@ const ListItem = ({
   onClick?: () => void;
 }) => {
   return (
-    <li className="flex h-8 items-center text-sm" onClick={onClick && onClick}>
+    <li
+      className="flex h-8 items-center justify-between text-sm"
+      onClick={onClick && onClick}
+    >
       {children}
     </li>
   );

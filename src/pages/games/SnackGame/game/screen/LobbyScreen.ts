@@ -1,5 +1,6 @@
 import gsap from 'gsap';
-import { Container } from 'pixi.js';
+import { t } from 'i18next';
+import { Container, Text } from 'pixi.js';
 
 import { GameScreen } from './GameScreen';
 import { app } from '../SnackGameBase';
@@ -41,14 +42,18 @@ export class LobbyScreen extends Container {
     this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
     this.addChild(this.waves);
 
-    this.defaultModButton = new LargeButton({ text: '기본 모드' });
+    this.defaultModButton = new LargeButton({
+      text: t('gold_mode', { ns: 'game' }),
+    });
     this.defaultModButton.onPress.connect(() => {
       setUrlParam('mode', 'default');
       navigation.showScreen(GameScreen);
     });
     this.addChild(this.defaultModButton);
 
-    this.infModButton = new LargeButton({ text: '무한 모드' });
+    this.infModButton = new LargeButton({
+      text: t('infinite_mode', { ns: 'game' }),
+    });
     this.infModButton.onPress.connect(() => {
       setUrlParam('mode', 'inf');
       navigation.showScreen(GameScreen);

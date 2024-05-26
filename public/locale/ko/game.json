@@ -1,0 +1,16 @@
+{
+  "loading_start": "로딩중..",
+  "loading_end": "로딩 완료!",
+
+  "gold_mode": "기본 모드",
+  "infinite_mode": "무한 모드",
+
+  "ready": "준비...",
+  "start": "시작!",
+  "restart": "재시작!",
+  "score": "점",
+  "end": "게임 종료!",
+
+  "result_rank": "나는 몇 등일까?",
+  "result_percentile": "전체 사용자 중 상위 {{percentile}}%의 점수에요!"
+}
