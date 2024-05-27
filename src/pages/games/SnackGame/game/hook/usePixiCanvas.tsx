@@ -4,7 +4,9 @@ import { useRecoilState } from 'recoil';
 
 import { pixiState } from '@utils/atoms/game.atom';
 
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import useError from '@hooks/useError';
+import useLocalStorage from '@hooks/useLocalStorage';
 
 import { LoadScreen } from '../screen/LoadScreen';
 import { LobbyScreen } from '../screen/LobbyScreen';
@@ -18,6 +20,9 @@ interface usePixiCanvasProps {
 
 const usePixiCanvas = ({ canvasBaseRef }: usePixiCanvasProps) => {
   const [pixiValue, setPixiValue] = useRecoilState(pixiState);
+  const { storageValue: languageChanged, setStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE_KEY.LANGUAGE_CHANGE,
+  });
   const setError = useError();
 
   useEffect(() => {
@@ -55,6 +60,12 @@ const usePixiCanvas = ({ canvasBaseRef }: usePixiCanvasProps) => {
 
     resize();
 
+    if (languageChanged) {
+      navigation.dismissPopup();
+      await navigation.showScreen(LobbyScreen);
+      setStorageValue(false);
+    }
+
     try {
       if (!pixiValue.assetsInit) {
         await initAssets(); // 필요 Assets 초기화
@@ -65,13 +76,13 @@ const usePixiCanvas = ({ canvasBaseRef }: usePixiCanvasProps) => {
           ...pre,
           assetsInit: true, // assets 로딩 성공
         }));
+
+        await navigation.showScreen(LobbyScreen);
       }
     } catch (e) {
       console.log(e);
       setError(new Error('필요 assets 로딩에 실패했습니다.'));
     }
-
-    await navigation.showScreen(LobbyScreen);
   };
 
   const resize = () => {

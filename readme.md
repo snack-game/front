@@ -1,4 +1,4 @@
-<div style='width: 50%; margin: auto; background-color: white; border-radius: 16px; text-aling: center;'>
+<div style='width: 50%; margin: auto; background-color: white; border-radius: 16px; text-align: center;'>
     <img src='./src/assets/images/logo-snack-game-letter.png' >
 </div>
 
