@@ -8,7 +8,6 @@ import {
   pauseTweens,
   resumeTweens,
 } from '../util/animation';
-import { sfx } from '../util/audio';
 
 /** 스낵 기본 옵션 */
 const defaultSnackOptions = {
