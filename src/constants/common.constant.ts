@@ -15,3 +15,9 @@ export const TIER_COLOR = [
 
 export const HJID = 4963723;
 export const HJSV = 6;
+
+export const GAMEVERSION = '1.0.0';
+
+export const KEY_VOLUME_MASTER = 'volume-master';
+export const KEY_VOLUME_BGM = 'volume-bgm';
+export const KEY_VOLUME_SFX = 'volume-sfx';

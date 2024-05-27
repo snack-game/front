@@ -1,7 +1,6 @@
 import gsap from 'gsap';
 import { Container, Graphics } from 'pixi.js';
 
-import { Cloud } from './Cloud';
 import { Label } from './Label';
 import { Waves } from './Waves';
 import { app } from '../SnackGameBase';

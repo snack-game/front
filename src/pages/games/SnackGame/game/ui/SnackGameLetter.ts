@@ -1,3 +1,4 @@
+import gsap from 'gsap';
 import { Container, Sprite } from 'pixi.js';
 
 import { Cloud } from './Cloud';
@@ -25,9 +26,33 @@ export class SnackGameLetter extends Container {
     this.container.addChild(this.cloud);
 
     this.image = Sprite.from('logo-snack-game-letter');
-    this.image.anchor.set(0.5);
     this.image.width = 200;
     this.image.height = 200;
+    this.image.anchor.set(0.5);
     this.addChild(this.image);
+  }
+
+  public async show() {
+    gsap.killTweensOf(this);
+    this.visible = true;
+    this.pivot.y = 300;
+    gsap.to(this.pivot, {
+      y: 0,
+      duration: 1,
+      ease: 'bounce.out',
+    });
+  }
+
+  public async hide(animated = true) {
+    gsap.killTweensOf(this);
+    if (animated) {
+      await gsap.to(this.pivot, {
+        y: 0,
+        duration: 0.5,
+        ease: 'back.in',
+      });
+    } else {
+      this.pivot.y = 300;
+    }
   }
 }
