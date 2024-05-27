@@ -2,8 +2,10 @@
   "menu_login": "Login",
   "menu_logout": "Logout",
 
-  "login_title": "Login",
   "login_oauth": "Start Easily",
+  "rank": "Rank",
+  "what_rank": "What's my rank?",
+
   "login_success": "Login Successful!",
   "login_fail": "Login Failed!",
   "login_logout": "Logout Successful!",
