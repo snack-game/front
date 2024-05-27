@@ -4,7 +4,9 @@ import { useRecoilState } from 'recoil';
 
 import { pixiState } from '@utils/atoms/game.atom';
 
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import useError from '@hooks/useError';
+import useLocalStorage from '@hooks/useLocalStorage';
 
 import { LoadScreen } from '../screen/LoadScreen';
 import { LobbyScreen } from '../screen/LobbyScreen';
@@ -18,6 +20,9 @@ interface usePixiCanvasProps {
 
 const usePixiCanvas = ({ canvasBaseRef }: usePixiCanvasProps) => {
   const [pixiValue, setPixiValue] = useRecoilState(pixiState);
+  const { storageValue: languageChanged, setStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE_KEY.LANGUAGE_CHANGE,
+  });
   const setError = useError();
 
   useEffect(() => {
@@ -54,6 +59,12 @@ const usePixiCanvas = ({ canvasBaseRef }: usePixiCanvasProps) => {
     window.addEventListener('resize', resize);
 
     resize();
+
+    if (languageChanged) {
+      navigation.dismissPopup();
+      await navigation.showScreen(LobbyScreen);
+      setStorageValue(false);
+    }
 
     try {
       if (!pixiValue.assetsInit) {
