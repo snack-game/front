@@ -67,14 +67,16 @@ export class SnackGameBoard {
     // 게임에서 사용될 스낵 타입 배열
     const snacks = snackGameGetSnack(config.mode);
 
-    this.typesMap = {};
+    if (!this.commonTypes.length) {
+      this.typesMap = {};
 
-    for (let i = 0; i < snacks.length; i++) {
-      const name = snacks[i];
-      const type = i + 1;
+      for (let i = 0; i < snacks.length; i++) {
+        const name = snacks[i];
+        const type = i + 1;
 
-      this.commonTypes.push(type);
-      this.typesMap[type] = name;
+        this.commonTypes.push(type);
+        this.typesMap[type] = name;
+      }
     }
 
     // 초기 격자 상태 생성
