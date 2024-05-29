@@ -69,6 +69,8 @@ export class GameScreen extends Container {
 
     this.snackGame = new SnackGame();
     this.snackGame.onPop = this.onPop.bind(this);
+    this.snackGame.onSnackGameBoardReset =
+      this.onSnackGameBoardReset.bind(this);
     this.gameContainer.addChild(this.snackGame);
 
     this.vfx = new GameEffects(this);
@@ -82,11 +84,13 @@ export class GameScreen extends Container {
   }
 
   public prepare() {
+    const mode = getUrlParam('mode') as SnackGameMode;
+
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
       duration: 120,
-      mode: getUrlParam('mode') as SnackGameMode,
+      mode,
     });
 
     this.finished = false;
@@ -111,6 +115,12 @@ export class GameScreen extends Container {
       window.location.pathname !== PATH.SNACK_GAME
     ) {
       this.blur();
+    }
+  }
+
+  private onSnackGameBoardReset() {
+    for (const snack of this.snackGame.board.snacks) {
+      this.vfx?.animationBeforStart(snack);
     }
   }
 
@@ -174,9 +184,7 @@ export class GameScreen extends Container {
     await this.beforGameStart.show();
     await waitFor(0.3);
     this.vfx?.playPopExplosion({ x: this.score.x, y: this.score.y });
-    for (const snack of this.snackGame.board.snacks) {
-      this.vfx?.animationBeforStart(snack);
-    }
+    this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforGameStart.hide();
     this.snackGame.startPlaying();
