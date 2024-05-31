@@ -7,10 +7,10 @@ import gsap from 'gsap';
 
 import ComingSoonImage from '@assets/images/main.png';
 import Button from '@components/Button/Button';
-import Lottie from '@components/Lottie/Lottie';
-import { lottieOptions } from '@utils/commonFuc';
 
 import PATH from '@constants/path.constant';
+
+import MovingSnack from './MovingSnack';
 
 interface HeroProps {
   selected: number;
@@ -39,7 +39,7 @@ const Hero = ({ selected }: HeroProps) => {
           </Link>
         </>
       ),
-      rightContent: <Lottie lottieOptions={lottieOptions} />,
+      rightContent: <MovingSnack />,
     },
 
     {
