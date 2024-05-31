@@ -10,7 +10,9 @@ const HeroSection = () => {
 
   return (
     <section
-      className={'flex flex-col bg-primary py-12 landscape:min-h-screen '}
+      className={
+        'flex h-screen flex-col bg-primary py-12 landscape:min-h-screen '
+      }
     >
       <div className={'flex h-full grow bg-white'}>
         <Hero selected={selected} />
