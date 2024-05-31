@@ -43,8 +43,8 @@ const teamInfoList = [
 ];
 
 const TeamSection = () => {
-  const teamRef = useRef<HTMLDivElement | null>(null);
-  const textRef = useRef<HTMLDivElement | null>(null);
+  const teamRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.from(textRef.current, {

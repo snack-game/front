@@ -17,8 +17,8 @@ gsap.registerPlugin(ScrollTrigger);
 const BlogSection = () => {
   const { t } = useTranslation(['landing']);
 
-  const logoRef = useRef<HTMLDivElement | null>(null);
-  const textRef = useRef<HTMLDivElement | null>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.from(textRef.current, {

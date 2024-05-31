@@ -18,8 +18,8 @@ interface HeroProps {
 
 const Hero = ({ selected }: HeroProps) => {
   const { t } = useTranslation(['landing']);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const imgRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
 
   const heroContents = [
     {
