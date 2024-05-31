@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AnimationItem } from 'lottie-web';
 
-import { GroupType, MemberType } from '@utils/types/member.type';
+import { MemberType } from '@utils/types/member.type';
 
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 
