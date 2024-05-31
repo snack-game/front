@@ -29,7 +29,6 @@ const BlogSection = () => {
       y: 50,
       opacity: 0,
       duration: 0.3,
-      delay: 0.3,
     });
 
     gsap.from(logoRef.current, {
@@ -40,6 +39,7 @@ const BlogSection = () => {
       y: 100,
       opacity: 0,
       duration: 0.3,
+      delay: 0.3,
     });
   });
 
