@@ -31,6 +31,16 @@ export class SnackGameActions {
     if (sum === 10) {
       sfx.play('common/sfx-match.mp3', { speed: 1.2, volume: 0.5 });
       this.snackGame.board.popAllSelectedSnacks();
+
+      // TODO: 지금은 특수 기물이 황금사과 하나지만 나중에 확장 될 경우 opens-games처럼 특수 기물을 따로 관리해주어야함.
+      this.snackGame.board.selectedSnacks.forEach((snack) => {
+        if (snack.type === 2) {
+          this.snackGame.board.reset();
+          this.snackGame.board.setup(this.snackGame.config);
+          this.snackGame.onSnackGameBoardReset?.();
+        }
+      });
+
       this.snackGame.board.clearAllSelectedSnacks();
     }
 
