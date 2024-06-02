@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { useRecoilValue } from 'recoil';
 
 import LogoImage from '@assets/images/main.png';
@@ -43,12 +45,14 @@ const RankingSection = ({ season }: RankingSectionProps) => {
 };
 
 const EmptyRanking = () => {
+  const { t } = useTranslation('ranking');
+
   return (
     <div className="flex flex-col items-center justify-center">
       {/* TODO: 이미지 교체 */}
       <img src={LogoImage} />
-      <p className="text-primary-deep-dark">
-        지금 바로 플레이하고 1등에 올라보세요!
+      <p className="whitespace-pre-line text-center text-primary-deep-dark">
+        {t('empty')}
       </p>
     </div>
   );
