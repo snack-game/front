@@ -43,7 +43,7 @@ const RankingPage = () => {
           className="max-w-[120px]"
         />
       </div>
-      <Spacing size={8} />
+      <Spacing size={6} />
       <RankingSection season={selectedSeason} />
     </>
   );
