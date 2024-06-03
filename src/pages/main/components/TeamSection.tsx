@@ -43,35 +43,40 @@ const teamInfoList = [
 ];
 
 const TeamSection = () => {
-  const teamRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    gsap.from(textRef.current, {
-      scrollTrigger: {
-        trigger: textRef.current,
-        toggleActions: 'restart none restart none',
-      },
-      y: 50,
-      opacity: 0,
-      duration: 0.3,
-    });
+  useGSAP(
+    () => {
+      gsap.from('.team', {
+        scrollTrigger: {
+          trigger: '.team',
+          toggleActions: 'restart none restart none',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.3,
+      });
 
-    gsap.from(teamRef.current, {
-      scrollTrigger: {
-        trigger: teamRef.current,
-        toggleActions: 'restart none restart none',
-      },
-      y: 100,
-      opacity: 0,
-      duration: 0.3,
-      delay: 0.3,
-    });
-  });
+      gsap.from('.teamCard', {
+        scrollTrigger: {
+          trigger: '.teamCard',
+          toggleActions: 'restart none restart none',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.3,
+      });
+    },
+    { scope: containerRef },
+  );
 
   return (
-    <section className={'flex w-full flex-col items-center justify-center'}>
-      <div ref={textRef} className="text-center font-bold">
+    <section
+      ref={containerRef}
+      className={'flex w-full flex-col items-center justify-center'}
+    >
+      <div className="team text-center font-bold">
         <p className={'text-xl text-primary lg:text-xl'}>Snack Game</p>
         <p className={'text-3xl text-primary-deep-dark lg:text-5xl'}>
           Team Member
@@ -81,9 +86,8 @@ const TeamSection = () => {
       <Spacing size={4} />
 
       <div
-        ref={teamRef}
         className={
-          'container flex w-full flex-wrap items-center justify-center'
+          'teamCard container flex w-full flex-wrap items-center justify-center'
         }
       >
         {teamInfoList.map((teamInfo) => (

@@ -17,35 +17,40 @@ gsap.registerPlugin(ScrollTrigger);
 const BlogSection = () => {
   const { t } = useTranslation(['landing']);
 
-  const logoRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    gsap.from(textRef.current, {
-      scrollTrigger: {
-        trigger: textRef.current,
-        toggleActions: 'restart none restart none',
-      },
-      y: 50,
-      opacity: 0,
-      duration: 0.3,
-    });
+  useGSAP(
+    () => {
+      gsap.from('.blog', {
+        scrollTrigger: {
+          trigger: '.blog',
+          toggleActions: 'restart none restart none',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.3,
+      });
 
-    gsap.from(logoRef.current, {
-      scrollTrigger: {
-        trigger: logoRef.current,
-        toggleActions: 'restart none restart none',
-      },
-      y: 100,
-      opacity: 0,
-      duration: 0.3,
-      delay: 0.3,
-    });
-  });
+      gsap.from('.logo', {
+        scrollTrigger: {
+          trigger: '.logo',
+          toggleActions: 'restart none restart none',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.3,
+      });
+    },
+    { scope: containerRef },
+  );
 
   return (
-    <section className={'flex w-full flex-col items-center justify-center'}>
-      <div ref={textRef} className="opacity-1 text-center font-bold">
+    <section
+      ref={containerRef}
+      className={'flex w-full flex-col items-center justify-center'}
+    >
+      <div className="blog opacity-1 text-center font-bold">
         <p className={'text-xl text-primary lg:text-xl'}>Dev Log</p>
         <p className={'text-3xl text-primary-deep-dark lg:text-5xl'}>BLOG!</p>
       </div>
@@ -53,8 +58,9 @@ const BlogSection = () => {
       <Spacing size={3} />
 
       <div
-        ref={logoRef}
-        className={'opacity-1 flex flex-col items-center justify-center gap-16'}
+        className={
+          'logo opacity-1 flex flex-col items-center justify-center gap-16'
+        }
       >
         <div className={'rounded-full bg-primary p-10 shadow-md'}>
           <img
