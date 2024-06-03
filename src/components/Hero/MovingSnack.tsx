@@ -7,26 +7,28 @@ import GoldenSnackImage from '@assets/images/golden_snack.png';
 import SnackImage from '@assets/images/snack.png';
 
 const MovingSnack = () => {
-  const snackRef = useRef<HTMLImageElement>(null);
-  const goldenSnackRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.fromTo(
-      snackRef.current,
-      { y: -15, rotation: 100 },
-      { y: 0, rotation: 30, repeat: -1, duration: 1, yoyo: true },
-    );
-    gsap.fromTo(
-      goldenSnackRef.current,
-      { y: -15, rotation: 0 },
-      { y: 0, rotation: 120, repeat: -1, duration: 1, yoyo: true },
-    );
-  });
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        '.normal',
+        { y: -15, rotation: 100 },
+        { y: 0, rotation: 30, repeat: -1, duration: 1, yoyo: true },
+      );
+      gsap.fromTo(
+        '.gold',
+        { y: -15, rotation: 0 },
+        { y: 0, rotation: 120, repeat: -1, duration: 1, yoyo: true },
+      );
+    },
+    { scope: containerRef },
+  );
 
   return (
-    <div className="flex gap-8">
-      <img ref={snackRef} src={SnackImage} className="mt-20 h-24 w-24" />
-      <img ref={goldenSnackRef} src={GoldenSnackImage} className="h-24 w-24" />
+    <div ref={containerRef} className="flex gap-8">
+      <img src={SnackImage} className="normal mt-20 h-24 w-24" />
+      <img src={GoldenSnackImage} className="gold h-24 w-24" />
     </div>
   );
 };
