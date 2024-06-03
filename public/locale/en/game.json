@@ -11,6 +11,5 @@
   "score": " score",
   "end": "Game Over!",
 
-  "result_rank": "What's my rank?",
   "result_percentile": "Your score is in the top {{percentile}}% of all users!"
 }

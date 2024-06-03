@@ -1,7 +1,10 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { motion } from 'framer-motion';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
 import LogoImage from '@assets/images/logo.png';
 import Button from '@components/Button/Button';
@@ -9,40 +12,55 @@ import Spacing from '@components/Spacing/Spacing';
 
 import PATH from '@constants/path.constant';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const BlogSection = () => {
   const { t } = useTranslation(['landing']);
 
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from('.blog', {
+        scrollTrigger: {
+          trigger: '.blog',
+          toggleActions: 'restart none restart none',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.3,
+      });
+
+      gsap.from('.logo', {
+        scrollTrigger: {
+          trigger: '.logo',
+          toggleActions: 'restart none restart none',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.3,
+      });
+    },
+    { scope: containerRef },
+  );
+
   return (
-    <section className={'flex w-full flex-col items-center justify-center'}>
-      <motion.div
-        className={'text-xl font-bold text-primary lg:text-xl'}
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{
-          duration: 0.3,
-          delay: 0.5,
-          type: 'spring',
-          stiffness: 100,
-        }}
-      >
-        Dev Log
-      </motion.div>
-      <motion.div
-        className={'text-3xl font-bold text-primary-deep-dark lg:text-5xl'}
-        initial={{ y: 100, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
-      >
-        BLOG!
-      </motion.div>
+    <section
+      ref={containerRef}
+      className={'flex w-full flex-col items-center justify-center'}
+    >
+      <div className="blog opacity-1 text-center font-bold">
+        <p className={'text-xl text-primary lg:text-xl'}>Dev Log</p>
+        <p className={'text-3xl text-primary-deep-dark lg:text-5xl'}>BLOG!</p>
+      </div>
 
       <Spacing size={3} />
 
-      <motion.div
-        className={'flex flex-col items-center justify-center gap-16'}
-        initial={{ y: 100, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
+      <div
+        className={
+          'logo opacity-1 flex flex-col items-center justify-center gap-16'
+        }
       >
         <div className={'rounded-full bg-primary p-10 shadow-md'}>
           <img
@@ -56,7 +74,7 @@ const BlogSection = () => {
         <Link to={PATH.BLOG} target="_blank">
           <Button size={'lg'}>{t('blog_button')}</Button>
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 };
