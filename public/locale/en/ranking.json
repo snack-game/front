@@ -7,5 +7,7 @@
 
   "name_column": "Name",
   "score_column": "Score",
-  "group": "Group"
+  "group": "Group",
+
+  "empty": "The ranking is empty.\nPlay now and become number one!"
 }

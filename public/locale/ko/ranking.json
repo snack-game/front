@@ -7,5 +7,7 @@
 
   "name_column": "이름",
   "score_column": "점수",
-  "group": "그룹"
+  "group": "그룹",
+
+  "empty": "랭킹이 비어있어요.\n지금 바로 플레이하고 1등에 올라보세요!"
 }

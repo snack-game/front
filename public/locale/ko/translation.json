@@ -2,8 +2,10 @@
   "menu_login": "로그인",
   "menu_logout": "로그아웃",
 
-  "login_title": "로그인",
   "login_oauth": "간편하게 시작하기",
+  "rank": "등",
+  "what_rank": "나는 몇 등일까?",
+
   "login_success": "로그인 성공!",
   "login_fail": "로그인 실패!",
 

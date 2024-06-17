@@ -1,5 +1,3 @@
-import React from 'react';
-
 import SnackRain from '@components/SnackRain/SnackRain';
 
 import { useCanvasOffset } from '@hooks/useCanvasOffset';

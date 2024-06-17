@@ -1,7 +1,9 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { motion } from 'framer-motion';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 import ChilImage from '@assets/images/0chil.jpg';
 import DongSuImage from '@assets/images/dongsu.webp';
@@ -41,44 +43,57 @@ const teamInfoList = [
 ];
 
 const TeamSection = () => {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from('.team', {
+        scrollTrigger: {
+          trigger: '.team',
+          toggleActions: 'restart none restart none',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.3,
+      });
+
+      gsap.from('.teamCard', {
+        scrollTrigger: {
+          trigger: '.teamCard',
+          toggleActions: 'restart none restart none',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.3,
+      });
+    },
+    { scope: containerRef },
+  );
+
   return (
-    <section className={'flex w-full flex-col items-center justify-center'}>
-      <motion.div
-        className={'text-xl font-bold text-primary lg:text-xl'}
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{
-          duration: 0.3,
-          delay: 0.3,
-          type: 'spring',
-          stiffness: 50,
-        }}
-      >
-        Snack Game
-      </motion.div>
-      <motion.div
-        className={'text-3xl font-bold text-primary-deep-dark lg:text-5xl'}
-        initial={{ y: 100, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
-      >
-        Team Member
-      </motion.div>
+    <section
+      ref={containerRef}
+      className={'flex w-full flex-col items-center justify-center'}
+    >
+      <div className="team text-center font-bold">
+        <p className={'text-xl text-primary lg:text-xl'}>Snack Game</p>
+        <p className={'text-3xl text-primary-deep-dark lg:text-5xl'}>
+          Team Member
+        </p>
+      </div>
 
       <Spacing size={4} />
 
-      <motion.div
+      <div
         className={
-          'container flex w-full flex-wrap items-center justify-center'
+          'teamCard container flex w-full flex-wrap items-center justify-center'
         }
-        initial={{ y: 100, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, type: 'spring', stiffness: 100 }}
       >
         {teamInfoList.map((teamInfo) => (
           <TeamCard key={teamInfo.name} {...teamInfo} />
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 };

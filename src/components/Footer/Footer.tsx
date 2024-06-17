@@ -17,9 +17,16 @@ const Footer = () => {
         <Link className={'text-xs text-gray-500'} to={PATH.POLICY}>
           개인정보처리방침
         </Link>
-        <div className={' text-xs text-gray-500'}>
+        <div className={'text-xs text-gray-500'}>
           <a href="https://www.flaticon.com/kr/free-icons/" title="아이콘">
             Icons: Freepik, Triangle Squad, IYAHICON from www.flaticon.com
+          </a>
+          <br />
+          <a
+            href="https://www.youtube.com/playlist?list=PLobY7vO0pgVIOZNKTVRhkPzrfCjDJ0CNl"
+            title="배경음악"
+          >
+            Music: YouTube Playlist from @HeatleyBros
           </a>
         </div>
       </div>
