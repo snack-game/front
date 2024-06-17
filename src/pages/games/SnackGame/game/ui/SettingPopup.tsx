@@ -1,5 +1,6 @@
 import { List } from '@pixi/ui';
 import gsap from 'gsap';
+import { t } from 'i18next';
 import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
 
 import { GAMEVERSION } from '@constants/common.constant';
@@ -48,22 +49,25 @@ export class SettingsPopup extends Container {
     this.panelBase = new RoundedBox({ height: 600 });
     this.panel.addChild(this.panelBase);
 
-    this.title = new Label('설정', {
+    this.title = new Label(t('setting', { ns: 'game' }), {
       fill: 0xfb923c,
       fontSize: 50,
     });
     this.title.y = -this.panelBase.boxHeight * 0.5 + 60;
     this.panel.addChild(this.title);
 
-    this.doneButton = new LargeButton({ text: '완료' });
+    this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
     this.doneButton.y = this.panelBase.boxHeight * 0.5 - 78;
     this.doneButton.onPress.connect(() => navigation.dismissPopup());
     this.panel.addChild(this.doneButton);
 
-    this.versionLabel = new Label(`게임 버전 ${GAMEVERSION}`, {
-      fill: 0xfb923c,
-      fontSize: 12,
-    });
+    this.versionLabel = new Label(
+      `${t('version', { ns: 'game' })} ${GAMEVERSION}`,
+      {
+        fill: 0xfb923c,
+        fontSize: 12,
+      },
+    );
     this.versionLabel.alpha = 0.5;
     this.versionLabel.y = this.panelBase.boxHeight * 0.5 - 15;
     this.panel.addChild(this.versionLabel);
@@ -73,19 +77,19 @@ export class SettingsPopup extends Container {
     this.layout.y = -160;
     this.panel.addChild(this.layout);
 
-    this.masterSlider = new VolumeSlider('Master');
+    this.masterSlider = new VolumeSlider(t('master_volume', { ns: 'game' }));
     this.masterSlider.onUpdate.connect((v) => {
       userSettings.setMasterVolume(v / 100);
     });
     this.layout.addChild(this.masterSlider);
 
-    this.bgmSlider = new VolumeSlider('BGM');
+    this.bgmSlider = new VolumeSlider(t('bgm_volume', { ns: 'game' }));
     this.bgmSlider.onUpdate.connect((v) => {
       userSettings.setBgmVolume(v / 100);
     });
     this.layout.addChild(this.bgmSlider);
 
-    this.sfxSlider = new VolumeSlider('SFX');
+    this.sfxSlider = new VolumeSlider(t('sfx_volume', { ns: 'game' }));
     this.sfxSlider.onUpdate.connect((v) => {
       userSettings.setSfxVolume(v / 100);
     });

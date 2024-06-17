@@ -5,6 +5,7 @@ import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
 import { navigation } from '../util/navigation';
+import { t } from 'i18next';
 
 /** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
 export class PausePopup extends Container {
@@ -33,11 +34,14 @@ export class PausePopup extends Container {
     this.panelBase = new RoundedBox({ height: 300 });
     this.panel.addChild(this.panelBase);
 
-    this.title = new Label('일시정지', { fill: 0xf58529, fontSize: 50 });
+    this.title = new Label(t('pause', { ns: 'game' }), {
+      fill: 0xf58529,
+      fontSize: 50,
+    });
     this.title.y = -80;
     this.panel.addChild(this.title);
 
-    this.doneButton = new LargeButton({ text: '완료' });
+    this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
     this.doneButton.y = 70;
     this.doneButton.onPress.connect(() => navigation.dismissPopup());
     this.panel.addChild(this.doneButton);

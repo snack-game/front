@@ -1,12 +1,15 @@
 {
   "title": "Setting",
+
   "account": "Account",
   "logout": "Logout",
+  "login_logout": "Logout Successful!",
+
   "service": "Service Information",
   "privacy_policy": "Privacy Policy",
+
   "etc": "Other Settings",
   "language": "Change Language",
-
   "ko": "Korean",
   "en": "English"
 }
