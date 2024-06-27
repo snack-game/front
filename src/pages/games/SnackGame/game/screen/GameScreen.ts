@@ -92,6 +92,7 @@ export class GameScreen extends Container {
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
+      // TODO: 게임 시간 임시로 5초로 바꿔둠!
       duration: 5,
       mode,
     });
