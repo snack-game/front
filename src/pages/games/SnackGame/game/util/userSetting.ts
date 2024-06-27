@@ -1,4 +1,5 @@
 import {
+  KEY_GAME_MODE,
   KEY_VOLUME_BGM,
   KEY_VOLUME_MASTER,
   KEY_VOLUME_SFX,
@@ -6,6 +7,7 @@ import {
 
 import { bgm, setMasterVolume, sfx } from './audio';
 import { storage } from './storage';
+import { SnackGameMode, snackGameModes } from '../snackGame/SnackGameUtil';
 
 /**
  * 볼륨 및 게임 모드의 지속적인 사용자 설정.
@@ -15,6 +17,20 @@ class UserSettings {
     setMasterVolume(this.getMasterVolume());
     bgm.setVolume(this.getBgmVolume());
     sfx.setVolume(this.getSfxVolume());
+  }
+
+  /** Get current game mode */
+  public getGameMode() {
+    const mode = storage.getString(KEY_GAME_MODE) as SnackGameMode;
+    return snackGameModes.includes(mode) ? mode : 'default';
+  }
+
+  /** Set current game mode */
+  public setGameMode(mode: SnackGameMode) {
+    if (!snackGameModes.includes(mode)) {
+      throw new Error('Invalid game mode: ' + mode);
+    }
+    return storage.setString(KEY_GAME_MODE, mode);
   }
 
   /** 전체 사운드 볼륨을 가져옵니다. */

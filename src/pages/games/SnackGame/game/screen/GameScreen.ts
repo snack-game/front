@@ -3,6 +3,7 @@ import { Container, Ticker } from 'pixi.js';
 
 import PATH from '@constants/path.constant';
 
+import { ResultScreen } from './ResultScreen';
 import { PausePopup } from '../popup/PausePopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
@@ -16,6 +17,7 @@ import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { getUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
+import { userStats } from '../util/userStats';
 
 export class GameScreen extends Container {
   /** 화면에 필요한 에셋 번들 리스트 */
@@ -71,6 +73,7 @@ export class GameScreen extends Container {
     this.snackGame.onPop = this.onPop.bind(this);
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
+    this.snackGame.onTimesUp = this.onTimesUp.bind(this);
     this.gameContainer.addChild(this.snackGame);
 
     this.vfx = new GameEffects(this);
@@ -89,7 +92,7 @@ export class GameScreen extends Container {
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
-      duration: 120,
+      duration: 5,
       mode,
     });
 
@@ -199,6 +202,26 @@ export class GameScreen extends Container {
 
   /** GameScreen 제거시 트리거 */
   public async hide() {
-    console.log('game over');
+    this.score.hide();
+    this.timer.hide();
+    this.vfx?.playGridExplosion();
+    await waitFor(1);
+  }
+
+  /** 게임 종료 시 트리거 */
+  private onTimesUp() {
+    this.pauseButton.hide();
+    this.snackGame.stopPlaying();
+    this.finish();
+  }
+
+  /** 게임 플레이를 마무리하고 결과를 userStats에 저장함 */
+  private async finish() {
+    if (this.finished) return;
+    this.finished = true;
+    this.snackGame.stopPlaying();
+    const performance = this.snackGame.stats.getGameplayPerformance();
+    userStats.save(this.snackGame.config.mode, performance);
+    navigation.showScreen(ResultScreen);
   }
 }

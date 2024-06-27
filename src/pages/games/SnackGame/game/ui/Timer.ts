@@ -92,10 +92,11 @@ export class Timer extends Container {
       await gsap.to(this.container.scale, {
         x: 0,
         y: 0,
-        duration: 0.3,
+        duration: 0.8,
         ease: 'back.in',
       });
+    } else {
+      this.visible = false;
     }
-    this.visible = false;
   }
 }

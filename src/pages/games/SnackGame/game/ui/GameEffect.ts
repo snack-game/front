@@ -160,10 +160,12 @@ export class GameEffects extends Container {
     gsap.killTweensOf(animatedSnack.scale);
     animatedSnack.setup({
       name: snack.name,
+      snackNum: snack.snackNum,
       type: snack.type,
       size: this.game.snackGame.board.tileSize,
       interactive: false,
     });
+    animatedSnack.visible = true;
     animatedSnack.position.copyFrom(position);
     animatedSnack.alpha = 1;
     this.addChild(animatedSnack);
