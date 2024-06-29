@@ -23,6 +23,23 @@ class StorageWrapper {
   public setNumber(key: string, value: number) {
     this.setString(key, String(value));
   }
+
+  /** 저장소에서 Object 값을 가져오거나 값을 가져올 수 없는 경우 undefined를 반환합니다. */
+  public getObject(key: string) {
+    const str = this.getString(key);
+    if (!str) return undefined;
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      console.warn(e);
+      return undefined;
+    }
+  }
+
+  /** 저장소에 Object값을 저장합니다. */
+  public setObject(key: string, value: Record<string, unknown>) {
+    this.setString(key, JSON.stringify(value));
+  }
 }
 
 export const storage = new StorageWrapper();
