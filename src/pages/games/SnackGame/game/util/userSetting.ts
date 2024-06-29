@@ -1,9 +1,9 @@
 import {
   KEY_GAME_MODE,
-  KEY_VOLUME_BGM,
   KEY_VOLUME_MASTER,
+  KEY_VOLUME_BGM,
   KEY_VOLUME_SFX,
-} from '@constants/common.constant';
+} from '@constants/localStorage.constant';
 
 import { bgm, setMasterVolume, sfx } from './audio';
 import { storage } from './storage';

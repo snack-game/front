@@ -1,4 +1,4 @@
-import { KEY_PREFIX_STATS } from '@constants/common.constant';
+import { KEY_PREFIX_STATS } from '@constants/localStorage.constant';
 
 import { storage } from './storage';
 import { SnackGameStateData } from '../snackGame/SnackGameStats';
