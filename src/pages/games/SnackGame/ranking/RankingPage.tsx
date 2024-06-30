@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
+import QueryBoundary from '@components/base/QueryBoundary';
 import Dropdown, { DropDownOptionType } from '@components/DropDown/DropDown';
+import RetryError from '@components/Error/RetryError';
 import Spacing from '@components/Spacing/Spacing';
 import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
 
@@ -44,7 +46,9 @@ const RankingPage = () => {
         />
       </div>
       <Spacing size={6} />
-      <RankingSection season={selectedSeason} />
+      <QueryBoundary errorFallback={RetryError}>
+        <RankingSection season={selectedSeason} />
+      </QueryBoundary>
     </>
   );
 };

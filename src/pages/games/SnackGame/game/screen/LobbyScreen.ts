@@ -18,8 +18,6 @@ export class LobbyScreen extends Container {
 
   /** 기본 모드 시작 버튼 */
   private defaultModButton: LargeButton;
-  /** 무한 모드 시작 버튼 */
-  private infModButton: LargeButton;
   /** wave 효과 */
   private waves: Waves;
   /** snack game letter logo */
@@ -49,17 +47,8 @@ export class LobbyScreen extends Container {
       setUrlParam('mode', 'default');
       navigation.showScreen(GameScreen);
     });
+
     this.addChild(this.defaultModButton);
-
-    this.infModButton = new LargeButton({
-      text: t('infinite_mode', { ns: 'game' }),
-    });
-    this.infModButton.onPress.connect(() => {
-      setUrlParam('mode', 'inf');
-      navigation.showScreen(GameScreen);
-    });
-    this.addChild(this.infModButton);
-
     this.snackGameLetter = new SnackGameLetter();
     this.addChild(this.snackGameLetter);
   }
@@ -67,14 +56,9 @@ export class LobbyScreen extends Container {
   /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
     this.defaultModButton.x = width * 0.5;
-    this.defaultModButton.y = height * 0.6;
+    this.defaultModButton.y = height * 0.8;
     this.defaultModButton.width = width * 0.5;
     this.defaultModButton.height = height * 0.1;
-
-    this.infModButton.x = width * 0.5;
-    this.infModButton.y = height * 0.75;
-    this.infModButton.width = width * 0.5;
-    this.infModButton.height = height * 0.1;
 
     this.waves.x = 0;
     this.waves.y = height;
@@ -92,7 +76,6 @@ export class LobbyScreen extends Container {
     bgm.play('common/bgm-lobby.mp3', { volume: 0.5 });
 
     this.defaultModButton.hide(false);
-    this.infModButton.hide(false);
     this.settingsButton.hide(false);
     this.snackGameLetter.hide(false);
 
@@ -106,14 +89,12 @@ export class LobbyScreen extends Container {
 
     this.snackGameLetter.show();
     this.defaultModButton.show();
-    this.infModButton.show();
     this.settingsButton.show();
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async hide() {
     this.defaultModButton.hide();
-    this.infModButton.hide();
     this.snackGameLetter.hide();
     this.settingsButton.hide(false);
 
