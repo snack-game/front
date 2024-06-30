@@ -2,7 +2,7 @@
   "loading_start": "로딩중..",
   "loading_end": "로딩 완료!",
 
-  "gold_mode": "기본 모드",
+  "default_mode": "기본 모드",
   "infinite_mode": "무한 모드",
 
   "ready": "준비...",

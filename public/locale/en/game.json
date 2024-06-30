@@ -2,7 +2,7 @@
   "loading_start": "Loading..",
   "loading_end": "Loading Complete!",
 
-  "gold_mode": "Basic Mode",
+  "default_mode": "Default Mode",
   "infinite_mode": "Infinite Mode",
 
   "ready": "Ready...",

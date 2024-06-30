@@ -43,7 +43,7 @@ export class LobbyScreen extends Container {
     this.addChild(this.waves);
 
     this.defaultModButton = new LargeButton({
-      text: t('gold_mode', { ns: 'game' }),
+      text: t('default_mode', { ns: 'game' }),
     });
     this.defaultModButton.onPress.connect(() => {
       setUrlParam('mode', 'default');
