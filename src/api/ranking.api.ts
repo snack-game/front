@@ -12,11 +12,6 @@ const rankingApi = {
     seasons: '/seasons',
   },
 
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-
   totalRanking: async () => {
     const { data } = await api.get(rankingApi.endPoint.totalRanking);
     return data;
