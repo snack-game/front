@@ -53,16 +53,14 @@ export class GameScreen extends Container {
       ripple: 'ripple',
     });
 
-    this.settingsButton.onPress.connect(() =>
-      this.handlePopUpButton('setting'),
-    );
+    this.settingsButton.onPress.connect(() => this.handlePopUpButton());
     this.addChild(this.settingsButton);
 
     this.pauseButton = new IconButton({
       image: 'pause',
       ripple: 'ripple',
     });
-    this.pauseButton.onPress.connect(() => this.handlePopUpButton('pause'));
+    this.pauseButton.onPress.connect(() => navigation.presentPopup(PausePopup));
 
     this.addChild(this.pauseButton);
 
@@ -89,13 +87,13 @@ export class GameScreen extends Container {
     this.addChild(this.beforGameStart);
   }
 
-  public handlePopUpButton = async (popup: 'pause' | 'setting') => {
+  public handlePopUpButton = async () => {
     try {
       const gameStats = storage.getObject('game-stats');
       if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
 
       await gamePause(gameStats.sessionId);
-      navigation.presentPopup(popup === 'pause' ? PausePopup : SettingsPopup);
+      navigation.presentPopup(SettingsPopup);
     } catch (error) {
       eventEmitter.emit('error', error);
     }
@@ -210,7 +208,7 @@ export class GameScreen extends Container {
   }
 
   /** URL이 변경되면 자동 정지 */
-  public blur() {
+  public async blur() {
     if (!navigation.currentPopup && this.snackGame.isPlaying()) {
       navigation.presentPopup(PausePopup);
     }

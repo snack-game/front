@@ -5,7 +5,7 @@ import { eventEmitter } from '../SnackGameBase';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
-import { gameResume } from '../util/api';
+import { gamePause, gameResume } from '../util/api';
 import { navigation } from '../util/navigation';
 import { storage } from '../util/storage';
 
@@ -51,7 +51,8 @@ export class PausePopup extends Container {
       const gameStats = storage.getObject('game-stats');
       if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
 
-      await gameResume(gameStats.sessionId);
+      const data = await gameResume(gameStats.sessionId);
+      storage.setObject('game-stats', { ...data });
       navigation.dismissPopup();
     } catch (error) {
       eventEmitter.emit('error', error);
@@ -77,6 +78,15 @@ export class PausePopup extends Container {
     this.panel.pivot.y = -400;
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
+
+    try {
+      const gameStats = storage.getObject('game-stats');
+      if (!gameStats) throw new Error('세션을 찾을 수 없습니다.');
+      const data = await gamePause(gameStats.sessionId);
+      storage.setObject('game-stats', { ...data });
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */

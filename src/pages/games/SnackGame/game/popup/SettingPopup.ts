@@ -100,7 +100,8 @@ export class SettingsPopup extends Container {
       const gameStats = storage.getObject('game-stats');
 
       if (gameStats.state === 'IN_PROGRESS') {
-        await gameResume(gameStats.sessionId);
+        const data = await gameResume(gameStats.sessionId);
+        storage.setObject('game-stats', { ...data });
       }
 
       navigation.dismissPopup();
