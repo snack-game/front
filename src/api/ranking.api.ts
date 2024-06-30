@@ -3,8 +3,8 @@ import { RankingType, SeasonType } from '@utils/types/common.type';
 
 const rankingApi = {
   endPoint: {
-    totalRanking: '/rankings?by=BEST_SCORE',
-    userRanking: '/rankings/me?by=BEST_SCORE',
+    totalRanking: '/rankings/2?by=BEST_SCORE',
+    userRanking: '/rankings/2/me?by=BEST_SCORE',
 
     seasonRanking: '/rankings',
     seasonRankingMe: '/rankings',
@@ -29,14 +29,14 @@ const rankingApi = {
 
   seasonRanking: async (season: number): Promise<RankingType[]> => {
     const { data } = await api.get(
-      `${rankingApi.endPoint.seasonRanking}/${season}?by=BEST_SCORE`,
+      `${rankingApi.endPoint.seasonRanking}/${season}/2?by=BEST_SCORE`,
     );
     return data;
   },
 
   seasonRankingMe: async (season: number) => {
     const { data } = await api.get(
-      `${rankingApi.endPoint.seasonRankingMe}/${season}/me?by=BEST_SCORE`,
+      `${rankingApi.endPoint.seasonRankingMe}/${season}/2/me?by=BEST_SCORE`,
     );
     return data;
   },
