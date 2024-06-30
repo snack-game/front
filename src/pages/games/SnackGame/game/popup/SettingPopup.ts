@@ -9,7 +9,7 @@ import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
 import { VolumeSlider } from '../ui/VolumeSlider';
-import { gameResume } from '../util/api';
+import { gamePause, gameResume } from '../util/api';
 import { navigation } from '../util/navigation';
 import { storage } from '../util/storage';
 import { userSettings } from '../util/userSetting';
@@ -99,7 +99,7 @@ export class SettingsPopup extends Container {
     try {
       const gameStats = storage.getObject('game-stats');
 
-      if (gameStats.state === 'IN_PROGRESS') {
+      if (gameStats.state === 'PAUSED') {
         const data = await gameResume(gameStats.sessionId);
         storage.setObject('game-stats', { ...data });
       }
@@ -136,6 +136,17 @@ export class SettingsPopup extends Container {
     this.panel.pivot.y = -400;
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
+
+    const gameStats = storage.getObject('game-stats');
+
+    if (gameStats.state === 'IN_PROGRESS') {
+      try {
+        const data = await gamePause(gameStats.sessionId);
+        storage.setObject('game-stats', { ...data });
+      } catch (error) {
+        eventEmitter.emit('error', error);
+      }
+    }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */

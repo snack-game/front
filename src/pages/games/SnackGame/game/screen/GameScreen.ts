@@ -53,7 +53,9 @@ export class GameScreen extends Container {
       ripple: 'ripple',
     });
 
-    this.settingsButton.onPress.connect(() => this.handlePopUpButton());
+    this.settingsButton.onPress.connect(() =>
+      navigation.presentPopup(SettingsPopup),
+    );
     this.addChild(this.settingsButton);
 
     this.pauseButton = new IconButton({
@@ -86,18 +88,6 @@ export class GameScreen extends Container {
     this.beforGameStart = new BeforGameStart();
     this.addChild(this.beforGameStart);
   }
-
-  public handlePopUpButton = async () => {
-    try {
-      const gameStats = storage.getObject('game-stats');
-      if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
-
-      await gamePause(gameStats.sessionId);
-      navigation.presentPopup(SettingsPopup);
-    } catch (error) {
-      eventEmitter.emit('error', error);
-    }
-  };
 
   public prepare() {
     const mode = getUrlParam('mode') as SnackGameMode;
