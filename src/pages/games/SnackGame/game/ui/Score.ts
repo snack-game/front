@@ -120,11 +120,13 @@ export class Score extends Container {
       await gsap.to(this.container.scale, {
         x: 0,
         y: 0,
-        duration: 0.3,
+        duration: 0.8,
         ease: 'back.in',
       });
+      this.visible = false;
+    } else {
+      this.visible = false;
     }
-    this.visible = false;
   }
 
   /** 실제 점수에 도달할 때까지 점점 증가하는 점수 애니메이션을 재생합니다 */
