@@ -1,10 +1,13 @@
 import gsap from 'gsap';
 import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
 
+import { eventEmitter } from '../SnackGameBase';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
+import { gameResume } from '../util/api';
 import { navigation } from '../util/navigation';
+import { storage } from '../util/storage';
 
 /** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
 export class PausePopup extends Container {
@@ -39,9 +42,21 @@ export class PausePopup extends Container {
 
     this.doneButton = new LargeButton({ text: '완료' });
     this.doneButton.y = 70;
-    this.doneButton.onPress.connect(() => navigation.dismissPopup());
+    this.doneButton.onPress.connect(this.handleDoneButton);
     this.panel.addChild(this.doneButton);
   }
+
+  public handleDoneButton = async () => {
+    try {
+      const gameStats = storage.getObject('game-stats');
+      if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
+
+      await gameResume(gameStats.sessionId);
+      navigation.dismissPopup();
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
+  };
 
   /** 창 크기가 변경될 때마다 호출되는 팝업 크기 조정 */
   public resize(width: number, height: number) {

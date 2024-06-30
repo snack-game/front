@@ -1,17 +1,19 @@
 import gsap from 'gsap';
 import { t } from 'i18next';
-import { Container, Text } from 'pixi.js';
+import { Container } from 'pixi.js';
 
 import { GameScreen } from './GameScreen';
-import { app } from '../SnackGameBase';
+import { SettingsPopup } from '../popup/SettingPopup';
+import { app, eventEmitter } from '../SnackGameBase';
 import { IconButton } from '../ui/IconButton';
 import { LargeButton } from '../ui/LargeButton';
-import { SettingsPopup } from '../ui/SettingPopup';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
+import { gameStart } from '../util/api';
 import { bgm } from '../util/audio';
 import { setUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
+import { storage } from '../util/storage';
 
 export class LobbyScreen extends Container {
   public static assetBundles = ['common'];
@@ -43,15 +45,23 @@ export class LobbyScreen extends Container {
     this.defaultModButton = new LargeButton({
       text: t('gold_mode', { ns: 'game' }),
     });
-    this.defaultModButton.onPress.connect(() => {
-      setUrlParam('mode', 'default');
-      navigation.showScreen(GameScreen);
-    });
+    this.defaultModButton.onPress.connect(this.handleGameStartButton);
 
     this.addChild(this.defaultModButton);
     this.snackGameLetter = new SnackGameLetter();
     this.addChild(this.snackGameLetter);
   }
+
+  public handleGameStartButton = async () => {
+    try {
+      const data = await gameStart();
+      storage.setObject('game-stats', { ...data });
+      setUrlParam('mode', 'default');
+      navigation.showScreen(GameScreen);
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
+  };
 
   /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
