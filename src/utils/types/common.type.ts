@@ -20,6 +20,11 @@ export interface toastStateType {
 
 export type RankingViewType = (typeof SnackGameId)[keyof typeof SnackGameId];
 
+export interface GameSeasonParams {
+  season: number;
+  gameId: RankingViewType;
+}
+
 export type RankingType = {
   rank: number;
   owner: MemberType;
