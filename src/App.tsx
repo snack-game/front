@@ -102,7 +102,7 @@ const App = () => {
             <Route
               path={PATH.NOT_FOUND_ERROR}
               element={
-                <ErrorPage code={404} message={'존재하지 않는 페이지입니다!'} />
+                <ErrorPage error={new Error('존재하지 않는 페이지입니다!')} />
               }
             />
           </Routes>

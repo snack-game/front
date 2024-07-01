@@ -5,18 +5,21 @@ import PATH from '@constants/path.constant';
 
 import { ResultScreen } from './ResultScreen';
 import { PausePopup } from '../popup/PausePopup';
+import { SettingsPopup } from '../popup/SettingPopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
+import { eventEmitter } from '../SnackGameBase';
 import { BeforGameStart } from '../ui/BeforeGameStart';
 import { GameEffects } from '../ui/GameEffect';
 import { IconButton } from '../ui/IconButton';
 import { Score } from '../ui/Score';
-import { SettingsPopup } from '../ui/SettingPopup';
 import { Timer } from '../ui/Timer';
+import { gameEnd, gamePause, gameScore, gameStart } from '../util/api';
 import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { getUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
+import { storage } from '../util/storage';
 import { userStats } from '../util/userStats';
 
 export class GameScreen extends Container {
@@ -195,7 +198,7 @@ export class GameScreen extends Container {
   }
 
   /** URL이 변경되면 자동 정지 */
-  public blur() {
+  public async blur() {
     if (!navigation.currentPopup && this.snackGame.isPlaying()) {
       navigation.presentPopup(PausePopup);
     }
@@ -218,11 +221,23 @@ export class GameScreen extends Container {
 
   /** 게임 플레이를 마무리하고 결과를 userStats에 저장함 */
   private async finish() {
-    if (this.finished) return;
-    this.finished = true;
-    this.snackGame.stopPlaying();
-    const performance = this.snackGame.stats.getGameplayPerformance();
-    userStats.save(this.snackGame.config.mode, performance);
-    navigation.showScreen(ResultScreen);
+    try {
+      if (this.finished) return;
+      this.finished = true;
+      this.snackGame.stopPlaying();
+
+      const performance = this.snackGame.stats.getGameplayPerformance();
+      userStats.save(this.snackGame.config.mode, performance);
+
+      const gameStats = storage.getObject('game-stats');
+      if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
+
+      await gameScore(performance.score, gameStats.sessionId);
+      const data = await gameEnd(gameStats.sessionId);
+      storage.setObject('game-stats', { ...data });
+      navigation.showScreen(ResultScreen);
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
   }
 }

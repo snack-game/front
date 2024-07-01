@@ -1,25 +1,25 @@
 import gsap from 'gsap';
 import { t } from 'i18next';
-import { Container, Text } from 'pixi.js';
+import { Container } from 'pixi.js';
 
 import { GameScreen } from './GameScreen';
-import { app } from '../SnackGameBase';
+import { SettingsPopup } from '../popup/SettingPopup';
+import { app, eventEmitter } from '../SnackGameBase';
 import { IconButton } from '../ui/IconButton';
 import { LargeButton } from '../ui/LargeButton';
-import { SettingsPopup } from '../ui/SettingPopup';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
+import { gameStart } from '../util/api';
 import { bgm } from '../util/audio';
 import { setUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
+import { storage } from '../util/storage';
 
 export class LobbyScreen extends Container {
   public static assetBundles = ['common'];
 
   /** 기본 모드 시작 버튼 */
   private defaultModButton: LargeButton;
-  /** 무한 모드 시작 버튼 */
-  private infModButton: LargeButton;
   /** wave 효과 */
   private waves: Waves;
   /** snack game letter logo */
@@ -45,36 +45,30 @@ export class LobbyScreen extends Container {
     this.defaultModButton = new LargeButton({
       text: t('gold_mode', { ns: 'game' }),
     });
-    this.defaultModButton.onPress.connect(() => {
-      setUrlParam('mode', 'default');
-      navigation.showScreen(GameScreen);
-    });
+    this.defaultModButton.onPress.connect(this.handleGameStartButton);
+
     this.addChild(this.defaultModButton);
-
-    this.infModButton = new LargeButton({
-      text: t('infinite_mode', { ns: 'game' }),
-    });
-    this.infModButton.onPress.connect(() => {
-      setUrlParam('mode', 'inf');
-      navigation.showScreen(GameScreen);
-    });
-    this.addChild(this.infModButton);
-
     this.snackGameLetter = new SnackGameLetter();
     this.addChild(this.snackGameLetter);
   }
 
+  public handleGameStartButton = async () => {
+    try {
+      const data = await gameStart();
+      storage.setObject('game-stats', { ...data });
+      setUrlParam('mode', 'default');
+      navigation.showScreen(GameScreen);
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
+  };
+
   /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
     this.defaultModButton.x = width * 0.5;
-    this.defaultModButton.y = height * 0.6;
+    this.defaultModButton.y = height * 0.8;
     this.defaultModButton.width = width * 0.5;
     this.defaultModButton.height = height * 0.1;
-
-    this.infModButton.x = width * 0.5;
-    this.infModButton.y = height * 0.75;
-    this.infModButton.width = width * 0.5;
-    this.infModButton.height = height * 0.1;
 
     this.waves.x = 0;
     this.waves.y = height;
@@ -92,7 +86,6 @@ export class LobbyScreen extends Container {
     bgm.play('common/bgm-lobby.mp3', { volume: 0.5 });
 
     this.defaultModButton.hide(false);
-    this.infModButton.hide(false);
     this.settingsButton.hide(false);
     this.snackGameLetter.hide(false);
 
@@ -106,14 +99,12 @@ export class LobbyScreen extends Container {
 
     this.snackGameLetter.show();
     this.defaultModButton.show();
-    this.infModButton.show();
     this.settingsButton.show();
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async hide() {
     this.defaultModButton.hide();
-    this.infModButton.hide();
     this.snackGameLetter.hide();
     this.settingsButton.hide(false);
 

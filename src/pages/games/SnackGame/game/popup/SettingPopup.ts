@@ -4,11 +4,14 @@ import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
 
 import { GAMEVERSION } from '@constants/common.constant';
 
-import { VolumeSlider } from './VolumeSlider';
+import { eventEmitter } from '../SnackGameBase';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
+import { VolumeSlider } from '../ui/VolumeSlider';
+import { gamePause, gameResume } from '../util/api';
 import { navigation } from '../util/navigation';
+import { storage } from '../util/storage';
 import { userSettings } from '../util/userSetting';
 
 /** 볼륨 설정을 위한 팝업 */
@@ -57,7 +60,7 @@ export class SettingsPopup extends Container {
 
     this.doneButton = new LargeButton({ text: '완료' });
     this.doneButton.y = this.panelBase.boxHeight * 0.5 - 78;
-    this.doneButton.onPress.connect(() => navigation.dismissPopup());
+    this.doneButton.onPress.connect(this.handleDoneButton);
     this.panel.addChild(this.doneButton);
 
     this.versionLabel = new Label(`게임 버전 ${GAMEVERSION}`, {
@@ -92,6 +95,21 @@ export class SettingsPopup extends Container {
     this.layout.addChild(this.sfxSlider);
   }
 
+  public handleDoneButton = async () => {
+    try {
+      const gameStats = storage.getObject('game-stats');
+
+      if (gameStats.state === 'PAUSED') {
+        const data = await gameResume(gameStats.sessionId);
+        storage.setObject('game-stats', { ...data });
+      }
+
+      navigation.dismissPopup();
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
+  };
+
   /** 창 크기가 변경될 때마다 팝업 크기 조정 */
   public resize(width: number, height: number) {
     this.bg.width = width;
@@ -118,6 +136,17 @@ export class SettingsPopup extends Container {
     this.panel.pivot.y = -400;
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
+
+    const gameStats = storage.getObject('game-stats');
+
+    if (gameStats.state === 'IN_PROGRESS') {
+      try {
+        const data = await gamePause(gameStats.sessionId);
+        storage.setObject('game-stats', { ...data });
+      } catch (error) {
+        eventEmitter.emit('error', error);
+      }
+    }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */

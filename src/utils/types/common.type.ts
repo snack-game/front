@@ -13,7 +13,7 @@ export interface ModalType {
 export interface toastStateType {
   id?: string;
   message: string;
-  type?: ToastType;
+  type: ToastType;
 }
 
 export type RankingType = {

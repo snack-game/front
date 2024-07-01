@@ -3,14 +3,17 @@ import { t } from 'i18next';
 import { Container } from 'pixi.js';
 
 import { GameScreen } from './GameScreen';
-import { app } from '../SnackGameBase';
+import { SettingsPopup } from '../popup/SettingPopup';
+import { app, eventEmitter } from '../SnackGameBase';
 import { IconButton } from '../ui/IconButton';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
-import { SettingsPopup } from '../ui/SettingPopup';
 import { Waves } from '../ui/Waves';
+import { gameStart } from '../util/api';
 import { bgm } from '../util/audio';
+import { setUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
+import { storage } from '../util/storage';
 import { userSettings } from '../util/userSetting';
 import { userStats } from '../util/userStats';
 
@@ -56,10 +59,20 @@ export class ResultScreen extends Container {
       text: t('restart', { ns: 'game' }),
     });
     this.addChild(this.continueButton);
-    this.continueButton.onPress.connect(() =>
-      navigation.showScreen(GameScreen),
-    );
+    this.continueButton.onPress.connect(this.handleGameStartButton);
   }
+
+  /** 게임 시작 버튼 */
+  public handleGameStartButton = async () => {
+    try {
+      const data = await gameStart();
+      storage.setObject('game-stats', { ...data });
+      setUrlParam('mode', 'default');
+      navigation.showScreen(GameScreen);
+    } catch (error) {
+      eventEmitter.emit('error', error);
+    }
+  };
 
   /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
