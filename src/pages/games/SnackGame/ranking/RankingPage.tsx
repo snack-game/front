@@ -4,21 +4,22 @@ import { useTranslation } from 'react-i18next';
 
 import Dropdown, { DropDownOptionType } from '@components/DropDown/DropDown';
 import Spacing from '@components/Spacing/Spacing';
+import { Tab, TabOptionType } from '@components/Tab/Tab';
 import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
 import { RankingViewType } from '@utils/types/common.type';
 
 import { useGetSeasons } from '@hooks/queries/ranking.query';
-
-interface RankTabInfo {
-  name: string;
-  gameId: RankingViewType;
-}
 
 const RankingPage = () => {
   const { t } = useTranslation('ranking');
 
   const seasonData = useGetSeasons();
   const latestSeason = seasonData[seasonData.length - 1].id;
+
+  const tabOptions: TabOptionType[] = [
+    { name: t('ranking_default'), onClick: () => setCurrentTab(2) },
+    { name: t('ranking_infinite'), onClick: () => setCurrentTab(3) },
+  ];
   const dropdownOptions: DropDownOptionType[] = [
     {
       name: t('all_season'),
@@ -32,10 +33,7 @@ const RankingPage = () => {
       onClick: () => setSelectedSeason(season.id),
     })),
   ];
-  const TAB_OPTIONS: RankTabInfo[] = [
-    { name: 'ranking_default', gameId: 2 },
-    { name: 'ranking_infinite', gameId: 3 },
-  ];
+
   const [currentTab, setCurrentTab] = useState<RankingViewType>(2);
   const [selectedSeason, setSelectedSeason] = useState<number>(latestSeason);
 
@@ -47,17 +45,7 @@ const RankingPage = () => {
 
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
-        {TAB_OPTIONS.map(({ name, gameId }) => (
-          <span
-            className={`mr-4 cursor-pointer text-lg ${
-              currentTab === gameId ? 'text-primary' : 'text-[#6B7280]'
-            }`}
-            key={name}
-            onClick={() => setCurrentTab(gameId)}
-          >
-            {t(name)}
-          </span>
-        ))}
+        <Tab options={tabOptions} />
         <Spacing size={1} />
         <Dropdown
           initialOption={latestSeason}
