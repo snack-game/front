@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { Level } from '@components/Level/Level';
+import { RankingViewType } from '@utils/types/common.type';
 
 import {
   useGetSeasonRankingMe,
@@ -9,17 +10,18 @@ import {
 
 interface UserRankingProps {
   season: number;
+  gameId: RankingViewType;
 }
 
-const UserRanking = ({ season }: UserRankingProps) => {
+const UserRanking = ({ season, gameId }: UserRankingProps) => {
   const { t } = useTranslation('ranking');
 
   let userRanking;
 
   if (season === 0) {
-    userRanking = useGetUserRanking();
+    userRanking = useGetUserRanking(gameId);
   } else {
-    userRanking = useGetSeasonRankingMe(season);
+    userRanking = useGetSeasonRankingMe(season, gameId);
   }
 
   return (
