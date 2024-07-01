@@ -2,6 +2,8 @@ import React from 'react';
 
 import { MemberType } from '@utils/types/member.type';
 
+import { SnackGameId } from '@constants/common.constant';
+
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 
 export interface ModalType {
@@ -15,6 +17,8 @@ export interface toastStateType {
   message: string;
   type?: ToastType;
 }
+
+export type RankingViewType = (typeof SnackGameId)[keyof typeof SnackGameId];
 
 export type RankingType = {
   rank: number;
