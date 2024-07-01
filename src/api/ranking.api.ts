@@ -1,10 +1,14 @@
 import api from '@api/index';
-import { RankingType, SeasonType } from '@utils/types/common.type';
+import {
+  RankingType,
+  RankingViewType,
+  SeasonType,
+} from '@utils/types/common.type';
 
 const rankingApi = {
   endPoint: {
-    totalRanking: '/rankings?by=BEST_SCORE',
-    userRanking: '/rankings/me?by=BEST_SCORE',
+    totalRanking: '/rankings',
+    userRanking: '/rankings',
 
     seasonRanking: '/rankings',
     seasonRankingMe: '/rankings',
@@ -17,26 +21,34 @@ const rankingApi = {
     Accept: 'application/json',
   },
 
-  totalRanking: async () => {
-    const { data } = await api.get(rankingApi.endPoint.totalRanking);
-    return data;
-  },
-
-  userRanking: async () => {
-    const { data } = await api.get(rankingApi.endPoint.userRanking);
-    return data;
-  },
-
-  seasonRanking: async (season: number): Promise<RankingType[]> => {
+  totalRanking: async (gameId: RankingViewType) => {
     const { data } = await api.get(
-      `${rankingApi.endPoint.seasonRanking}/${season}?by=BEST_SCORE`,
+      `${rankingApi.endPoint.totalRanking}/${gameId}?by=BEST_SCORE`,
     );
     return data;
   },
 
-  seasonRankingMe: async (season: number) => {
+  userRanking: async (gameId: RankingViewType) => {
     const { data } = await api.get(
-      `${rankingApi.endPoint.seasonRankingMe}/${season}/me?by=BEST_SCORE`,
+      `${rankingApi.endPoint.userRanking}/${gameId}/me?by=BEST_SCORE`,
+    );
+    return data;
+  },
+
+  // TODO: season -> game 이 아니라 game -> season 순서로 변경 필요 (테스트 후 마지막으로 변경 예정)
+  seasonRanking: async (
+    season: number,
+    gameId: RankingViewType,
+  ): Promise<RankingType[]> => {
+    const { data } = await api.get(
+      `${rankingApi.endPoint.seasonRanking}/${season}/${gameId}?by=BEST_SCORE`,
+    );
+    return data;
+  },
+
+  seasonRankingMe: async (season: number, gameId: RankingViewType) => {
+    const { data } = await api.get(
+      `${rankingApi.endPoint.seasonRankingMe}/${season}/${gameId}/me?by=BEST_SCORE`,
     );
     return data;
   },
