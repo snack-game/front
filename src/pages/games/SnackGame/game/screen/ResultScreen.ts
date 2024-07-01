@@ -6,29 +6,34 @@ import { GameScreen } from './GameScreen';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { app, eventEmitter } from '../SnackGameBase';
 import { IconButton } from '../ui/IconButton';
+import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
-import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
 import { gameStart } from '../util/api';
 import { bgm } from '../util/audio';
 import { setUrlParam } from '../util/getUrlParams';
 import { navigation } from '../util/navigation';
 import { storage } from '../util/storage';
+import { userSettings } from '../util/userSetting';
+import { userStats } from '../util/userStats';
 
-export class LobbyScreen extends Container {
-  public static assetBundles = ['common'];
-
+export class ResultScreen extends Container {
   /** 기본 모드 시작 버튼 */
-  private defaultModButton: LargeButton;
+  private retryButton: LargeButton;
   /** wave 효과 */
   private waves: Waves;
-  /** snack game letter logo */
-  private snackGameLetter: SnackGameLetter;
   /** 설정 버튼 */
   private settingsButton: IconButton;
+  /** 점수 라벨 */
+  private scoreLabel: Label;
+  /** 재시작 버튼 */
+  private continueButton: LargeButton;
 
   constructor() {
     super();
+
+    const mode = userSettings.getGameMode();
+    const score = userStats.load(mode).score;
 
     this.settingsButton = new IconButton({
       image: 'settings',
@@ -39,19 +44,25 @@ export class LobbyScreen extends Container {
     );
     this.addChild(this.settingsButton);
 
+    this.retryButton = new LargeButton({
+      text: t('restart', { ns: 'game' }),
+    });
+
     this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
     this.addChild(this.waves);
 
-    this.defaultModButton = new LargeButton({
-      text: t('gold_mode', { ns: 'game' }),
-    });
-    this.defaultModButton.onPress.connect(this.handleGameStartButton);
+    this.scoreLabel = new Label(`${score}${t('score', { ns: 'game' })}!`);
+    this.scoreLabel.y = -10;
+    this.addChild(this.scoreLabel);
 
-    this.addChild(this.defaultModButton);
-    this.snackGameLetter = new SnackGameLetter();
-    this.addChild(this.snackGameLetter);
+    this.continueButton = new LargeButton({
+      text: t('restart', { ns: 'game' }),
+    });
+    this.addChild(this.continueButton);
+    this.continueButton.onPress.connect(this.handleGameStartButton);
   }
 
+  /** 게임 시작 버튼 */
   public handleGameStartButton = async () => {
     try {
       const data = await gameStart();
@@ -65,29 +76,34 @@ export class LobbyScreen extends Container {
 
   /** 화면 크기 변경 시 트리거 됩니다. */
   public resize(width: number, height: number) {
-    this.defaultModButton.x = width * 0.5;
-    this.defaultModButton.y = height * 0.8;
-    this.defaultModButton.width = width * 0.5;
-    this.defaultModButton.height = height * 0.1;
+    this.retryButton.x = width * 0.5;
+    this.retryButton.y = height * 0.6;
+    this.retryButton.width = width * 0.5;
+    this.retryButton.height = height * 0.1;
 
     this.waves.x = 0;
     this.waves.y = height;
     this.waves.width = width;
 
-    this.snackGameLetter.x = width * 0.5;
-    this.snackGameLetter.y = height * 0.3;
+    this.scoreLabel.x = width * 0.5;
+    this.scoreLabel.y = height * 0.4;
 
     this.settingsButton.x = width - 25;
     this.settingsButton.y = 25;
+
+    this.continueButton.x = width * 0.5;
+    this.continueButton.y = height * 0.75;
+    this.continueButton.width = width * 0.5;
+    this.continueButton.height = height * 0.1;
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async show() {
     bgm.play('common/bgm-lobby.mp3', { volume: 0.5 });
 
-    this.defaultModButton.hide(false);
+    this.retryButton.hide(false);
     this.settingsButton.hide(false);
-    this.snackGameLetter.hide(false);
+    this.continueButton.hide(false);
 
     gsap.to(this.waves, {
       y: app.renderer.height * 0.85,
@@ -97,16 +113,16 @@ export class LobbyScreen extends Container {
       delay: 0.5,
     });
 
-    this.snackGameLetter.show();
-    this.defaultModButton.show();
+    this.retryButton.show();
     this.settingsButton.show();
+    this.continueButton.show();
   }
 
   /** Screen 시작 시 보여지는 애니메이션 입니다. */
   public async hide() {
-    this.defaultModButton.hide();
-    this.snackGameLetter.hide();
+    this.retryButton.hide();
     this.settingsButton.hide(false);
+    this.continueButton.hide();
 
     gsap.to(this.waves, {
       y: app.renderer.height,

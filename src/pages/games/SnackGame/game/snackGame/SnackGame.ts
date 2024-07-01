@@ -28,10 +28,10 @@ export interface SnackGameOnPopData {
   snack: Snack;
   /** 현재 콤보 레벨 */
   // combo: number;
-  // TODO Combo 시스템
+  // TODO: Combo 시스템
   /** 주어진 유형이 특수 유형인지 여부 */
   // isSpecial: boolean;
-  // TODO 황금사과 시스템
+  // TODO: 황금사과 시스템
 }
 
 /**

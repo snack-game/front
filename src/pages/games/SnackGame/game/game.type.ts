@@ -1,35 +1,24 @@
 export type SnackGameMod = 'default' | 'inf';
 
-export interface goldModAppleType {
-  number: number;
-  golden: boolean;
-}
+export type SnackGameAPIStats = 'IN_PROGRESS' | 'PAUSED' | 'EXPIRED';
 
-export interface classicModAppleType {
-  number: number;
-}
-
-export type AppleData = goldModAppleType | classicModAppleType;
-
-export type coordinatesType = { y: number; x: number };
-
-export interface scoredAppleRectType {
-  topLeft: coordinatesType;
-  bottomRight: coordinatesType;
-}
-
-export interface goldModeType {
-  apples: goldModAppleType[][];
+export interface SnackGameDefalutResponse {
+  metadata: {
+    gameId: number;
+    localizedName: string;
+  };
+  ownerId: number;
   sessionId: number;
+  state: SnackGameAPIStats;
   score: number;
+  createdAt: string;
+  board: string;
 }
 
-export interface checkMoveType {
-  sessionId: number;
-  rects: scoredAppleRectType[];
-}
+export type SnackGameStart = SnackGameDefalutResponse;
 
-export interface gameEndType {
-  score: number;
+export type SnackGamePauese = SnackGameDefalutResponse;
+
+export type SnackGameEnd = SnackGameDefalutResponse & {
   percentile: number;
-}
+};

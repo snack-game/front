@@ -3,15 +3,11 @@ import { useEffect, useState } from 'react';
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
 import GameResult from '@pages/games/SnackGame/game/legacy/components/GameResult';
-import {
-  goldModAppleType,
-  scoredAppleRectType,
-} from '@pages/games/SnackGame/game/game.type';
+import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
 import Apple from '@pages/games/SnackGame/game/legacy/model/appleGame/apple';
 import { AppleGame } from '@pages/games/SnackGame/game/legacy/model/appleGame/appleGame';
 import { GoldenApple } from '@pages/games/SnackGame/game/legacy/model/appleGame/goldenApple';
 import PlainApple from '@pages/games/SnackGame/game/legacy/model/appleGame/plainApple';
-import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
 
 import {
   useAppleGameRefresh,
@@ -24,6 +20,7 @@ import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import AppleGameView from './AppleGameView';
+import { scoredAppleRectType, goldModAppleType } from '../../legacyType';
 
 const DefaultMode = () => {
   const setError = useError();

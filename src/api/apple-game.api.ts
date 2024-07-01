@@ -1,8 +1,8 @@
 import {
+  goldModeType,
   checkMoveType,
   gameEndType,
-  goldModeType,
-} from '@pages/games/SnackGame/game/game.type';
+} from '@pages/games/SnackGame/game/legacy/legacyType';
 
 import api from './index';
 

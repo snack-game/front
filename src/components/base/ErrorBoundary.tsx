@@ -3,7 +3,7 @@ import { Component, ComponentType, PropsWithChildren } from 'react';
 import * as Sentry from '@sentry/react';
 
 export interface FallbackProps {
-  error?: Error;
+  error?: Error & { code?: string };
   resetErrorBoundary?: () => void;
   message?: string;
 }
@@ -14,7 +14,7 @@ interface ErrorBoundaryProps {
 }
 
 interface ErrorBoundaryState {
-  error: Error | null;
+  error: (Error & { code?: string }) | null;
   message?: string;
 }
 
@@ -36,7 +36,9 @@ class ErrorBoundary extends Component<
   };
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { error };
+    const errorWithCode = error as Error & { code?: string };
+    errorWithCode.code = errorWithCode.code || 'UNKNOWN_ERROR';
+    return { error: errorWithCode };
   }
 
   componentDidCatch(error: Error): void {

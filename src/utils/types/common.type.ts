@@ -15,7 +15,7 @@ export interface ModalType {
 export interface toastStateType {
   id?: string;
   message: string;
-  type?: ToastType;
+  type: ToastType;
 }
 
 export type RankingViewType = (typeof SnackGameId)[keyof typeof SnackGameId];

@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useRecoilValue } from 'recoil';
 
 import appleGameApi from '@api/apple-game.api';
-import { scoredAppleRectType } from '@pages/games/SnackGame/game/game.type';
+import { scoredAppleRectType } from '@pages/games/SnackGame/game/legacy/legacyType';
 import { userState } from '@utils/atoms/member.atom';
 
 import { ServerError } from '@constants/api.constant';

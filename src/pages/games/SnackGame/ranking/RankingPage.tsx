@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
+import QueryBoundary from '@components/base/QueryBoundary';
 import Dropdown, { DropDownOptionType } from '@components/DropDown/DropDown';
+import RetryError from '@components/Error/RetryError';
 import Spacing from '@components/Spacing/Spacing';
 import { Tab, TabOptionType } from '@components/Tab/Tab';
 import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
@@ -55,7 +57,9 @@ const RankingPage = () => {
       </div>
       <Spacing size={6} />
       {/* TODO: 무한모드 준비 끝나면 gameId={currentTab} 으로 수정 */}
-      <RankingSection season={selectedSeason} gameId={2} />
+      <QueryBoundary errorFallback={RetryError}>
+        <RankingSection season={selectedSeason} gameId={2} />
+      </QueryBoundary>
     </>
   );
 };
