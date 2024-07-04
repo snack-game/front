@@ -20,7 +20,7 @@ export interface toastStateType {
 
 export type RankingViewType = (typeof SnackGameId)[keyof typeof SnackGameId];
 
-export interface GameSeasonParams {
+export interface GameSeasonProps {
   season: number;
   gameId: RankingViewType;
 }

@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
 
 import { Level } from '@components/Level/Level';
-import { GameSeasonParams } from '@utils/types/common.type';
+import { GameSeasonProps } from '@utils/types/common.type';
 
 import {
   useGetSeasonRankingMe,
   useGetUserRanking,
 } from '@hooks/queries/ranking.query';
 
-const UserRanking = ({ season, gameId }: GameSeasonParams) => {
+const UserRanking = ({ season, gameId }: GameSeasonProps) => {
   const { t } = useTranslation('ranking');
 
   let userRanking;

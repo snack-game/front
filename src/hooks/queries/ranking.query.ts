@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import rankingApi from '@api/ranking.api';
 import {
-  GameSeasonParams,
+  GameSeasonProps,
   RankingType,
   RankingViewType,
   SeasonType,
@@ -34,7 +34,7 @@ export const useGetUserRanking = (gameId: RankingViewType) => {
   return data;
 };
 
-export const useGetSeasonRanking = ({ season, gameId }: GameSeasonParams) => {
+export const useGetSeasonRanking = ({ season, gameId }: GameSeasonProps) => {
   const { data } = useSuspenseQuery<RankingType[], AxiosError>({
     queryKey: [QUERY_KEY.SEASON_RANKING, season, gameId],
     queryFn: () => rankingApi.seasonRanking(season, gameId),
@@ -43,7 +43,7 @@ export const useGetSeasonRanking = ({ season, gameId }: GameSeasonParams) => {
   return data;
 };
 
-export const useGetSeasonRankingMe = ({ season, gameId }: GameSeasonParams) => {
+export const useGetSeasonRankingMe = ({ season, gameId }: GameSeasonProps) => {
   const { data } = useQuery<RankingType, AxiosError<ServerError>>({
     queryKey: [QUERY_KEY.SEASON_USER_RANKING, season, gameId],
     queryFn: () => rankingApi.seasonRankingMe(season, gameId),

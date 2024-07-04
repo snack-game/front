@@ -6,7 +6,7 @@ import LogoImage from '@assets/images/main.png';
 import OtherRanking from '@pages/games/SnackGame/ranking/components/OtherRanking';
 import TopRanking from '@pages/games/SnackGame/ranking/components/TopRanking';
 import { userState } from '@utils/atoms/member.atom';
-import { GameSeasonParams } from '@utils/types/common.type';
+import { GameSeasonProps } from '@utils/types/common.type';
 
 import {
   useGetSeasonRanking,
@@ -15,7 +15,7 @@ import {
 
 import UserRanking from './UserRanking';
 
-const RankingSection = ({ season, gameId }: GameSeasonParams) => {
+const RankingSection = ({ season, gameId }: GameSeasonProps) => {
   let totalRanking;
 
   const userInfo = useRecoilValue(userState);
