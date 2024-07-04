@@ -47,7 +47,8 @@ const RankingPage = () => {
 
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
-        <Tab options={tabOptions} />
+        {/* TODO: 무한모드 준비 끝나면 해제 */}
+        {/* <Tab options={tabOptions} /> */}
         <Spacing size={1} />
         <Dropdown
           initialOption={latestSeason}
