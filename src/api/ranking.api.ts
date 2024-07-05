@@ -1,42 +1,54 @@
 import api from '@api/index';
-import { RankingType, SeasonType } from '@utils/types/common.type';
+import {
+  RankingType,
+  RankingViewType,
+  SeasonType,
+} from '@utils/types/common.type';
 
 const rankingApi = {
   endPoint: {
-    totalRanking: '/rankings?by=BEST_SCORE',
-    userRanking: '/rankings/me?by=BEST_SCORE',
+    ranking: ({
+      gameId,
+      season,
+      user = false,
+    }: {
+      gameId: RankingViewType;
+      season?: number;
+      user?: boolean;
+    }) => {
+      const seasonPath = season ? `/${season}` : '';
+      const userPath = user ? '/me' : '';
 
-    seasonRanking: '/rankings',
-    seasonRankingMe: '/rankings',
-
+      return `/rankings/${gameId}${seasonPath}${userPath}?by=BEST_SCORE`;
+    },
     seasons: '/seasons',
   },
 
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-
-  totalRanking: async () => {
-    const { data } = await api.get(rankingApi.endPoint.totalRanking);
+  totalRanking: async (gameId: RankingViewType) => {
+    const { data } = await api.get(rankingApi.endPoint.ranking({ gameId }));
     return data;
   },
 
-  userRanking: async () => {
-    const { data } = await api.get(rankingApi.endPoint.userRanking);
-    return data;
-  },
-
-  seasonRanking: async (season: number): Promise<RankingType[]> => {
+  userRanking: async (gameId: RankingViewType) => {
     const { data } = await api.get(
-      `${rankingApi.endPoint.seasonRanking}/${season}?by=BEST_SCORE`,
+      rankingApi.endPoint.ranking({ gameId, user: true }),
     );
     return data;
   },
 
-  seasonRankingMe: async (season: number) => {
+  seasonRanking: async (
+    season: number,
+    gameId: RankingViewType,
+  ): Promise<RankingType[]> => {
     const { data } = await api.get(
-      `${rankingApi.endPoint.seasonRankingMe}/${season}/me?by=BEST_SCORE`,
+      rankingApi.endPoint.ranking({ gameId, season }),
+    );
+    return data;
+  },
+
+  seasonRankingMe: async (season: number, gameId: RankingViewType) => {
+    const { data } = await api.get(
+      rankingApi.endPoint.ranking({ gameId, season, user: true }),
     );
     return data;
   },

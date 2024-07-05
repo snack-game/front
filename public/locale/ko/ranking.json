@@ -2,6 +2,9 @@
   "all_season": "전체",
   "season": "시즌 {{season}}",
 
+  "ranking_default": "기본 모드",
+  "ranking_infinite": "무한 모드",
+
   "score": "점",
   "rank": "등",
 

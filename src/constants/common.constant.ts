@@ -17,3 +17,8 @@ export const HJID = 4963723;
 export const HJSV = 6;
 
 export const GAMEVERSION = '1.0.0';
+
+export const SnackGameId = {
+  DEFAULT: 2,
+  INF: 3,
+} as const;
