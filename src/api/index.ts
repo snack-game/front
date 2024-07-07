@@ -14,7 +14,7 @@ api.interceptors.response.use(
   async (error) => {
     if (error.response) {
       const status = error.response.status;
-      const { action } = error.response.data;
+      const { code } = error.response.data;
       const originalRequest = error.config;
       if (!originalRequest._retry) {
         // _retry 플래그를 사용하여 무한 재시도 방지
@@ -22,8 +22,8 @@ api.interceptors.response.use(
 
         switch (status) {
           case 401: {
-            switch (action) {
-              case 'REISSUE': {
+            switch (code) {
+              case 'TOKEN_EXPIRED_EXCEPTION': {
                 await authApi.tokenReIssue();
                 return api.request(originalRequest);
               }
