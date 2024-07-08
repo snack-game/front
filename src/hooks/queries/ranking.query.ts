@@ -2,23 +2,28 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import rankingApi from '@api/ranking.api';
-import { RankingType, SeasonType } from '@utils/types/common.type';
+import {
+  GameSeasonProps,
+  RankingType,
+  RankingViewType,
+  SeasonType,
+} from '@utils/types/common.type';
 
 import { QUERY_KEY, ServerError } from '@constants/api.constant';
 
-export const useGetTotalRanking = () => {
+export const useGetTotalRanking = (gameId: RankingViewType) => {
   const { data } = useSuspenseQuery<RankingType[], AxiosError>({
-    queryKey: [QUERY_KEY.TOTAL_RANKING],
-    queryFn: rankingApi.totalRanking,
+    queryKey: [QUERY_KEY.TOTAL_RANKING, gameId],
+    queryFn: () => rankingApi.totalRanking(gameId),
   });
 
   return data;
 };
 
-export const useGetUserRanking = () => {
+export const useGetUserRanking = (gameId: RankingViewType) => {
   const { data } = useQuery<RankingType, AxiosError<ServerError>>({
-    queryKey: [QUERY_KEY.USER_RANKING],
-    queryFn: rankingApi.userRanking,
+    queryKey: [QUERY_KEY.USER_RANKING, gameId],
+    queryFn: () => rankingApi.userRanking(gameId),
     throwOnError: (error: AxiosError<ServerError>) => {
       if (!error.response) throw error;
 
@@ -29,19 +34,19 @@ export const useGetUserRanking = () => {
   return data;
 };
 
-export const useGetSeasonRanking = (season: number) => {
+export const useGetSeasonRanking = ({ season, gameId }: GameSeasonProps) => {
   const { data } = useSuspenseQuery<RankingType[], AxiosError>({
-    queryKey: [QUERY_KEY.SEASON_RANKING, season],
-    queryFn: () => rankingApi.seasonRanking(season),
+    queryKey: [QUERY_KEY.SEASON_RANKING, season, gameId],
+    queryFn: () => rankingApi.seasonRanking(season, gameId),
   });
 
   return data;
 };
 
-export const useGetSeasonRankingMe = (season: number) => {
+export const useGetSeasonRankingMe = ({ season, gameId }: GameSeasonProps) => {
   const { data } = useQuery<RankingType, AxiosError<ServerError>>({
-    queryKey: [QUERY_KEY.SEASON_USER_RANKING, season],
-    queryFn: () => rankingApi.seasonRankingMe(season),
+    queryKey: [QUERY_KEY.SEASON_USER_RANKING, season, gameId],
+    queryFn: () => rankingApi.seasonRankingMe(season, gameId),
     throwOnError: (error: AxiosError<ServerError>) => {
       if (!error.response) throw error;
 

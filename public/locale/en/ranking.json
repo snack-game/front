@@ -2,6 +2,9 @@
   "all_season": "All Seasons",
   "season": "Season {{season}}",
 
+  "ranking_default": "Default Mode",
+  "ranking_infinite": "Infinite Mode",
+
   "score": "score",
   "rank": "Rank",
 

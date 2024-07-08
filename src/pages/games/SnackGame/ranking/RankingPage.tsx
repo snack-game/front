@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
+import QueryBoundary from '@components/base/QueryBoundary';
 import Dropdown, { DropDownOptionType } from '@components/DropDown/DropDown';
+import RetryError from '@components/Error/RetryError';
 import Spacing from '@components/Spacing/Spacing';
+import { Tab, TabOptionType } from '@components/Tab/Tab';
 import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
+import { RankingViewType } from '@utils/types/common.type';
 
 import { useGetSeasons } from '@hooks/queries/ranking.query';
 
@@ -13,6 +17,11 @@ const RankingPage = () => {
 
   const seasonData = useGetSeasons();
   const latestSeason = seasonData[seasonData.length - 1].id;
+
+  const tabOptions: TabOptionType[] = [
+    { name: t('ranking_default'), onClick: () => setCurrentTab(2) },
+    { name: t('ranking_infinite'), onClick: () => setCurrentTab(3) },
+  ];
   const dropdownOptions: DropDownOptionType[] = [
     {
       name: t('all_season'),
@@ -27,6 +36,7 @@ const RankingPage = () => {
     })),
   ];
 
+  const [currentTab, setCurrentTab] = useState<RankingViewType>(2);
   const [selectedSeason, setSelectedSeason] = useState<number>(latestSeason);
 
   return (
@@ -37,6 +47,9 @@ const RankingPage = () => {
 
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
+        {/* TODO: 무한모드 준비 끝나면 해제 */}
+        {/* <Tab options={tabOptions} /> */}
+        <Spacing size={1} />
         <Dropdown
           initialOption={latestSeason}
           options={dropdownOptions}
@@ -44,7 +57,10 @@ const RankingPage = () => {
         />
       </div>
       <Spacing size={6} />
-      <RankingSection season={selectedSeason} />
+      {/* TODO: 무한모드 준비 끝나면 gameId={currentTab} 으로 수정 */}
+      <QueryBoundary errorFallback={RetryError}>
+        <RankingSection season={selectedSeason} gameId={2} />
+      </QueryBoundary>
     </>
   );
 };

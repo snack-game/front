@@ -6,6 +6,7 @@ import LogoImage from '@assets/images/main.png';
 import OtherRanking from '@pages/games/SnackGame/ranking/components/OtherRanking';
 import TopRanking from '@pages/games/SnackGame/ranking/components/TopRanking';
 import { userState } from '@utils/atoms/member.atom';
+import { GameSeasonProps } from '@utils/types/common.type';
 
 import {
   useGetSeasonRanking,
@@ -14,19 +15,15 @@ import {
 
 import UserRanking from './UserRanking';
 
-interface RankingSectionProps {
-  season: number;
-}
-
-const RankingSection = ({ season }: RankingSectionProps) => {
+const RankingSection = ({ season, gameId }: GameSeasonProps) => {
   let totalRanking;
 
   const userInfo = useRecoilValue(userState);
 
   if (season === 0) {
-    totalRanking = useGetTotalRanking();
+    totalRanking = useGetTotalRanking(gameId);
   } else {
-    totalRanking = useGetSeasonRanking(season);
+    totalRanking = useGetSeasonRanking({ season, gameId });
   }
 
   const topRanking = totalRanking?.slice(0, 3);
@@ -38,7 +35,7 @@ const RankingSection = ({ season }: RankingSectionProps) => {
       {topRanking && <TopRanking topRanking={topRanking} />}
       {otherRanking && <OtherRanking otherRanking={otherRanking} />}
       {userInfo.type && userInfo.type !== 'GUEST' && (
-        <UserRanking season={season} />
+        <UserRanking season={season} gameId={gameId} />
       )}
     </div>
   );
@@ -49,7 +46,6 @@ const EmptyRanking = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      {/* TODO: 이미지 교체 */}
       <img src={LogoImage} />
       <p className="whitespace-pre-line text-center text-primary-deep-dark">
         {t('empty')}

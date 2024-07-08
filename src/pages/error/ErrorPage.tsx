@@ -8,15 +8,7 @@ import SnackRainContainer from '@components/SnackRain/SnackRainContainer';
 
 import PATH from '@constants/path.constant';
 
-interface ErrorPageProps {
-  code?: number | string;
-  message?: string;
-}
-
-const ErrorPage = ({
-  code = 'Error',
-  message = '오류가 발생했습니다.',
-}: FallbackProps & ErrorPageProps) => {
+const ErrorPage = ({ error }: FallbackProps) => {
   return (
     <>
       <Helmet>
@@ -24,13 +16,9 @@ const ErrorPage = ({
       </Helmet>
       <SnackRainContainer />
 
-      <div className='flex flex-col items-center gap-6'>
-        <img
-          className='m-auto w-20 h-20'
-          src={ErrorImage}
-          alt={'에러 이미지'}
-        />
-        <span>{message}</span>
+      <div className="flex h-screen w-screen flex-col items-center justify-center gap-6">
+        <img className="h-20 w-20" src={ErrorImage} alt={'에러 이미지'} />
+        <span>{error ? `[${error.code}: ${error.message}` : ''}</span>
         <Link to={PATH.MAIN}>
           <Button>돌아가기</Button>
         </Link>

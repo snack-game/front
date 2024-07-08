@@ -17,7 +17,7 @@ export const toastState = atom<toastStateType>({
   default: {
     id: TOAST_ID,
     message: '',
-    type: undefined,
+    type: 'success',
   },
 });
 
