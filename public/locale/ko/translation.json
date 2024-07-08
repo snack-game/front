@@ -8,7 +8,6 @@
 
   "login_success": "로그인 성공!",
   "login_fail": "로그인 실패!",
-  "login_logout": "로그아웃 성공!",
 
   "member_change_name": "이름 변경 완료!",
   "member_change_group": "그룹 변경 완료!",

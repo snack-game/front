@@ -2,7 +2,7 @@
   "loading_start": "Loading..",
   "loading_end": "Loading Complete!",
 
-  "gold_mode": "Basic Mode",
+  "default_mode": "Default Mode",
   "infinite_mode": "Infinite Mode",
 
   "ready": "Ready...",
@@ -11,5 +11,14 @@
   "score": " score",
   "end": "Game Over!",
 
-  "result_percentile": "Your score is in the top {{percentile}}% of all users!"
+  "result_rank": "What's my rank?",
+  "result_percentile": "Your score is in the top {{percentile}}% of all users!",
+
+  "pause": "Pause",
+  "confirm": "Confirm",
+  "setting": "Setting",
+  "master_volume": "Master",
+  "bgm_volume": "Background Music",
+  "sfx_volume": "Sound Effects",
+  "version": "Game version"
 }

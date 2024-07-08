@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { t } from 'i18next';
 import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
 
 import { eventEmitter } from '../SnackGameBase';
@@ -36,11 +37,14 @@ export class PausePopup extends Container {
     this.panelBase = new RoundedBox({ height: 300 });
     this.panel.addChild(this.panelBase);
 
-    this.title = new Label('일시정지', { fill: 0xf58529, fontSize: 50 });
+    this.title = new Label(t('pause', { ns: 'game' }), {
+      fill: 0xf58529,
+      fontSize: 50,
+    });
     this.title.y = -80;
     this.panel.addChild(this.title);
 
-    this.doneButton = new LargeButton({ text: '완료' });
+    this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
     this.doneButton.y = 70;
     this.doneButton.onPress.connect(this.handleDoneButton);
     this.panel.addChild(this.doneButton);
