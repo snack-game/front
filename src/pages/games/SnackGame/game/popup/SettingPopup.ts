@@ -1,22 +1,22 @@
 import { List } from '@pixi/ui';
 import gsap from 'gsap';
 import { t } from 'i18next';
-import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
+import { Container, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { GAMEVERSION } from '@constants/common.constant';
 
-import { eventEmitter } from '../SnackGameBase';
+import { AppScreen } from '../screen/appScreen';
+import { SnackgameApplication } from '../screen/SnackgameApplication';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
 import { VolumeSlider } from '../ui/VolumeSlider';
 import { gamePause, gameResume } from '../util/api';
-import { navigation } from '../util/navigation';
 import { storage } from '../util/storage';
 import { userSettings } from '../util/userSetting';
 
 /** 볼륨 설정을 위한 팝업 */
-export class SettingsPopup extends Container {
+export class SettingsPopup extends Container implements AppScreen {
   /** 현재 화면을 덮는 어두운 반투명 배경 */
   private bg: Sprite;
   /** 팝업 UI 구성 요소를 위한 컨테이너 */
@@ -38,10 +38,10 @@ export class SettingsPopup extends Container {
   /** 효과음 볼륨을 변경하는 슬라이더 */
   private sfxSlider: VolumeSlider;
 
-  constructor() {
+  constructor(private app: SnackgameApplication) {
     super();
 
-    this.bg = new Sprite(Texture.WHITE);
+    this.bg = new Sprite(Texture.WHITE); // TODO: (배경 흐리기 + 어둡게 하기)를 팝업에서 하기(bg 유지) vs 모든 팝업에 일관적으로 적용하기(bg 이동)
     this.bg.tint = 0xffedd5;
     this.bg.interactive = true;
     this.addChild(this.bg);
@@ -108,14 +108,14 @@ export class SettingsPopup extends Container {
         storage.setObject('game-stats', { ...data });
       }
 
-      navigation.dismissPopup();
+      this.app.dismissPopup();
     } catch (error) {
-      eventEmitter.emit('error', error);
+      this.app.setError(error);
     }
   };
 
   /** 창 크기가 변경될 때마다 팝업 크기 조정 */
-  public resize(width: number, height: number) {
+  public onResize({ width, height }: Rectangle) {
     this.bg.width = width;
     this.bg.height = height;
     this.panel.x = width * 0.5;
@@ -123,17 +123,14 @@ export class SettingsPopup extends Container {
   }
 
   /** 팝업을 표시하기 직전에 설정 */
-  public prepare() {
+  public async onPrepare(screen: Rectangle) {
     this.masterSlider.value = userSettings.getMasterVolume() * 100;
     this.bgmSlider.value = userSettings.getBgmVolume() * 100;
     this.sfxSlider.value = userSettings.getSfxVolume() * 100;
   }
 
   /** 팝업을 애니메이션과 함께 표시 */
-  public async show() {
-    if (navigation.currentScreen) {
-      navigation.currentScreen.filters = [new BlurFilter({ strength: 4 })];
-    }
+  public async onShow({ width, height }: Rectangle) {
     gsap.killTweensOf(this.bg);
     gsap.killTweensOf(this.panel.pivot);
     this.bg.alpha = 0;
@@ -141,23 +138,20 @@ export class SettingsPopup extends Container {
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
 
-    const gameStats = storage.getObject('game-stats');
+    // const gameStats = storage.getObject('game-stats');
 
-    if (gameStats.state === 'IN_PROGRESS') {
-      try {
-        const data = await gamePause(gameStats.sessionId);
-        storage.setObject('game-stats', { ...data });
-      } catch (error) {
-        eventEmitter.emit('error', error);
-      }
-    }
+    // if (gameStats.state === 'IN_PROGRESS') {
+    //   try {
+    //     const data = await gamePause(gameStats.sessionId);
+    //     storage.setObject('game-stats', { ...data });
+    //   } catch (error) {
+    //     this.app.setError(error);
+    //   }
+    // }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */
-  public async hide() {
-    if (navigation.currentScreen) {
-      navigation.currentScreen.filters = [];
-    }
+  public async onHide({ width, height }: Rectangle) {
     gsap.killTweensOf(this.bg);
     gsap.killTweensOf(this.panel.pivot);
     gsap.to(this.bg, { alpha: 0, duration: 0.2, ease: 'linear' });

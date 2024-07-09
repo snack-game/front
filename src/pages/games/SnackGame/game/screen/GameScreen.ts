@@ -1,14 +1,15 @@
 import gsap from 'gsap';
-import { Container, Ticker } from 'pixi.js';
+import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import PATH from '@constants/path.constant';
 
-import { ResultScreen } from './ResultScreen';
+import { AppScreen } from './appScreen';
+import { SnackgameApplication } from './SnackgameApplication';
+import { SnackGameEnd } from '../game.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
-import { eventEmitter } from '../SnackGameBase';
 import { BeforGameStart } from '../ui/BeforeGameStart';
 import { GameEffects } from '../ui/GameEffect';
 import { IconButton } from '../ui/IconButton';
@@ -18,11 +19,10 @@ import { gameEnd, gamePause, gameScore, gameStart } from '../util/api';
 import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { getUrlParam } from '../util/getUrlParams';
-import { navigation } from '../util/navigation';
 import { storage } from '../util/storage';
 import { userStats } from '../util/userStats';
 
-export class GameScreen extends Container {
+export class GameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
   public static assetBundles = ['game'];
 
@@ -45,7 +45,10 @@ export class GameScreen extends Container {
   /** 게임 종료시 true가 됩니다. */
   private finished = false;
 
-  constructor() {
+  constructor(
+    private app: SnackgameApplication,
+    private handleGameEnd: (sesionId: number) => Promise<SnackGameEnd>,
+  ) {
     super();
 
     this.settingsButton = new IconButton({
@@ -53,16 +56,14 @@ export class GameScreen extends Container {
       ripple: 'ripple',
     });
 
-    this.settingsButton.onPress.connect(() =>
-      navigation.presentPopup(SettingsPopup),
-    );
+    this.settingsButton.onPress.connect(() => app.presentPopup(SettingsPopup));
     this.addChild(this.settingsButton);
 
     this.pauseButton = new IconButton({
       image: 'pause',
       ripple: 'ripple',
     });
-    this.pauseButton.onPress.connect(() => navigation.presentPopup(PausePopup));
+    this.pauseButton.onPress.connect(() => app.presentPopup(PausePopup));
 
     this.addChild(this.pauseButton);
 
@@ -89,7 +90,7 @@ export class GameScreen extends Container {
     this.addChild(this.beforGameStart);
   }
 
-  public prepare() {
+  public async onPrepare({ width, height }: Rectangle) {
     const mode = getUrlParam('mode') as SnackGameMode;
 
     const snackGameConfig = snackGameGetConfig({
@@ -106,7 +107,7 @@ export class GameScreen extends Container {
     this.pauseButton.hide(false);
     this.timer.hide(false);
     gsap.killTweensOf(this.gameContainer.pivot);
-    this.gameContainer.pivot.y = -navigation.height * 0.7;
+    this.gameContainer.pivot.y = -height * 0.7;
     gsap.killTweensOf(this.timer.scale);
   }
 
@@ -117,7 +118,7 @@ export class GameScreen extends Container {
     this.score.setScore(this.snackGame.stats.getScore());
 
     if (
-      !navigation.currentPopup &&
+      !this.app.currentPopup &&
       this.snackGame.isPlaying() &&
       window.location.pathname !== PATH.SNACK_GAME
     ) {
@@ -155,7 +156,7 @@ export class GameScreen extends Container {
   }
 
   /** 화면 크기 변경 시 트리거 됩니다. */
-  public resize(width: number, height: number) {
+  public onResize({ width, height }: Rectangle) {
     const div = height * 0.3;
     const centerX = width * 0.5;
     const centerY = height * 0.5;
@@ -183,7 +184,7 @@ export class GameScreen extends Container {
   }
 
   /** 화면 노출 시 애니메이션을 재생합니다. */
-  public async show() {
+  public async onShow({ width, height }: Rectangle) {
     bgm.play('common/bgm-game1.mp3', { volume: 0.5 });
     this.score.show();
     this.timer.show();
@@ -199,13 +200,13 @@ export class GameScreen extends Container {
 
   /** URL이 변경되면 자동 정지 */
   public async blur() {
-    if (!navigation.currentPopup && this.snackGame.isPlaying()) {
-      navigation.presentPopup(PausePopup);
+    if (!this.app.currentPopup && this.snackGame.isPlaying()) {
+      this.app.presentPopup(PausePopup);
     }
   }
 
   /** GameScreen 제거시 트리거 */
-  public async hide() {
+  public async onHide({ width, height }: Rectangle) {
     this.score.hide();
     this.timer.hide();
     this.vfx?.playGridExplosion();
@@ -233,11 +234,10 @@ export class GameScreen extends Container {
       if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
 
       await gameScore(performance.score, gameStats.sessionId);
-      const data = await gameEnd(gameStats.sessionId);
+      const data = await this.handleGameEnd(gameStats.sessionId);
       storage.setObject('game-stats', { ...data });
-      navigation.showScreen(ResultScreen);
     } catch (error) {
-      eventEmitter.emit('error', error);
+      this.app.setError(error);
     }
   }
 }
