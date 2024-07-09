@@ -80,14 +80,14 @@ export class Wave extends Container {
 
     this.gap = this.width / (this.maxPoints - 1);
 
-    for (const circle of this.points) {
-      this.removeChild(circle);
-    }
-
-    for (let i = 0; i < this.maxPoints; i++) {
-      const point = new Point(this.gap * i, this.centerY, i);
-      this.addChild(point);
-      this.points.push(point);
+    if (this.points.length) {
+      this.points.forEach((e, i) => (e.x = this.gap * i));
+    } else {
+      for (let i = 0; i < this.maxPoints; i++) {
+        const point = new Point(this.gap * i, this.centerY, i);
+        this.addChild(point);
+        this.points.push(point);
+      }
     }
 
     for (const point of this.points) {
