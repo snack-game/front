@@ -1,8 +1,9 @@
+// TODO: 제거 (SnackgameApplication으로 대체됨)
+
 import { Container, Ticker } from 'pixi.js';
 
 import { areBundlesLoaded, loadBundles } from './assets';
 import { pool } from './pool';
-import { app } from '../SnackGameBase';
 
 /** 앱 화면 인터페이스 */
 interface AppScreen extends Container {

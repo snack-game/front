@@ -2,14 +2,10 @@
  * 특정 클래스의 인스턴스를 재사용하기 위해 풀링합니다.
  */
 class Pool<T extends new () => InstanceType<T> = new () => any> {
-  /** 새 인스턴스를 생성하기 위한 생성자 */
-  public readonly ctor: T;
-  /** 재사용 준비가 된 유휴 인스턴스 목록 */
-  public readonly list: InstanceType<T>[] = [];
-
-  constructor(ctor: T) {
-    this.ctor = ctor;
-  }
+  constructor(
+    private readonly ctor: T,
+    private readonly list: InstanceType<T>[] = [],
+  ) {}
 
   /** 풀에서 유휴 인스턴스를 가져오거나, 사용 가능한 인스턴스가 없다면 새로운 인스턴스를 생성합니다 */
   public get() {
@@ -26,7 +22,7 @@ class Pool<T extends new () => InstanceType<T> = new () => any> {
 /**
  * 모든 클래스의 인스턴스를 관리하는 내부 풀을 조직화합니다.
  */
-class MultiPool {
+export class MultiPool {
   /** 클래스별 풀 맵 */
   public readonly map: Map<new () => any, Pool> = new Map();
 
@@ -47,7 +43,4 @@ class MultiPool {
   }
 }
 
-/**
- * 공유되는 다중 클래스 풀 인스턴스
- */
 export const pool = new MultiPool();
