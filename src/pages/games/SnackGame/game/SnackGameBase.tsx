@@ -1,44 +1,84 @@
-import { memo, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { Application, EventEmitter } from 'pixi.js';
+import { useRecoilValue } from 'recoil';
 
+import ErrorBoundary from '@components/base/ErrorBoundary';
+import RetryError from '@components/Error/RetryError';
+import { pixiState } from '@utils/atoms/game.atom';
 import { toastStateType } from '@utils/types/common.type';
 
-import useError from '@hooks/useError';
+import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
-import usePixiCanvas from './hook/usePixiCanvas';
-
-export const app = new Application();
-export const eventEmitter = new EventEmitter();
+import initializeApplication from './hook/initializeApplication';
+import GameResult from './legacy/components/GameResult';
+import { PausePopup } from './popup/PausePopup';
+import { SettingsPopup } from './popup/SettingPopup';
+import { GameScreen } from './screen/GameScreen';
+import { LobbyScreen } from './screen/LobbyScreen';
+import { SnackgameApplication } from './screen/SnackgameApplication';
+import { gameEnd, gameStart } from './util/api';
 
 const SnackGameBase = () => {
   const canvasBaseRef = useRef<HTMLDivElement>(null);
-  const openToast = useToast();
-  const setError = useError();
-  usePixiCanvas({ canvasBaseRef });
+  const { openModal } = useModal();
+
+  // TODO: 훅 안으로 끌고 들어가기
+  // 여기서부터
+  const initializeAppScreens = async (application: SnackgameApplication) => {
+    application.appScreenPool.insert(
+      [LobbyScreen, () => new LobbyScreen(application, handleGameStart)],
+      [SettingsPopup, () => new SettingsPopup(application)],
+      [PausePopup, () => new PausePopup(application)],
+      [GameScreen, () => new GameScreen(application, handleGameEnd)],
+    );
+    return application.appScreenPool;
+  };
+  // 여기까지
+  const application = initializeApplication({
+    canvasBaseRef,
+    initializeAppScreens,
+  });
+
+  const handleGameStart = async () => {
+    const data = await gameStart();
+    return data;
+  };
+
+  const handleGameEnd = async (sessionId: number) => {
+    const data = await gameEnd(sessionId);
+    openModal({
+      children: (
+        <GameResult
+          score={data.score}
+          percentile={data.percentile}
+          reStart={() => application.show(LobbyScreen)} // TODO: 게임 바로 재시작 할 수 있게(아직 버그있음)
+        />
+      ),
+    });
+    return data;
+  };
+
+  const pixiValue = useRecoilValue(pixiState);
+
+  const handleRetryGameError = () => {
+    if (pixiValue.assetsInit && pixiValue.pixiInit) {
+      application.show(LobbyScreen);
+    }
+  };
 
   useEffect(() => {
-    const handleToastEvent = (data: toastStateType) => {
-      openToast(data.message, data.type);
-    };
-
-    const handleErrorEvent = (error: Error) => {
-      setError(error);
-    };
-
-    eventEmitter.on('openToast', handleToastEvent);
-    eventEmitter.on('error', handleErrorEvent);
-
-    return () => {
-      eventEmitter.off('openToast', handleToastEvent);
-      eventEmitter.off('error', handleErrorEvent);
-    };
+    // no-op
   }, []);
 
   return (
-    <div ref={canvasBaseRef} className={'mx-auto h-full w-full max-w-xl'}></div>
+    <ErrorBoundary fallback={RetryError} onReset={handleRetryGameError}>
+      <div
+        ref={canvasBaseRef}
+        className={'mx-auto h-full w-full max-w-xl'}
+      ></div>
+    </ErrorBoundary>
   );
 };
 
-export default memo(SnackGameBase);
+export default SnackGameBase;
