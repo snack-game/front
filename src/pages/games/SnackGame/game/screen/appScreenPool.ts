@@ -13,11 +13,11 @@ export class AppScreenPool {
 
   public get(ctor: AppScreenConstructor): AppScreen {
     const instance = this.instances.get(ctor);
-    const initializer = this.initializers.get(ctor);
     if (instance) {
       return instance;
     }
-    if (!instance && initializer) {
+    const initializer = this.initializers.get(ctor);
+    if (initializer) {
       const newInstance = initializer();
       this.instances.set(ctor, newInstance);
       return newInstance;
