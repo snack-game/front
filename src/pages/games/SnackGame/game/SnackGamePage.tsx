@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+
+import ErrorBoundary from '@components/base/ErrorBoundary';
+import RetryError from '@components/Error/RetryError';
 
 import SnackGameBase from './SnackGameBase';
 
 const SnackGamePage = () => {
+  const [errorHandler, replaceErrorHandler] = useState<() => void>(() => {
+    // no-op
+  });
+
   return (
     <>
       <Helmet>
@@ -10,7 +18,9 @@ const SnackGamePage = () => {
       </Helmet>
 
       <div className={'h-screen bg-game'}>
-        <SnackGameBase />
+        <ErrorBoundary fallback={RetryError} onReset={errorHandler}>
+          <SnackGameBase replaceErrorHandler={replaceErrorHandler} />
+        </ErrorBoundary>
       </div>
     </>
   );

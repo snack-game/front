@@ -1,11 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-import { useRecoilValue } from 'recoil';
-
-import ErrorBoundary from '@components/base/ErrorBoundary';
-import RetryError from '@components/Error/RetryError';
-import { pixiState } from '@utils/atoms/game.atom';
-
 import useModal from '@hooks/useModal';
 
 import { SnackGameDefalutResponse } from './game.type';
@@ -18,7 +12,11 @@ import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
 import { gameEnd, gameScore, gameStart } from './util/api';
 
-const SnackGameBase = () => {
+type Props = {
+  replaceErrorHandler: (handler: () => void) => void;
+};
+
+const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const canvasBaseRef = useRef<HTMLDivElement>(null);
   const { openModal } = useModal();
 
@@ -36,6 +34,8 @@ const SnackGameBase = () => {
     canvasBaseRef,
     initializeAppScreens,
   });
+
+  const handleApplicationError = () => { console.log("오류났어용") };
 
   // 게임 진행 관련 functions
   let session: SnackGameDefalutResponse | undefined;
@@ -79,25 +79,12 @@ const SnackGameBase = () => {
     application.show(LobbyScreen);
   };
 
-  const pixiValue = useRecoilValue(pixiState);
-
-  const handleRetryGameError = () => {
-    if (pixiValue.assetsInit && pixiValue.pixiInit) {
-      application.show(LobbyScreen);
-    }
-  };
-
   useEffect(() => {
-    // no-op
+    replaceErrorHandler(handleApplicationError);
   }, []);
 
   return (
-    <ErrorBoundary fallback={RetryError} onReset={handleRetryGameError}>
-      <div
-        ref={canvasBaseRef}
-        className={'mx-auto h-full w-full max-w-xl'}
-      ></div>
-    </ErrorBoundary>
+    <div ref={canvasBaseRef} className={'mx-auto h-full w-full max-w-xl'}></div>
   );
 };
 
