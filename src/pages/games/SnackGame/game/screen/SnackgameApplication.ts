@@ -40,6 +40,17 @@ export class SnackgameApplication extends Application {
     this.renderer.on('resize', () => this.resizeChildren()); // TODO: delayed resize
   }
 
+  public override stop() {
+    // Hook
+    console.log("Application stopped");
+    super.stop();
+  }
+
+  public override start() {
+    console.log("Application started");
+    super.start();
+  }
+
   public async show(ctor: AppScreenConstructor) {
     await this.showAppScreen(this.appScreenPool.get(ctor));
   }

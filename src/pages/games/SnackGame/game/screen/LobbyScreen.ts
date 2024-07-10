@@ -5,15 +5,12 @@ import { Container, Rectangle } from 'pixi.js';
 import { AppScreen } from './appScreen';
 import { GameScreen } from './GameScreen';
 import { SnackgameApplication } from './SnackgameApplication';
-import { SnackGameDefalutResponse } from '../game.type';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { IconButton } from '../ui/IconButton';
 import { LargeButton } from '../ui/LargeButton';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
 import { Waves } from '../ui/Waves';
 import { bgm } from '../util/audio';
-import { setUrlParam } from '../util/getUrlParams';
-import { storage } from '../util/storage';
 
 export class LobbyScreen extends Container implements AppScreen {
   public static assetBundles = ['common'];
@@ -29,7 +26,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
   constructor(
     private app: SnackgameApplication,
-    private handleGameStart: () => Promise<SnackGameDefalutResponse>,
+    private handleGameStart: (mode: string) => Promise<void>,
   ) {
     super();
 
@@ -38,9 +35,7 @@ export class LobbyScreen extends Container implements AppScreen {
       image: 'settings',
       ripple: 'ripple',
     });
-    this.settingsButton.onPress.connect(
-      () => app.presentPopup(SettingsPopup), // RootContainer 일부 호출하도록 변경, 함수로 전달.
-    );
+    this.settingsButton.onPress.connect(() => app.presentPopup(SettingsPopup));
     this.defaultModButton = new LargeButton({
       text: t('default_mode', { ns: 'game' }),
     });
@@ -51,9 +46,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
   public handleGameStartButton = async () => {
     try {
-      const data = await this.handleGameStart();
-      storage.setObject('game-stats', { ...data }); // TODO: 제거
-      setUrlParam('mode', 'default');
+      await this.handleGameStart("default");
       this.app.show(GameScreen);
     } catch (error) {
       this.app.setError(error);
