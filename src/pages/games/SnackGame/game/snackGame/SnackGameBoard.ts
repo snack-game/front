@@ -230,6 +230,7 @@ export class SnackGameBoard {
 
   /** 선택된 스낵들을 모두 pop */
   public popAllSelectedSnacks() {
+    this.snackGame.onStreak?.(this.selectedSnacks);
     for (const snack of this.selectedSnacks) {
       this.popSnack(snack.getGridPosition());
     }

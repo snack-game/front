@@ -44,6 +44,7 @@ export class GameScreen extends Container implements AppScreen {
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
     private handleStreak: (streakLength: number) => Promise<void>,
+    private handleGameStart: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
   ) {
     super();
@@ -72,6 +73,9 @@ export class GameScreen extends Container implements AppScreen {
 
     this.snackGame = new SnackGame();
     this.snackGame.onPop = this.onPop.bind(this);
+    this.snackGame.onStreak = (data: any[]) => {
+      handleStreak(data.length);
+    };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
     this.snackGame.onTimesUp = this.onTimesUp.bind(this);
@@ -88,13 +92,14 @@ export class GameScreen extends Container implements AppScreen {
   }
 
   public async onPrepare({ width, height }: Rectangle) {
+    await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
 
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
       // TODO: 게임 시간 임시로 5초로 바꿔둠!
-      duration: 5,
+      duration: 10,
       mode,
     });
 
@@ -131,7 +136,6 @@ export class GameScreen extends Container implements AppScreen {
 
   /** 스낵이 제거될 때 트리거 됩니다. */
   private onPop(data: SnackGameOnPopData) {
-    this.handleStreak(this.snackGame.board.selectedSnacks.length)
     this.vfx?.onPop(data);
     this.score.upWavesPosition();
   }

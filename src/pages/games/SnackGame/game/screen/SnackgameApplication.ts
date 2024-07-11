@@ -112,7 +112,7 @@ export class SnackgameApplication extends Application {
   }
 
   private async prepareAndShow(appScreen: AppScreen) {
-    appScreen.onPrepare(this.screen);
+    await appScreen.onPrepare(this.screen);
     appScreen.onResize(this.screen);
 
     if (appScreen.update) {

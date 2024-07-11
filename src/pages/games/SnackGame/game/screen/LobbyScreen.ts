@@ -26,7 +26,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
   constructor(
     private app: SnackgameApplication,
-    private handleGameStart: (mode: string) => Promise<void>,
+    private handleSetMode: (mode: string) => void,
   ) {
     super();
 
@@ -46,7 +46,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
   public handleGameStartButton = async () => {
     try {
-      await this.handleGameStart("default");
+      this.handleSetMode("default");
       this.app.show(GameScreen);
     } catch (error) {
       this.app.setError(error);
@@ -61,7 +61,7 @@ export class LobbyScreen extends Container implements AppScreen {
   public onResize({ width, height }: Rectangle) {
     this.defaultModButton.x = width * 0.5;
     this.defaultModButton.y = height * 0.8;
-    this.defaultModButton.scale = 0.6;
+    this.defaultModButton.scale = 0.7;
 
     this.waves.width = width;
 
