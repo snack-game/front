@@ -7,8 +7,6 @@ import { SnackgameApplication } from '../screen/SnackgameApplication';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
-import { gameResume } from '../util/api';
-import { storage } from '../util/storage';
 
 /** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
 export class PausePopup extends Container implements AppScreen {
