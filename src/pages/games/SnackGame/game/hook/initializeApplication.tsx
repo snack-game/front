@@ -29,23 +29,23 @@ const initializeApplication = ({
   useEffect(() => {
     initCanvas().then(loadAdditional);
 
-    return () => { application.stop };
+    return () => {
+      application.stop;
+    };
   }, []);
 
   const initCanvas = async () => {
-    try {
-      if (!pixiValue.pixiInit) {
-        await application.init({
-          resizeTo: canvasBaseRef.current!,
-          resolution: Math.max(window.devicePixelRatio, 2),
-          // antialias: true, // 해상도가 훨씬 좋아지긴 하는데, 프레임이 떨어지는 것 같아요
-          autoDensity: true,
-          backgroundColor: 0xffedd5,
-        });
-        canvasBaseRef.current!.appendChild(application.canvas);
+    try { // TODO: 다시 로드할 필요가 없도록 어플리케이션을 유지해야 합니다.
+      await application.init({
+        resizeTo: canvasBaseRef.current!,
+        resolution: Math.max(window.devicePixelRatio, 2),
+        // antialias: true, // 해상도가 훨씬 좋아지긴 하는데, 프레임이 떨어지는 것 같아요
+        autoDensity: true,
+        backgroundColor: 0xffedd5,
+      });
+      canvasBaseRef.current!.appendChild(application.canvas);
 
-        setPixiValue((pre) => ({ ...pre, pixiInit: true }));
-      }
+      setPixiValue((pre) => ({ ...pre, pixiInit: true }));
     } catch (e) {
       console.log(e);
       setError(new Error('Pixi 어플리케이션 초기화에 실패했습니다.'));
@@ -54,25 +54,23 @@ const initializeApplication = ({
 
   const loadAdditional = async () => {
     try {
-      if (!pixiValue.assetsInit) {
-        await initAssets();
-        const loadScreen = new LoadScreen();
-        const loadScreenPromise = application.showAppScreen(loadScreen);
+      await initAssets();
+      const loadScreen = new LoadScreen();
+      const loadScreenPromise = application.showAppScreen(loadScreen);
 
-        // 로딩중학교
-        const appScreenPool = await initializeAppScreens(application);
+      // 로딩중학교
+      const appScreenPool = await initializeAppScreens(application);
 
-        const ctors = appScreenPool.initializers.keys();
-        for (const ctor of ctors) {
-          if (ctor.assetBundles && !areBundlesLoaded(ctor.assetBundles)) {
-            await loadBundles(ctor.assetBundles);
-          }
+      const ctors = appScreenPool.initializers.keys();
+      for (const ctor of ctors) {
+        if (ctor.assetBundles && !areBundlesLoaded(ctor.assetBundles)) {
+          await loadBundles(ctor.assetBundles);
         }
-        setPixiValue((pre) => ({ ...pre, assetsInit: true }));
-
-        await loadScreenPromise;
-        application.show(LobbyScreen);
       }
+      setPixiValue((pre) => ({ ...pre, assetsInit: true }));
+
+      await loadScreenPromise;
+      application.show(LobbyScreen);
     } catch (e) {
       console.log(e);
       setError(new Error('구성요소 로딩에 실패했습니다'));
