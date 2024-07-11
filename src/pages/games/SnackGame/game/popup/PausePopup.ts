@@ -7,7 +7,7 @@ import { SnackgameApplication } from '../screen/SnackgameApplication';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
-import { gamePause, gameResume } from '../util/api';
+import { gameResume } from '../util/api';
 import { storage } from '../util/storage';
 
 /** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
@@ -23,7 +23,7 @@ export class PausePopup extends Container implements AppScreen {
   /** 패널 배경 */
   private panelBase: RoundedBox;
 
-  constructor(private app: SnackgameApplication) {
+  constructor(private app: SnackgameApplication, private handleGameResume: () => Promise<void>) {
     super();
 
     this.bg = new Sprite(Texture.WHITE);
@@ -56,11 +56,7 @@ export class PausePopup extends Container implements AppScreen {
 
   public handleDoneButton = async () => {
     try {
-      const gameStats = storage.getObject('game-stats');
-      if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
-
-      const data = await gameResume(gameStats.sessionId);
-      storage.setObject('game-stats', { ...data });
+      await this.handleGameResume();
       this.app.dismissPopup();
     } catch (error) {
       this.app.setError(error);
@@ -83,15 +79,6 @@ export class PausePopup extends Container implements AppScreen {
     this.panel.pivot.y = -400;
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
-
-    try {
-      const gameStats = storage.getObject('game-stats');
-      if (!gameStats) throw new Error('세션을 찾을 수 없습니다.');
-      const data = await gamePause(gameStats.sessionId);
-      storage.setObject('game-stats', { ...data });
-    } catch (error) {
-      this.app.setError(error);
-    }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */

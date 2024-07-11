@@ -45,6 +45,7 @@ export class GameScreen extends Container implements AppScreen {
     private getCurrentMode: () => string,
     private handleStreak: (streakLength: number) => Promise<void>,
     private handleGameStart: () => Promise<void>,
+    private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
   ) {
     super();
@@ -61,7 +62,10 @@ export class GameScreen extends Container implements AppScreen {
       image: 'pause',
       ripple: 'ripple',
     });
-    this.pauseButton.onPress.connect(() => app.presentPopup(PausePopup));
+    this.pauseButton.onPress.connect(async () => {
+      await handleGamePause();
+      app.presentPopup(PausePopup);
+    });
 
     this.addChild(this.pauseButton);
 

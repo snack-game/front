@@ -10,7 +10,7 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
-import { gameEnd, gameScore, gameStart } from './util/api';
+import { gameEnd, gamePause, gameResume, gameScore, gameStart } from './util/api';
 
 type Props = {
   replaceErrorHandler: (handler: () => void) => void;
@@ -24,9 +24,9 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const initializeAppScreens = async (application: SnackgameApplication) => {
     application.appScreenPool.insert(
       [SettingsPopup, () => new SettingsPopup(application)],
-      [PausePopup, () => new PausePopup(application)],
+      [PausePopup, () => new PausePopup(application, handleGameResume)],
       [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
-      [GameScreen, () => new GameScreen(application, handleGetMode, handleStreak, handleGameStart, handleGameEnd)],
+      [GameScreen, () => new GameScreen(application, handleGetMode, handleStreak, handleGameStart, handleGamePause, handleGameEnd)],
     );
     return application.appScreenPool;
   };
@@ -60,6 +60,14 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     session!.score += streakLength;
     await gameScore(session!.score, session!.sessionId);
   };
+  
+  const handleGamePause = async ()=>{
+    await gamePause(session!.sessionId);
+  }
+
+  const handleGameResume = async ()=>{
+    await gameResume(session!.sessionId);
+  }
 
   const handleGameEnd = async () => {
     const data = await gameEnd(session!.sessionId);
