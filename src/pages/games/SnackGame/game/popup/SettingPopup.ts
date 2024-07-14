@@ -38,7 +38,7 @@ export class SettingsPopup extends Container implements AppScreen {
   /** 효과음 볼륨을 변경하는 슬라이더 */
   private sfxSlider: VolumeSlider;
 
-  constructor(private app: SnackgameApplication) {
+  constructor(private app: SnackgameApplication, private handleGameResume: () => Promise<void>) {
     super();
 
     this.bg = new Sprite(Texture.WHITE); // TODO: (배경 흐리기 + 어둡게 하기)를 팝업에서 하기(bg 유지) vs 모든 팝업에 일관적으로 적용하기(bg 이동)
@@ -101,13 +101,7 @@ export class SettingsPopup extends Container implements AppScreen {
 
   public handleDoneButton = async () => {
     try {
-      const gameStats = storage.getObject('game-stats');
-
-      if (gameStats.state === 'PAUSED') {
-        const data = await gameResume(gameStats.sessionId);
-        storage.setObject('game-stats', { ...data });
-      }
-
+      await this.handleGameResume();
       this.app.dismissPopup();
     } catch (error) {
       this.app.setError(error);
@@ -137,17 +131,6 @@ export class SettingsPopup extends Container implements AppScreen {
     this.panel.pivot.y = -400;
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
-
-    // const gameStats = storage.getObject('game-stats');
-
-    // if (gameStats.state === 'IN_PROGRESS') {
-    //   try {
-    //     const data = await gamePause(gameStats.sessionId);
-    //     storage.setObject('game-stats', { ...data });
-    //   } catch (error) {
-    //     this.app.setError(error);
-    //   }
-    // }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */

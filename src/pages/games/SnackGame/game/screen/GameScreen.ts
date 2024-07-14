@@ -55,7 +55,10 @@ export class GameScreen extends Container implements AppScreen {
       ripple: 'ripple',
     });
 
-    this.settingsButton.onPress.connect(() => app.presentPopup(SettingsPopup));
+    this.settingsButton.onPress.connect(async () => {
+      await handleGamePause();
+      app.presentPopup(SettingsPopup);
+    });
     this.addChild(this.settingsButton);
 
     this.pauseButton = new IconButton({

@@ -23,7 +23,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // TODO: 훅 안으로 끌고 들어가기
   const initializeAppScreens = async (application: SnackgameApplication) => {
     application.appScreenPool.insert(
-      [SettingsPopup, () => new SettingsPopup(application)],
+      [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
       [PausePopup, () => new PausePopup(application, handleGameResume)],
       [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
       [GameScreen, () => new GameScreen(application, handleGetMode, handleStreak, handleGameStart, handleGamePause, handleGameEnd)],
@@ -62,10 +62,12 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleGamePause = async ()=>{
+    if(!session) return;
     await gamePause(session!.sessionId);
   }
 
   const handleGameResume = async ()=>{
+    if(!session) return;
     await gameResume(session!.sessionId);
   }
 
