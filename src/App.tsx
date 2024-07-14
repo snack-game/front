@@ -1,15 +1,16 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
+import membersApi from '@api/members.api';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
 import { AuthPage } from '@pages/auth/AuthPage';
 import GameLayout from '@pages/GameLayout';
-import { resetUserState } from '@utils/atoms/member.atom';
+import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
@@ -38,6 +39,7 @@ const UserPage = lazy(() => import('@pages/user/UserPage'));
 const SettingPage = lazy(() => import('@pages/user/setting/SettingPage'));
 
 const App = () => {
+  const [userStateValue, setUserState] = useRecoilState(userState);
   const resetUser = useResetRecoilState(resetUserState);
   const { storageValue, deleteStorageValue } = useLocalStorage<string>({
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
@@ -48,21 +50,28 @@ const App = () => {
     });
 
   useEffect(() => {
-    const checkUserExpired = () => {
-      if (!storageValue) return;
-
-      const currentTime = Date.now();
-      const oneMonthInMilliseconds = 30 * 24 * 60 * 60 * 1000;
-      const expireTime = parseInt(storageValue, 10);
-
-      if (expireTime && currentTime - expireTime > oneMonthInMilliseconds) {
-        resetUser();
-        deleteUserPersistState();
-        deleteStorageValue();
-      }
+    const updateProfile = async () => {
+      const profile = await membersApi.getMemberProfile();
+      setUserState({ ...profile });
     };
 
-    checkUserExpired();
+    updateProfile();
+
+    // const checkUserExpired = () => {
+    //   if (!storageValue) return;
+
+    //   const currentTime = Date.now();
+    //   const oneMonthInMilliseconds = 30 * 24 * 60 * 60 * 1000;
+    //   const expireTime = parseInt(storageValue, 10);
+
+    //   if (expireTime && currentTime - expireTime > oneMonthInMilliseconds) {
+    //     resetUser();
+    //     deleteUserPersistState();
+    //     deleteStorageValue();
+    //   }
+    // };
+
+    // checkUserExpired();
   }, []);
 
   return (
