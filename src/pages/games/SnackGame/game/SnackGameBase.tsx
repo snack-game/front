@@ -60,7 +60,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     session!.score += streakLength;
     await gameScore(session!.score, session!.sessionId);
   };
-  
+
   const handleGamePause = async ()=>{
     await gamePause(session!.sessionId);
   }
@@ -90,7 +90,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   useEffect(() => {
-    // replaceErrorHandler(handleApplicationError);
+    replaceErrorHandler(handleApplicationError);
   }, []);
 
   return (

@@ -30,7 +30,7 @@ export class SnackgameApplication extends Application {
 
   constructor(
     public readonly appScreenPool: AppScreenPool,
-    public readonly setError: (error: any) => void,
+    public setError: (error: any) => void,
   ) {
     super();
   }
