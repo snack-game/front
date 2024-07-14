@@ -30,6 +30,7 @@ const SettingPage = () => {
     await authApi.logOut();
     openToast(t('login_logout'), 'success');
     deleteStorageValue();
+    window.dispatchEvent(new Event('loggedOut'));
     navigate(PATH.AUTH, { replace: true });
   };
 
