@@ -1,13 +1,13 @@
 import gsap from 'gsap';
 import { t } from 'i18next';
-import { Container, Text } from 'pixi.js';
+import { Container, Rectangle, Text } from 'pixi.js';
 
-import { app } from '../SnackGameBase';
+import { AppScreen } from './appScreen';
 import { SnackGameLogo } from '../ui/SnackGameLogo';
 import { Waves } from '../ui/Waves';
 
 /** assets 이 비동기로 로드되는 동안 보여지는 화면입니다. */
-export class LoadScreen extends Container {
+export class LoadScreen extends Container implements AppScreen {
   /** 화면에 필요한 assets 번들 리스트 */
   public static assetBundles = ['preload'];
 
@@ -22,8 +22,6 @@ export class LoadScreen extends Container {
     super();
 
     this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
-    this.addChild(this.waves);
-
     this.message = new Text({
       text: t('loading_start', { ns: 'game' }),
       style: {
@@ -33,41 +31,40 @@ export class LoadScreen extends Container {
       },
     });
     this.message.anchor.set(0.5);
-    this.addChild(this.message);
-
     this.snackGameLogo = new SnackGameLogo();
-    this.addChild(this.snackGameLogo);
+    this.addChild(this.waves, this.message, this.snackGameLogo);
   }
 
-  /** 화면 크기 변경 시 트리거 됩니다. */
-  public resize(width: number, height: number) {
+  async onPrepare({ width, height }: Rectangle) {
+    this.waves.x = 0;
+    this.waves.y = height;
+  }
+
+  public onResize({ width, height }: Rectangle) {
     this.message.x = width * 0.5;
     this.message.y = height * 0.7;
 
     this.snackGameLogo.x = width * 0.5;
     this.snackGameLogo.y = height * 0.5;
 
-    this.waves.x = 0;
-    this.waves.y = height;
     this.waves.width = width;
+    // TODO: 높이 변화도 대응해야합니당
   }
 
-  /** Screen 시작 시 보여지는 애니메이션 입니다. */
-  public async show() {
+  public async onShow({ width, height }: Rectangle) {
     gsap.killTweensOf(this.message);
     this.message.alpha = 1;
 
     await gsap.to(this.waves, {
-      y: app.renderer.height * 0.1,
-      height: app.renderer.height * 0.9,
+      y: height * 0.1,
+      height: height * 0.9,
       duration: 1,
       ease: 'quad.out',
       delay: 0.2,
     });
   }
 
-  /** Screen이 사라실 때 보여지는 애니메이션 입니다. */
-  public async hide() {
+  public async onHide({ width, height }: Rectangle) {
     this.message.text = t('loading_end', { ns: 'game' });
     gsap.killTweensOf(this.message);
     gsap.to(this.message, {
@@ -85,7 +82,7 @@ export class LoadScreen extends Container {
     });
 
     await gsap.to(this.waves, {
-      y: app.renderer.height,
+      y: height,
       duration: 0.5,
       ease: 'quad.in',
       delay: 0.5,

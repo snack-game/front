@@ -1,17 +1,15 @@
 import gsap from 'gsap';
 import { t } from 'i18next';
-import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
+import { Container, Rectangle, Sprite, Texture } from 'pixi.js';
 
-import { eventEmitter } from '../SnackGameBase';
+import { AppScreen } from '../screen/appScreen';
+import { SnackgameApplication } from '../screen/SnackgameApplication';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
-import { gamePause, gameResume } from '../util/api';
-import { navigation } from '../util/navigation';
-import { storage } from '../util/storage';
 
 /** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
-export class PausePopup extends Container {
+export class PausePopup extends Container implements AppScreen {
   /** 현재 화면을 덮는 어두운 반투명 배경 */
   private bg: Sprite;
   /** 팝업 UI 구성 요소를 위한 컨테이너 */
@@ -23,7 +21,7 @@ export class PausePopup extends Container {
   /** 패널 배경 */
   private panelBase: RoundedBox;
 
-  constructor() {
+  constructor(private app: SnackgameApplication, private handleGameResume: () => Promise<void>) {
     super();
 
     this.bg = new Sprite(Texture.WHITE);
@@ -50,21 +48,21 @@ export class PausePopup extends Container {
     this.panel.addChild(this.doneButton);
   }
 
+  async onPrepare(screen: Rectangle) {
+    // no-op
+  }
+
   public handleDoneButton = async () => {
     try {
-      const gameStats = storage.getObject('game-stats');
-      if (!gameStats) throw new Error('게임 세션을 찾을 수 없습니다.');
-
-      const data = await gameResume(gameStats.sessionId);
-      storage.setObject('game-stats', { ...data });
-      navigation.dismissPopup();
+      await this.handleGameResume();
+      this.app.dismissPopup();
     } catch (error) {
-      eventEmitter.emit('error', error);
+      this.app.setError(error);
     }
   };
 
   /** 창 크기가 변경될 때마다 호출되는 팝업 크기 조정 */
-  public resize(width: number, height: number) {
+  public onResize({ width, height }: Rectangle) {
     this.bg.width = width;
     this.bg.height = height;
     this.panel.x = width * 0.5;
@@ -72,32 +70,17 @@ export class PausePopup extends Container {
   }
 
   /** 팝업을 애니메이션과 함께 표시 */
-  public async show() {
-    if (navigation.currentScreen) {
-      navigation.currentScreen.filters = [new BlurFilter({ strength: 5 })];
-    }
+  public async onShow({ width, height }: Rectangle) {
     gsap.killTweensOf(this.bg);
     gsap.killTweensOf(this.panel.pivot);
     this.bg.alpha = 0;
     this.panel.pivot.y = -400;
     gsap.to(this.bg, { alpha: 0.8, duration: 0.2, ease: 'linear' });
     await gsap.to(this.panel.pivot, { y: 0, duration: 0.3, ease: 'back.out' });
-
-    try {
-      const gameStats = storage.getObject('game-stats');
-      if (!gameStats) throw new Error('세션을 찾을 수 없습니다.');
-      const data = await gamePause(gameStats.sessionId);
-      storage.setObject('game-stats', { ...data });
-    } catch (error) {
-      eventEmitter.emit('error', error);
-    }
   }
 
   /** 팝업을 애니메이션과 함께 해제 */
-  public async hide() {
-    if (navigation.currentScreen) {
-      navigation.currentScreen.filters = [];
-    }
+  public async onHide({ width, height }: Rectangle) {
     gsap.killTweensOf(this.bg);
     gsap.killTweensOf(this.panel.pivot);
     gsap.to(this.bg, { alpha: 0, duration: 0.2, ease: 'linear' });

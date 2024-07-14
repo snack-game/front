@@ -1,33 +1,25 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { useRecoilValue } from 'recoil';
-
 import ErrorBoundary from '@components/base/ErrorBoundary';
-import retryError from '@components/Error/RetryError';
-import { pixiState } from '@utils/atoms/game.atom';
+import RetryError from '@components/Error/RetryError';
 
-import { LobbyScreen } from './screen/LobbyScreen';
 import SnackGameBase from './SnackGameBase';
-import { navigation } from './util/navigation';
 
 const SnackGamePage = () => {
-  const pixiValue = useRecoilValue(pixiState);
-
-  const handleRetryGameError = () => {
-    if (pixiValue.assetsInit && pixiValue.pixiInit) {
-      navigation.showScreen(LobbyScreen);
-    }
-  };
+  const [errorHandler, replaceErrorHandler] = useState<() => void>(() => {
+    // no-op
+  });
 
   return (
     <>
       <Helmet>
-        <title>Snack Game || Apple Game</title>
+        <title>Snack Game || Snack Game</title>
       </Helmet>
 
       <div className={'h-screen bg-game'}>
-        <ErrorBoundary fallback={retryError} onReset={handleRetryGameError}>
-          <SnackGameBase />
+        <ErrorBoundary fallback={RetryError} onReset={errorHandler}>
+          <SnackGameBase replaceErrorHandler={replaceErrorHandler} />
         </ErrorBoundary>
       </div>
     </>

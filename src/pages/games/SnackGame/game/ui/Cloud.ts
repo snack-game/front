@@ -1,7 +1,6 @@
 import gsap from 'gsap';
-import { Container, Sprite, Texture } from 'pixi.js';
+import { Container, Sprite, Texture, Ticker } from 'pixi.js';
 
-import { app } from '../SnackGameBase';
 import { randomRange } from '../util/random';
 
 const defaultCloudOptions = {
@@ -121,7 +120,7 @@ export class Cloud extends Container {
 
   /** 매 프레임마다 자동 업데이트 */
   public renderUpdate() {
-    const delta = app.ticker.deltaTime;
+    const delta = new Ticker().deltaTime;
     for (const circle of this.circles) {
       circle.update(delta);
     }
