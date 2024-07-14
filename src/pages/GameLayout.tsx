@@ -19,7 +19,7 @@ const GameLayout = () => {
       setUserState({ ...profile });
     };
 
-    if (window.navigator.userAgent.includes('RN')) {
+    if (window.navigator.userAgent.includes('SnackgameApp')) {
       updateProfile();
       return;
     }
