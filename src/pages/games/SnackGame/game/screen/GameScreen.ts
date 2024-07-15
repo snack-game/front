@@ -105,8 +105,7 @@ export class GameScreen extends Container implements AppScreen {
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
-      // TODO: 게임 시간 임시로 5초로 바꿔둠!
-      duration: 10,
+      duration: 120,
       mode,
     });
 
