@@ -32,7 +32,7 @@ const initializeApplication = ({
     initCanvas().then(loadAdditional);
 
     return () => {
-      application.stop();
+      application.onPause();
     };
   }, []);
 
@@ -58,7 +58,7 @@ const initializeApplication = ({
       console.log(e);
       setError(new Error('Pixi 어플리케이션 초기화에 실패했습니다.'));
     }
-    application.start()
+    application.onResume();
     canvasBaseRef.current?.appendChild(application.canvas);
   };
 

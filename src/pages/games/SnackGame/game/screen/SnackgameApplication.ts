@@ -40,15 +40,16 @@ export class SnackgameApplication extends Application {
     this.renderer.on('resize', () => this.resizeChildren()); // TODO: delayed resize
   }
 
-  public override stop() {
+  onPause(): void {
     // Hook
-    console.log("Application stopped");
-    super.stop();
+    console.log('Application paused');
+    this.currentAppScreen?.onPause?.();
+    this.stop();
   }
 
-  public override start() {
-    console.log("Application started");
-    super.start();
+   onResume() {
+    console.log('Application resumed');
+    this.start();
   }
 
   public async show(ctor: AppScreenConstructor) {
@@ -99,8 +100,8 @@ export class SnackgameApplication extends Application {
    * 포커스를 잃었을 때 화면 흐리게 하기
    */
   public blur() {
-    this.currentAppScreen?.blur?.();
-    this.currentPopup?.blur?.();
+    this.currentAppScreen?.onPause?.();
+    this.currentPopup?.onPause?.();
   }
 
   /**

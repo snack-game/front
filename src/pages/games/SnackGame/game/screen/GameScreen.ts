@@ -130,7 +130,7 @@ export class GameScreen extends Container implements AppScreen {
       this.snackGame.isPlaying() &&
       window.location.pathname !== PATH.SNACK_GAME
     ) {
-      this.blur();
+      this.onPause();
     }
   }
 
@@ -203,10 +203,9 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.startPlaying();
   }
 
-  public async blur() {
-    if (!this.app.currentPopup && this.snackGame.isPlaying()) {
-      this.app.presentPopup(PausePopup);
-    }
+  public async onPause() {
+    await this.handleGamePause();
+    this.app.presentPopup(PausePopup);
   }
 
   public async onHide({ width, height }: Rectangle) {
