@@ -27,6 +27,24 @@ const initializeApplication = ({
   const [pixiValue, setPixiValue] = useRecoilState(pixiState);
   const setError = useError();
 
+  const appBackgroundListener = (message: any) => {
+    try {
+      const parsed = JSON.parse(message.data);
+      if (parsed.event === 'app-background') {
+        application.onPause();
+      }
+    } finally {
+      // no-op
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('message', appBackgroundListener);
+    return () => {
+      window.removeEventListener('message', appBackgroundListener);
+    };
+  }, []);
+
   useEffect(() => {
     application.setError = setError;
     initCanvas().then(loadAdditional);
@@ -39,7 +57,7 @@ const initializeApplication = ({
   const initCanvas = async () => {
     try { // TODO: 다시 로드할 필요가 없도록 어플리케이션을 유지해야 합니다.
 
-      if(!pixiValue.pixiInit){
+      if (!pixiValue.pixiInit) {
         // const application = new SnackgameApplication(new AppScreenPool(), setError);
 
         await application.init({
@@ -51,20 +69,17 @@ const initializeApplication = ({
         });
 
         setPixiValue((pre) => ({ ...pre, pixiInit: true }));
-
       }
-
     } catch (e) {
       console.log(e);
       setError(new Error('Pixi 어플리케이션 초기화에 실패했습니다.'));
     }
-    application.onResume();
     canvasBaseRef.current?.appendChild(application.canvas);
   };
 
   const loadAdditional = async () => {
     try {
-      if(!pixiValue.assetsInit){
+      if (!pixiValue.assetsInit) {
         await initAssets();
         const loadScreen = new LoadScreen();
         const loadScreenPromise = application.showAppScreen(loadScreen);

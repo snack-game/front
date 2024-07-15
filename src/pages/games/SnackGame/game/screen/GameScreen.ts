@@ -146,14 +146,14 @@ export class GameScreen extends Container implements AppScreen {
     this.score.upWavesPosition();
   }
 
-  /** 게임을 일시 정지 합니다. */
-  public async pause() {
+  public async onPause() {
+    await this.handleGamePause();
     this.gameContainer.interactiveChildren = false;
     this.snackGame.pause();
+    this.app.presentPopup(PausePopup);
   }
 
-  /** 게임 재게 */
-  public async resume() {
+  public async onResume() {
     this.gameContainer.interactiveChildren = true;
     this.snackGame.resume();
   }
@@ -201,11 +201,6 @@ export class GameScreen extends Container implements AppScreen {
     await waitFor(0.6);
     await this.beforGameStart.hide();
     this.snackGame.startPlaying();
-  }
-
-  public async onPause() {
-    await this.handleGamePause();
-    this.app.presentPopup(PausePopup);
   }
 
   public async onHide({ width, height }: Rectangle) {

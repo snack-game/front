@@ -41,15 +41,8 @@ export class SnackgameApplication extends Application {
   }
 
   onPause(): void {
-    // Hook
     console.log('Application paused');
     this.currentAppScreen?.onPause?.();
-    this.stop();
-  }
-
-   onResume() {
-    console.log('Application resumed');
-    this.start();
   }
 
   public async show(ctor: AppScreenConstructor) {
@@ -70,7 +63,7 @@ export class SnackgameApplication extends Application {
   public async presentPopup(ctor: AppScreenConstructor) {
     if (this.currentAppScreen) {
       this.currentAppScreen.interactiveChildren = false;
-      await this.currentAppScreen.pause?.();
+      await this.currentAppScreen.onPause?.();
       this.currentAppScreen.filters = [new BlurFilter({ strength: 4 })];
     }
     if (this.currentPopup) {
@@ -90,26 +83,10 @@ export class SnackgameApplication extends Application {
     await this.hideAndReset(this.currentPopup);
     if (this.currentAppScreen) {
       this.currentAppScreen.interactiveChildren = true;
-      this.currentAppScreen.resume?.();
+      this.currentAppScreen.onResume?.();
       this.currentAppScreen.filters = [];
     }
     this.currentPopup = undefined;
-  }
-
-  /**
-   * 포커스를 잃었을 때 화면 흐리게 하기
-   */
-  public blur() {
-    this.currentAppScreen?.onPause?.();
-    this.currentPopup?.onPause?.();
-  }
-
-  /**
-   * 화면에 포커스 주기
-   */
-  public focus() {
-    this.currentAppScreen?.focus?.();
-    this.currentPopup?.focus?.();
   }
 
   private async prepareAndShow(appScreen: AppScreen) {
