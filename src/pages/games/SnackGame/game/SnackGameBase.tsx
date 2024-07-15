@@ -35,7 +35,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     initializeAppScreens,
   });
 
-  const handleApplicationError = () => { console.log("오류났어용") };
+  const handleApplicationError = () => { application.show(LobbyScreen) };
 
   // 게임 진행 관련 functions
   let session: SnackGameDefalutResponse | undefined;
