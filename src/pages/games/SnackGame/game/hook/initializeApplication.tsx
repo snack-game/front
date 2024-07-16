@@ -27,7 +27,7 @@ const initializeApplication = ({
   const setError = useError();
 
   const appBackgroundListener = (event: MessageEvent) => {
-    if (!event.source && event.data.contains('app-')) {
+    if (!event.source && event.data.includes('app-')) {
       const parsed = JSON.parse(event.data);
       if (parsed.event === 'app-background') {
         application.onPause();
