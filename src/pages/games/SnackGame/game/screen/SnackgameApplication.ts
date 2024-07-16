@@ -30,7 +30,10 @@ export class SnackgameApplication extends Application {
 
   constructor(
     public readonly appScreenPool: AppScreenPool,
-    public setError: (error: any) => void,
+    public setError: (error: any) => void = (error: any) => {
+      console.warn('No setError yet for SnackgameApplication');
+      console.log(error);
+    },
   ) {
     super();
   }
