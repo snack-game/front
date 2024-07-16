@@ -66,7 +66,6 @@ export class SnackgameApplication extends Application {
   public async presentPopup(ctor: AppScreenConstructor) {
     if (this.currentAppScreen) {
       this.currentAppScreen.interactiveChildren = false;
-      await this.currentAppScreen.onPause?.();
       this.currentAppScreen.filters = [new BlurFilter({ strength: 4 })];
     }
     if (this.currentPopup) {
