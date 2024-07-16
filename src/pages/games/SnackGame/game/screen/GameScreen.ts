@@ -124,14 +124,6 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.update(time.deltaMS);
     this.timer.updateTime(this.snackGame.timer.getTimeRemaining());
     this.score.setScore(this.snackGame.stats.getScore());
-
-    if (
-      !this.app.currentPopup &&
-      this.snackGame.isPlaying() &&
-      window.location.pathname !== PATH.SNACK_GAME
-    ) {
-      this.onPause();
-    }
   }
 
   private onSnackGameBoardReset() {
@@ -147,10 +139,12 @@ export class GameScreen extends Container implements AppScreen {
   }
 
   public async onPause() {
-    await this.handleGamePause();
-    this.gameContainer.interactiveChildren = false;
-    this.snackGame.pause();
-    this.app.presentPopup(PausePopup);
+    if (this.snackGame.isPlaying()) {
+      await this.handleGamePause();
+      this.gameContainer.interactiveChildren = false;
+      this.snackGame.pause();
+      this.app.presentPopup(PausePopup);
+    }
   }
 
   public async onResume() {
