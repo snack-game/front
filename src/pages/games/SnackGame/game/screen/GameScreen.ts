@@ -95,7 +95,6 @@ export class GameScreen extends Container implements AppScreen {
   }
 
   public async onPrepare({ width, height }: Rectangle) {
-    await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
 
     const snackGameConfig = snackGameGetConfig({
@@ -190,6 +189,7 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforGameStart.hide();
+    await this.handleGameStart();
     this.snackGame.startPlaying();
   }
 
