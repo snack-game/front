@@ -30,7 +30,12 @@ const initializeApplication = ({
     if (!event.source && event.data.includes('app-')) {
       const parsed = JSON.parse(event.data);
       if (parsed.event === 'app-background') {
-        application.onPause();
+        application.onLostFocus();
+        return;
+      }
+      if (parsed.event === 'app-foreground') {
+        application.onGotFocus();
+        return;
       }
     }
   };
@@ -45,9 +50,10 @@ const initializeApplication = ({
   useEffect(() => {
     application.setError = setError;
     initCanvas().then(loadAdditional);
-
+    
+    application.onGotFocus();
     return () => {
-      application.onPause();
+      application.onLostFocus();
     };
   }, []);
 

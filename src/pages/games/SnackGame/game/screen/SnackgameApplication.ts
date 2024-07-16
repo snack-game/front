@@ -2,6 +2,7 @@ import { Application, ApplicationOptions, BlurFilter } from 'pixi.js';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { AppScreenPool } from './appScreenPool';
+import { bgm } from '../util/audio';
 
 export class SnackgameApplication extends Application {
   private _currentAppScreen?: AppScreen;
@@ -43,9 +44,15 @@ export class SnackgameApplication extends Application {
     this.renderer.on('resize', () => this.resizeChildren()); // TODO: delayed resize
   }
 
-  onPause(): void {
-    console.log('Application paused');
+  onLostFocus(): void {
+    console.log('SnackgameApplication lost focus');
     this.currentAppScreen?.onPause?.();
+    bgm.current?.pause()
+  }
+
+  onGotFocus(): void {
+    console.log('SnackgameApplication got focus');
+    bgm.current?.resume()
   }
 
   public async show(ctor: AppScreenConstructor) {
