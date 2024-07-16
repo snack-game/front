@@ -10,7 +10,13 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
-import { gameEnd, gamePause, gameResume, gameScore, gameStart } from './util/api';
+import {
+  gameEnd,
+  gamePause,
+  gameResume,
+  gameScore,
+  gameStart,
+} from './util/api';
 
 type Props = {
   replaceErrorHandler: (handler: () => void) => void;
@@ -26,7 +32,18 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
       [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
       [PausePopup, () => new PausePopup(application, handleGameResume)],
       [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
-      [GameScreen, () => new GameScreen(application, handleGetMode, handleStreak, handleGameStart, handleGamePause, handleGameEnd)],
+      [
+        GameScreen,
+        () =>
+          new GameScreen(
+            application,
+            handleGetMode,
+            handleStreak,
+            handleGameStart,
+            handleGamePause,
+            handleGameEnd,
+          ),
+      ],
     );
     return application.appScreenPool;
   };
@@ -35,7 +52,9 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     initializeAppScreens,
   });
 
-  const handleApplicationError = () => { application.show(LobbyScreen) };
+  const handleApplicationError = () => {
+    application.show(LobbyScreen);
+  };
 
   // 게임 진행 관련 functions
   let session: SnackGameDefalutResponse | undefined;
@@ -61,15 +80,15 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     await gameScore(session!.score, session!.sessionId);
   };
 
-  const handleGamePause = async ()=>{
-    if(!session) return;
-    await gamePause(session!.sessionId);
-  }
+  const handleGamePause = async () => {
+    if (!session || session.state === 'PAUSED') return;
+    session = await gamePause(session!.sessionId);
+  };
 
-  const handleGameResume = async ()=>{
-    if(!session) return;
-    await gameResume(session!.sessionId);
-  }
+  const handleGameResume = async () => {
+    if (!session) return;
+    session = await gameResume(session!.sessionId);
+  };
 
   const handleGameEnd = async () => {
     const data = await gameEnd(session!.sessionId);

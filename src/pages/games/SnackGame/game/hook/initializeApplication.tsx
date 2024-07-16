@@ -17,8 +17,7 @@ interface Props {
   initializeAppScreens: (app: SnackgameApplication) => Promise<AppScreenPool>;
 }
 
-const errorHandler = (e:any)=>{console.log("no error handler yet")};
-const application = new SnackgameApplication(new AppScreenPool(), errorHandler);
+const application = new SnackgameApplication(new AppScreenPool());
 
 const initializeApplication = ({
   canvasBaseRef,
@@ -27,14 +26,17 @@ const initializeApplication = ({
   const [pixiValue, setPixiValue] = useRecoilState(pixiState);
   const setError = useError();
 
-  const appBackgroundListener = (message: any) => {
-    try {
-      const parsed = JSON.parse(message.data);
+  const appBackgroundListener = (event: MessageEvent) => {
+    if (!event.source && event.data.includes('app-')) {
+      const parsed = JSON.parse(event.data);
       if (parsed.event === 'app-background') {
-        application.onPause();
+        application.onLostFocus();
+        return;
       }
-    } finally {
-      // no-op
+      if (parsed.event === 'app-foreground') {
+        application.onGotFocus();
+        return;
+      }
     }
   };
 
@@ -48,18 +50,16 @@ const initializeApplication = ({
   useEffect(() => {
     application.setError = setError;
     initCanvas().then(loadAdditional);
-
+    
+    application.onGotFocus();
     return () => {
-      application.onPause();
+      application.onLostFocus();
     };
   }, []);
 
   const initCanvas = async () => {
-    try { // TODO: 다시 로드할 필요가 없도록 어플리케이션을 유지해야 합니다.
-
+    try {
       if (!pixiValue.pixiInit) {
-        // const application = new SnackgameApplication(new AppScreenPool(), setError);
-
         await application.init({
           resizeTo: canvasBaseRef.current!,
           resolution: Math.max(window.devicePixelRatio, 2),

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import ErrorBoundary from '@components/base/ErrorBoundary';
@@ -7,9 +6,10 @@ import RetryError from '@components/Error/RetryError';
 import SnackGameBase from './SnackGameBase';
 
 const SnackGamePage = () => {
-  const [errorHandler, replaceErrorHandler] = useState<() => void>(() => {
-    // no-op
-  });
+  let errorHandler = () => {
+    console.log('SnackgameBase 초기화 전 오류가 발생했습니다');
+  };
+  const replaceErrorHandler = (handler: () => void) => (errorHandler = handler);
 
   return (
     <>

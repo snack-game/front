@@ -1,9 +1,7 @@
 import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
-import PATH from '@constants/path.constant';
-
-import { AppScreen } from './appScreen';
+import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
@@ -56,8 +54,7 @@ export class GameScreen extends Container implements AppScreen {
     });
 
     this.settingsButton.onPress.connect(async () => {
-      await handleGamePause();
-      app.presentPopup(SettingsPopup);
+      await this.onPause(SettingsPopup);
     });
     this.addChild(this.settingsButton);
 
@@ -66,8 +63,7 @@ export class GameScreen extends Container implements AppScreen {
       ripple: 'ripple',
     });
     this.pauseButton.onPress.connect(async () => {
-      await handleGamePause();
-      app.presentPopup(PausePopup);
+      await this.onPause();
     });
 
     this.addChild(this.pauseButton);
@@ -81,7 +77,7 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame = new SnackGame();
     this.snackGame.onPop = this.onPop.bind(this);
     this.snackGame.onStreak = (data: any[]) => {
-      handleStreak(data.length);
+      this.handleStreak(data.length);
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
@@ -99,7 +95,6 @@ export class GameScreen extends Container implements AppScreen {
   }
 
   public async onPrepare({ width, height }: Rectangle) {
-    await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
 
     const snackGameConfig = snackGameGetConfig({
@@ -138,12 +133,12 @@ export class GameScreen extends Container implements AppScreen {
     this.score.upWavesPosition();
   }
 
-  public async onPause() {
+  public async onPause(popup?: AppScreenConstructor) {
     if (this.snackGame.isPlaying()) {
       await this.handleGamePause();
       this.gameContainer.interactiveChildren = false;
       this.snackGame.pause();
-      this.app.presentPopup(PausePopup);
+      this.app.presentPopup(popup ? popup : PausePopup);
     }
   }
 
@@ -194,6 +189,7 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforGameStart.hide();
+    await this.handleGameStart();
     this.snackGame.startPlaying();
   }
 

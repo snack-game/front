@@ -2,6 +2,7 @@ import { Application, ApplicationOptions, BlurFilter } from 'pixi.js';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { AppScreenPool } from './appScreenPool';
+import { bgm } from '../util/audio';
 
 export class SnackgameApplication extends Application {
   private _currentAppScreen?: AppScreen;
@@ -30,7 +31,10 @@ export class SnackgameApplication extends Application {
 
   constructor(
     public readonly appScreenPool: AppScreenPool,
-    public setError: (error: any) => void,
+    public setError: (error: any) => void = (error: any) => {
+      console.warn('No setError yet for SnackgameApplication');
+      console.log(error);
+    },
   ) {
     super();
   }
@@ -40,9 +44,15 @@ export class SnackgameApplication extends Application {
     this.renderer.on('resize', () => this.resizeChildren()); // TODO: delayed resize
   }
 
-  onPause(): void {
-    console.log('Application paused');
+  onLostFocus(): void {
+    console.log('SnackgameApplication lost focus');
     this.currentAppScreen?.onPause?.();
+    bgm.current?.pause()
+  }
+
+  onGotFocus(): void {
+    console.log('SnackgameApplication got focus');
+    bgm.current?.resume()
   }
 
   public async show(ctor: AppScreenConstructor) {
@@ -63,7 +73,6 @@ export class SnackgameApplication extends Application {
   public async presentPopup(ctor: AppScreenConstructor) {
     if (this.currentAppScreen) {
       this.currentAppScreen.interactiveChildren = false;
-      await this.currentAppScreen.onPause?.();
       this.currentAppScreen.filters = [new BlurFilter({ strength: 4 })];
     }
     if (this.currentPopup) {
