@@ -124,14 +124,6 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.update(time.deltaMS);
     this.timer.updateTime(this.snackGame.timer.getTimeRemaining());
     this.score.setScore(this.snackGame.stats.getScore());
-
-    if (
-      !this.app.currentPopup &&
-      this.snackGame.isPlaying() &&
-      window.location.pathname !== PATH.SNACK_GAME
-    ) {
-      this.blur();
-    }
   }
 
   private onSnackGameBoardReset() {
@@ -146,14 +138,16 @@ export class GameScreen extends Container implements AppScreen {
     this.score.upWavesPosition();
   }
 
-  /** 게임을 일시 정지 합니다. */
-  public async pause() {
-    this.gameContainer.interactiveChildren = false;
-    this.snackGame.pause();
+  public async onPause() {
+    if (this.snackGame.isPlaying()) {
+      await this.handleGamePause();
+      this.gameContainer.interactiveChildren = false;
+      this.snackGame.pause();
+      this.app.presentPopup(PausePopup);
+    }
   }
 
-  /** 게임 재게 */
-  public async resume() {
+  public async onResume() {
     this.gameContainer.interactiveChildren = true;
     this.snackGame.resume();
   }
@@ -201,12 +195,6 @@ export class GameScreen extends Container implements AppScreen {
     await waitFor(0.6);
     await this.beforGameStart.hide();
     this.snackGame.startPlaying();
-  }
-
-  public async blur() {
-    if (!this.app.currentPopup && this.snackGame.isPlaying()) {
-      this.app.presentPopup(PausePopup);
-    }
   }
 
   public async onHide({ width, height }: Rectangle) {

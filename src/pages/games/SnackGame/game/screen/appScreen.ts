@@ -7,16 +7,12 @@ export interface AppScreen extends Container {
     onShow(screen: Rectangle): Promise<void>;
     onHide(screen: Rectangle): Promise<void>;
     onResize(screen: Rectangle): void;
-    /** 화면을 일시 정지 */
-    pause?(): Promise<void>;
-    /** 화면을 재개 */
-    resume?(): Promise<void>;
+    onPause?(): Promise<void>;
+    onResume?(): Promise<void>;
     /** 숨겨진 후 화면 재설정 */
     reset?(): void;
     /** 화면 업데이트, 델타 시간/단계 전달 */
     update?(time: Ticker): void;
-    /** 화면 흐리게 하기 */
-    blur?(): void;
     /** 화면에 포커스 */
     focus?(): void;
   }
