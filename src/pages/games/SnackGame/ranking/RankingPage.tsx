@@ -56,7 +56,6 @@ const RankingPage = () => {
           className="max-w-[120px]"
         />
       </div>
-      <Spacing size={6} />
       {/* TODO: 무한모드 준비 끝나면 gameId={currentTab} 으로 수정 */}
       <QueryBoundary errorFallback={RetryError}>
         <RankingSection season={selectedSeason} gameId={2} />

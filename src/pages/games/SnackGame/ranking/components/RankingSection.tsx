@@ -32,11 +32,11 @@ const RankingSection = ({ season, gameId }: GameSeasonProps) => {
   if (totalRanking.length === 0) return <EmptyRanking />;
   return (
     <div className={'mx-auto w-full max-w-4xl'}>
-      {topRanking && <TopRanking topRanking={topRanking} />}
-      {otherRanking && <OtherRanking otherRanking={otherRanking} />}
       {userInfo.type && userInfo.type !== 'GUEST' && (
         <UserRanking season={season} gameId={gameId} />
       )}
+      {topRanking && <TopRanking topRanking={topRanking} />}
+      {otherRanking && <OtherRanking otherRanking={otherRanking} />}
     </div>
   );
 };
