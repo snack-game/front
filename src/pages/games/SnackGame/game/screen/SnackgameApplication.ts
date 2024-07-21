@@ -45,14 +45,12 @@ export class SnackgameApplication extends Application {
   }
 
   onLostFocus(): void {
-    console.log('SnackgameApplication lost focus');
     this.currentAppScreen?.onPause?.();
-    bgm.current?.pause()
+    bgm.current?.pause();
   }
 
   onGotFocus(): void {
-    console.log('SnackgameApplication got focus');
-    bgm.current?.resume()
+    bgm.current?.resume();
   }
 
   public async show(ctor: AppScreenConstructor) {
