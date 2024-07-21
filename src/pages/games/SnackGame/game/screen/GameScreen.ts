@@ -7,7 +7,7 @@ import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
-import { BeforGameStart } from '../ui/BeforeGameStart';
+import { BeforeGameStart } from '../ui/BeforeGameStart';
 import { GameEffects } from '../ui/GameEffect';
 import { IconButton } from '../ui/IconButton';
 import { Score } from '../ui/Score';
@@ -32,7 +32,7 @@ export class GameScreen extends Container implements AppScreen {
   /** 게임 효과 */
   public readonly vfx?: GameEffects;
   /** 게임 시작 전 준비 화면 */
-  public readonly beforGameStart: BeforGameStart;
+  public readonly beforeGameStart: BeforeGameStart;
   /** 설정 버튼 */
   private settingsButton: IconButton;
   /** 게임 종료시 true가 됩니다. */
@@ -90,8 +90,8 @@ export class GameScreen extends Container implements AppScreen {
     this.score = new Score();
     this.addChild(this.score);
 
-    this.beforGameStart = new BeforGameStart();
-    this.addChild(this.beforGameStart);
+    this.beforeGameStart = new BeforeGameStart();
+    this.addChild(this.beforeGameStart);
   }
 
   public async onPrepare({ width, height }: Rectangle) {
@@ -123,7 +123,7 @@ export class GameScreen extends Container implements AppScreen {
 
   private onSnackGameBoardReset() {
     for (const snack of this.snackGame.board.snacks) {
-      this.vfx?.animationBeforStart(snack);
+      this.vfx?.animationBeforeStart(snack);
     }
   }
 
@@ -168,8 +168,8 @@ export class GameScreen extends Container implements AppScreen {
     this.score.x = centerX;
     this.score.y = div - 80;
 
-    this.beforGameStart.x = centerX;
-    this.beforGameStart.y = centerY;
+    this.beforeGameStart.x = centerX;
+    this.beforeGameStart.y = centerY;
 
     this.pauseButton.x = 25;
     this.pauseButton.y = 25;
@@ -183,12 +183,12 @@ export class GameScreen extends Container implements AppScreen {
     this.score.show();
     this.timer.show();
     this.pauseButton.show();
-    await this.beforGameStart.show();
+    await this.beforeGameStart.show();
     await waitFor(0.3);
     this.vfx?.playPopExplosion({ x: this.score.x, y: this.score.y });
     this.onSnackGameBoardReset();
     await waitFor(0.6);
-    await this.beforGameStart.hide();
+    await this.beforeGameStart.hide();
     await this.handleGameStart();
     this.snackGame.startPlaying();
   }

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import useModal from '@hooks/useModal';
 
-import { SnackGameDefalutResponse } from './game.type';
+import { SnackGameDefaultResponse } from './game.type';
 import initializeApplication from './hook/initializeApplication';
 import GameResult from './legacy/components/GameResult';
 import { PausePopup } from './popup/PausePopup';
@@ -57,7 +57,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // 게임 진행 관련 functions
-  let session: SnackGameDefalutResponse | undefined;
+  let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다

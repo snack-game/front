@@ -2,7 +2,7 @@ export type SnackGameMod = 'default' | 'inf';
 
 export type SnackGameAPIStats = 'IN_PROGRESS' | 'PAUSED' | 'EXPIRED';
 
-export interface SnackGameDefalutResponse {
+export interface SnackGameDefaultResponse {
   metadata: {
     gameId: number;
     localizedName: string;
@@ -15,10 +15,10 @@ export interface SnackGameDefalutResponse {
   board: string;
 }
 
-export type SnackGameStart = SnackGameDefalutResponse;
+export type SnackGameStart = SnackGameDefaultResponse;
 
-export type SnackGamePauese = SnackGameDefalutResponse;
+export type SnackGamePause = SnackGameDefaultResponse;
 
-export type SnackGameEnd = SnackGameDefalutResponse & {
+export type SnackGameEnd = SnackGameDefaultResponse & {
   percentile: number;
 };

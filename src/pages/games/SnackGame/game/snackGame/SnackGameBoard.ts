@@ -211,7 +211,7 @@ export class SnackGameBoard {
   }
 
   /** 선택되 스낵의 숫자 총합 */
-  public getSeletedSnacksSum() {
+  public getSelectedSnacksSum() {
     let total = 0;
     for (const snack of this.selectedSnacks) {
       total += snack.snackNum;

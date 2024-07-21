@@ -22,7 +22,7 @@ export class SnackGameActions {
 
     this.updateSelectedSnacks(position);
 
-    const sum = this.snackGame.board.getSeletedSnacksSum();
+    const sum = this.snackGame.board.getSelectedSnacksSum();
 
     if (sum > 10) {
       this.snackGame.board.clearAllSelectedSnacks();

@@ -51,7 +51,7 @@ export class SnackGameStats {
    * @param playTime The play time (in milliseconds) of the score
    * @returns An number (0 to 3) representing the grade
    */
-  public caulculateGrade(score: number, playTime: number) {
+  public calculateGrade(score: number, playTime: number) {
     const avgPointsPerSecond = 8;
     const gameplayTimeInSecs = playTime / 1000;
     const pointsPerSecond = score / gameplayTimeInSecs;
@@ -76,7 +76,7 @@ export class SnackGameStats {
    * Retrieve full gameplay session performance in an object
    */
   public getGameplayPerformance() {
-    const grade = this.caulculateGrade(
+    const grade = this.calculateGrade(
       this.data.score,
       this.snackGame.timer.getTime(),
     );

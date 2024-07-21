@@ -1,9 +1,9 @@
 import api from '@api/index';
 
 import {
-  SnackGameDefalutResponse,
+  SnackGameDefaultResponse,
   SnackGameEnd,
-  SnackGamePauese,
+  SnackGamePause,
   SnackGameStart,
 } from '../game.type';
 
@@ -16,7 +16,7 @@ export const gameStart = async (): Promise<SnackGameStart> => {
 export const gameScore = async (
   score: number,
   sessionId: number,
-): Promise<SnackGameDefalutResponse> => {
+): Promise<SnackGameDefaultResponse> => {
   const { data } = await api.put(`/games/2/${sessionId}`, {
     score,
   });
@@ -24,9 +24,7 @@ export const gameScore = async (
   return data;
 };
 
-export const gamePause = async (
-  sessionId: number,
-): Promise<SnackGamePauese> => {
+export const gamePause = async (sessionId: number): Promise<SnackGamePause> => {
   const { data } = await api.post(`games/2/${sessionId}/pause`);
 
   return data;
@@ -34,7 +32,7 @@ export const gamePause = async (
 
 export const gameResume = async (
   sessionId: number,
-): Promise<SnackGameDefalutResponse> => {
+): Promise<SnackGameDefaultResponse> => {
   const { data } = await api.post(`games/2/${sessionId}/resume`);
 
   return data;

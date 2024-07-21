@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import GoogleIcon from '@assets/icon/google.svg?react';
-import KakakoIcon from '@assets/icon/kakao.svg?react';
+import KakaoIcon from '@assets/icon/kakao.svg?react';
 import LogoImage from '@assets/images/logo-snack-game-letter.png';
 import SnackRainContainer from '@components/SnackRain/SnackRainContainer';
 import { userState } from '@utils/atoms/member.atom';
@@ -127,7 +127,7 @@ export const AuthPage = () => {
                 openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
               }
             >
-              <KakakoIcon className="h-10 w-10" />
+              <KakaoIcon className="h-10 w-10" />
               <span className="w-20  text-center text-sm">
                 {t('auth_kakao_button')}
               </span>

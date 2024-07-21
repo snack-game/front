@@ -65,7 +65,7 @@ export class Score extends Container {
     this.waves.y = 40;
   }
 
-  // waves hegith 설정
+  // waves height 설정
   public set height(value: number) {
     this.waves.height = value * 2;
   }
