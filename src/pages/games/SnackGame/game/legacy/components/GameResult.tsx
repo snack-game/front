@@ -14,7 +14,7 @@ import ExpBarChart from './ExpBarChart';
 
 interface GameResultProps {
   score: number;
-  percentile?: number;
+  percentile: number;
   reStart: () => void;
 }
 
@@ -40,7 +40,7 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
 
         {userStateValue.type !== 'GUEST' && (
           <>
-            {percentile && <p>전체 사용자 중 상위 {percentile}%의 점수에요!</p>}
+            <p>전체 사용자 중 상위 {percentile}%의 점수에요!</p>
             {profile.status && <ExpBarChart status={profile.status} />}
           </>
         )}

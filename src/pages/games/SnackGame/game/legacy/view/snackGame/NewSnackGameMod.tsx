@@ -8,8 +8,8 @@ import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import SnackGameView from './SnackGameView';
-import { GameStart } from '../../components/GameStart';
 import { SnackGameMod } from '../../../game.type';
+import { GameStart } from '../../components/GameStart';
 import { GoldenSnack } from '../../model/snackGame/goldSnack';
 import NewPlainApple from '../../model/snackGame/plainSnack';
 import NewApple from '../../model/snackGame/snack';
@@ -115,7 +115,11 @@ const NewSnackGameMod = () => {
 
       openModal({
         children: (
-          <GameResult score={score} reStart={() => startGame(snackGameMod)} />
+          <GameResult
+            score={score}
+            percentile={0}
+            reStart={() => startGame(snackGameMod)}
+          />
         ),
       });
     } catch (e) {
