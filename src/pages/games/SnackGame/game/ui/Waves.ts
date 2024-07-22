@@ -22,7 +22,7 @@ export class Waves extends Container {
     }
   }
 
-  // wave 들의 hegith 설정
+  // wave 들의 height 설정
   public set height(value: number) {
     for (const wave of this.waves) {
       wave.height = value;

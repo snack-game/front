@@ -15,7 +15,7 @@ const easeMidSlowMotion = registerCustomEase(
 /**
  * 게임 시작 전 "준비 시작" 메시지를 표시하는 클래스.
  */
-export class BeforGameStart extends Container {
+export class BeforeGameStart extends Container {
   /** 내부 애니메이션을 위한 서브 컨테이너 */
   private readonly container: Container;
   /** 애니메이션된 구름 배경 */

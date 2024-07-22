@@ -22,7 +22,7 @@ const UserRanking = ({ season, gameId }: GameSeasonProps) => {
   return (
     <>
       {userRanking && (
-        <div className="fixed bottom-20 left-1/2 w-[90%] -translate-x-1/2 rounded-full border-2 border-primary bg-primary-light px-6 py-3 text-primary-deep-dark lg:w-1/3">
+        <div className="m-auto mb-20 mt-8 w-[90%] rounded-full border-2 border-primary bg-primary-light px-6 py-3 text-primary-deep-dark lg:w-1/3">
           <div className="flex h-full w-full items-center justify-around">
             <div className="flex flex-col">
               <div className="text-xs">{userRanking?.owner.group?.name}</div>
