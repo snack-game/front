@@ -41,7 +41,7 @@ const initializeApplication = ({
   };
 
   const browserFocusListener = () => {
-    if (document.hidden) {
+    if (document.visibilityState === 'hidden') {
       application.onLostFocus();
       return;
     }
