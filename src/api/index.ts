@@ -20,19 +20,13 @@ api.interceptors.response.use(
         // _retry 플래그를 사용하여 무한 재시도 방지
         originalRequest._retry = true;
 
-        switch (status) {
-          case 401: {
-            switch (code) {
-              case 'TOKEN_EXPIRED_EXCEPTION': {
-                await authApi.tokenReIssue();
-                return api.request(originalRequest);
-              }
-              case null: {
-                await authApi.logOut();
-                break;
-              }
-            }
-          }
+        if (status === 401 && code === 'TOKEN_EXPIRED_EXCEPTION') {
+          await authApi.tokenReIssue();
+          return api.request(originalRequest);
+        }
+        if (status === 401 && code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION') {
+          await authApi.tokenReIssue();
+          return api.request(originalRequest);
         }
       }
     }
