@@ -26,7 +26,7 @@ const initializeApplication = ({
   const [pixiValue, setPixiValue] = useRecoilState(pixiState);
   const setError = useError();
 
-  const appBackgroundListener = (event: MessageEvent) => {
+  const appFocusListener = (event: MessageEvent) => {
     if (!event.source && event.data.includes('app-')) {
       const parsed = JSON.parse(event.data);
       if (parsed.event === 'app-background') {
@@ -40,17 +40,27 @@ const initializeApplication = ({
     }
   };
 
+  const browserFocusListener = () => {
+    if (document.hidden) {
+      application.onLostFocus();
+      return;
+    }
+    application.onGotFocus();
+  };
+
   useEffect(() => {
-    window.addEventListener('message', appBackgroundListener);
+    window.addEventListener('message', appFocusListener);
+    window.addEventListener('visibilitychange', browserFocusListener);
     return () => {
-      window.removeEventListener('message', appBackgroundListener);
+      window.removeEventListener('message', appFocusListener);
+      window.removeEventListener('visibilitychange', browserFocusListener);
     };
   }, []);
 
   useEffect(() => {
     application.setError = setError;
     initCanvas().then(loadAdditional);
-    
+
     application.onGotFocus();
     return () => {
       application.onLostFocus();
