@@ -23,12 +23,12 @@ const TopBar = ({ title, backUrl }: { title: string; backUrl: string }) => {
   return (
     <>
       <div className="fixed top-0 flex h-12 w-screen items-center justify-between border-b-[1px] border-gray-200 bg-primary-light">
-        <RouterLink to={backUrl} className="z-10 ml-4">
-          <DownArrow className="h-8 w-8 rotate-90 text-black" />
-        </RouterLink>
         <p className="absolute w-full text-center text-lg font-semibold">
           {title}
         </p>
+        <RouterLink to={backUrl} className="ml-4">
+          <DownArrow className="h-8 w-8 rotate-90 text-black" />
+        </RouterLink>
       </div>
       <Spacing size={3} />
     </>

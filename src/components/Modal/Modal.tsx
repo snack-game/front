@@ -34,7 +34,7 @@ const Modal = () => {
     <>
       {open && (
         <div
-          className={'fixed top-0 z-50 h-screen w-screen bg-gray-500/50'}
+          className={'z-modal fixed top-0 h-screen w-screen bg-gray-500/50'}
           onClick={handleClose}
         >
           <motion.div
