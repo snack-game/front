@@ -97,7 +97,9 @@ const SnackGameMode = () => {
       openToast('게임 종료!', 'success');
 
       openModal({
-        children: <GameResult score={score} reStart={startGame} />,
+        children: (
+          <GameResult score={score} percentile={0} reStart={startGame} />
+        ),
       });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import GameResult from '@pages/games/SnackGame/game/legacy/components/GameResult';
+import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
 import Apple from '@pages/games/SnackGame/game/legacy/model/appleGame/apple';
 import { AppleGame } from '@pages/games/SnackGame/game/legacy/model/appleGame/appleGame';
 import PlainApple from '@pages/games/SnackGame/game/legacy/model/appleGame/plainApple';
-import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
 
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
@@ -71,7 +71,9 @@ const ClassicMode = () => {
       openToast('게임 종료!', 'success');
 
       openModal({
-        children: <GameResult score={score} reStart={startGame} />,
+        children: (
+          <GameResult score={score} percentile={0} reStart={startGame} />
+        ),
       });
     } catch (e) {
       setError(new Error('게임 종료에 실패했습니다.'));
