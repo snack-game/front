@@ -25,8 +25,7 @@ api.interceptors.response.use(
           return api.request(originalRequest);
         }
         if (status === 401 && code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION') {
-          await authApi.tokenReIssue();
-          return api.request(originalRequest);
+          await authApi.logOut();
         }
       }
     }
