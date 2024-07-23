@@ -29,7 +29,7 @@ const UserInfo = () => {
   return (
     <div className="relative mt-20 h-full pt-20">
       <RouterLink to={PATH.SETTING}>
-        <SettingIcon className="absolute right-0 top-12 z-10 mr-2" />
+        <SettingIcon className="absolute right-0 top-12 mr-2" />
       </RouterLink>
       <div className={'flex min-h-full flex-col items-center bg-game pb-20'}>
         {profile && (

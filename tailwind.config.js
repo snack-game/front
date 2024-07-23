@@ -23,6 +23,15 @@ export default {
         navigation:
           '0px 0px 4px 0px rgba(0, 0, 0, 0.4), 2px 4px 12px 0px rgba(0, 0, 0, 0.1)',
       },
+
+      zIndex: {
+        snackRain: -1,
+        dropDown: 1,
+        header: 1,
+        levelBadge: 1,
+        bottomNav: 999,
+        modal: 1000,
+      },
     },
   },
   plugins: [],

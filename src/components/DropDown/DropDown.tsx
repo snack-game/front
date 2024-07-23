@@ -45,7 +45,7 @@ export default function Dropdown({
         </motion.div>
       </div>
       {isOpen && (
-        <div className="absolute z-10 mt-1 min-w-[150px] divide-y-2 rounded-md border-2 border-primary bg-white">
+        <div className="z-dropDown absolute mt-1 min-w-[150px] divide-y-2 rounded-md border-2 border-primary bg-white">
           {options.map((option) => (
             <motion.div
               key={option.name}

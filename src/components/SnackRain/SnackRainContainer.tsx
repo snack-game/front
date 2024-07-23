@@ -8,7 +8,7 @@ const SnackRainContainer = () => {
   return (
     <div
       ref={canvasBaseRef}
-      className={'absolute left-0 top-0 -z-50 h-full w-full bg-game'}
+      className={'z-snackRain absolute left-0 top-0 h-full w-full bg-game'}
     >
       <SnackRain offsetWidth={offsetWidth} offsetHeight={offsetHeight} />
     </div>
