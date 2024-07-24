@@ -38,7 +38,7 @@ api.interceptors.response.use(
         originalRequest._renewal === true &&
         status === 401 &&
         (code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION' ||
-          code === 'TOKEN_UNRESOLVABLE')
+          code === 'TOKEN_UNRESOLVABLE_EXCEPTION')
       ) {
         await authApi.logOut();
         window.dispatchEvent(new Event('loggedOut'));
