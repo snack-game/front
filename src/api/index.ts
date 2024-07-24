@@ -18,29 +18,31 @@ api.interceptors.response.use(
       const status = error.response.status;
       const { code } = error.response.data;
       const originalRequest = error.config;
-      if (!originalRequest._retry) {
-        // _retry 플래그를 사용하여 무한 재시도 방지
-        originalRequest._retry = true;
 
-        if (status === 401 && code === 'TOKEN_EXPIRED_EXCEPTION') {
-          try {
-            if (window.navigator.userAgent.includes('SnackgameApp')) {
-              await appRefresh();
-            } else {
-              await authApi.tokenReIssue();
-            }
-          } catch (error) {
-            await authApi.logOut();
-            window.dispatchEvent(new Event('loggedOut'));
-            window.location.href = PATH.MAIN;
+      if (status === 401 && code === 'TOKEN_EXPIRED_EXCEPTION') {
+        try {
+          if (window.navigator.userAgent.includes('SnackgameApp')) {
+            await appRefresh();
+          } else {
+            await authApi.tokenReIssue();
+            originalRequest._renewal = true;
           }
-          return api.request(originalRequest);
-        }
-        if (status === 401 && code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION') {
+        } catch (error) {
           await authApi.logOut();
           window.dispatchEvent(new Event('loggedOut'));
           window.location.href = PATH.MAIN;
         }
+        return api.request(originalRequest);
+      }
+      if (
+        originalRequest._renewal === true &&
+        status === 401 &&
+        (code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION' ||
+          code === 'TOKEN_UNRESOLVABLE')
+      ) {
+        await authApi.logOut();
+        window.dispatchEvent(new Event('loggedOut'));
+        window.location.href = PATH.MAIN;
       }
     }
     // 처리되지 않은 오류는 그대로 반환
