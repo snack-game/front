@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import PATH from '@constants/path.constant';
+
 import authApi from './auth.api';
 
 const api = axios.create({
@@ -21,11 +23,23 @@ api.interceptors.response.use(
         originalRequest._retry = true;
 
         if (status === 401 && code === 'TOKEN_EXPIRED_EXCEPTION') {
-          await authApi.tokenReIssue();
+          try {
+            if (window.navigator.userAgent.includes('SnackgameApp')) {
+              await appRefresh();
+            } else {
+              await authApi.tokenReIssue();
+            }
+          } catch (error) {
+            await authApi.logOut();
+            window.dispatchEvent(new Event('loggedOut'));
+            window.location.href = PATH.MAIN;
+          }
           return api.request(originalRequest);
         }
         if (status === 401 && code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION') {
           await authApi.logOut();
+          window.dispatchEvent(new Event('loggedOut'));
+          window.location.href = PATH.MAIN;
         }
       }
     }
@@ -33,5 +47,32 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+function appRefresh(): Promise<void> {
+  dispatchEvent(new CustomEvent('app-refresh-requested'));
+  return new Promise((resolve, reject) => {
+    const successHandler = () => {
+      cleanup();
+      resolve();
+    };
+    const failureHandler = () => {
+      cleanup();
+      reject(new Error('app logged out'));
+    };
+    window.addEventListener('app-refreshed', successHandler);
+    window.addEventListener('app-refresh-failed', failureHandler);
+
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error('app refresh timeout'));
+    }, 5000);
+
+    const cleanup = () => {
+      window.removeEventListener('app-refreshed', successHandler);
+      window.removeEventListener('app-refresh-failed', successHandler);
+      clearTimeout(timeout);
+    };
+  });
+}
 
 export default api;
