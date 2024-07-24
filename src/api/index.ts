@@ -29,6 +29,7 @@ api.interceptors.response.use(
           }
         } catch (error) {
           await authApi.logOut();
+          localStorage.clear();
           window.dispatchEvent(new Event('loggedOut'));
           window.location.href = PATH.MAIN;
         }
@@ -41,6 +42,7 @@ api.interceptors.response.use(
           code === 'TOKEN_UNRESOLVABLE_EXCEPTION')
       ) {
         await authApi.logOut();
+        localStorage.clear();
         window.dispatchEvent(new Event('loggedOut'));
         window.location.href = PATH.MAIN;
       }
