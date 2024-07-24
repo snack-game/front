@@ -3,6 +3,7 @@ import axios from 'axios';
 import PATH from '@constants/path.constant';
 
 import authApi from './auth.api';
+import { ATOM_KEY } from '@constants/atom.constant';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -25,26 +26,34 @@ api.interceptors.response.use(
             await appRefresh();
           } else {
             await authApi.tokenReIssue();
-            originalRequest._renewal = true;
           }
         } catch (error) {
           await authApi.logOut();
-          localStorage.clear();
+          localStorage.removeItem(ATOM_KEY.USER_PERSIST);
           window.dispatchEvent(new Event('loggedOut'));
-          window.location.href = PATH.MAIN;
+          window.location.reload();
         }
         return api.request(originalRequest);
       }
       if (
-        originalRequest._renewal === true &&
         status === 401 &&
-        (code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION' ||
-          code === 'TOKEN_UNRESOLVABLE_EXCEPTION')
+        originalRequest.method === 'patch' &&
+        originalRequest.url === '/tokens/me' &&
+        code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION'
       ) {
         await authApi.logOut();
-        localStorage.clear();
+        localStorage.removeItem(ATOM_KEY.USER_PERSIST);
         window.dispatchEvent(new Event('loggedOut'));
-        window.location.href = PATH.MAIN;
+        window.location.reload();
+      }
+      if (
+        status === 401 &&
+        localStorage.getItem(ATOM_KEY.USER_PERSIST) &&
+        code === 'TOKEN_UNRESOLVABLE_EXCEPTION'
+      ) {
+        localStorage.removeItem(ATOM_KEY.USER_PERSIST);
+        window.dispatchEvent(new Event('loggedOut'));
+        window.location.reload();
       }
     }
     // 처리되지 않은 오류는 그대로 반환
