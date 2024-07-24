@@ -16,9 +16,9 @@ const OtherRanking = ({ otherRanking }: OtherRankingProps) => {
     <table className={'mx-auto mt-10 w-full table-fixed lg:mt-24 lg:w-[80%]'}>
       <thead className={'h-10 bg-primary text-primary-light'}>
         <tr>
-          <th>#</th>
-          <th className={'w-[40%]'}>{t('name_column')}</th>
-          <th className={'w-[30%]'}>{t('score_column')}</th>
+          <th className={'w-[20%]'}>#</th>
+          <th>{t('name_column')}</th>
+          <th className={'w-[20%]'}>{t('score_column')}</th>
         </tr>
       </thead>
       <motion.tbody>

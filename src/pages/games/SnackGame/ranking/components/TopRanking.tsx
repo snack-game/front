@@ -33,7 +33,7 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
         return (
           <div
             key={`top-rank-${top.owner.name}`}
-            className={`flex flex-col items-center gap-4 font-semibold text-primary-deep-dark
+            className={`flex flex-1 flex-col items-center gap-4 font-semibold text-primary-deep-dark
             ${index == 0 && 'order-2 -mt-12'}
             ${index == 1 && 'order-1'}
             ${index == 2 && 'order-3'}`}
@@ -50,7 +50,9 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
                     {top.owner.group.name}
                   </span>
                 )}
-                <span className={'text-xl text-primary'}>{top.owner.name}</span>
+                <span className={'text-center text-xl text-primary'}>
+                  {top.owner.name}
+                </span>
                 {top.owner.status?.level !== undefined && (
                   <Level level={top.owner.status.level} />
                 )}
