@@ -73,7 +73,7 @@ function appRefresh(): Promise<void> {
 
     const cleanup = () => {
       window.removeEventListener('app-refreshed', successHandler);
-      window.removeEventListener('app-refresh-failed', successHandler);
+      window.removeEventListener('app-refresh-failed', failureHandler);
       clearTimeout(timeout);
     };
   });
