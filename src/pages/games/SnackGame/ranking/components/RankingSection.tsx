@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
 import LogoImage from '@assets/images/main.png';
+import Spacing from '@components/Spacing/Spacing';
 import OtherRanking from '@pages/games/SnackGame/ranking/components/OtherRanking';
 import TopRanking from '@pages/games/SnackGame/ranking/components/TopRanking';
 import { userState } from '@utils/atoms/member.atom';
@@ -31,9 +32,11 @@ const RankingSection = ({ season, gameId }: GameSeasonProps) => {
 
   if (totalRanking.length === 0) return <EmptyRanking />;
   return (
-    <div className={'mx-auto w-full max-w-4xl mb-16'}>
-      {userInfo.type && userInfo.type !== 'GUEST' && (
+    <div className={'mx-auto mb-16 w-full max-w-4xl'}>
+      {userInfo.type && userInfo.type !== 'GUEST' ? (
         <UserRanking season={season} gameId={gameId} />
+      ) : (
+        <Spacing size={5} />
       )}
       {topRanking && <TopRanking topRanking={topRanking} />}
       {otherRanking && <OtherRanking otherRanking={otherRanking} />}
