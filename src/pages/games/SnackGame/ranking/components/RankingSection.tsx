@@ -31,7 +31,7 @@ const RankingSection = ({ season, gameId }: GameSeasonProps) => {
 
   if (totalRanking.length === 0) return <EmptyRanking />;
   return (
-    <div className={'mx-auto w-full max-w-4xl'}>
+    <div className={'mx-auto w-full max-w-4xl mb-16'}>
       {userInfo.type && userInfo.type !== 'GUEST' && (
         <UserRanking season={season} gameId={gameId} />
       )}
