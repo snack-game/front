@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 import { useSetRecoilState } from 'recoil';
 
-import GoogleSingIn from '@assets/images/google.png';
-import KaKaoSingIn from '@assets/images/kakao.png';
+import AppleSignin from '@assets/images/apple.png';
+import GoogleSignin from '@assets/images/google.png';
+import KakaoSignin from '@assets/images/kakao.png';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
+import { isApp } from '@utils/userAgentIdentifier';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
@@ -50,25 +52,37 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
 
   const OAuthListener = async (event: MessageEvent) => {
     if (event.origin !== window.location.origin) return;
-
     if (event.data.type === 'oAuthSuccess') {
-      const member = await oAuthOnSuccess();
-      openToast(t('login_success'), 'success');
-      setUserState(() => ({
-        ...member,
-      }));
-      setStorageValue(Date.now());
+      oAuthSuccessHandler();
     }
-
     if (event.data.type === 'oAuthError') {
-      openToast(t('login_fail'), 'error');
+      oAuthFailureHandler();
     }
+  };
+
+  const oAuthSuccessHandler = async () => {
+    const member = await oAuthOnSuccess();
+    openToast(t('login_success'), 'success');
+    setUserState(() => ({
+      ...member,
+    }));
+    setStorageValue(Date.now());
+  };
+
+  const oAuthFailureHandler = async () => {
+    openToast(t('login_fail'), 'error');
+  };
+
+  const requestAppOAuth = (provider: 'google' | 'kakao' | 'apple') => {
+    dispatchEvent(new CustomEvent(`app-oauth-requested-${provider}`));
   };
 
   useEffect(() => {
     if (!popup) return;
 
     window.addEventListener('message', OAuthListener, false);
+    window.addEventListener('app-oauth-succeeded', oAuthSuccessHandler);
+    window.addEventListener('app-oauth-failed', oAuthFailureHandler);
     return () => {
       window.removeEventListener('message', OAuthListener);
       setPopup(!popup);
@@ -94,20 +108,36 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
         <div className={'mt-6 flex justify-center gap-12'}>
           <div
             className={'h-12 w-12 cursor-pointer rounded-full shadow-xl'}
-            onClick={() =>
-              openOAuthDialog({ url: PATH.GOOGLE, name: 'Login with Google' })
-            }
+            onClick={() => {
+              if (isApp()) {
+                requestAppOAuth('google');
+                return;
+              }
+              openOAuthDialog({ url: PATH.GOOGLE, name: 'Signin with Google' });
+            }}
           >
-            <img src={GoogleSingIn} alt={'구글 로그인'} />
+            <img src={GoogleSignin} alt={'구글 로그인'} />
           </div>
           <div
             className={'h-12 w-12 cursor-pointer rounded-full shadow-xl'}
-            onClick={() =>
-              openOAuthDialog({ url: PATH.KAKAO, name: 'Login with KAKAO' })
-            }
+            onClick={() => {
+              if (isApp()) {
+                requestAppOAuth('kakao');
+                return;
+              }
+              openOAuthDialog({ url: PATH.KAKAO, name: 'Signin with Kakao' });
+            }}
           >
-            <img src={KaKaoSingIn} alt={'카카오 로그인'} />
+            <img src={KakaoSignin} alt={'카카오 로그인'} />
           </div>
+          {isApp() && (
+            <div
+              className={'h-12 w-12 cursor-pointer rounded-full shadow-xl'}
+              onClick={() => requestAppOAuth('apple')}
+            >
+              <img src={AppleSignin} alt={'Signin with Apple'} />
+            </div>
+          )}
         </div>
       </div>
     </div>
