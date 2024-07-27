@@ -8,7 +8,7 @@ import GoogleSignin from '@assets/images/google.png';
 import KakaoSignin from '@assets/images/kakao.png';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
-import { isApp } from '@utils/userAgentIdentifier';
+import { isApp, isIOSApp } from '@utils/userAgentIdentifier';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
@@ -132,7 +132,7 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
           >
             <img src={KakaoSignin} alt={'카카오 로그인'} />
           </div>
-          {isApp() && (
+          {isIOSApp() && (
             <div
               className={'h-12 w-12 cursor-pointer rounded-full shadow-xl'}
               onClick={() => requestAppOAuth('apple')}
