@@ -74,7 +74,9 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   };
 
   const requestAppOAuth = (provider: 'google' | 'kakao' | 'apple') => {
-    dispatchEvent(new CustomEvent(`app-oauth-requested-${provider}`));
+    dispatchEvent(
+      new CustomEvent(`app-oauth-requested`, { detail: { provider } }),
+    );
   };
 
   useEffect(() => {
