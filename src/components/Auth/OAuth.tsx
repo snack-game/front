@@ -83,13 +83,21 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     if (!popup) return;
 
     window.addEventListener('message', OAuthListener, false);
-    window.addEventListener('app-oauth-succeeded', oAuthSuccessHandler);
-    window.addEventListener('app-oauth-failed', oAuthFailureHandler);
     return () => {
       window.removeEventListener('message', OAuthListener);
       setPopup(!popup);
     };
   }, [popup]);
+
+  useEffect(() => {
+    window.addEventListener('app-oauth-succeeded', oAuthSuccessHandler);
+    window.addEventListener('app-oauth-failed', oAuthFailureHandler);
+
+    return () => {
+      window.removeEventListener('app-oauth-succeeded', oAuthSuccessHandler);
+      window.removeEventListener('app-oauth-failed', oAuthFailureHandler);
+    };
+  }, []);
 
   return (
     <div className={'flex h-full flex-col items-center justify-evenly'}>
