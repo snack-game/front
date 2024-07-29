@@ -11,6 +11,8 @@ import {
 import useModal from '@hooks/useModal';
 
 import ExpBarChart from './ExpBarChart';
+import { isApp } from '@utils/userAgentIdentifier';
+import membersApi from '@api/members.api';
 
 interface GameResultProps {
   score: number;
@@ -30,6 +32,9 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
   };
 
   const onOAuthSuccess = async () => {
+    if (isApp()) {
+      return await membersApi.getMemberProfile();
+    }
     return await integrateMember.mutateAsync();
   };
 
