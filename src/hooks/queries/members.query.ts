@@ -59,13 +59,8 @@ const useOnError = () => {
 };
 
 export const useIntegrateMember = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: membersApi.integrateMember,
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
-    },
   });
 };
 
