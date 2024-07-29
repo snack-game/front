@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
 import AppleSignin from '@assets/images/apple.png';
@@ -10,6 +11,7 @@ import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 import { isApp, isIOSApp } from '@utils/userAgentIdentifier';
 
+import { QUERY_KEY } from '@constants/api.constant';
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -33,6 +35,8 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
 
   const setUserState = useSetRecoilState(userState);
   const openToast = useToast();
+
+  const queryClient = useQueryClient();
 
   const openOAuthDialog = ({ url, name }: DialogProps) => {
     const oAuthURL = import.meta.env.VITE_API_URL + url;
@@ -67,6 +71,8 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
       ...member,
     }));
     setStorageValue(Date.now());
+
+    queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
   };
 
   const oAuthFailureHandler = async () => {
