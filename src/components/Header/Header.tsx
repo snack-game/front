@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { twMerge } from 'tailwind-merge';
 
-import authApi from '@api/auth.api';
+import { logOut } from '@api/auth.api';
 import Hamburger from '@assets/icon/hamburger.svg?react';
 import Auth from '@components/Auth/Auth';
 import Button from '@components/Button/Button';
@@ -46,7 +46,7 @@ const Header = ({ children, className }: HeaderProps) => {
 
   const handleLogout = async () => {
     resetUser();
-    await authApi.logOut();
+    await logOut();
     openToast(t('login_logout'), 'success');
     deleteStorageValue();
     navigate(PATH.MAIN, { replace: true });

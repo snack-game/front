@@ -1,8 +1,10 @@
 import { useRecoilValue } from 'recoil';
 
+import { getMemberProfile } from '@api/members.api';
 import OAuth from '@components/Auth/OAuth';
 import Button from '@components/Button/Button';
 import { userState } from '@utils/atoms/member.atom';
+import { isApp } from '@utils/userAgentIdentifier';
 
 import {
   useGetMemberProfile,
@@ -11,8 +13,6 @@ import {
 import useModal from '@hooks/useModal';
 
 import ExpBarChart from './ExpBarChart';
-import { isApp } from '@utils/userAgentIdentifier';
-import membersApi from '@api/members.api';
 
 interface GameResultProps {
   score: number;
@@ -33,7 +33,7 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
 
   const onOAuthSuccess = async () => {
     if (isApp()) {
-      return await membersApi.getMemberProfile();
+      return await getMemberProfile();
     }
     return await integrateMember.mutateAsync();
   };

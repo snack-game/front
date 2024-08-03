@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-import PATH from '@constants/path.constant';
+import { logOut, tokenReIssue } from '@api/auth.api';
 
-import authApi from './auth.api';
 import { ATOM_KEY } from '@constants/atom.constant';
 
 const api = axios.create({
@@ -25,10 +24,10 @@ api.interceptors.response.use(
           if (window.navigator.userAgent.includes('SnackgameApp')) {
             await appRefresh();
           } else {
-            await authApi.tokenReIssue();
+            await tokenReIssue();
           }
         } catch (error) {
-          await authApi.logOut();
+          await logOut();
           localStorage.removeItem(ATOM_KEY.USER_PERSIST);
           window.dispatchEvent(new Event('loggedOut'));
           window.location.reload();
@@ -41,7 +40,7 @@ api.interceptors.response.use(
         originalRequest.url === '/tokens/me' &&
         code === 'REFRESH_TOKEN_EXPIRED_EXCEPTION'
       ) {
-        await authApi.logOut();
+        await logOut();
         localStorage.removeItem(ATOM_KEY.USER_PERSIST);
         window.dispatchEvent(new Event('loggedOut'));
         window.location.reload();

@@ -1,12 +1,13 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import membersApi from '@api/members.api';
+import { getMemberProfile } from '@api/members.api';
 import AwardIcon from '@assets/icon/award.svg?react';
 import ChartIcon from '@assets/icon/chart.svg?react';
 import EditIcon from '@assets/icon/edit.svg?react';
 import GroupIcon from '@assets/icon/group.svg?react';
 import OAuth from '@components/Auth/OAuth';
+import { MemberType } from '@utils/types/member.type';
 import { isApp } from '@utils/userAgentIdentifier';
 
 import { useIntegrateMember } from '@hooks/queries/members.query';
@@ -39,9 +40,9 @@ const GuestToMember = () => {
 
   const integrateMember = useIntegrateMember();
 
-  const onOAuthSuccess = async () => {
+  const onOAuthSuccess = async (): Promise<MemberType> => {
     if (isApp()) {
-      return await membersApi.getMemberProfile();
+      return await getMemberProfile();
     }
     return await integrateMember.mutateAsync();
   };

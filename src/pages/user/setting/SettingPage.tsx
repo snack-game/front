@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useResetRecoilState } from 'recoil';
 
-import authApi from '@api/auth.api';
+import { logOut } from '@api/auth.api';
 import TopBar from '@components/TopBar/TopBar';
 import { resetUserState } from '@utils/atoms/member.atom';
 
@@ -27,7 +27,7 @@ const SettingPage = () => {
 
   const handleLogout = async () => {
     resetUser();
-    await authApi.logOut();
+    await logOut();
     openToast(t('login_logout'), 'success');
     deleteStorageValue();
     window.dispatchEvent(new Event('loggedOut'));

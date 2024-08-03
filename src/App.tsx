@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
-import membersApi from '@api/members.api';
+import { getMemberProfile } from '@api/members.api';
 import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
@@ -51,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     const updateProfile = async () => {
-      const profile = await membersApi.getMemberProfile();
+      const profile = await getMemberProfile();
       setUserState({ ...profile });
     };
 
