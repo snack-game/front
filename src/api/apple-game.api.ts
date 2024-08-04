@@ -6,59 +6,43 @@ import {
 
 import api from './index';
 
-const appleGameApi = {
-  endPoint: {
-    game: '/v2/games/1',
-    checkMove: '/v2/sessions',
-    gameEnd: '/v2/sessions',
-    gameRefresh: '/v2/sessions',
-  },
+export const snackGameStart = async (): Promise<goldModeType> => {
+  const { data } = await api.post('/v2/games/1');
 
-  gameStart: async (): Promise<goldModeType> => {
-    const { data } = await api.post(appleGameApi.endPoint.game);
-
-    return {
-      apples: data.apples,
-      sessionId: data.sessionId,
-      score: data.score,
-    };
-  },
-
-  checkGameMove: async ({
-    sessionId,
-    rects,
-  }: checkMoveType): Promise<void | goldModeType> => {
-    const { data } = await api.put(
-      `${appleGameApi.endPoint.checkMove}/${sessionId}/moves`,
-      rects,
-    );
-
-    return {
-      apples: data.apples,
-      sessionId: data.sessionId,
-      score: data.score,
-    };
-  },
-
-  gameEnd: async (sessionId: number): Promise<gameEndType> => {
-    const { data } = await api.put(
-      `${appleGameApi.endPoint.gameEnd}/${sessionId}/end`,
-    );
-
-    return { ...data };
-  },
-
-  gameRefresh: async (sessionId: number): Promise<goldModeType> => {
-    const { data } = await api.delete(
-      `${appleGameApi.endPoint.gameRefresh}/${sessionId}/board`,
-    );
-
-    return {
-      apples: data.apples,
-      sessionId: data.sessionId,
-      score: data.score,
-    };
-  },
+  return {
+    apples: data.apples,
+    sessionId: data.sessionId,
+    score: data.score,
+  };
 };
 
-export default appleGameApi;
+export const checkSnackGameMove = async ({
+  sessionId,
+  rects,
+}: checkMoveType): Promise<void | goldModeType> => {
+  const { data } = await api.put(`/v2/sessions/${sessionId}/moves`, rects);
+
+  return {
+    apples: data.apples,
+    sessionId: data.sessionId,
+    score: data.score,
+  };
+};
+
+export const snackGameEnd = async (sessionId: number): Promise<gameEndType> => {
+  const { data } = await api.put(`/v2/sessions/${sessionId}/end`);
+
+  return { ...data };
+};
+
+export const snackGameRefresh = async (
+  sessionId: number,
+): Promise<goldModeType> => {
+  const { data } = await api.delete(`/v2/sessions/${sessionId}/board`);
+
+  return {
+    apples: data.apples,
+    sessionId: data.sessionId,
+    score: data.score,
+  };
+};

@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 
-import authApi from '@api/auth.api';
+import { guest, login, register, social } from '@api/auth.api';
 import { userState } from '@utils/atoms/member.atom';
 import { MemberType } from '@utils/types/member.type';
 
@@ -66,7 +66,7 @@ export const useMemberAuth = ({ apiMethod }: useMemberAuthProps) => {
 
 export const useGuest = () => {
   return useMutation({
-    mutationFn: authApi.guest,
+    mutationFn: guest,
     onSuccess: useMemberOnSuccess(),
     onError: useOnError(),
     throwOnError: memberErrorBoundary,
@@ -75,16 +75,16 @@ export const useGuest = () => {
 
 export const useRegister = () =>
   useMemberAuth({
-    apiMethod: authApi.register,
+    apiMethod: register,
   });
 
 export const useLogin = () =>
   useMemberAuth({
-    apiMethod: authApi.login,
+    apiMethod: login,
   });
 
 export const useSocial = () => {
   return useMutation({
-    mutationFn: authApi.social,
+    mutationFn: social,
   });
 };

@@ -5,58 +5,35 @@ import {
   SeasonType,
 } from '@utils/types/common.type';
 
-const rankingApi = {
-  endPoint: {
-    ranking: ({
-      gameId,
-      season,
-      user = false,
-    }: {
-      gameId: RankingViewType;
-      season?: number;
-      user?: boolean;
-    }) => {
-      const seasonPath = season ? `/${season}` : '';
-      const userPath = user ? '/me' : '';
-
-      return `/rankings/${gameId}${seasonPath}${userPath}?by=BEST_SCORE`;
-    },
-    seasons: '/seasons',
-  },
-
-  totalRanking: async (gameId: RankingViewType) => {
-    const { data } = await api.get(rankingApi.endPoint.ranking({ gameId }));
-    return data;
-  },
-
-  userRanking: async (gameId: RankingViewType) => {
-    const { data } = await api.get(
-      rankingApi.endPoint.ranking({ gameId, user: true }),
-    );
-    return data;
-  },
-
-  seasonRanking: async (
-    season: number,
-    gameId: RankingViewType,
-  ): Promise<RankingType[]> => {
-    const { data } = await api.get(
-      rankingApi.endPoint.ranking({ gameId, season }),
-    );
-    return data;
-  },
-
-  seasonRankingMe: async (season: number, gameId: RankingViewType) => {
-    const { data } = await api.get(
-      rankingApi.endPoint.ranking({ gameId, season, user: true }),
-    );
-    return data;
-  },
-
-  seasons: async (): Promise<SeasonType[]> => {
-    const { data } = await api.get(rankingApi.endPoint.seasons);
-    return data;
-  },
+export const totalRanking = async (gameId: RankingViewType) => {
+  const { data } = await api.get(`/rankings/${gameId}?by=BEST_SCORE`);
+  return data;
 };
 
-export default rankingApi;
+export const userRanking = async (gameId: RankingViewType) => {
+  const { data } = await api.get(`/rankings/${gameId}/me?by=BEST_SCORE`);
+  return data;
+};
+
+export const seasonRanking = async (
+  season: number,
+  gameId: RankingViewType,
+): Promise<RankingType[]> => {
+  const { data } = await api.get(`/rankings/${gameId}/${season}?by=BEST_SCORE`);
+  return data;
+};
+
+export const seasonRankingMe = async (
+  season: number,
+  gameId: RankingViewType,
+) => {
+  const { data } = await api.get(
+    `/rankings/${gameId}/${season}/me?by=BEST_SCORE`,
+  );
+  return data;
+};
+
+export const seasons = async (): Promise<SeasonType[]> => {
+  const { data } = await api.get('/seasons');
+  return data;
+};

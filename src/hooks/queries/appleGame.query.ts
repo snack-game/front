@@ -2,7 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRecoilValue } from 'recoil';
 
-import appleGameApi from '@api/apple-game.api';
+import {
+  checkSnackGameMove,
+  snackGameEnd,
+  snackGameRefresh,
+  snackGameStart,
+} from '@api/apple-game.api';
 import { scoredAppleRectType } from '@pages/games/SnackGame/game/legacy/legacyType';
 import { userState } from '@utils/atoms/member.atom';
 
@@ -31,7 +36,7 @@ export const useGoldModeStart = () => {
   const guestMutation = useGuest();
 
   const gameStartMutation = useMutation({
-    mutationFn: appleGameApi.gameStart,
+    mutationFn: snackGameStart,
     onError: useAppleGameError(),
     throwOnError: appleGameErrorBoundary,
   });
@@ -50,7 +55,7 @@ export const useGoldModeStart = () => {
 
 export const useAppleGameSessionEnd = () => {
   const gameEnd = useMutation({
-    mutationFn: appleGameApi.gameEnd,
+    mutationFn: snackGameEnd,
     onError: useAppleGameError(),
     throwOnError: appleGameErrorBoundary,
   });
@@ -60,7 +65,7 @@ export const useAppleGameSessionEnd = () => {
 
 export const useGoldModeCheck = () => {
   const checkGameMove = useMutation({
-    mutationFn: appleGameApi.checkGameMove,
+    mutationFn: checkSnackGameMove,
     onError: useAppleGameError(),
     throwOnError: appleGameErrorBoundary,
   });
@@ -84,7 +89,7 @@ export const useGoldModeCheck = () => {
 
 export const useAppleGameRefresh = () => {
   return useMutation({
-    mutationFn: appleGameApi.gameRefresh,
+    mutationFn: snackGameRefresh,
     onError: useAppleGameError(),
     throwOnError: appleGameErrorBoundary,
   });
