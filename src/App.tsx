@@ -38,6 +38,8 @@ const UserPage = lazy(() => import('@pages/user/UserPage'));
 
 const SettingPage = lazy(() => import('@pages/user/setting/SettingPage'));
 
+const WithdrawPage = lazy(() => import('@pages/withdraw/WithdrawPage'));
+
 const App = () => {
   const [userStateValue, setUserState] = useRecoilState(userState);
   const resetUser = useResetRecoilState(resetUserState);
@@ -106,6 +108,9 @@ const App = () => {
 
             {/*Setting*/}
             <Route path={PATH.SETTING} element={<SettingPage />} />
+
+            {/* Withdraw */}
+            <Route path={PATH.WITHDRAW} element={<WithdrawPage />} />
 
             {/*Error*/}
             <Route
