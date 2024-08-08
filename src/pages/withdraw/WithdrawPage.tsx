@@ -36,7 +36,7 @@ const WithdrawPage = () => {
     openToast(t('withdraw_success'), 'success');
     deleteStorageValue();
     window.dispatchEvent(new Event('loggedOut'));
-    navigate(PATH.MAIN, { replace: true }); // TODO: #281 이후 게임 페이지로 이동하도록 수정
+    navigate(PATH.SNACK_GAME, { replace: true });
   };
 
   return (
