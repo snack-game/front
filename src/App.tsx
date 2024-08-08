@@ -8,8 +8,8 @@ import ErrorBoundary from '@components/base/ErrorBoundary';
 import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
-import { AuthPage } from '@pages/auth/AuthPage';
 import GameLayout from '@pages/GameLayout';
+import { PrivateRoute } from '@pages/PrivateRoute';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
@@ -84,8 +84,6 @@ const App = () => {
             {/*Main*/}
             <Route path={PATH.MAIN} element={<MainPage />} />
 
-            <Route path={PATH.AUTH} element={<AuthPage />} />
-
             {/*OAuth*/}
             <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
             <Route
@@ -97,20 +95,25 @@ const App = () => {
               {/*Game*/}
               <Route path={PATH.SNACK_GAME} element={<SnackGamePage />} />
 
-              {/*RANKING*/}
+              {/*Ranking*/}
               <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
 
-              {/* User */}
-              <Route path={PATH.USER} element={<UserPage />} />
+              <Route element={<PrivateRoute />}>
+                {/* User */}
+                <Route path={PATH.USER} element={<UserPage />} />
+              </Route>
             </Route>
 
+            <Route element={<PrivateRoute />}>
+              {/*Setting*/}
+              <Route path={PATH.SETTING} element={<SettingPage />} />
+
+              {/* Withdraw */}
+              <Route path={PATH.WITHDRAW} element={<WithdrawPage />} />
+            </Route>
+
+            {/* Policy */}
             <Route path={PATH.POLICY} element={<PolicyPage />} />
-
-            {/*Setting*/}
-            <Route path={PATH.SETTING} element={<SettingPage />} />
-
-            {/* Withdraw */}
-            <Route path={PATH.WITHDRAW} element={<WithdrawPage />} />
 
             {/*Error*/}
             <Route
