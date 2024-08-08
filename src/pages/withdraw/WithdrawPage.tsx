@@ -1,15 +1,68 @@
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
+import Button from '@components/Button/Button';
 import TopBar from '@components/TopBar/TopBar';
 
 import PATH from '@constants/path.constant';
 
+const warningText = [
+  '1. 랭킹 데이터가 삭제됩니다.',
+  '2. 게임 전적 데이터가 삭제됩니다.',
+  '3. 레벨이 초기화됩니다.',
+];
+
 const WithdrawPage = () => {
   const { t } = useTranslation('setting');
 
+  const [checked, setChecked] = useState(false);
+
   return (
     <>
-      <TopBar title={t('withdraw')} backUrl={PATH.SETTING} />
+      <Helmet>
+        <title>Snack Game || Withdraw</title>
+      </Helmet>
+
+      <div className="flex h-screen flex-col items-center py-5">
+        <TopBar title={t('withdraw')} backUrl={PATH.SETTING} />
+
+        <div className="flex flex-1 flex-col justify-between px-4 sm:w-3/5">
+          <div className="flex flex-col gap-4">
+            <p className="text-center text-2xl font-bold">
+              탈퇴 전, 안내사항을 꼭 확인하세요!
+            </p>
+            <div className="text-md flex w-full gap-2 border-l-4 border-primary bg-primary bg-opacity-20 px-2 py-3">
+              <p>⚠️</p>
+              <p className="break-keep pr-12 sm:pr-2">
+                동일한 소셜 계정으로 재가입하더라도 복구가 불가능합니다.
+              </p>
+            </div>
+            {warningText.map((text) => (
+              <div
+                key={text}
+                className="text-md w-full rounded-md border border-primary border-opacity-80 p-2"
+              >
+                {text}
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <label className="flex items-center justify-center gap-2">
+              <input
+                type="checkbox"
+                className="h-5 w-5"
+                onChange={(event) => setChecked(event.target.checked)}
+              />
+              위 내용을 확인하였으며, 탈퇴에 동의합니다.
+            </label>
+            <Button size="lg" className="mt-4 w-full" disabled={!checked}>
+              탈퇴하기
+            </Button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
