@@ -5,6 +5,7 @@
   "logout": "Logout",
   "login_logout": "Logout Successful!",
   "withdraw": "Delete Account",
+  "withdraw_success": "Delete Account Successful!",
 
   "service": "Service Information",
   "privacy_policy": "Privacy Policy",
