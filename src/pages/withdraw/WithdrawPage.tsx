@@ -1,22 +1,47 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
+import { useResetRecoilState } from 'recoil';
 
 import Button from '@components/Button/Button';
 import TopBar from '@components/TopBar/TopBar';
+import { resetUserState } from '@utils/atoms/member.atom';
 
+import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
+import { useDeleteMember } from '@hooks/queries/members.query';
+import useLocalStorage from '@hooks/useLocalStorage';
+import useToast from '@hooks/useToast';
 
 const warningText = [
   '1. 랭킹 데이터가 삭제됩니다.',
   '2. 게임 전적 데이터가 삭제됩니다.',
-  '3. 레벨이 초기화됩니다.',
+  '3. 레벨과 경험치가 초기화됩니다.',
 ];
 
 const WithdrawPage = () => {
-  const { t } = useTranslation('setting');
-
   const [checked, setChecked] = useState(false);
+
+  const resetUser = useResetRecoilState(resetUserState); // TODO: user / member 표현 통일하기
+  const withdrawMember = useDeleteMember();
+
+  const navigate = useNavigate();
+  const openToast = useToast();
+  const { t } = useTranslation('setting');
+  const { deleteStorageValue } = useLocalStorage({
+    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
+  });
+
+  const handleWithdraw = async () => {
+    resetUser();
+    await withdrawMember.mutateAsync();
+    openToast(t('withdraw_success'), 'success');
+    deleteStorageValue();
+    window.dispatchEvent(new Event('loggedOut'));
+    navigate(PATH.MAIN, { replace: true }); // TODO: #281 이후 게임 페이지로 이동하도록 수정
+  };
 
   return (
     <>
@@ -57,7 +82,12 @@ const WithdrawPage = () => {
               />
               위 내용을 확인하였으며, 탈퇴에 동의합니다.
             </label>
-            <Button size="lg" className="mt-4 w-full" disabled={!checked}>
+            <Button
+              size="lg"
+              className="mt-4 w-full"
+              disabled={!checked}
+              onClick={handleWithdraw}
+            >
               탈퇴하기
             </Button>
           </div>

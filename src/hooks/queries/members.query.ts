@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
+import { withdraw } from '@api/auth.api';
 import {
   changeMemberImage,
   changeMemberName,
@@ -72,4 +73,8 @@ export const useGetMemberProfile = () => {
   });
 
   return data;
+};
+
+export const useDeleteMember = () => {
+  return useMutation({ mutationFn: withdraw });
 };
