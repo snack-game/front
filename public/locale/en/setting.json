@@ -4,6 +4,7 @@
   "account": "Account",
   "logout": "Logout",
   "login_logout": "Logout Successful!",
+  "withdraw": "Delete Account",
 
   "service": "Service Information",
   "privacy_policy": "Privacy Policy",

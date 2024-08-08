@@ -1,0 +1,14 @@
+{
+  "withdraw": "Delete Account",
+  "withdraw_success": "Delete Account Successful!",
+
+  "notice": "Please review the information before deleting your account!",
+  "warning": "Rejoining with the same social account cannot recover your data.",
+
+  "ranking_deleted": "1. Ranking data will be deleted.",
+  "history_deleted": "2. Game history data will be deleted.",
+  "level_reset": "3. Level and experience points will be reset.",
+
+  "agree_with_notice": "I have read and agree to the information.",
+  "withdraw_confirm": "Delete Account"
+}

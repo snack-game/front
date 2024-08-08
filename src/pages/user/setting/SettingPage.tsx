@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { logOut } from '@api/auth.api';
 import TopBar from '@components/TopBar/TopBar';
-import { resetUserState } from '@utils/atoms/member.atom';
+import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
@@ -18,8 +18,10 @@ import { List } from './components/List';
 const SettingPage = () => {
   const { t } = useTranslation('setting');
 
-  const openToast = useToast();
+  const userInfo = useRecoilValue(userState);
   const resetUser = useResetRecoilState(resetUserState);
+
+  const openToast = useToast();
   const navigate = useNavigate();
   const { deleteStorageValue } = useLocalStorage({
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
@@ -40,6 +42,11 @@ const SettingPage = () => {
       <div>
         <List title={t('account')}>
           <List.Item onClick={handleLogout}> {t('logout')} </List.Item>
+          {userInfo.type !== 'GUEST' && (
+            <List.Item onClick={() => navigate(PATH.WITHDRAW)}>
+              {t('withdraw')}
+            </List.Item>
+          )}
         </List>
         <List title={t('etc')}>
           <List.Item>

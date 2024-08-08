@@ -9,6 +9,7 @@ const PATH = {
   SETTING: '/user/setting',
   NOT_FOUND_ERROR: '*',
   POLICY: '/policy',
+  WITHDRAW: '/user/setting/withdraw',
 
   SNACK_GAME: '/snack-game',
   SNACK_GAME_RANKING: '/snack-game/ranking',

@@ -37,3 +37,7 @@ export const social = async (): Promise<MemberType> => {
 export const tokenReIssue = async (): Promise<void> => {
   await api.patch('tokens/me', {});
 };
+
+export const withdraw = async (): Promise<void> => {
+  await api.delete('/members/me');
+};
