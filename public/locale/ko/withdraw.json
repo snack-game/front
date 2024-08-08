@@ -1,0 +1,14 @@
+{
+  "withdraw": "회원 탈퇴",
+  "withdraw_success": "회원 탈퇴 성공!",
+
+  "notice": "탈퇴 전, 안내사항을 꼭 확인하세요!",
+  "warning": "동일한 소셜 계정으로 재가입하더라도 복구가 불가능합니다.",
+
+  "ranking_deleted": "1. 랭킹 데이터가 삭제됩니다.",
+  "history_deleted": "2. 게임 전적 데이터가 삭제됩니다.",
+  "level_reset": "3. 레벨과 경험치가 초기화됩니다.",
+
+  "agree_with_notice": "위 내용을 확인하였으며, 탈퇴에 동의합니다.",
+  "withdraw_confirm": "탈퇴하기"
+}

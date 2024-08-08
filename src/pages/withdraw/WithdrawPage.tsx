@@ -15,11 +15,7 @@ import { useDeleteMember } from '@hooks/queries/members.query';
 import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
-const warningText = [
-  '1. 랭킹 데이터가 삭제됩니다.',
-  '2. 게임 전적 데이터가 삭제됩니다.',
-  '3. 레벨과 경험치가 초기화됩니다.',
-];
+const warningTextKey = ['ranking_deleted', 'history_deleted', 'level_reset'];
 
 const WithdrawPage = () => {
   const [checked, setChecked] = useState(false);
@@ -29,7 +25,7 @@ const WithdrawPage = () => {
 
   const navigate = useNavigate();
   const openToast = useToast();
-  const { t } = useTranslation('setting');
+  const { t } = useTranslation('withdraw');
   const { deleteStorageValue } = useLocalStorage({
     key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
   });
@@ -54,21 +50,17 @@ const WithdrawPage = () => {
 
         <div className="flex flex-1 flex-col justify-between px-4 sm:w-3/5">
           <div className="flex flex-col gap-4">
-            <p className="text-center text-2xl font-bold">
-              탈퇴 전, 안내사항을 꼭 확인하세요!
-            </p>
+            <p className="text-center text-2xl font-bold">{t('notice')}</p>
             <div className="text-md flex w-full gap-2 border-l-4 border-primary bg-primary bg-opacity-20 px-2 py-3">
               <p>⚠️</p>
-              <p className="break-keep pr-12 sm:pr-2">
-                동일한 소셜 계정으로 재가입하더라도 복구가 불가능합니다.
-              </p>
+              <p className="break-keep pr-12 sm:pr-2">{t('warning')}</p>
             </div>
-            {warningText.map((text) => (
+            {warningTextKey.map((localeKey) => (
               <div
-                key={text}
+                key={localeKey}
                 className="text-md w-full rounded-md border border-primary border-opacity-80 p-2"
               >
-                {text}
+                {t(localeKey)}
               </div>
             ))}
           </div>
@@ -80,7 +72,7 @@ const WithdrawPage = () => {
                 className="h-5 w-5"
                 onChange={(event) => setChecked(event.target.checked)}
               />
-              위 내용을 확인하였으며, 탈퇴에 동의합니다.
+              {t('agree_with_notice')}
             </label>
             <Button
               size="lg"
@@ -88,7 +80,7 @@ const WithdrawPage = () => {
               disabled={!checked}
               onClick={handleWithdraw}
             >
-              탈퇴하기
+              {t('withdraw_confirm')}
             </Button>
           </div>
         </div>
