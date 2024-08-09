@@ -8,6 +8,7 @@
 
   "login_success": "Login Successful!",
   "login_fail": "Login Failed!",
+  "guest_login_success": "Logged in as guest!",
 
   "member_change_name": "Name Change Completed!",
   "member_change_group": "Group Change Completed!",

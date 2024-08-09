@@ -8,6 +8,7 @@
 
   "login_success": "로그인 성공!",
   "login_fail": "로그인 실패!",
+  "guest_login_success": "자동으로 게스트 로그인되었습니다!",
 
   "member_change_name": "이름 변경 완료!",
   "member_change_group": "그룹 변경 완료!",
