@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
 
+import { useRecoilValue } from 'recoil';
+
+import { pixiState } from '@utils/atoms/game.atom';
+import { userState } from '@utils/atoms/member.atom';
+
 import useModal from '@hooks/useModal';
 
 import { SnackGameDefaultResponse } from './game.type';
@@ -25,6 +30,9 @@ type Props = {
 const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const canvasBaseRef = useRef<HTMLDivElement>(null);
   const { openModal } = useModal();
+
+  const pixiValue = useRecoilValue(pixiState);
+  const userInfo = useRecoilValue(userState);
 
   // TODO: 훅 안으로 끌고 들어가기
   const initializeAppScreens = async (application: SnackgameApplication) => {
@@ -107,11 +115,16 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   const navigateToLobby = async () => {
     session = undefined;
+    application.dismissPopup();
     application.show(LobbyScreen);
   };
 
   useEffect(() => {
     replaceErrorHandler(handleApplicationError);
+  }, []);
+
+  useEffect(() => {
+    if (pixiValue.pixiInit && !userInfo.id) navigateToLobby();
   }, []);
 
   return (
