@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 
+import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
 import { SnackGameDefaultResponse } from './game.type';
@@ -33,13 +34,18 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   const pixiValue = useRecoilValue(pixiState);
   const userInfo = useRecoilValue(userState);
+  const guestMutation = useGuest();
 
   // TODO: 훅 안으로 끌고 들어가기
   const initializeAppScreens = async (application: SnackgameApplication) => {
     application.appScreenPool.insert(
       [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
       [PausePopup, () => new PausePopup(application, handleGameResume)],
-      [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
+      [
+        LobbyScreen,
+        () =>
+          new LobbyScreen(application, handleSetMode, handleNonLoggedInUser),
+      ],
       [
         GameScreen,
         () =>
@@ -67,6 +73,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
+
+  const handleNonLoggedInUser = async () => {
+    if (!userInfo.id) await guestMutation.mutateAsync();
+  };
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
@@ -124,7 +134,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (pixiValue.pixiInit && !userInfo.id) navigateToLobby();
+    if (pixiValue.assetsInit && !userInfo.id) navigateToLobby();
   }, []);
 
   return (
