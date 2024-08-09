@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
 
+import { useRecoilValue } from 'recoil';
+
+import { userState } from '@utils/atoms/member.atom';
+
+import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
 import { SnackGameDefaultResponse } from './game.type';
@@ -26,12 +31,19 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const canvasBaseRef = useRef<HTMLDivElement>(null);
   const { openModal } = useModal();
 
+  const guestMutation = useGuest();
+  const userInfo = useRecoilValue(userState);
+
   // TODO: 훅 안으로 끌고 들어가기
   const initializeAppScreens = async (application: SnackgameApplication) => {
     application.appScreenPool.insert(
       [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
       [PausePopup, () => new PausePopup(application, handleGameResume)],
-      [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
+      [
+        LobbyScreen,
+        () =>
+          new LobbyScreen(application, handleSetMode, handleNonLoggedInUser),
+      ],
       [
         GameScreen,
         () =>
@@ -59,6 +71,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
+
+  const handleNonLoggedInUser = async () => {
+    if (!userInfo.id) await guestMutation.mutateAsync();
+  };
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
