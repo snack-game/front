@@ -33,7 +33,7 @@ const SettingPage = () => {
     openToast(t('login_logout'), 'success');
     deleteStorageValue();
     window.dispatchEvent(new Event('loggedOut'));
-    navigate(PATH.AUTH, { replace: true });
+    navigate(PATH.SNACK_GAME, { replace: true });
   };
 
   return (
