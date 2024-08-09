@@ -124,9 +124,8 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (pixiValue.pixiInit && !userInfo.id) navigateToLobby();
+    if (pixiValue.assetsInit && !userInfo.id) navigateToLobby();
   }, []);
-
   return (
     <div ref={canvasBaseRef} className={'mx-auto h-full w-full max-w-xl'}></div>
   );
