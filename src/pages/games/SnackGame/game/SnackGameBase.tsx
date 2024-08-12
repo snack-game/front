@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 
+import { QUERY_KEY } from '@constants/api.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
@@ -35,6 +37,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const pixiValue = useRecoilValue(pixiState);
   const userInfo = useRecoilValue(userState);
   const guestMutation = useGuest();
+  const queryClient = useQueryClient();
 
   // TODO: 훅 안으로 끌고 들어가기
   const initializeAppScreens = async (application: SnackgameApplication) => {
@@ -110,6 +113,9 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   const handleGameEnd = async () => {
     const data = await gameEnd(session!.sessionId);
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_KEY.USER_RANKING, QUERY_KEY.SEASON_USER_RANKING],
+    });
 
     openModal({
       children: (
