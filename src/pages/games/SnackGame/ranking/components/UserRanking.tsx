@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { Level } from '@components/Level/Level';
+import Spacing from '@components/Spacing/Spacing';
 import { GameSeasonProps } from '@utils/types/common.type';
 
 import {
@@ -21,7 +22,7 @@ const UserRanking = ({ season, gameId }: GameSeasonProps) => {
 
   return (
     <>
-      {userRanking && (
+      {userRanking ? (
         <div className="m-auto mb-20 mt-8 w-[90%] rounded-full border-2 border-primary bg-primary-light px-6 py-3 text-primary-deep-dark lg:w-1/2">
           <div className="flex h-full w-full items-center justify-around">
             <div className="flex flex-col">
@@ -41,6 +42,8 @@ const UserRanking = ({ season, gameId }: GameSeasonProps) => {
             </div>
           </div>
         </div>
+      ) : (
+        <Spacing size={5} />
       )}
     </>
   );
