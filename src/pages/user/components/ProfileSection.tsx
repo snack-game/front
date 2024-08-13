@@ -44,7 +44,7 @@ const ProfileSection = ({
 
   const newGroup = useInput<string>({
     initialValue: profile.group?.name || '',
-    isValid: (group) => (group ? GROUP_CHANGE_REGEXP.test(group) : true),
+    isValid: (group) => GROUP_CHANGE_REGEXP.test(group),
   });
 
   const setUserState = useSetRecoilState(userState);
@@ -67,8 +67,8 @@ const ProfileSection = ({
     if (profile.name !== newName.value) {
       newProfile = await changeUserName.mutateAsync(newName.value);
     }
-    if (newGroup.value && profile.group?.name !== newGroup.value) {
-      newProfile = await changeGroupName.mutateAsync(newGroup.value);
+    if (profile.group && profile.group.name !== newGroup.value) {
+      newProfile = await changeGroupName.mutateAsync(newGroup.value || null);
     }
     if (newImageFile !== null) {
       newProfile = await changeUserImage.mutateAsync(newImageFile);

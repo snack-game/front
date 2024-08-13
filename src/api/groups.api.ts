@@ -11,7 +11,9 @@ export const getGroupsNames = async (startWith: string) => {
   return data;
 };
 
-export const changeGroupName = async (group: string): Promise<MemberType> => {
+export const changeGroupName = async (
+  group: string | null,
+): Promise<MemberType> => {
   const { data } = await api.put('members/me/group', {
     group,
   });
