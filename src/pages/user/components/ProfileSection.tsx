@@ -39,12 +39,12 @@ const ProfileSection = ({
 
   const newName = useInput<string>({
     initialValue: profile.name || '',
-    isInvalid: (name) => NAME_REGEXP.test(name),
+    isValid: (name) => NAME_REGEXP.test(name),
   });
 
   const newGroup = useInput<string>({
     initialValue: profile.group?.name || '',
-    isInvalid: (group) => (group ? GROUP_CHANGE_REGEXP.test(group) : true),
+    isValid: (group) => (group ? GROUP_CHANGE_REGEXP.test(group) : true),
   });
 
   const setUserState = useSetRecoilState(userState);

@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 
 interface useInputProps<T> {
   initialValue: T;
-  isInvalid?: (value: T) => boolean;
+  isValid?: (value: T) => boolean;
 }
 
 export interface useInputResult<T> {
@@ -14,18 +14,18 @@ export interface useInputResult<T> {
 
 const useInput = <T>({
   initialValue,
-  isInvalid,
+  isValid,
 }: useInputProps<T>): useInputResult<T> => {
   const [valid, setValid] = useState<boolean>(
-    isInvalid ? isInvalid(initialValue) : true,
+    isValid ? isValid(initialValue) : true,
   );
   const [value, setValue] = useState(initialValue);
 
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>): void => {
     const eventValue = event.target.value as T;
 
-    if (isInvalid) {
-      setValid(isInvalid(eventValue));
+    if (isValid) {
+      setValid(isValid(eventValue));
     }
 
     setValue(eventValue);
