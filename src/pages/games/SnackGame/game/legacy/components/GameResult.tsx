@@ -21,7 +21,7 @@ interface GameResultProps {
 }
 
 const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
-  const profile = useGetMemberProfile();
+  const { data: profile } = useGetMemberProfile();
   const userStateValue = useRecoilValue(userState);
   const integrateMember = useIntegrateMember();
   const { closeModal } = useModal();

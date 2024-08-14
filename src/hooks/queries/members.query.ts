@@ -67,12 +67,10 @@ export const useIntegrateMember = () => {
 };
 
 export const useGetMemberProfile = () => {
-  const { data } = useSuspenseQuery({
+  return useSuspenseQuery({
     queryKey: [QUERY_KEY.USER_PROFILE],
     queryFn: getMemberProfile,
   });
-
-  return data;
 };
 
 export const useDeleteMember = () => {
