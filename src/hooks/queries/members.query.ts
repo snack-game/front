@@ -70,7 +70,6 @@ export const useGetMemberProfile = () => {
   const { data } = useSuspenseQuery({
     queryKey: [QUERY_KEY.USER_PROFILE],
     queryFn: getMemberProfile,
-    gcTime: 0,
   });
 
   return data;
