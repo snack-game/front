@@ -8,7 +8,7 @@ export const convertHeic = async (imageFile: File) => {
     toType: 'image/jpeg',
     quality: Math.min(1.0, megabyte / imageFile.size),
   });
-  return new File([result], imageFile.name + '.jpg', {
+  return new File([result as BlobPart], imageFile.name + '.jpg', {
     type: 'image/jpeg',
   });
 };
