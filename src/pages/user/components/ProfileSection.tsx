@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
 import { userState } from '@utils/atoms/member.atom';
+import { convertHeic } from '@utils/heicConverter';
 import { MemberType } from '@utils/types/member.type';
 
 import { QUERY_KEY } from '@constants/api.constant';
@@ -14,6 +15,7 @@ import {
   useChangeUserName,
 } from '@hooks/queries/members.query';
 import useInput from '@hooks/useInput';
+import useToast from '@hooks/useToast';
 
 import EditImage from './EditImage';
 import EditInfo from './EditInfo';
@@ -34,6 +36,8 @@ const ProfileSection = ({
   onClickDone,
   onClickClose,
 }: ProfileSectionProps) => {
+  const openToast = useToast();
+
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImage, setNewImage] = useState<string | null>(null);
 
@@ -54,10 +58,21 @@ const ProfileSection = ({
   const changeGroupName = useChangeGroupName();
   const changeUserImage = useChangeUserImage();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (event.target.files !== null) {
-      setNewImageFile(event.target.files[0]);
-      setNewImage(URL.createObjectURL(event.target.files[0]));
+      let imageFile = event.target.files[0];
+      if (imageFile.type == 'image/heic') {
+        try {
+          imageFile = await convertHeic(imageFile);
+        } catch (error) {
+          openToast('사용할 수 없는 이미지입니다', 'error');
+          return;
+        }
+      }
+      setNewImageFile(imageFile);
+      setNewImage(URL.createObjectURL(imageFile));
     }
   };
 
