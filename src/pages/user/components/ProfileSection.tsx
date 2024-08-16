@@ -63,7 +63,7 @@ const ProfileSection = ({
   ) => {
     if (event.target.files !== null) {
       let imageFile = event.target.files[0];
-      if (imageFile.name.toLowerCase().endsWith('.heic')) {
+      if (imageFile.type == 'image/heic') {
         try {
           imageFile = await convertHeic(imageFile);
         } catch (error) {
