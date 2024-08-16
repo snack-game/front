@@ -6,7 +6,7 @@ export const convertHeic = async (imageFile: File) => {
   const result = await heic2any({
     blob: imageFile,
     toType: 'image/jpeg',
-    quality: megabyte / imageFile.size,
+    quality: Math.min(1.0, megabyte / imageFile.size),
   });
   return new File([result], imageFile.name + '.jpg', {
     type: 'image/jpeg',
