@@ -100,7 +100,7 @@ export class GameScreen extends Container implements AppScreen {
     const snackGameConfig = snackGameGetConfig({
       rows: 8,
       columns: 6,
-      duration: 30,
+      duration: 120,
       mode,
     });
 
