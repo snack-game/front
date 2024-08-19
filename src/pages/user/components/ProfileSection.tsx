@@ -79,16 +79,16 @@ const ProfileSection = ({
   const handleProfileChange = async () => {
     let newProfile = undefined;
 
+    if (newImageFile !== null) {
+      newProfile = await changeUserImage.mutateAsync(newImageFile);
+      setNewImageFile(null);
+    }
     if (profile.name !== newName.value) {
       newProfile = await changeUserName.mutateAsync(newName.value);
     }
     if (profile.group?.name !== newGroup.value) {
-      if (profile.group === null && newGroup.value === '') return;
+      if (profile.group === null && newGroup.value === '') return newProfile;
       newProfile = await changeGroupName.mutateAsync(newGroup.value || null);
-    }
-    if (newImageFile !== null) {
-      newProfile = await changeUserImage.mutateAsync(newImageFile);
-      setNewImageFile(null);
     }
 
     return newProfile;
