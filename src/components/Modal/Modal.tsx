@@ -34,12 +34,12 @@ const Modal = () => {
     <>
       {open && (
         <div
-          className={'z-modal fixed top-0 h-screen w-screen bg-gray-500/50'}
+          className={'fixed top-0 z-modal h-screen w-screen bg-gray-500/50'}
           onClick={handleClose}
         >
           <motion.div
             className={
-              'absolute left-1/2 top-1/2 h-1/2 w-[80%] min-w-fit rounded-xl bg-white p-10 shadow-md lg:max-h-[600px] lg:w-1/4 lg:max-w-[400px]'
+              'absolute left-1/2 top-1/2 flex min-h-[50%] w-[80%] min-w-fit flex-col rounded-xl bg-white p-10 shadow-md lg:max-h-[600px] lg:w-1/4 lg:max-w-[400px]'
             }
             onClick={(event) => event.stopPropagation()}
             initial={{ y: 10, opacity: 0, x: '-50%' }}
