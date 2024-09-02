@@ -106,7 +106,7 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   }, []);
 
   return (
-    <div className={'flex h-full flex-col items-center justify-evenly'}>
+    <div className={'flex flex-grow flex-col items-center justify-evenly'}>
       <div className={'flex w-full flex-col items-center gap-4'}>
         <span className={'font-semibold text-primary'}>{t('what_rank')}</span>
         <div

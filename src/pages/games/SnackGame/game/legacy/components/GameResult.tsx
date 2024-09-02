@@ -39,7 +39,7 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
   };
 
   return (
-    <div className={'flex h-full w-full flex-col justify-evenly'}>
+    <div className={'flex w-full flex-grow flex-col justify-evenly gap-4'}>
       <div className={'mx-auto flex flex-col items-center gap-4 font-semibold'}>
         <p className="text-6xl text-primary">{score}점</p>
 
