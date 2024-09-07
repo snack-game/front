@@ -196,8 +196,7 @@ export class GameScreen extends Container implements AppScreen {
   public async onHide({ width, height }: Rectangle) {
     this.score.hide();
     this.timer.hide();
-    this.vfx?.playGridExplosion();
-    await waitFor(1);
+    await this.vfx?.playGridExplosion();
   }
 
   /** 게임 종료 시 트리거 */

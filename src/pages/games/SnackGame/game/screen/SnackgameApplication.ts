@@ -8,17 +8,16 @@ export class SnackgameApplication extends Application {
   private _currentAppScreen?: AppScreen;
   private _currentPopup?: AppScreen;
 
-  get currentAppScreen(): AppScreen | undefined {
-    return this._currentAppScreen;
-  }
   private set currentAppScreen(appScreen: AppScreen) {
     this.stage.removeChildren();
     this._currentAppScreen = appScreen;
     this.stage.addChild(appScreen);
   }
-  get currentPopup() {
-    return this._currentPopup;
+
+  private get currentAppScreen(): AppScreen | undefined {
+    return this._currentAppScreen;
   }
+
   private set currentPopup(popup: AppScreen | undefined) {
     if (this.currentPopup) {
       this.stage.removeChild(this.currentPopup);
@@ -27,6 +26,10 @@ export class SnackgameApplication extends Application {
       this.stage.addChild(popup);
     }
     this._currentPopup = popup;
+  }
+
+  private get currentPopup() {
+    return this._currentPopup;
   }
 
   constructor(
@@ -58,6 +61,7 @@ export class SnackgameApplication extends Application {
   }
 
   public async showAppScreen(appScreen: AppScreen) {
+    this.dismissPopup();
     if (this.currentAppScreen) {
       await this.hideAndReset(this.currentAppScreen);
     }

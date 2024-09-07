@@ -81,8 +81,6 @@ export class GameEffects extends Container {
 
   /** 게임 시작 전 스낵이 위치를 찾아가는 애니메이션 */
   public async animationBeforeStart(snack: Snack) {
-    const position = this.toLocal(snack.getGlobalPosition());
-
     const copySnack = pool.get(Snack);
     copySnack.setup({
       name: snack.name,
@@ -95,7 +93,7 @@ export class GameEffects extends Container {
     copySnack.position.x = this.game.score.x;
     copySnack.position.y = this.game.score.y;
     this.addChild(copySnack);
-    await this.playFlyToTarget(copySnack, { x: position.x, y: position.y });
+    await this.playFlyToTarget(copySnack, this.toLocal(snack.getGlobalPosition()));
     snack.visible = true;
     this.removeChild(copySnack);
     pool.giveBack(copySnack);

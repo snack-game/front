@@ -131,7 +131,6 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   const navigateToLobby = async () => {
     session = undefined;
-    application.dismissPopup();
     application.show(LobbyScreen);
   };
 
