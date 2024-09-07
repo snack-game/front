@@ -76,7 +76,7 @@ export class GameEffects extends Container {
     this.addChild(snack);
     await this.playFlyToTarget(snack, { x, y });
     this.removeChild(snack);
-    pool.giveBack(Snack);
+    pool.giveBack(snack);
   }
 
   /** 게임 시작 전 스낵이 위치를 찾아가는 애니메이션 */
