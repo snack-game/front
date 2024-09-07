@@ -63,7 +63,7 @@ export class GameEffects extends Container {
     const x = this.game.score.x + randomRange(-20, 20);
     const y = this.game.score.y - 55;
 
-    const snack = new Snack();
+    const snack = pool.get(Snack);
     snack.setup({
       name: data.snack.name,
       snackNum: data.snack.snackNum,
@@ -76,11 +76,12 @@ export class GameEffects extends Container {
     this.addChild(snack);
     await this.playFlyToTarget(snack, { x, y });
     this.removeChild(snack);
+    pool.giveBack(Snack);
   }
 
   /** 게임 시작 전 스낵이 위치를 찾아가는 애니메이션 */
   public async animationBeforeStart(snack: Snack) {
-    const copySnack = new Snack();
+    const copySnack = pool.get(Snack);
     copySnack.setup({
       name: snack.name,
       snackNum: snack.snackNum,
@@ -95,6 +96,7 @@ export class GameEffects extends Container {
     await this.playFlyToTarget(copySnack, this.toLocal(snack.getGlobalPosition()));
     snack.visible = true;
     this.removeChild(copySnack);
+    pool.giveBack(copySnack);
   }
 
   /** a, b 사이의 거리 계산 */
