@@ -12,16 +12,17 @@ import { RoundedBox } from '../ui/RoundedBox';
 export class PausePopup extends Container implements AppScreen {
   /** 현재 화면을 덮는 어두운 반투명 배경 */
   private bg: Sprite;
-  /** 팝업 UI 구성 요소를 위한 컨테이너 */
   private panel: Container;
-  /** 팝업 제목 레이블 */
   private title: Label;
-  /** 팝업을 닫는 버튼 */
-  private doneButton: LargeButton;
-  /** 패널 배경 */
   private panelBase: RoundedBox;
+  private resumeButton: LargeButton;
+  private endButton: LargeButton;
 
-  constructor(private app: SnackgameApplication, private handleGameResume: () => Promise<void>) {
+  constructor(
+    private app: SnackgameApplication,
+    private handleGameResume: () => Promise<void>,
+    private handleGameEnd: () => Promise<void>,
+  ) {
     super();
 
     this.bg = new Sprite(Texture.WHITE);
@@ -42,17 +43,32 @@ export class PausePopup extends Container implements AppScreen {
     this.title.y = -80;
     this.panel.addChild(this.title);
 
-    this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
-    this.doneButton.y = 70;
-    this.doneButton.onPress.connect(this.handleDoneButton);
-    this.panel.addChild(this.doneButton);
+    this.endButton = new LargeButton({ text: "■", width: 90, height: 90 });
+    this.endButton.x = -100;
+    this.endButton.y = 70;
+    this.endButton.onPress.connect(this.handleEndButton);
+    this.panel.addChild(this.endButton);
+
+    this.resumeButton = new LargeButton({ text: '▶', width: 200, height: 90 });
+    this.resumeButton.x = 50;
+    this.resumeButton.y = 70;
+    this.resumeButton.onPress.connect(this.handleResumeButton);
+    this.panel.addChild(this.resumeButton);
   }
 
   async onPrepare(screen: Rectangle) {
     // no-op
   }
 
-  public handleDoneButton = async () => {
+  public handleEndButton = async () => {
+    try {
+      await this.handleGameEnd();
+    } catch (error) {
+      this.app.setError(error);
+    }
+  };
+
+  public handleResumeButton = async () => {
     try {
       await this.handleGameResume();
       this.app.dismissPopup();
