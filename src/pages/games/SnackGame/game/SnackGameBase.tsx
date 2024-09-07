@@ -43,7 +43,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const initializeAppScreens = async (application: SnackgameApplication) => {
     application.appScreenPool.insert(
       [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
-      [PausePopup, () => new PausePopup(application, handleGameResume)],
+      [PausePopup, () => new PausePopup(application, handleGameResume, handleGameEnd)],
       [
         LobbyScreen,
         () =>
