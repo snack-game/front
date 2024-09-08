@@ -5,6 +5,7 @@ import { Container, Rectangle } from 'pixi.js';
 import { AppScreen } from './appScreen';
 import { GameScreen } from './GameScreen';
 import { SnackgameApplication } from './SnackgameApplication';
+import { RulePopup } from '../popup/RulePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { IconButton } from '../ui/IconButton';
 import { LargeButton } from '../ui/LargeButton';
@@ -23,6 +24,8 @@ export class LobbyScreen extends Container implements AppScreen {
   private snackGameLetter: SnackGameLetter;
   /** 설정 버튼 */
   private settingsButton: IconButton;
+  /** 도움말 버튼 */
+  private questionButton: IconButton;
 
   constructor(
     private app: SnackgameApplication,
@@ -32,18 +35,28 @@ export class LobbyScreen extends Container implements AppScreen {
     super();
 
     this.waves = new Waves([0xdb7b2d, 0xfb923c, 0xffedd5]);
+
     this.settingsButton = new IconButton({
       image: 'settings',
       ripple: 'ripple',
     });
     this.settingsButton.onPress.connect(() => app.presentPopup(SettingsPopup));
+
+    this.questionButton = new IconButton({
+      image: 'question',
+      ripple: 'ripple',
+    });
+    this.questionButton.onPress.connect(() => app.presentPopup(RulePopup));
+
     this.defaultModButton = new LargeButton({
       text: t('default_mode', { ns: 'game' }),
     });
     this.defaultModButton.onPress.connect(this.handleGameStartButton);
+
     this.snackGameLetter = new SnackGameLetter();
     this.addChild(
       this.settingsButton,
+      this.questionButton,
       this.waves,
       this.snackGameLetter,
       this.defaultModButton,
@@ -77,6 +90,9 @@ export class LobbyScreen extends Container implements AppScreen {
 
     this.settingsButton.x = width - 25;
     this.settingsButton.y = 25;
+
+    this.questionButton.x = 25;
+    this.questionButton.y = 25;
   }
 
   public async onShow({ width, height }: Rectangle) {
@@ -84,6 +100,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
     this.defaultModButton.hide(false);
     this.settingsButton.hide(false);
+    this.questionButton.hide(false);
     this.snackGameLetter.hide(false);
 
     gsap.to(this.waves, {
@@ -97,12 +114,14 @@ export class LobbyScreen extends Container implements AppScreen {
     this.snackGameLetter.show();
     this.defaultModButton.show();
     this.settingsButton.show();
+    this.questionButton.show();
   }
 
   public async onHide({ width, height }: Rectangle) {
     this.defaultModButton.hide();
     this.snackGameLetter.hide();
     this.settingsButton.hide(false);
+    this.questionButton.hide(false);
 
     gsap.to(this.waves, {
       y: height,
