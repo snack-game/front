@@ -63,14 +63,6 @@ export class RulePopup extends Container implements AppScreen {
   }
 
   public handleDoneButton = async () => {
-    try {
-      this.app.dismissPopup();
-    } catch (error) {
-      this.app.setError(error);
-    }
-  };
-
-  public handleEndButton = async () => {
     this.app.dismissPopup();
   };
 
