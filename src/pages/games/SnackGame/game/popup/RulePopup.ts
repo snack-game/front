@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { t } from 'i18next';
-import { Container, Rectangle, Sprite, Texture } from 'pixi.js';
+import { Container, Rectangle, Sprite, Text, Texture } from 'pixi.js';
 
 import { AppScreen } from '../screen/appScreen';
 import { SnackgameApplication } from '../screen/SnackgameApplication';
@@ -8,21 +8,17 @@ import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
 
-/** 게임 플레이가 일시 중지되었을 때 표시되는 팝업 */
-export class PausePopup extends Container implements AppScreen {
-  /** 현재 화면을 덮는 어두운 반투명 배경 */
+/** LobbyScreen에서 도움말을 클릭했을 때 표시되는 팝업 */
+export class RulePopup extends Container implements AppScreen {
   private bg: Sprite;
   private panel: Container;
   private title: Label;
   private panelBase: RoundedBox;
-  private resumeButton: LargeButton;
-  private endButton: LargeButton;
+  private matchImage: Sprite;
+  private ruleText: Text;
+  private doneButton: LargeButton;
 
-  constructor(
-    private app: SnackgameApplication,
-    private handleGameResume: () => Promise<void>,
-    private handleGameEnd: () => Promise<void>,
-  ) {
+  constructor(private app: SnackgameApplication) {
     super();
 
     this.bg = new Sprite(Texture.WHITE);
@@ -33,48 +29,41 @@ export class PausePopup extends Container implements AppScreen {
     this.panel = new Container();
     this.addChild(this.panel);
 
-    this.panelBase = new RoundedBox({ height: 300 });
+    this.panelBase = new RoundedBox({ height: 480 });
     this.panel.addChild(this.panelBase);
 
-    this.title = new Label(t('pause', { ns: 'game' }), {
+    this.title = new Label(t('rule', { ns: 'game' }), {
       fill: 0xf58529,
       fontSize: 50,
     });
-    this.title.y = -80;
+    this.title.y = -this.panelBase.boxHeight * 0.5 + 60;
     this.panel.addChild(this.title);
 
-    this.endButton = new LargeButton({ text: '■', width: 90, height: 90 });
-    this.endButton.x = -100;
-    this.endButton.y = 70;
-    this.endButton.onPress.connect(this.handleEndButton);
-    this.panel.addChild(this.endButton);
+    this.matchImage = Sprite.from('match');
+    this.matchImage.anchor.set(0.5);
+    this.matchImage.y = -this.panelBase.boxHeight * 0.5 + 155;
+    this.panel.addChild(this.matchImage);
 
-    this.resumeButton = new LargeButton({ text: '▶', width: 200, height: 90 });
-    this.resumeButton.x = 50;
-    this.resumeButton.y = 70;
-    this.resumeButton.onPress.connect(this.handleResumeButton);
-    this.panel.addChild(this.resumeButton);
+    this.ruleText = new Label(t('rule_text', { ns: 'game' }), {
+      fill: 0x482e19,
+      fontSize: 18,
+      lineHeight: 36,
+    });
+    this.ruleText.y = -this.panelBase.boxHeight * 0.5 + 275;
+    this.panel.addChild(this.ruleText);
+
+    this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
+    this.doneButton.y = this.panelBase.boxHeight * 0.5 - 80;
+    this.doneButton.onPress.connect(this.handleDoneButton);
+    this.panel.addChild(this.doneButton);
   }
 
   async onPrepare(screen: Rectangle) {
     // no-op
   }
 
-  public async handleEndButton() {
-    try {
-      await this.handleGameEnd();
-    } catch (error) {
-      this.app.setError(error);
-    }
-  }
-
-  public async handleResumeButton() {
-    try {
-      await this.handleGameResume();
-      this.app.dismissPopup();
-    } catch (error) {
-      this.app.setError(error);
-    }
+  public async handleDoneButton() {
+    this.app.dismissPopup();
   }
 
   /** 창 크기가 변경될 때마다 호출되는 팝업 크기 조정 */

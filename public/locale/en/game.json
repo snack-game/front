@@ -5,6 +5,9 @@
   "default_mode": "Default Mode",
   "infinite_mode": "Infinite Mode",
 
+  "rule": "How to play",
+  "rule_text": "1. Click on adjacent snacks to make a total of 10.\n2. You earn points equal to the number of snacks burst.\n3. Bursting a golden snack resets the game board",
+
   "ready": "Ready...",
   "start": "Start!",
   "restart": "Retry",

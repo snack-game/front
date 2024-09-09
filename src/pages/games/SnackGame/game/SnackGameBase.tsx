@@ -14,6 +14,7 @@ import { SnackGameDefaultResponse } from './game.type';
 import initializeApplication from './hook/initializeApplication';
 import GameResult from './legacy/components/GameResult';
 import { PausePopup } from './popup/PausePopup';
+import { RulePopup } from './popup/RulePopup';
 import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
@@ -43,7 +44,11 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const initializeAppScreens = async (application: SnackgameApplication) => {
     application.appScreenPool.insert(
       [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
-      [PausePopup, () => new PausePopup(application, handleGameResume, handleGameEnd)],
+      [RulePopup, () => new RulePopup(application)],
+      [
+        PausePopup,
+        () => new PausePopup(application, handleGameResume, handleGameEnd),
+      ],
       [
         LobbyScreen,
         () =>
