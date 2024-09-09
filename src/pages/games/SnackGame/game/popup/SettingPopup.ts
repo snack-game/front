@@ -38,7 +38,10 @@ export class SettingsPopup extends Container implements AppScreen {
   /** 효과음 볼륨을 변경하는 슬라이더 */
   private sfxSlider: VolumeSlider;
 
-  constructor(private app: SnackgameApplication, private handleGameResume: () => Promise<void>) {
+  constructor(
+    private app: SnackgameApplication,
+    private handleGameResume: () => Promise<void>,
+  ) {
     super();
 
     this.bg = new Sprite(Texture.WHITE); // TODO: (배경 흐리기 + 어둡게 하기)를 팝업에서 하기(bg 유지) vs 모든 팝업에 일관적으로 적용하기(bg 이동)
@@ -99,14 +102,14 @@ export class SettingsPopup extends Container implements AppScreen {
     this.layout.addChild(this.sfxSlider);
   }
 
-  public handleDoneButton = async () => {
+  public async handleDoneButton() {
     try {
       await this.handleGameResume();
       this.app.dismissPopup();
     } catch (error) {
       this.app.setError(error);
     }
-  };
+  }
 
   /** 창 크기가 변경될 때마다 팝업 크기 조정 */
   public onResize({ width, height }: Rectangle) {
