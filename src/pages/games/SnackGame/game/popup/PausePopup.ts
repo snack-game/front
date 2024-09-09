@@ -43,7 +43,7 @@ export class PausePopup extends Container implements AppScreen {
     this.title.y = -80;
     this.panel.addChild(this.title);
 
-    this.endButton = new LargeButton({ text: '■', width: 90, height: 90 });
+    this.endButton = new LargeButton({ text: "■", width: 90, height: 90 });
     this.endButton.x = -100;
     this.endButton.y = 70;
     this.endButton.onPress.connect(this.handleEndButton);
@@ -60,22 +60,22 @@ export class PausePopup extends Container implements AppScreen {
     // no-op
   }
 
-  public async handleEndButton() {
+  public handleEndButton = async () => {
     try {
       await this.handleGameEnd();
     } catch (error) {
       this.app.setError(error);
     }
-  }
+  };
 
-  public async handleResumeButton() {
+  public handleResumeButton = async () => {
     try {
       await this.handleGameResume();
       this.app.dismissPopup();
     } catch (error) {
       this.app.setError(error);
     }
-  }
+  };
 
   /** 창 크기가 변경될 때마다 호출되는 팝업 크기 조정 */
   public onResize({ width, height }: Rectangle) {
