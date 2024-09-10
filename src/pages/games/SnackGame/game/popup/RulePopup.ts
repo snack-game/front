@@ -54,7 +54,7 @@ export class RulePopup extends Container implements AppScreen {
 
     this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
     this.doneButton.y = this.panelBase.boxHeight * 0.5 - 80;
-    this.doneButton.onPress.connect(this.handleDoneButton);
+    this.doneButton.onPress.connect(this.handleDoneButton.bind(this));
     this.panel.addChild(this.doneButton);
   }
 
@@ -62,9 +62,9 @@ export class RulePopup extends Container implements AppScreen {
     // no-op
   }
 
-  public handleDoneButton = async () => {
+  public async handleDoneButton() {
     this.app.dismissPopup();
-  };
+  }
 
   /** 창 크기가 변경될 때마다 호출되는 팝업 크기 조정 */
   public onResize({ width, height }: Rectangle) {
