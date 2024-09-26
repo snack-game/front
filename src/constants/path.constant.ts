@@ -12,6 +12,7 @@ const PATH = {
   WITHDRAW: '/user/setting/withdraw',
 
   SNACK_GAME: '/snack-game',
+  SNACK_GAME_BIZ: '/snack-game/biz',
   SNACK_GAME_RANKING: '/snack-game/ranking',
 
   BLOG: 'https://blog.snackga.me/',

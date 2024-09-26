@@ -23,6 +23,9 @@ const MainPage = lazy(() => import('@pages/main/MainPage'));
 const SnackGamePage = lazy(
   () => import('@pages/games/SnackGame/game/SnackGamePage'),
 );
+const SnackGameBizPage = lazy(
+  () => import('@pages/games/SnackgameBiz/SnackGameBizPage'),
+);
 
 const RankingPage = lazy(
   () => import('@pages/games/SnackGame/ranking/RankingPage'),
@@ -102,6 +105,11 @@ const App = () => {
                 {/* User */}
                 <Route path={PATH.USER} element={<UserPage />} />
               </Route>
+            </Route>
+
+            <Route>
+              {/*Game*/}
+              <Route path={PATH.SNACK_GAME_BIZ} element={<SnackGameBizPage />} />
             </Route>
 
             <Route element={<PrivateRoute />}>
