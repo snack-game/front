@@ -117,6 +117,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
 
   const handleGameEnd = async () => {
     const data = await gameEnd(session!.sessionId);
+    window.parent?.postMessage({ type: 'snackgameresult', payload: data }, '*');
 
     openModal({
       children: (
