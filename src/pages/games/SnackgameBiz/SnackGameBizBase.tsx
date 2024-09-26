@@ -117,7 +117,10 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
 
   const handleGameEnd = async () => {
     const data = await gameEnd(session!.sessionId);
-    window.parent?.postMessage({ type: 'snackgameresult', payload: data }, '*');
+    const resultMessage = { type: 'snackgameresult', payload: data };
+    window.parent?.postMessage(resultMessage, '*');
+    const anyWindow: any = window;
+    anyWindow.ReactNativeWebView?.postMessage(JSON.stringify(resultMessage));
 
     openModal({
       children: (
