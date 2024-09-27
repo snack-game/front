@@ -7,6 +7,7 @@ import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 
 import { QUERY_KEY } from '@constants/api.constant';
+import { ATOM_KEY } from '@constants/atom.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
@@ -83,7 +84,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   let sessionMode: string | undefined;
 
   const handleNonLoggedInUser = async () => {
-    if (!userInfo.id) await guestMutation.mutateAsync();
+    const isLoggedIn = JSON.parse(
+      window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}',
+    ).userState;
+    if (!isLoggedIn) await guestMutation.mutateAsync();
   };
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
