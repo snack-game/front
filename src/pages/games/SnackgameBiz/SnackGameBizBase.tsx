@@ -125,8 +125,8 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
     openModal({
       children: (
         <GameResult
-          score={data.score}
-          percentile={data.percentile}
+          score={data.original.score}
+          percentile={data.original.percentile}
           reStart={() => application.show(GameScreen)}
         />
       ),
