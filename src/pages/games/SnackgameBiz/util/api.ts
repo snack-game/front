@@ -40,7 +40,12 @@ export const gameResume = async (
   return data;
 };
 
-export const gameEnd = async (sessionId: number): Promise<SnackGameEnd> => {
+export type SnackGameBizEnd = {
+  original: SnackGameEnd,
+  signed: string
+};
+
+export const gameEnd = async (sessionId: number): Promise<SnackGameBizEnd> => {
   const { data } = await api.post(`games/${GAME_ID}/${sessionId}/end`);
 
   return data;
