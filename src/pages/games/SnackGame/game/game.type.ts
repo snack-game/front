@@ -2,6 +2,11 @@ export type SnackGameMod = 'default' | 'inf';
 
 export type SnackGameAPIStats = 'IN_PROGRESS' | 'PAUSED' | 'EXPIRED';
 
+export type SnackResponse = {
+  number: number;
+  golden: boolean;
+};
+
 export interface SnackGameDefaultResponse {
   metadata: {
     gameId: number;
@@ -12,7 +17,7 @@ export interface SnackGameDefaultResponse {
   state: SnackGameAPIStats;
   score: number;
   createdAt: string;
-  board: string;
+  board: SnackResponse[][];
 }
 
 export type SnackGameStart = SnackGameDefaultResponse;
