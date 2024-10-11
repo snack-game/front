@@ -1,3 +1,5 @@
+import { SnackResponse } from '../game.type';
+
 /** 각 그리드 내부 스낵 타입 */
 export type SnackType = number;
 
@@ -58,41 +60,18 @@ export function snackGameGetSnack(mode: SnackGameMode): string[] {
  * @param types 채워야 하는 스낵 타입들
  * @returns 스낵 타입들로 채워진 2차원 배열
  */
-export function snackGameCreateGrid(rows = 6, columns = 6, types: SnackType[]) {
+export function snackGameCreateGrid(
+  rows = 6,
+  columns = 6,
+  board: SnackResponse[][],
+) {
   const grid: SnackGameGrid = [];
-  const gimmickSnackIndex = [];
-
-  /**
-   * SnackType이 1보다 길다면 기믹을 가진 스낵이 존재함을 의미합니다.
-   * 해당 기믹 스낵이 생성될 위치를 미리 계산합니다.
-   * type은 1부터 시작하며 1은 기본 스낵 2부터는 기믹 스낵 입니다.
-   */
-  if (types.length > 1) {
-    for (let i = 2; i <= types.length; i++) {
-      // TODO 기믹을 가진 스낵이 중복된 위치를 가지지 못 하도록 해야합니다.
-      const randomRow = Math.floor(Math.random() * rows);
-      const randomColumn = Math.floor(Math.random() * columns);
-
-      gimmickSnackIndex.push({ row: randomRow, column: randomColumn, type: i });
-    }
-  }
 
   for (let r = 0; r < rows; r++) {
     const types = [];
 
     for (let c = 0; c < columns; c++) {
-      let currentType = 1;
-      const position: SnackGamePosition = { row: r, column: c };
-
-      for (const gimmick of gimmickSnackIndex) {
-        if (
-          position.row === gimmick.row &&
-          position.column === gimmick.column
-        ) {
-          currentType = gimmick.type;
-        }
-      }
-
+      const currentType = board[r][c].golden ? 2 : 1;
       types.push(currentType);
     }
 

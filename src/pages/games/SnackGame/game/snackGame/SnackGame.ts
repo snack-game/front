@@ -11,6 +11,7 @@ import {
   snackGameGetConfig,
   SnackType,
 } from './SnackGameUtil';
+import { SnackResponse } from '../game.type';
 
 /** onMatch 이벤트 데이터에 대한 인터페이스 */
 export interface SnackGameOnMatchData {
@@ -75,10 +76,10 @@ export class SnackGame extends Container {
    * 조각, 행, 열, 지속 시간 등을 포함하여 새로운 SnackGame 게임을 설정
    * @param config 게임이 기반으로 할 설정 객체
    */
-  public setup(config: SnackGameConfig) {
+  public setup(config: SnackGameConfig, board: SnackResponse[][]) {
     this.config = config;
     this.reset();
-    this.board.setup(config);
+    this.board.setup(config, board);
     this.timer.setup(config.duration * 1000);
   }
 

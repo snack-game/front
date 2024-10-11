@@ -3,6 +3,7 @@ import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
+import { SnackGameStart } from '../game.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
@@ -42,7 +43,7 @@ export class GameScreen extends Container implements AppScreen {
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
     private handleStreak: (streakLength: number) => Promise<void>,
-    private handleGameStart: () => Promise<void>,
+    private handleGameStart: () => Promise<SnackGameStart>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
   ) {
@@ -95,17 +96,18 @@ export class GameScreen extends Container implements AppScreen {
   }
 
   public async onPrepare({ width, height }: Rectangle) {
+    const { board } = await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
 
     const snackGameConfig = snackGameGetConfig({
-      rows: 8,
-      columns: 6,
+      rows: board.length,
+      columns: board[0].length,
       duration: 120,
       mode,
     });
 
     this.finished = false;
-    this.snackGame.setup(snackGameConfig);
+    this.snackGame.setup(snackGameConfig, board);
     this.score.hide(false);
     this.pauseButton.hide(false);
     this.timer.hide(false);
@@ -189,7 +191,6 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforeGameStart.hide();
-    await this.handleGameStart();
     this.snackGame.startPlaying();
   }
 

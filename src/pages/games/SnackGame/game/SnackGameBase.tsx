@@ -92,8 +92,8 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
-    const data = await gameStart();
-    session = data;
+    session = await gameStart();
+    return session;
   };
 
   // TODO: 현재 PixiJS 컨테이너와 게임의 모든 것이 결합되어있는데,
