@@ -20,11 +20,12 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
+import { StreakPosition } from './snackGame/SnackGameUtil';
 import {
+  checkMoves,
   gameEnd,
   gamePause,
   gameResume,
-  gameScore,
   gameStart,
 } from './util/api';
 
@@ -105,9 +106,9 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streakLength: number) => {
-    session!.score += streakLength;
-    await gameScore(session!.score, session!.sessionId);
+  const handleStreak = async (streaks: StreakPosition[][]) => {
+    session = await checkMoves(session!.sessionId, streaks);
+    return session;
   };
 
   const handleGamePause = async () => {

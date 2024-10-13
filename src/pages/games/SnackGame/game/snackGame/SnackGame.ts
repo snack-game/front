@@ -11,7 +11,7 @@ import {
   snackGameGetConfig,
   SnackType,
 } from './SnackGameUtil';
-import { SnackResponse } from '../game.type';
+import { SnackGameVerify, SnackResponse } from '../game.type';
 
 /** onMatch 이벤트 데이터에 대한 인터페이스 */
 export interface SnackGameOnMatchData {
@@ -55,7 +55,7 @@ export class SnackGame extends Container {
   public onMatch?: (data: SnackGameOnMatchData) => void;
   /** 보드에서 조각이 팝될 때 발생 */
   public onPop?: (data: SnackGameOnPopData) => void;
-  public onStreak?: (data: Snack[]) => void;
+  public onStreak?: (data: Snack[]) => Promise<SnackGameVerify>;
   /** 게임 시간이 만료되면 발생 */
   public onTimesUp?: () => void;
   /** SnackGameBoard 리셋 시 발생*/

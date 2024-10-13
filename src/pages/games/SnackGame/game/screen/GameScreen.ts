@@ -3,11 +3,16 @@ import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
-import { SnackGameStart } from '../game.type';
+import { SnackGameStart, SnackGameVerify } from '../game.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
+import { Snack } from '../snackGame/Snack';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
-import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
+import {
+  SnackGameMode,
+  StreakPosition,
+  snackGameGetConfig,
+} from '../snackGame/SnackGameUtil';
 import { BeforeGameStart } from '../ui/BeforeGameStart';
 import { GameEffects } from '../ui/GameEffect';
 import { IconButton } from '../ui/IconButton';
@@ -42,7 +47,9 @@ export class GameScreen extends Container implements AppScreen {
   constructor(
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
-    private handleStreak: (streakLength: number) => Promise<void>,
+    private handleStreak: (
+      streaks: StreakPosition[][],
+    ) => Promise<SnackGameVerify>,
     private handleGameStart: () => Promise<SnackGameStart>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
@@ -77,8 +84,14 @@ export class GameScreen extends Container implements AppScreen {
 
     this.snackGame = new SnackGame();
     this.snackGame.onPop = this.onPop.bind(this);
-    this.snackGame.onStreak = (data: any[]) => {
-      this.handleStreak(data.length);
+    this.snackGame.onStreak = (data: Snack[]) => {
+      const streaks = data.reduce((acc: StreakPosition[], snack) => {
+        const { row: x, column: y } = snack.getGridPosition();
+        acc.push({ x, y });
+        return acc;
+      }, []);
+
+      return this.handleStreak([streaks]);
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
