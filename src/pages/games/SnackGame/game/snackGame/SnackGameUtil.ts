@@ -8,6 +8,7 @@ export type SnackGameGrid = SnackType[][];
 
 /** 그리드 내부 좌표 타입 */
 export type SnackGamePosition = { row: number; column: number };
+export type StreakPosition = { x: number; y: number }; // TODO: SnackGamePosition과 합치기
 
 /** 게임 모드 */
 export const snackGameModes = ['default', 'inf'] as const;

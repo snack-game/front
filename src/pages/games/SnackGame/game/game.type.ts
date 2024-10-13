@@ -22,6 +22,8 @@ export interface SnackGameDefaultResponse {
 
 export type SnackGameStart = SnackGameDefaultResponse;
 
+export type SnackGameVerify = SnackGameDefaultResponse;
+
 export type SnackGamePause = SnackGameDefaultResponse;
 
 export type SnackGameEnd = SnackGameDefaultResponse & {
