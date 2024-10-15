@@ -24,17 +24,6 @@ export const checkMoves = async (
   return data;
 };
 
-export const gameScore = async (
-  score: number,
-  sessionId: number,
-): Promise<SnackGameDefaultResponse> => {
-  const { data } = await api.put(`/games/2/${sessionId}`, {
-    score,
-  });
-
-  return data;
-};
-
 export const gamePause = async (sessionId: number): Promise<SnackGamePause> => {
   const { data } = await api.post(`games/2/${sessionId}/pause`);
 
