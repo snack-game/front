@@ -11,7 +11,7 @@ import { ATOM_KEY } from '@constants/atom.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
-import { SnackGameDefaultResponse } from './game.type';
+import { SnackGameDefaultResponse, SnackGameVerify } from './game.type';
 import initializeApplication from './hook/initializeApplication';
 import GameResult from './legacy/components/GameResult';
 import { PausePopup } from './popup/PausePopup';
@@ -83,6 +83,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
+  let cumulativeStreaks: StreakPosition[][] = [];
 
   const handleNonLoggedInUser = async () => {
     const isLoggedIn = JSON.parse(
@@ -106,13 +107,29 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streaks: StreakPosition[][]) => {
-    session = await checkMoves(session!.sessionId, streaks);
-    return session;
+  const handleStreak = async (streaks: StreakPosition[], isGolden: boolean) => {
+    cumulativeStreaks = [...cumulativeStreaks, streaks];
+
+    if (isGolden) {
+      const result = await handleStreakMove();
+      if (result) session = result;
+      return result;
+    }
+  };
+
+  const handleStreakMove = async (): Promise<SnackGameVerify | void> => {
+    const result = await checkMoves(session!.sessionId, cumulativeStreaks);
+    cumulativeStreaks = [];
+    return result;
   };
 
   const handleGamePause = async () => {
     if (!session || session.state === 'PAUSED') return;
+
+    if (cumulativeStreaks.length > 0) {
+      await handleStreakMove();
+    }
+
     session = await gamePause(session!.sessionId);
   };
 
@@ -122,6 +139,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleGameEnd = async () => {
+    if (cumulativeStreaks.length > 0) {
+      await handleStreakMove();
+    }
+
     const data = await gameEnd(session!.sessionId);
     queryClient.invalidateQueries({
       queryKey: [QUERY_KEY.USER_RANKING, QUERY_KEY.SEASON_USER_RANKING],
