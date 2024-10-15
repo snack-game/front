@@ -125,7 +125,6 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   const handleGamePause = async () => {
     if (!session || session.state === 'PAUSED') return;
-
     if (cumulativeStreaks.length > 0) {
       await handleStreaksMove();
     }

@@ -9,22 +9,26 @@ import { userState } from '@utils/atoms/member.atom';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
-import { SnackGameDefaultResponse } from '../SnackGame/game/game.type';
-import initializeApplication from '../SnackGame/game/hook/initializeApplication';
 import GameResult from './components/GameResult';
+import {
+  checkMoves,
+  gameEnd,
+  gamePause,
+  gameResume,
+  gameStart,
+} from './util/api';
+import {
+  SnackGameDefaultResponse,
+  SnackGameVerify,
+} from '../SnackGame/game/game.type';
+import initializeApplication from '../SnackGame/game/hook/initializeApplication';
 import { PausePopup } from '../SnackGame/game/popup/PausePopup';
 import { RulePopup } from '../SnackGame/game/popup/RulePopup';
 import { SettingsPopup } from '../SnackGame/game/popup/SettingPopup';
 import { GameScreen } from '../SnackGame/game/screen/GameScreen';
 import { LobbyScreen } from '../SnackGame/game/screen/LobbyScreen';
 import { SnackgameApplication } from '../SnackGame/game/screen/SnackgameApplication';
-import {
-  gameEnd,
-  gamePause,
-  gameResume,
-  gameScore,
-  gameStart,
-} from './util/api';
+import { Streak } from '../SnackGame/game/snackGame/SnackGameUtil';
 
 type Props = {
   replaceErrorHandler: (handler: () => void) => void;
@@ -80,6 +84,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
+  let cumulativeStreaks: Streak[] = [];
 
   const handleNonLoggedInUser = async () => {
     if (!userInfo.id) await guestMutation.mutateAsync();
@@ -87,8 +92,8 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
-    const data = await gameStart();
-    session = data;
+    session = await gameStart();
+    return session;
   };
 
   // TODO: 현재 PixiJS 컨테이너와 게임의 모든 것이 결합되어있는데,
@@ -100,13 +105,28 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streakLength: number) => {
-    session!.score += streakLength;
-    await gameScore(session!.score, session!.sessionId);
+  const handleStreak = async (streak: Streak, isGolden: boolean) => {
+    cumulativeStreaks = [...cumulativeStreaks, streak];
+
+    if (isGolden) {
+      const result = await handleStreaksMove();
+      if (result) session = result;
+      return result;
+    }
+  };
+
+  const handleStreaksMove = async (): Promise<SnackGameVerify | void> => {
+    const result = await checkMoves(session!.sessionId, cumulativeStreaks);
+    cumulativeStreaks = [];
+    return result;
   };
 
   const handleGamePause = async () => {
     if (!session || session.state === 'PAUSED') return;
+    if (cumulativeStreaks.length > 0) {
+      await handleStreaksMove();
+    }
+
     session = await gamePause(session!.sessionId);
   };
 
@@ -116,6 +136,9 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleGameEnd = async () => {
+    if (cumulativeStreaks.length > 0) {
+      await handleStreaksMove();
+    }
     const data = await gameEnd(session!.sessionId);
     const resultMessage = { type: 'snackgameresult', payload: data };
     window.parent?.postMessage(resultMessage, '*');
