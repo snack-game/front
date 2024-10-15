@@ -10,7 +10,7 @@ import { Snack } from '../snackGame/Snack';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import {
   SnackGameMode,
-  StreakPosition,
+  Streak,
   snackGameGetConfig,
 } from '../snackGame/SnackGameUtil';
 import { BeforeGameStart } from '../ui/BeforeGameStart';
@@ -48,7 +48,7 @@ export class GameScreen extends Container implements AppScreen {
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
     private handleStreak: (
-      streaks: StreakPosition[],
+      streaks: Streak,
       isGolden: boolean,
     ) => Promise<SnackGameVerify | void>,
     private handleGameStart: () => Promise<SnackGameStart>,
@@ -88,7 +88,7 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.onStreak = (data: Snack[]) => {
       let isGolden = false;
 
-      const streaks = data.reduce((acc: StreakPosition[], snack) => {
+      const streaks = data.reduce((acc: Streak, snack) => {
         if (snack.type === 2) isGolden = true;
 
         const { row: y, column: x } = snack.getGridPosition();

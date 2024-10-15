@@ -20,7 +20,7 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
-import { StreakPosition } from './snackGame/SnackGameUtil';
+import { Streak } from './snackGame/SnackGameUtil';
 import {
   checkMoves,
   gameEnd,
@@ -83,7 +83,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
-  let cumulativeStreaks: StreakPosition[][] = [];
+  let cumulativeStreaks: Streak[] = [];
 
   const handleNonLoggedInUser = async () => {
     const isLoggedIn = JSON.parse(
@@ -107,7 +107,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streaks: StreakPosition[], isGolden: boolean) => {
+  const handleStreak = async (streaks: Streak, isGolden: boolean) => {
     cumulativeStreaks = [...cumulativeStreaks, streaks];
 
     if (isGolden) {
