@@ -86,7 +86,7 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.onPop = this.onPop.bind(this);
     this.snackGame.onStreak = (data: Snack[]) => {
       const streaks = data.reduce((acc: StreakPosition[], snack) => {
-        const { row: x, column: y } = snack.getGridPosition();
+        const { row: y, column: x } = snack.getGridPosition();
         acc.push({ x, y });
         return acc;
       }, []);
