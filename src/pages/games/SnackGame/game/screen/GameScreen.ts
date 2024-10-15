@@ -48,7 +48,7 @@ export class GameScreen extends Container implements AppScreen {
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
     private handleStreak: (
-      streaks: Streak,
+      streak: Streak,
       isGolden: boolean,
     ) => Promise<SnackGameVerify | void>,
     private handleGameStart: () => Promise<SnackGameStart>,
@@ -88,7 +88,7 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.onStreak = (data: Snack[]) => {
       let isGolden = false;
 
-      const streaks = data.reduce((acc: Streak, snack) => {
+      const streak = data.reduce((acc: Streak, snack) => {
         if (snack.type === 2) isGolden = true;
 
         const { row: y, column: x } = snack.getGridPosition();
@@ -96,7 +96,7 @@ export class GameScreen extends Container implements AppScreen {
         return acc;
       }, []);
 
-      return this.handleStreak(streaks, isGolden);
+      return this.handleStreak(streak, isGolden);
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);

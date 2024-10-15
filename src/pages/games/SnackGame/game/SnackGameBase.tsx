@@ -107,17 +107,17 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streaks: Streak, isGolden: boolean) => {
-    cumulativeStreaks = [...cumulativeStreaks, streaks];
+  const handleStreak = async (streak: Streak, isGolden: boolean) => {
+    cumulativeStreaks = [...cumulativeStreaks, streak];
 
     if (isGolden) {
-      const result = await handleStreakMove();
+      const result = await handleStreaksMove();
       if (result) session = result;
       return result;
     }
   };
 
-  const handleStreakMove = async (): Promise<SnackGameVerify | void> => {
+  const handleStreaksMove = async (): Promise<SnackGameVerify | void> => {
     const result = await checkMoves(session!.sessionId, cumulativeStreaks);
     cumulativeStreaks = [];
     return result;
@@ -127,7 +127,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     if (!session || session.state === 'PAUSED') return;
 
     if (cumulativeStreaks.length > 0) {
-      await handleStreakMove();
+      await handleStreaksMove();
     }
 
     session = await gamePause(session!.sessionId);
@@ -140,7 +140,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   const handleGameEnd = async () => {
     if (cumulativeStreaks.length > 0) {
-      await handleStreakMove();
+      await handleStreaksMove();
     }
 
     const data = await gameEnd(session!.sessionId);
