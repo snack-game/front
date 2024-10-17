@@ -50,7 +50,7 @@ export class GameScreen extends Container implements AppScreen {
     private handleStreak: (
       streak: Streak,
       isGolden: boolean,
-    ) => Promise<SnackGameVerify | void>,
+    ) => Promise<SnackGameVerify>,
     private handleGameStart: () => Promise<SnackGameStart>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,

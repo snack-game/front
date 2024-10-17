@@ -109,13 +109,12 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
     cumulativeStreaks = [...cumulativeStreaks, streak];
 
     if (isGolden) {
-      const result = await handleStreaksMove();
-      if (result) session = result;
-      return result;
+      session = await handleStreaksMove();
     }
+    return session!;
   };
 
-  const handleStreaksMove = async (): Promise<SnackGameVerify | void> => {
+  const handleStreaksMove = async (): Promise<SnackGameVerify> => {
     const result = await verifyStreaks(session!.sessionId, cumulativeStreaks);
     cumulativeStreaks = [];
     return result;
