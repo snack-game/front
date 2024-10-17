@@ -64,8 +64,8 @@ export function snackGameGetSnack(mode: SnackGameMode): string[] {
  * @returns 스낵 타입들로 채워진 2차원 배열
  */
 export function snackGameCreateGrid(
-  rows = 6,
-  columns = 6,
+  rows: number,
+  columns: number,
   board: SnackResponse[][],
 ) {
   const grid: SnackGameGrid = [];
