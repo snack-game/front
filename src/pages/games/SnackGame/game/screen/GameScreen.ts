@@ -120,12 +120,13 @@ export class GameScreen extends Container implements AppScreen {
     const snackGameConfig = snackGameGetConfig({
       rows: board.length,
       columns: board[0].length,
-      duration: 120,
+      duration: 121,
       mode,
     });
+    this.snackGame.setup(snackGameConfig, board);
+    this.snackGame.startPlaying(); // TODO: onPrepare로 이동시키면서 시간을 1초 늘렸는데, 다른 방법이 없을지?
 
     this.finished = false;
-    this.snackGame.setup(snackGameConfig, board);
     this.score.hide(false);
     this.pauseButton.hide(false);
     this.timer.hide(false);
@@ -209,7 +210,6 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforeGameStart.hide();
-    this.snackGame.startPlaying();
   }
 
   public async onHide({ width, height }: Rectangle) {
