@@ -11,7 +11,7 @@ import useModal from '@hooks/useModal';
 
 import GameResult from './components/GameResult';
 import {
-  checkMoves,
+  verifyStreaks,
   gameEnd,
   gamePause,
   gameResume,
@@ -116,7 +116,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleStreaksMove = async (): Promise<SnackGameVerify | void> => {
-    const result = await checkMoves(session!.sessionId, cumulativeStreaks);
+    const result = await verifyStreaks(session!.sessionId, cumulativeStreaks);
     cumulativeStreaks = [];
     return result;
   };

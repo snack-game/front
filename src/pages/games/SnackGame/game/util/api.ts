@@ -15,7 +15,7 @@ export const gameStart = async (): Promise<SnackGameStart> => {
   return data;
 };
 
-export const checkMoves = async (
+export const verifyStreaks = async (
   sessionId: number,
   streaks: Streak[],
 ): Promise<SnackGameVerify> => {

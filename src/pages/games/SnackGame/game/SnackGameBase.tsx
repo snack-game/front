@@ -22,7 +22,7 @@ import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
 import { Streak } from './snackGame/SnackGameUtil';
 import {
-  checkMoves,
+  verifyStreaks,
   gameEnd,
   gamePause,
   gameResume,
@@ -118,7 +118,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleStreaksMove = async (): Promise<SnackGameVerify | void> => {
-    const result = await checkMoves(session!.sessionId, cumulativeStreaks);
+    const result = await verifyStreaks(session!.sessionId, cumulativeStreaks);
     cumulativeStreaks = [];
     return result;
   };
