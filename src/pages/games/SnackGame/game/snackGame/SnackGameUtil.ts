@@ -1,7 +1,7 @@
 import { SnackResponse } from '../game.type';
 
 /** 각 그리드 내부 스낵 타입 */
-export type SnackType = number;
+export type SnackType = number; // TODO: 타입 안정성과 가독성을 위해 새로운 타입으로 정의
 
 /** 스낵게임 board를 표현하는 2차원 배열 타입 */
 export type SnackGameGrid = SnackType[][];
