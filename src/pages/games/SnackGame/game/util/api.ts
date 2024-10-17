@@ -5,7 +5,9 @@ import {
   SnackGameEnd,
   SnackGamePause,
   SnackGameStart,
+  SnackGameVerify,
 } from '../game.type';
+import { Streak } from '../snackGame/SnackGameUtil';
 
 export const gameStart = async (): Promise<SnackGameStart> => {
   const { data } = await api.post('/games/2');
@@ -13,13 +15,11 @@ export const gameStart = async (): Promise<SnackGameStart> => {
   return data;
 };
 
-export const gameScore = async (
-  score: number,
+export const verifyStreaks = async (
   sessionId: number,
-): Promise<SnackGameDefaultResponse> => {
-  const { data } = await api.put(`/games/2/${sessionId}`, {
-    score,
-  });
+  streaks: Streak[],
+): Promise<SnackGameVerify> => {
+  const { data } = await api.post(`/games/2/${sessionId}/streaks`, { streaks });
 
   return data;
 };

@@ -16,7 +16,7 @@ export class SnackGameActions {
   /** Snack 객체에게 onPointerDown이벤트 시 실행할 콜백을 넘깁니다.
    * @param position 타겟 스낵 그리드 위치
    */
-  public actionTap(position: SnackGamePosition) {
+  public async actionTap(position: SnackGamePosition) {
     if (!this.snackGame.isPlaying()) return;
     sfx.play('common/sfx-select.mp3');
 
@@ -30,13 +30,13 @@ export class SnackGameActions {
 
     if (sum === 10) {
       sfx.play('common/sfx-match.mp3', { speed: 1.2, volume: 0.5 });
-      this.snackGame.board.popAllSelectedSnacks();
+      const session = await this.snackGame.board.popAllSelectedSnacks();
 
       // TODO: 지금은 특수 기물이 황금사과 하나지만 나중에 확장 될 경우 opens-games처럼 특수 기물을 따로 관리해주어야함.
       this.snackGame.board.selectedSnacks.forEach((snack) => {
         if (snack.type === 2) {
           this.snackGame.board.reset();
-          this.snackGame.board.setup(this.snackGame.config);
+          this.snackGame.board.setup(this.snackGame.config, session!.board);
           this.snackGame.onSnackGameBoardReset?.();
         }
       });

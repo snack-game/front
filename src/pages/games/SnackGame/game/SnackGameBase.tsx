@@ -11,7 +11,7 @@ import { ATOM_KEY } from '@constants/atom.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
-import { SnackGameDefaultResponse } from './game.type';
+import { SnackGameDefaultResponse, SnackGameVerify } from './game.type';
 import initializeApplication from './hook/initializeApplication';
 import GameResult from './legacy/components/GameResult';
 import { PausePopup } from './popup/PausePopup';
@@ -20,11 +20,12 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
+import { Streak } from './snackGame/SnackGameUtil';
 import {
+  verifyStreaks,
   gameEnd,
   gamePause,
   gameResume,
-  gameScore,
   gameStart,
 } from './util/api';
 
@@ -82,6 +83,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
+  let cumulativeStreaks: Streak[] = [];
 
   const handleNonLoggedInUser = async () => {
     const isLoggedIn = JSON.parse(
@@ -92,8 +94,8 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
-    const data = await gameStart();
-    session = data;
+    session = await gameStart();
+    return session;
   };
 
   // TODO: 현재 PixiJS 컨테이너와 게임의 모든 것이 결합되어있는데,
@@ -105,13 +107,27 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streakLength: number) => {
-    session!.score += streakLength;
-    await gameScore(session!.score, session!.sessionId);
+  const handleStreak = async (streak: Streak, isGolden: boolean) => {
+    cumulativeStreaks = [...cumulativeStreaks, streak];
+
+    if (isGolden) {
+      session = await handleStreaksMove();
+    }
+    return session!;
+  };
+
+  const handleStreaksMove = async (): Promise<SnackGameVerify> => {
+    const result = await verifyStreaks(session!.sessionId, cumulativeStreaks);
+    cumulativeStreaks = [];
+    return result;
   };
 
   const handleGamePause = async () => {
     if (!session || session.state === 'PAUSED') return;
+    if (cumulativeStreaks.length > 0) {
+      await handleStreaksMove();
+    }
+
     session = await gamePause(session!.sessionId);
   };
 
@@ -121,6 +137,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleGameEnd = async () => {
+    if (cumulativeStreaks.length > 0) {
+      await handleStreaksMove();
+    }
+
     const data = await gameEnd(session!.sessionId);
     queryClient.invalidateQueries({
       queryKey: [QUERY_KEY.USER_RANKING, QUERY_KEY.SEASON_USER_RANKING],

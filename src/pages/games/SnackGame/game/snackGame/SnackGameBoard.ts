@@ -3,16 +3,16 @@ import { Container, Graphics } from 'pixi.js';
 import { Snack } from './Snack';
 import { SnackGame } from './SnackGame';
 import {
-  snackGameForEach,
   SnackGamePosition,
   SnackGameConfig,
-  snackGameCreateGrid,
   snackGameGetSnack,
   SnackGameGrid,
   SnackType,
   snackGameGetSnackType,
   snackGameSetPieceType,
+  snackGameCreateGrid,
 } from './SnackGameUtil';
+import { SnackResponse } from '../game.type';
 import { pool } from '../util/pool';
 
 export class SnackGameBoard {
@@ -56,7 +56,7 @@ export class SnackGameBoard {
    * 초기 격자 상태를 설정하고 뷰를 스낵으로 채움
    * @param config 스낵게임 설정 매개 변수
    */
-  public setup(config: SnackGameConfig) {
+  public setup(config: SnackGameConfig, board: SnackResponse[][]) {
     this.rows = config.rows;
     this.columns = config.columns;
     this.tileSize = 50;
@@ -80,15 +80,14 @@ export class SnackGameBoard {
     }
 
     // 초기 격자 상태 생성
-    this.grid = snackGameCreateGrid(this.rows, this.columns, this.commonTypes);
+    this.grid = snackGameCreateGrid(this.rows, this.columns, board);
 
-    // 시각적 보드를 스낵 스프라이트로 채우기
-    snackGameForEach(
-      this.grid,
-      (gridPosition: SnackGamePosition, type: SnackType) => {
-        this.createSnack(gridPosition, type);
-      },
-    );
+    // 서버에서 준 board 정보로 보드에 스낵 스프라이트 채우기
+    board.forEach((rowSnack, row) => {
+      rowSnack.forEach((snack, column) => {
+        this.createSnack({ row, column }, snack);
+      });
+    });
   }
 
   /**
@@ -108,16 +107,17 @@ export class SnackGameBoard {
    * @param position 새 스낵이 붙을 그리드 위치
    * @param snackType 새 스낵의 유형
    */
-  public createSnack(position: SnackGamePosition, snackType: SnackType) {
-    const name = this.typesMap[snackType];
+  public createSnack(position: SnackGamePosition, snackInfo: SnackResponse) {
+    const type = snackInfo.golden ? 2 : 1;
+    const name = this.typesMap[type];
     const snack = pool.get(Snack);
     const viewPosition = this.getViewPositionByGridPosition(position);
     snack.onTap = (position) => this.snackGame.actions.actionTap(position);
     snack.setup({
       name,
-      type: snackType,
+      type,
       interactive: true,
-      snackNum: Math.floor(Math.random() * 9) + 1,
+      snackNum: snackInfo.number,
     });
     snack.row = position.row;
     snack.column = position.column;
@@ -230,10 +230,11 @@ export class SnackGameBoard {
 
   /** 선택된 스낵들을 모두 pop */
   public popAllSelectedSnacks() {
-    this.snackGame.onStreak?.(this.selectedSnacks);
+    const session = this.snackGame.onStreak?.(this.selectedSnacks);
     for (const snack of this.selectedSnacks) {
       this.popSnack(snack.getGridPosition());
     }
+    return session;
   }
 
   /** 모든 스낵이 선택 가능하게  */

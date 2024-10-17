@@ -3,10 +3,16 @@ import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
+import { SnackGameStart, SnackGameVerify } from '../game.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
+import { Snack } from '../snackGame/Snack';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
-import { SnackGameMode, snackGameGetConfig } from '../snackGame/SnackGameUtil';
+import {
+  SnackGameMode,
+  Streak,
+  snackGameGetConfig,
+} from '../snackGame/SnackGameUtil';
 import { BeforeGameStart } from '../ui/BeforeGameStart';
 import { GameEffects } from '../ui/GameEffect';
 import { IconButton } from '../ui/IconButton';
@@ -41,8 +47,11 @@ export class GameScreen extends Container implements AppScreen {
   constructor(
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
-    private handleStreak: (streakLength: number) => Promise<void>,
-    private handleGameStart: () => Promise<void>,
+    private handleStreak: (
+      streak: Streak,
+      isGolden: boolean,
+    ) => Promise<SnackGameVerify>,
+    private handleGameStart: () => Promise<SnackGameStart>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
   ) {
@@ -76,8 +85,18 @@ export class GameScreen extends Container implements AppScreen {
 
     this.snackGame = new SnackGame();
     this.snackGame.onPop = this.onPop.bind(this);
-    this.snackGame.onStreak = (data: any[]) => {
-      this.handleStreak(data.length);
+    this.snackGame.onStreak = (data: Snack[]) => {
+      let isGolden = false;
+
+      const streak = data.reduce((acc: Streak, snack) => {
+        if (snack.type === 2) isGolden = true;
+
+        const { row: y, column: x } = snack.getGridPosition();
+        acc.push({ x, y });
+        return acc;
+      }, []);
+
+      return this.handleStreak(streak, isGolden);
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
@@ -95,17 +114,19 @@ export class GameScreen extends Container implements AppScreen {
   }
 
   public async onPrepare({ width, height }: Rectangle) {
+    const { board } = await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
 
     const snackGameConfig = snackGameGetConfig({
-      rows: 8,
-      columns: 6,
-      duration: 120,
+      rows: board.length,
+      columns: board[0].length,
+      duration: 121,
       mode,
     });
+    this.snackGame.setup(snackGameConfig, board);
+    this.snackGame.startPlaying(); // TODO: onPrepare로 이동시키면서 시간을 1초 늘렸는데, 다른 방법이 없을지?
 
     this.finished = false;
-    this.snackGame.setup(snackGameConfig);
     this.score.hide(false);
     this.pauseButton.hide(false);
     this.timer.hide(false);
@@ -189,8 +210,6 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforeGameStart.hide();
-    await this.handleGameStart();
-    this.snackGame.startPlaying();
   }
 
   public async onHide({ width, height }: Rectangle) {

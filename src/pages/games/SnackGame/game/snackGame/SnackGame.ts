@@ -11,6 +11,7 @@ import {
   snackGameGetConfig,
   SnackType,
 } from './SnackGameUtil';
+import { SnackGameVerify, SnackResponse } from '../game.type';
 
 /** onMatch 이벤트 데이터에 대한 인터페이스 */
 export interface SnackGameOnMatchData {
@@ -54,7 +55,7 @@ export class SnackGame extends Container {
   public onMatch?: (data: SnackGameOnMatchData) => void;
   /** 보드에서 조각이 팝될 때 발생 */
   public onPop?: (data: SnackGameOnPopData) => void;
-  public onStreak?: (data: Snack[]) => void;
+  public onStreak?: (data: Snack[]) => Promise<SnackGameVerify>;
   /** 게임 시간이 만료되면 발생 */
   public onTimesUp?: () => void;
   /** SnackGameBoard 리셋 시 발생*/
@@ -75,10 +76,10 @@ export class SnackGame extends Container {
    * 조각, 행, 열, 지속 시간 등을 포함하여 새로운 SnackGame 게임을 설정
    * @param config 게임이 기반으로 할 설정 객체
    */
-  public setup(config: SnackGameConfig) {
+  public setup(config: SnackGameConfig, board: SnackResponse[][]) {
     this.config = config;
     this.reset();
-    this.board.setup(config);
+    this.board.setup(config, board);
     this.timer.setup(config.duration * 1000);
   }
 
