@@ -56,3 +56,9 @@ export interface GameHistoryResponse {
 }
 
 export type HistoryViewType = 'DATE' | 'SESSION';
+
+export type NoticeItemType = {
+  title: string;
+  description: string;
+  date: string;
+};
