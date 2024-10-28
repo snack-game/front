@@ -10,6 +10,7 @@ const PATH = {
   NOT_FOUND_ERROR: '*',
   POLICY: '/policy',
   WITHDRAW: '/user/setting/withdraw',
+  NOTICE: '/user/setting/notices',
 
   SNACK_GAME: '/snack-game',
   SNACK_GAME_BIZ: '/snack-game/biz',

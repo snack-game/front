@@ -43,6 +43,8 @@ const SettingPage = lazy(() => import('@pages/user/setting/SettingPage'));
 
 const WithdrawPage = lazy(() => import('@pages/withdraw/WithdrawPage'));
 
+const NoticePage = lazy(() => import('@pages/user/notice/NoticePage'));
+
 const App = () => {
   const [userStateValue, setUserState] = useRecoilState(userState);
   const resetUser = useResetRecoilState(resetUserState);
@@ -109,7 +111,10 @@ const App = () => {
 
             <Route>
               {/*Game*/}
-              <Route path={PATH.SNACK_GAME_BIZ} element={<SnackGameBizPage />} />
+              <Route
+                path={PATH.SNACK_GAME_BIZ}
+                element={<SnackGameBizPage />}
+              />
             </Route>
 
             <Route element={<PrivateRoute />}>
@@ -118,6 +123,9 @@ const App = () => {
 
               {/* Withdraw */}
               <Route path={PATH.WITHDRAW} element={<WithdrawPage />} />
+
+              {/* Notices */}
+              <Route path={PATH.NOTICE} element={<NoticePage />} />
             </Route>
 
             {/* Policy */}
