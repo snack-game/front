@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import TopBar from '@components/TopBar/TopBar';
-import { NoticeItemType } from '@utils/types/common.type';
 
 import { NOTICES } from '@constants/notice.constant';
 import PATH from '@constants/path.constant';
@@ -14,9 +13,9 @@ const NoticePage = () => {
     <>
       <TopBar title={t('notice')} backUrl={PATH.SETTING} />
       <ul>
-        {NOTICES.map(({ title, description, date }) => (
+        {NOTICES.map(({ id, title, description, date }) => (
           <NoticeItem
-            key={title + date}
+            key={id}
             title={title}
             description={description}
             date={date}
@@ -29,7 +28,15 @@ const NoticePage = () => {
 
 export default NoticePage;
 
-const NoticeItem = ({ title, description, date }: NoticeItemType) => {
+const NoticeItem = ({
+  title,
+  description,
+  date,
+}: {
+  title: string;
+  description: string;
+  date: string;
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
