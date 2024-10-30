@@ -57,6 +57,13 @@ const SettingPage = () => {
         <List title={t('service')}>
           <List.Item
             onClick={() => {
+              navigate(PATH.NOTICE);
+            }}
+          >
+            {t('notice')}
+          </List.Item>
+          <List.Item
+            onClick={() => {
               navigate(PATH.POLICY);
             }}
           >

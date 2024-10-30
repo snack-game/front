@@ -12,6 +12,8 @@ import { RankingViewType } from '@utils/types/common.type';
 
 import { useGetSeasons } from '@hooks/queries/ranking.query';
 
+import { NoticeSection } from './components/NoticeSection';
+
 const RankingPage = () => {
   const { t } = useTranslation('ranking');
 
@@ -47,9 +49,10 @@ const RankingPage = () => {
 
       <Spacing size={2} />
       <div className="mx-auto w-[90%] max-w-4xl">
+        <NoticeSection />
+        <Spacing size={1} />
         {/* TODO: 무한모드 준비 끝나면 해제 */}
         {/* <Tab options={tabOptions} /> */}
-        <Spacing size={1} />
         <Dropdown
           initialOption={latestSeason}
           options={dropdownOptions}
