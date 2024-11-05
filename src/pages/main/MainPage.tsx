@@ -4,6 +4,7 @@ import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import SnackRainContainer from '@components/SnackRain/SnackRainContainer';
 import Spacing from '@components/Spacing/Spacing';
+import AppSection from '@pages/main/components/AppSection';
 import BlogSection from '@pages/main/components/BlogSection';
 import HeroSection from '@pages/main/components/HeroSection';
 import TeamSection from '@pages/main/components/TeamSection';
@@ -19,6 +20,8 @@ const MainPage = () => {
       <div className="flex flex-col">
         <HeroSection />
         <Spacing size={10} />
+        <AppSection />
+        <Spacing size={16} />
         <BlogSection />
         <Spacing size={16} />
         <TeamSection />
