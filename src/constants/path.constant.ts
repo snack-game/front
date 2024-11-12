@@ -20,6 +20,7 @@ const PATH = {
 
   FEED_BACK:
     'https://docs.google.com/forms/d/e/1FAIpQLScYLV4AQccEoAlcSo1fC9_1-7gC3KYR1lnOGJ7Xtqm5DPBbHg/viewform?usp=sharing',
+  FEED_BACK_EVENT: 'https://forms.gle/H7Gzk3x3YqHUDVsw7',
 
   ONE_LINK: 'https://snackgame.onelink.me/MHW6/github',
 
