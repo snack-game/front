@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useRecoilValue } from 'recoil';
 
 import { getMemberProfile } from '@api/members.api';
@@ -6,6 +8,7 @@ import Button from '@components/Button/Button';
 import { userState } from '@utils/atoms/member.atom';
 import { isApp } from '@utils/userAgentIdentifier';
 
+import PATH from '@constants/path.constant';
 import {
   useGetMemberProfile,
   useIntegrateMember,
@@ -50,9 +53,18 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
           </>
         )}
 
-        <Button onClick={handleReStartButton} size={'lg'}>
-          재시작!
-        </Button>
+        <div className="mt-4 flex w-full items-center justify-evenly">
+          <Link
+            target="_blank"
+            to={PATH.FEED_BACK_EVENT}
+            className="rounded-md border border-primary px-4 py-2 text-xl text-primary"
+          >
+            이벤트 참여
+          </Link>
+          <Button onClick={handleReStartButton} size={'lg'}>
+            재시작!
+          </Button>
+        </div>
       </div>
       {userStateValue.type === 'GUEST' && (
         <OAuth oAuthOnSuccess={onOAuthSuccess} />
