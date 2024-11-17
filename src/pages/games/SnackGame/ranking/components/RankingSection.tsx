@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useRecoilValue } from 'recoil';
 
-import LogoImage from '@assets/images/main.png';
+import LogoImage from '@assets/images/main.avif';
 import Spacing from '@components/Spacing/Spacing';
 import OtherRanking from '@pages/games/SnackGame/ranking/components/OtherRanking';
 import TopRanking from '@pages/games/SnackGame/ranking/components/TopRanking';
@@ -49,7 +49,7 @@ const EmptyRanking = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <img src={LogoImage} />
+      <img src={LogoImage} className="h-[250px] w-[250px]" />
       <p className="whitespace-pre-line text-center text-primary-deep-dark">
         {t('empty')}
       </p>

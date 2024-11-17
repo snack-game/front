@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import SnackGameImage from '@assets/images/logo-snack-game-letter.png';
-import ComingSoonImage from '@assets/images/main.png';
+import SnackGameImage from '@assets/images/logo-snack-game-letter.avif';
+import ComingSoonImage from '@assets/images/main.avif';
 import Carousel from '@components/Carousel/Carousel';
 import Hero from '@components/Hero/Hero';
 

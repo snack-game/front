@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-import ComingSoonImage from '@assets/images/main.png';
+import ComingSoonImage from '@assets/images/main.avif';
 import Button from '@components/Button/Button';
 
 import PATH from '@constants/path.constant';
