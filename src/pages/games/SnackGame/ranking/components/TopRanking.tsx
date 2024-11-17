@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next';
 
 import { motion } from 'framer-motion';
 
-import First from '@assets/images/first.png';
-import Second from '@assets/images/second.png';
-import Third from '@assets/images/third.png';
+import First from '@assets/images/first.avif';
+import Second from '@assets/images/second.avif';
+import Third from '@assets/images/third.avif';
 import { Level } from '@components/Level/Level';
 import { RankingType } from '@utils/types/common.type';
 
