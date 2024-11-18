@@ -144,16 +144,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
     const anyWindow: any = window;
     anyWindow.ReactNativeWebView?.postMessage(JSON.stringify(resultMessage));
 
-    openModal({
-      children: (
-        <GameResult
-          score={data.original.score}
-          percentile={data.original.percentile}
-          reStart={() => application.show(GameScreen)}
-        />
-      ),
-      handleOutsideClick: navigateToLobby,
-    });
+    navigateToLobby()
   };
 
   const navigateToLobby = async () => {
