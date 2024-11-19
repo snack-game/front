@@ -1,5 +1,7 @@
 import { Container } from 'pixi.js';
 
+import { SnackGameBizVerify } from '@pages/games/SnackgameBiz/game.type';
+
 import { Snack } from './Snack';
 import { SnackGameActions } from './SnackGameAction';
 import { SnackGameBoard } from './SnackGameBoard';
@@ -55,7 +57,9 @@ export class SnackGame extends Container {
   public onMatch?: (data: SnackGameOnMatchData) => void;
   /** 보드에서 조각이 팝될 때 발생 */
   public onPop?: (data: SnackGameOnPopData) => void;
-  public onStreak?: (data: Snack[]) => Promise<SnackGameVerify>;
+  public onStreak?: (
+    data: Snack[],
+  ) => Promise<SnackGameVerify | SnackGameBizVerify>;
   /** 게임 시간이 만료되면 발생 */
   public onTimesUp?: () => void;
   /** SnackGameBoard 리셋 시 발생*/

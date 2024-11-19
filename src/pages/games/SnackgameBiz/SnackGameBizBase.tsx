@@ -1,26 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 
-import { useGuest } from '@hooks/queries/auth.query';
-import useModal from '@hooks/useModal';
-
-import GameResult from './components/GameResult';
-import {
-  verifyStreaks,
-  gameEnd,
-  gamePause,
-  gameResume,
-  gameStart,
-} from './util/api';
-import {
-  SnackGameDefaultResponse,
-  SnackGameVerify,
-} from '../SnackGame/game/game.type';
+import { SnackGameBizDefaultResponse, SnackGameBizVerify } from './game.type';
+import { createGameApiClient } from './util/api';
 import initializeApplication from '../SnackGame/game/hook/initializeApplication';
 import { PausePopup } from '../SnackGame/game/popup/PausePopup';
 import { RulePopup } from '../SnackGame/game/popup/RulePopup';
@@ -36,12 +22,11 @@ type Props = {
 
 const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   const canvasBaseRef = useRef<HTMLDivElement>(null);
-  const { openModal } = useModal();
 
   const pixiValue = useRecoilValue(pixiState);
   const userInfo = useRecoilValue(userState);
-  const guestMutation = useGuest();
-  const queryClient = useQueryClient();
+
+  const gameApi = createGameApiClient();
 
   // TODO: 훅 안으로 끌고 들어가기
   const initializeAppScreens = async (application: SnackgameApplication) => {
@@ -52,11 +37,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
         PausePopup,
         () => new PausePopup(application, handleGameResume, handleGameEnd),
       ],
-      [
-        LobbyScreen,
-        () =>
-          new LobbyScreen(application, handleSetMode, handleNonLoggedInUser),
-      ],
+      [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
       [
         GameScreen,
         () =>
@@ -82,17 +63,14 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // 게임 진행 관련 functions
-  let session: SnackGameDefaultResponse | undefined;
+  let session: SnackGameBizDefaultResponse | undefined;
   let sessionMode: string | undefined;
   let cumulativeStreaks: Streak[] = [];
 
-  const handleNonLoggedInUser = async () => {
-    if (!userInfo.id) await guestMutation.mutateAsync();
-  };
-
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
-    session = await gameStart();
+    session = await gameApi.start();
+    gameApi.setAccessToken(session.accessToken);
     return session;
   };
 
@@ -114,8 +92,8 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
     return session!;
   };
 
-  const handleStreaksMove = async (): Promise<SnackGameVerify> => {
-    const result = await verifyStreaks(session!.sessionId, cumulativeStreaks);
+  const handleStreaksMove = async (): Promise<SnackGameBizVerify> => {
+    const result = await gameApi.verifyStreaks(cumulativeStreaks);
     cumulativeStreaks = [];
     return result;
   };
@@ -126,25 +104,27 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
       await handleStreaksMove();
     }
 
-    session = await gamePause(session!.sessionId);
+    session = await gameApi.pause();
   };
 
   const handleGameResume = async () => {
     if (!session) return;
-    session = await gameResume(session!.sessionId);
+    session = await gameApi.resume();
   };
 
   const handleGameEnd = async () => {
     if (cumulativeStreaks.length > 0) {
       await handleStreaksMove();
     }
-    const data = await gameEnd(session!.sessionId);
+    const data = await gameApi.end();
+    gameApi.clearAccessToken();
+
     const resultMessage = { type: 'snackgameresult', payload: data };
     window.parent?.postMessage(resultMessage, '*');
     const anyWindow: any = window;
     anyWindow.ReactNativeWebView?.postMessage(JSON.stringify(resultMessage));
 
-    navigateToLobby()
+    navigateToLobby();
   };
 
   const navigateToLobby = async () => {
@@ -159,6 +139,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   useEffect(() => {
     if (pixiValue.assetsInit && !userInfo.id) navigateToLobby();
   }, []);
+
   return (
     <div ref={canvasBaseRef} className={'mx-auto h-full w-full max-w-xl'}></div>
   );

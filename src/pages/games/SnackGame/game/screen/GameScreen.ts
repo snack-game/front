@@ -1,6 +1,11 @@
 import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
+import {
+  SnackGameBizStart,
+  SnackGameBizVerify,
+} from '@pages/games/SnackgameBiz/game.type';
+
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
 import { SnackGameStart, SnackGameVerify } from '../game.type';
@@ -50,8 +55,8 @@ export class GameScreen extends Container implements AppScreen {
     private handleStreak: (
       streak: Streak,
       isGolden: boolean,
-    ) => Promise<SnackGameVerify>,
-    private handleGameStart: () => Promise<SnackGameStart>,
+    ) => Promise<SnackGameVerify | SnackGameBizVerify>,
+    private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
   ) {
