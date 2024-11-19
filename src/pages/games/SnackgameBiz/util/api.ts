@@ -13,46 +13,52 @@ import {
 const GAME_ID = 5;
 
 export const createGameApiClient = () => {
-  let accessToken: string | null = null;
+  let token: string | null = null;
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
   });
 
   api.interceptors.request.use((config) => {
-    if (accessToken) {
-      config.headers.Authorization = `${accessToken}`;
+    if (token) {
+      config.headers.Authorization = `${token}`;
     }
     return config;
   });
 
   return {
-    setAccessToken: (token: string) => {
-      accessToken = token;
+    setToken: (newToken: string) => {
+      token = newToken;
     },
-    clearAccessToken: () => {
-      accessToken = null;
+    clearToken: () => {
+      token = null;
     },
     start: async (): Promise<SnackGameBizStart> => {
       const { data } = await api.post(`/games/${GAME_ID}`);
       return data;
     },
-    verifyStreaks: async (streaks: Streak[]): Promise<SnackGameBizVerify> => {
-      const { data } = await api.post(`/games/${GAME_ID}/streaks`, {
-        streaks,
-      });
+    verifyStreaks: async (
+      sessionId: number,
+      streaks: Streak[],
+    ): Promise<SnackGameBizVerify> => {
+      const { data } = await api.post(
+        `/games/${GAME_ID}/${sessionId}/streaks`,
+        {
+          streaks,
+        },
+      );
       return data;
     },
-    pause: async (): Promise<SnackGameBizPause> => {
-      const { data } = await api.post(`games/${GAME_ID}/pause`);
+    pause: async (sessionId: number): Promise<SnackGameBizPause> => {
+      const { data } = await api.post(`games/${GAME_ID}/${sessionId}/pause`);
       return data;
     },
-    resume: async (): Promise<SnackGameBizDefaultResponse> => {
-      const { data } = await api.post(`games/${GAME_ID}/resume`);
+    resume: async (sessionId: number): Promise<SnackGameBizDefaultResponse> => {
+      const { data } = await api.post(`games/${GAME_ID}/${sessionId}/resume`);
       return data;
     },
-    end: async (): Promise<SnackGameBizEnd> => {
-      const { data } = await api.post(`games/${GAME_ID}/end`);
+    end: async (sessionId: number): Promise<SnackGameBizEnd> => {
+      const { data } = await api.post(`games/${GAME_ID}/${sessionId}/end`);
       return data;
     },
   };

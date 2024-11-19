@@ -1,8 +1,7 @@
 import { SnackGameDefaultResponse } from '../SnackGame/game/game.type';
 
-export interface SnackGameBizDefaultResponse
-  extends Omit<SnackGameDefaultResponse, 'sessionId'> {
-  accessToken: string;
+export interface SnackGameBizDefaultResponse extends SnackGameDefaultResponse {
+  token: string;
 }
 
 export type SnackGameBizStart = SnackGameBizDefaultResponse;

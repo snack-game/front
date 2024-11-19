@@ -70,7 +70,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
     session = await gameApi.start();
-    gameApi.setAccessToken(session.accessToken);
+    gameApi.setToken(session.token);
     return session;
   };
 
@@ -93,7 +93,10 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const handleStreaksMove = async (): Promise<SnackGameBizVerify> => {
-    const result = await gameApi.verifyStreaks(cumulativeStreaks);
+    const result = await gameApi.verifyStreaks(
+      session!.sessionId,
+      cumulativeStreaks,
+    );
     cumulativeStreaks = [];
     return result;
   };
@@ -104,20 +107,20 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
       await handleStreaksMove();
     }
 
-    session = await gameApi.pause();
+    session = await gameApi.pause(session!.sessionId);
   };
 
   const handleGameResume = async () => {
     if (!session) return;
-    session = await gameApi.resume();
+    session = await gameApi.resume(session!.sessionId);
   };
 
   const handleGameEnd = async () => {
     if (cumulativeStreaks.length > 0) {
       await handleStreaksMove();
     }
-    const data = await gameApi.end();
-    gameApi.clearAccessToken();
+    const data = await gameApi.end(session!.sessionId);
+    gameApi.clearToken();
 
     const resultMessage = { type: 'snackgameresult', payload: data };
     window.parent?.postMessage(resultMessage, '*');
