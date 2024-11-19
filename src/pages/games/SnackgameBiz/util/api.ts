@@ -1,54 +1,65 @@
-import api from '@api/index';
+import axios from 'axios';
+
 import { Streak } from '@pages/games/SnackGame/game/snackGame/SnackGameUtil';
 
 import {
-  SnackGameDefaultResponse,
-  SnackGameEnd,
-  SnackGamePause,
-  SnackGameStart,
-  SnackGameVerify,
-} from '../../SnackGame/game/game.type';
+  SnackGameBizDefaultResponse,
+  SnackGameBizPause,
+  SnackGameBizStart,
+  SnackGameBizVerify,
+  SnackGameBizEnd,
+} from '../game.type';
 
-const GAME_ID = 4;
+const GAME_ID = 5;
 
-export const gameStart = async (): Promise<SnackGameStart> => {
-  const { data } = await api.post(`/games/${GAME_ID}`);
+export const createGameApiClient = () => {
+  let token: string | null = null;
 
-  return data;
-};
-
-export const verifyStreaks = async (
-  sessionId: number,
-  streaks: Streak[],
-): Promise<SnackGameVerify> => {
-  const { data } = await api.post(`/games/${GAME_ID}/${sessionId}/streaks`, {
-    streaks,
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
   });
 
-  return data;
-};
+  api.interceptors.request.use((config) => {
+    if (token) {
+      config.headers.Authorization = `${token}`;
+    }
+    return config;
+  });
 
-export const gamePause = async (sessionId: number): Promise<SnackGamePause> => {
-  const { data } = await api.post(`games/${GAME_ID}/${sessionId}/pause`);
-
-  return data;
-};
-
-export const gameResume = async (
-  sessionId: number,
-): Promise<SnackGameDefaultResponse> => {
-  const { data } = await api.post(`games/${GAME_ID}/${sessionId}/resume`);
-
-  return data;
-};
-
-export type SnackGameBizEnd = {
-  original: SnackGameEnd;
-  signed: string;
-};
-
-export const gameEnd = async (sessionId: number): Promise<SnackGameBizEnd> => {
-  const { data } = await api.post(`games/${GAME_ID}/${sessionId}/end`);
-
-  return data;
+  return {
+    setToken: (newToken: string) => {
+      token = newToken;
+    },
+    clearToken: () => {
+      token = null;
+    },
+    start: async (): Promise<SnackGameBizStart> => {
+      const { data } = await api.post(`/games/${GAME_ID}`);
+      return data;
+    },
+    verifyStreaks: async (
+      sessionId: number,
+      streaks: Streak[],
+    ): Promise<SnackGameBizVerify> => {
+      const { data } = await api.post(
+        `/games/${GAME_ID}/${sessionId}/streaks`,
+        {
+          streaks,
+        },
+      );
+      return data;
+    },
+    pause: async (sessionId: number): Promise<SnackGameBizPause> => {
+      const { data } = await api.post(`games/${GAME_ID}/${sessionId}/pause`);
+      return data;
+    },
+    resume: async (sessionId: number): Promise<SnackGameBizDefaultResponse> => {
+      const { data } = await api.post(`games/${GAME_ID}/${sessionId}/resume`);
+      return data;
+    },
+    end: async (sessionId: number): Promise<SnackGameBizEnd> => {
+      const { data } = await api.post(`games/${GAME_ID}/${sessionId}/end`);
+      return data;
+    },
+  };
 };
