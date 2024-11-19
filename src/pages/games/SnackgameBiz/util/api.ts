@@ -21,7 +21,7 @@ export const createGameApiClient = () => {
 
   api.interceptors.request.use((config) => {
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `${accessToken}`;
     }
     return config;
   });
