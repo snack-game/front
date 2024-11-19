@@ -30,7 +30,7 @@ export class LobbyScreen extends Container implements AppScreen {
   constructor(
     private app: SnackgameApplication,
     private handleSetMode: (mode: string) => void,
-    private handleNonLoggedInUser: () => Promise<void>,
+    private handleNonLoggedInUser?: () => Promise<void>,
   ) {
     super();
 
@@ -65,7 +65,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
   public handleGameStartButton = async () => {
     try {
-      await this.handleNonLoggedInUser();
+      await this.handleNonLoggedInUser?.();
       this.handleSetMode('default');
       this.app.show(GameScreen);
     } catch (error) {
