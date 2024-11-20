@@ -39,8 +39,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
       ],
       [
         LobbyScreen,
-        () =>
-          new LobbyScreen(application, handleSetMode, () => Promise.resolve()),
+        () => new LobbyScreen(application, handleSetMode),
       ],
       [
         GameScreen,

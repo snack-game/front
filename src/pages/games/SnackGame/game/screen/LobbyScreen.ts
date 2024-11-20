@@ -30,7 +30,7 @@ export class LobbyScreen extends Container implements AppScreen {
   constructor(
     private app: SnackgameApplication,
     private handleSetMode: (mode: string) => void,
-    private handleNonLoggedInUser: () => Promise<void>,
+    private handleNonLoggedInUser: () => Promise<void> = () => Promise.resolve(),
   ) {
     super();
 
