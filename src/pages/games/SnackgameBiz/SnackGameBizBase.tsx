@@ -138,6 +138,22 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
     application.show(LobbyScreen);
   };
 
+  const onClientMessage = (e: MessageEvent) => {
+    if (!(e.data.type?.startsWith("snackgame-client"))) return;
+    switch (e.data.type) {
+      case 'snackgame-client-restart-invoked':
+        if (!session) {
+          (application.appScreenPool.get(LobbyScreen) as LobbyScreen).handleGameStartButton();
+        }
+        break;
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('message', onClientMessage);
+    return () => window.removeEventListener('message', onClientMessage)
+  }, []);
+
   useEffect(() => {
     replaceErrorHandler(handleApplicationError);
   }, []);
