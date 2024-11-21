@@ -139,8 +139,9 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const onClientMessage = (e: MessageEvent) => {
-    if (!(e.data.type?.startsWith("snackgame-client"))) return;
-    switch (e.data.type) {
+    const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+    if (!data.type?.startsWith("snackgame-client")) return;
+    switch (data.type) {
       case 'snackgame-client-restart-invoked':
         if (!session) {
           (application.appScreenPool.get(LobbyScreen) as LobbyScreen).handleGameStartButton();
