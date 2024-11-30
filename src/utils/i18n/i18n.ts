@@ -29,6 +29,7 @@ i18next
         'subdomain',
       ],
       caches: ['localStorage'],
+      convertDetectedLanguage: (lng) => lng.split('-')[0]
     },
   });
 

@@ -1,4 +1,4 @@
-import LoadingImage from '@assets/images/logo.png';
+import LoadingImage from '@assets/images/logo.avif';
 
 interface LoadingProps {
   type?: 'page' | 'component';

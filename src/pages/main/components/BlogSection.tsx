@@ -6,7 +6,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 
-import LogoImage from '@assets/images/logo.png';
+import LogoImage from '@assets/images/logo.avif';
 import Button from '@components/Button/Button';
 import Spacing from '@components/Spacing/Spacing';
 

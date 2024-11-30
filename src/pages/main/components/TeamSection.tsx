@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-import ChilImage from '@assets/images/0chil.jpg';
-import DongSuImage from '@assets/images/dongsu.webp';
-import HwanImage from '@assets/images/hwan.jpg';
-import YujinImage from '@assets/images/nijuy.jpg';
+import ChilImage from '@assets/images/0chil.avif';
+import DongSuImage from '@assets/images/dongsu.avif';
+import HwanImage from '@assets/images/hwan.avif';
+import YujinImage from '@assets/images/nijuy.avif';
 import Spacing from '@components/Spacing/Spacing';
 
 const teamInfoList = [
@@ -121,8 +121,9 @@ const TeamCard = ({
         <div className={'px-20'}>
           <img
             alt="team"
-            className="object-start mb-4 w-full flex-shrink-0 rounded-full object-cover shadow-md"
+            className="object-start mb-4 h-full w-full flex-shrink-0 rounded-full object-cover shadow-md"
             src={imgSrc}
+            loading="lazy"
           />
         </div>
 

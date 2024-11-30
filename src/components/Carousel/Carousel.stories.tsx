@@ -1,4 +1,4 @@
-import LogoImage from '@assets/images/main.png';
+import LogoImage from '@assets/images/main.avif';
 import Carousel from '@components/Carousel/Carousel';
 
 import type { Meta, StoryObj } from '@storybook/react';
