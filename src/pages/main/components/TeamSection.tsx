@@ -123,6 +123,7 @@ const TeamCard = ({
             alt="team"
             className="object-start mb-4 h-full w-full flex-shrink-0 rounded-full object-cover shadow-md"
             src={imgSrc}
+            loading="lazy"
           />
         </div>
 
