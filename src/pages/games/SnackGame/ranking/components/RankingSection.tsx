@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 
 import LogoImage from '@assets/images/main.avif';
+import LogoWebpImage from '@assets/images/main.webp';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import Spacing from '@components/Spacing/Spacing';
 import OtherRanking from '@pages/games/SnackGame/ranking/components/OtherRanking';
 import TopRanking from '@pages/games/SnackGame/ranking/components/TopRanking';
@@ -49,7 +51,12 @@ const EmptyRanking = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <img src={LogoImage} className="h-[250px] w-[250px]" />
+      <ImageWithFallback
+        sources={[{ srcSet: LogoImage, type: 'avif' }]}
+        src={LogoWebpImage}
+        alt="empty ranking"
+        className="h-[250px] w-[250px]"
+      />
       <p className="whitespace-pre-line text-center text-primary-deep-dark">
         {t('empty')}
       </p>

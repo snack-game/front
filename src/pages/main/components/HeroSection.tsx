@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import SnackGameImage from '@assets/images/logo-snack-game-letter.avif';
+import SnackGameWebpImage from '@assets/images/logo-snack-game-letter.webp';
 import ComingSoonImage from '@assets/images/main.avif';
+import ComingSoonWebpImage from '@assets/images/main.webp';
 import Carousel from '@components/Carousel/Carousel';
 import Hero from '@components/Hero/Hero';
 
@@ -24,8 +26,14 @@ const HeroSection = () => {
       >
         <Carousel
           items={[
-            { title: 'Snack Game', image: SnackGameImage },
-            { title: 'Coming Soon', image: ComingSoonImage },
+            {
+              title: 'Snack Game',
+              images: [SnackGameImage, SnackGameWebpImage],
+            },
+            {
+              title: 'Coming Soon',
+              images: [ComingSoonImage, ComingSoonWebpImage],
+            },
           ]}
           selected={selected}
           setSelected={setSelected}

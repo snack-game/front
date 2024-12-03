@@ -3,8 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 import First from '@assets/images/first.avif';
+import FirstWebp from '@assets/images/first.webp';
 import Second from '@assets/images/second.avif';
+import SecondWebp from '@assets/images/second.webp';
 import Third from '@assets/images/third.avif';
+import ThirdWebp from '@assets/images/third.webp';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import { Level } from '@components/Level/Level';
 import { RankingType } from '@utils/types/common.type';
 
@@ -12,11 +16,11 @@ interface TopRankingProps {
   topRanking: RankingType[];
 }
 
-const loadedImages = [First, Second, Third].map((src) => {
-  const img = new Image();
-  img.src = src;
-  return img;
-});
+const TOP_RANKING_IMAGES = [
+  [First, FirstWebp],
+  [Second, SecondWebp],
+  [Third, ThirdWebp],
+];
 
 const TopRanking = ({ topRanking }: TopRankingProps) => {
   const { t } = useTranslation('ranking');
@@ -38,10 +42,13 @@ const TopRanking = ({ topRanking }: TopRankingProps) => {
             ${index == 1 && 'order-1'}
             ${index == 2 && 'order-3'}`}
           >
-            <img
-              className={'h-16 w-16 lg:h-20 lg:w-20'}
-              src={loadedImages[top.rank - 1].src}
+            <ImageWithFallback
+              sources={[
+                { srcSet: TOP_RANKING_IMAGES[top.rank - 1][0], type: 'avif' },
+              ]}
+              src={TOP_RANKING_IMAGES[top.rank - 1][1]}
               alt={`ranking ${top.rank} image`}
+              className={'h-16 w-16 lg:h-20 lg:w-20'}
             />
             <div className={'flex flex-col items-center justify-center gap-2'}>
               <div className={'flex flex-col items-center'}>

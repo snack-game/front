@@ -6,35 +6,40 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 import ChilImage from '@assets/images/0chil.avif';
+import ChilWebpImage from '@assets/images/0chil.webp';
 import DongSuImage from '@assets/images/dongsu.avif';
+import DongSWebpImage from '@assets/images/dongsu.webp';
 import HwanImage from '@assets/images/hwan.avif';
+import HwanWebpImage from '@assets/images/hwan.webp';
 import YujinImage from '@assets/images/nijuy.avif';
+import YujinWebpImage from '@assets/images/nijuy.webp';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import Spacing from '@components/Spacing/Spacing';
 
 const teamInfoList = [
   {
-    imgSrc: DongSuImage,
+    imgSrc: [DongSuImage, DongSWebpImage],
     name: 'dev-dong-su',
     position: 'Front-End, Game Developer',
     intro: 'team_dongsu',
     githubUrl: 'https://github.com/dev-dong-su',
   },
   {
-    imgSrc: ChilImage,
+    imgSrc: [ChilImage, ChilWebpImage],
     name: '0chil',
     position: 'Back-End Developer',
     intro: 'team_0chil',
     githubUrl: 'https://github.com/0chil',
   },
   {
-    imgSrc: HwanImage,
+    imgSrc: [HwanImage, HwanWebpImage],
     name: 'Hwanvely',
     position: 'Back-End Developer',
     intro: 'team_hwanvely',
     githubUrl: 'https://github.com/Hwanvely',
   },
   {
-    imgSrc: YujinImage,
+    imgSrc: [YujinImage, YujinWebpImage],
     name: 'nijuy',
     position: 'Front-End Developer',
     intro: 'team_nijuy',
@@ -100,7 +105,7 @@ const TeamSection = () => {
 
 interface TeamCardProps {
   name: string;
-  imgSrc: string;
+  imgSrc: string[];
   position: string;
   intro: string;
   githubUrl: string;
@@ -119,10 +124,11 @@ const TeamCard = ({
     <div className="p-4 md:w-1/2 lg:min-h-[350px] lg:w-1/4">
       <div className="flex h-full flex-col items-center text-center">
         <div className={'px-20'}>
-          <img
+          <ImageWithFallback
+            sources={[{ srcSet: imgSrc[0], type: 'avif' }]}
+            src={imgSrc[1]}
             alt="team"
             className="object-start mb-4 h-full w-full flex-shrink-0 rounded-full object-cover shadow-md"
-            src={imgSrc}
             loading="lazy"
           />
         </div>
