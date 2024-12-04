@@ -6,7 +6,9 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 import ComingSoonImage from '@assets/images/main.avif';
+import ComingSoonWebPImage from '@assets/images/main.webp';
 import Button from '@components/Button/Button';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 
 import PATH from '@constants/path.constant';
 
@@ -53,8 +55,9 @@ const Hero = ({ selected }: HeroProps) => {
         </Link>
       ),
       rightContent: (
-        <img
-          src={ComingSoonImage}
+        <ImageWithFallback
+          sources={[{ srcSet: ComingSoonImage, type: 'avif' }]}
+          src={ComingSoonWebPImage}
           alt={'main image'}
           className={'rounded-full bg-primary-light'}
         />

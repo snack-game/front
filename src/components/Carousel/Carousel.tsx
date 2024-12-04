@@ -1,8 +1,10 @@
 import { Dispatch, useEffect, useRef, useState } from 'react';
 
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
+
 interface CarouselItem {
   title: string;
-  image: string;
+  images: string[];
   isSelected?: boolean;
   onClick?: () => void;
 }
@@ -48,7 +50,7 @@ const Carousel = ({ items, selected, setSelected }: CarouselProps) => {
             <CarouselItem
               key={index}
               title={item.title}
-              image={item.image}
+              images={item.images}
               isSelected={index === selected}
               onClick={() => setSelected(index)}
             />
@@ -59,7 +61,7 @@ const Carousel = ({ items, selected, setSelected }: CarouselProps) => {
   );
 };
 
-const CarouselItem = ({ title, image, isSelected, onClick }: CarouselItem) => {
+const CarouselItem = ({ title, images, isSelected, onClick }: CarouselItem) => {
   return (
     <div
       className={`h-[150px] w-[200px] cursor-pointer rounded-md bg-white p-2 shadow-lg ${
@@ -69,7 +71,12 @@ const CarouselItem = ({ title, image, isSelected, onClick }: CarouselItem) => {
       }`}
       onClick={onClick}
     >
-      <img src={image} alt={title} className={'h-full w-full object-contain'} />
+      <ImageWithFallback
+        sources={[{ srcSet: images[0], type: 'avif' }]}
+        src={images[1]}
+        alt={title}
+        className={'h-full w-full object-contain'}
+      />
     </div>
   );
 };

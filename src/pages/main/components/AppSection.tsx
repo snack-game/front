@@ -7,7 +7,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 
 import LogoImage from '@assets/images/main.avif';
+import LogoWebpImage from '@assets/images/main.webp';
 import Button from '@components/Button/Button';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import Spacing from '@components/Spacing/Spacing';
 
 import PATH from '@constants/path.constant';
@@ -65,9 +67,10 @@ const AppSection = () => {
         }
       >
         <div className={'rounded-3xl bg-game p-8 shadow-md'}>
-          <img
-            src={LogoImage}
-            alt={'blog image'}
+          <ImageWithFallback
+            sources={[{ srcSet: LogoImage, type: 'avif' }]}
+            src={LogoWebpImage}
+            alt={'app image'}
             className={
               'h-full max-h-[150px] w-full max-w-[150px] lg:max-h-[200px] lg:max-w-[200px]'
             }

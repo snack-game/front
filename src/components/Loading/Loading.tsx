@@ -1,4 +1,6 @@
 import LoadingImage from '@assets/images/logo.avif';
+import LoadingWebpImage from '@assets/images/logo.webp';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 
 interface LoadingProps {
   type?: 'page' | 'component';
@@ -11,8 +13,9 @@ const Loading = ({ type = 'component' }: LoadingProps) => {
       ${type === 'page' ? 'h-screen w-screen' : 'h-full w-full'}
     `}
     >
-      <img
-        src={LoadingImage}
+      <ImageWithFallback
+        sources={[{ srcSet: LoadingImage, type: 'avif' }]}
+        src={LoadingWebpImage}
         alt={'loading image'}
         className="h-10 w-10 animate-spin"
       />
