@@ -230,6 +230,7 @@ export class GameScreen extends Container implements AppScreen {
     this.pauseButton.hide();
     this.snackGame.stopPlaying();
     this.finish();
+    HapticFeedback.invokeImpactHeavy();
   }
 
   /** 게임 플레이를 마무리하고 결과를 userStats에 저장함 */
