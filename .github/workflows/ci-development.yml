@@ -2,6 +2,7 @@ name: Deploy Development CI
 on:
   push:
     branches: [develop]
+  workflow_dispatch:
 
 jobs:
   deploy:
