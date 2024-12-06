@@ -53,6 +53,6 @@
     }
   },
   "include": [
-    "src", "svg.d.ts", "vite.config.ts"
+    "src", "svg.d.ts", "vite.config.ts", "global.d.ts"
   ]
 }

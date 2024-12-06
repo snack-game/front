@@ -25,6 +25,7 @@ import { Score } from '../ui/Score';
 import { Timer } from '../ui/Timer';
 import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
+import { HapticFeedback } from '../util/hapticFeedback';
 
 export class GameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
@@ -215,6 +216,7 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforeGameStart.hide();
+    HapticFeedback.invokeNotificationSuccess();
   }
 
   public async onHide({ width, height }: Rectangle) {
@@ -228,6 +230,7 @@ export class GameScreen extends Container implements AppScreen {
     this.pauseButton.hide();
     this.snackGame.stopPlaying();
     this.finish();
+    HapticFeedback.invokeImpactHeavy();
   }
 
   /** 게임 플레이를 마무리하고 결과를 userStats에 저장함 */
