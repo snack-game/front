@@ -127,8 +127,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
 
     const resultMessage = { type: 'snackgameresult', payload: data };
     window.parent?.postMessage(resultMessage, '*');
-    const anyWindow: any = window;
-    anyWindow.ReactNativeWebView?.postMessage(JSON.stringify(resultMessage));
+    window.ReactNativeWebView?.postMessage(JSON.stringify(resultMessage));
 
     navigateToLobby();
   };
