@@ -130,6 +130,8 @@ export class GameScreen extends Container implements AppScreen {
       mode,
     });
     this.snackGame.setup(snackGameConfig, board);
+    HapticFeedback.invokeNotificationSuccess();
+    
     this.snackGame.startPlaying(); // TODO: onPrepare로 이동시키면서 시간을 1초 늘렸는데, 다른 방법이 없을지?
 
     this.finished = false;
@@ -216,7 +218,6 @@ export class GameScreen extends Container implements AppScreen {
     this.onSnackGameBoardReset();
     await waitFor(0.6);
     await this.beforeGameStart.hide();
-    HapticFeedback.invokeNotificationSuccess();
   }
 
   public async onHide({ width, height }: Rectangle) {
@@ -230,7 +231,6 @@ export class GameScreen extends Container implements AppScreen {
     this.pauseButton.hide();
     this.snackGame.stopPlaying();
     this.finish();
-    HapticFeedback.invokeImpactHeavy();
   }
 
   /** 게임 플레이를 마무리하고 결과를 userStats에 저장함 */
