@@ -25,6 +25,7 @@ import { Score } from '../ui/Score';
 import { Timer } from '../ui/Timer';
 import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
+import { HapticFeedback } from '../util/hapticFeedback';
 
 export class GameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
@@ -129,6 +130,8 @@ export class GameScreen extends Container implements AppScreen {
       mode,
     });
     this.snackGame.setup(snackGameConfig, board);
+    HapticFeedback.invokeNotificationSuccess();
+    
     this.snackGame.startPlaying(); // TODO: onPrepare로 이동시키면서 시간을 1초 늘렸는데, 다른 방법이 없을지?
 
     this.finished = false;
