@@ -12,6 +12,7 @@ import { ATOM_KEY } from '@constants/atom.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
+import ProvocationSender from './components/ProvocationSender';
 import { SnackGameDefaultResponse, SnackGameVerify } from './game.type';
 import initializeApplication from './hook/initializeApplication';
 import { PausePopup } from './popup/PausePopup';
@@ -154,7 +155,16 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
           reStart={() => application.show(GameScreen)}
         />
       ),
-      onClose: navigateToLobby,
+      onClose:
+        // TODO: 도발 대상이 있을 경우(신기록 갱신)로 조건 수정
+        data.score
+          ? () => {
+              openModal({
+                children: <ProvocationSender targets={[]} />,
+                onClose: navigateToLobby,
+              });
+            }
+          : navigateToLobby,
     });
   };
 
@@ -170,6 +180,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   useEffect(() => {
     if (pixiValue.assetsInit && !userInfo.id) navigateToLobby();
   }, []);
+
   return (
     <div ref={canvasBaseRef} className={'mx-auto h-full w-full max-w-xl'}></div>
   );
