@@ -154,7 +154,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
           reStart={() => application.show(GameScreen)}
         />
       ),
-      handleOutsideClick: navigateToLobby,
+      onClose: navigateToLobby,
     });
   };
 
