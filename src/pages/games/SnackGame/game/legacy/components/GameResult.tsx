@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { useRecoilValue } from 'recoil';
 
@@ -8,7 +8,6 @@ import Button from '@components/Button/Button';
 import { userState } from '@utils/atoms/member.atom';
 import { isApp } from '@utils/userAgentIdentifier';
 
-import PATH from '@constants/path.constant';
 import {
   useGetMemberProfile,
   useIntegrateMember,
@@ -16,7 +15,6 @@ import {
 import useModal from '@hooks/useModal';
 
 import ExpBarChart from './ExpBarChart';
-import { useEffect } from 'react';
 import { HapticFeedback } from '../../util/hapticFeedback';
 
 interface GameResultProps {
@@ -45,7 +43,7 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
 
   useEffect(() => {
     HapticFeedback.invokeImpactHeavy();
-  })
+  });
 
   return (
     <div className={'flex w-full flex-grow flex-col justify-evenly gap-4'}>
@@ -59,18 +57,9 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
           </>
         )}
 
-        <div className="mt-4 flex w-full items-center justify-evenly">
-          <Link
-            target="_blank"
-            to={PATH.FEED_BACK_EVENT}
-            className="rounded-md border border-primary px-4 py-2 text-xl text-primary"
-          >
-            이벤트 참여
-          </Link>
-          <Button onClick={handleReStartButton} size={'lg'}>
-            재시작!
-          </Button>
-        </div>
+        <Button onClick={handleReStartButton} size={'lg'}>
+          재시작!
+        </Button>
       </div>
       {userStateValue.type === 'GUEST' && (
         <OAuth oAuthOnSuccess={onOAuthSuccess} />
