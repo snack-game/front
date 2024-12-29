@@ -7,6 +7,14 @@ export const HapticFeedback = {
             }
         ));
     },
+    async invokeImpactLight() {
+        window.ReactNativeWebView?.postMessage(JSON.stringify(
+            {
+                "type": "snackgame-haptic-feedback",
+                "method": "impactLight"
+            }
+        ));
+    },
     async invokeImpactMedium() {
         window.ReactNativeWebView?.postMessage(JSON.stringify(
             {

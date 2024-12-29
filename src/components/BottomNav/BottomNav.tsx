@@ -6,6 +6,7 @@ import RankingIcon from '@assets/icon/ranking.svg?react';
 import RouterLink from '@components/RouterLink/RouterLink';
 
 import PATH from '@constants/path.constant';
+import { HapticFeedback } from '@pages/games/SnackGame/game/util/hapticFeedback';
 
 export const BottomNav = () => {
   const location = useLocation().pathname;
@@ -17,6 +18,7 @@ export const BottomNav = () => {
           to={PATH.SNACK_GAME}
           className={'flex-col items-center justify-between'}
           isActivated={location == PATH.SNACK_GAME}
+          onClick={HapticFeedback.invokeImpactLight}
         >
           <GameIcon className={'h-6 w-6'} />
           <span>게임</span>
@@ -25,6 +27,7 @@ export const BottomNav = () => {
           to={PATH.SNACK_GAME_RANKING}
           className={'flex-col items-center justify-between'}
           isActivated={location == PATH.SNACK_GAME_RANKING}
+          onClick={HapticFeedback.invokeImpactLight}
         >
           <RankingIcon className={'h-6 w-6'} />
           <span>랭킹</span>
@@ -33,6 +36,7 @@ export const BottomNav = () => {
           to={PATH.USER}
           className={'flex-col items-center justify-between'}
           isActivated={location == PATH.USER}
+          onClick={HapticFeedback.invokeImpactLight}
         >
           <ProfileIcon className={'h-6 w-6'} />
           <span>프로필</span>
