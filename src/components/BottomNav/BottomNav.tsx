@@ -10,7 +10,6 @@ import { HapticFeedback } from '@pages/games/SnackGame/game/util/hapticFeedback'
 
 export const BottomNav = () => {
   const location = useLocation().pathname;
-  
 
   return (
     <div className="fixed bottom-0 z-bottomNav flex w-full justify-center">
