@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useRecoilValue } from 'recoil';
 
 import { getMemberProfile } from '@api/members.api';
@@ -15,7 +13,7 @@ import {
 import useModal from '@hooks/useModal';
 
 import ExpBarChart from './ExpBarChart';
-import { HapticFeedback } from '../../util/hapticFeedback';
+// import { HapticFeedback } from '../../util/hapticFeedback';
 
 interface GameResultProps {
   score: number;
@@ -41,9 +39,9 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
     return await integrateMember.mutateAsync();
   };
 
-  useEffect(() => {
-    HapticFeedback.invokeImpactHeavy();
-  });
+  // useEffect(() => {
+  //   HapticFeedback.invokeImpactHeavy();
+  // });
 
   return (
     <div className={'flex w-full flex-grow flex-col justify-evenly gap-4'}>
