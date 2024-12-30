@@ -1,4 +1,5 @@
-import Apple from '@pages/games/SnackGame/game/legacy/model/appleGame/apple';
+import Apple from "./apple";
+
 
 export class AppleGame {
   public score = 0;

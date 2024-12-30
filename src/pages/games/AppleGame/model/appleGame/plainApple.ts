@@ -1,4 +1,4 @@
-import AppleImage from '@assets/images/apple.png';
+import AppleImage from '@assets/images/snack.png';
 
 import Apple, { ApplePropType } from './apple';
 
