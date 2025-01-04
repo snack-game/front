@@ -42,7 +42,7 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
   };
 
   useEffect(() => {
-    HapticFeedback.invokeImpactHeavy();
+    HapticFeedback.invoke('impactHeavy');
   });
 
   return (

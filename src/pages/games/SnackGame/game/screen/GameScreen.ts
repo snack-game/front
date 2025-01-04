@@ -130,8 +130,8 @@ export class GameScreen extends Container implements AppScreen {
       mode,
     });
     this.snackGame.setup(snackGameConfig, board);
-    HapticFeedback.invokeNotificationSuccess();
-    
+    HapticFeedback.invoke('notificationSuccess');
+
     this.snackGame.startPlaying(); // TODO: onPrepare로 이동시키면서 시간을 1초 늘렸는데, 다른 방법이 없을지?
 
     this.finished = false;
