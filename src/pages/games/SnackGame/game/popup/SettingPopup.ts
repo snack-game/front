@@ -107,6 +107,9 @@ export class SettingsPopup extends Container implements AppScreen {
     this.hapticCheckBox = new Switch('햅틱');
     this.hapticCheckBox.x = 77;
     this.hapticCheckBox.y = 10;
+    this.hapticCheckBox.onCheck.connect((v) => {
+      userSettings.setHapticEnabled(v);
+    });
     this.panel.addChild(this.hapticCheckBox);
   }
 

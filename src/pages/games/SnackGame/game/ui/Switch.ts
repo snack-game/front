@@ -10,7 +10,7 @@ export class Switch extends CheckBox {
   /** 스위치에 표시되는 메시지 */
   public messageLabel: Label;
 
-  constructor(label: string, checked = false) {
+  constructor(label: string, checked = true) {
     super({
       checked,
       style: {
