@@ -74,7 +74,7 @@ class UserSettings {
 
   /** 햅틱 활성화 여부를 가져옵니다. */
   public getHapticEnabled() {
-    return storage.getBoolean(KEY_HAPTIC_ENABLED);
+    return storage.getBoolean(KEY_HAPTIC_ENABLED) ?? true;
   }
 }
 

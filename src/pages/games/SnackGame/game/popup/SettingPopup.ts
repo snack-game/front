@@ -135,6 +135,7 @@ export class SettingsPopup extends Container implements AppScreen {
     this.masterSlider.value = userSettings.getMasterVolume() * 100;
     this.bgmSlider.value = userSettings.getBgmVolume() * 100;
     this.sfxSlider.value = userSettings.getSfxVolume() * 100;
+    this.hapticCheckBox.checked = userSettings.getHapticEnabled();
   }
 
   /** 팝업을 애니메이션과 함께 표시 */
