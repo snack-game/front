@@ -3,6 +3,7 @@ import {
   KEY_VOLUME_MASTER,
   KEY_VOLUME_BGM,
   KEY_VOLUME_SFX,
+  KEY_HAPTIC_ENABLED,
 } from '@constants/localStorage.constant';
 
 import { bgm, setMasterVolume, sfx } from './audio';
@@ -64,6 +65,16 @@ class UserSettings {
   public setSfxVolume(value: number) {
     sfx.setVolume(value);
     storage.setNumber(KEY_VOLUME_SFX, value);
+  }
+
+  /** 햅틱 활성화 여부를 설정합니다. */
+  public setHapticEnabled(value: boolean) {
+    storage.setBoolean(KEY_HAPTIC_ENABLED, value);
+  }
+
+  /** 햅틱 활성화 여부를 가져옵니다. */
+  public getHapticEnabled() {
+    return storage.getBoolean(KEY_HAPTIC_ENABLED);
   }
 }
 
