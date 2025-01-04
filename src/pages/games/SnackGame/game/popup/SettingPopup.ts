@@ -10,6 +10,7 @@ import { SnackgameApplication } from '../screen/SnackgameApplication';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
+import { Switch } from '../ui/Switch';
 import { VolumeSlider } from '../ui/VolumeSlider';
 import { gamePause, gameResume } from '../util/api';
 import { storage } from '../util/storage';
@@ -37,6 +38,8 @@ export class SettingsPopup extends Container implements AppScreen {
   private bgmSlider: VolumeSlider;
   /** 효과음 볼륨을 변경하는 슬라이더 */
   private sfxSlider: VolumeSlider;
+  /** 햅틱 활성화 여부를 변경하는 스위치 */
+  private hapticCheckBox: Switch;
 
   constructor(
     private app: SnackgameApplication,
@@ -100,6 +103,11 @@ export class SettingsPopup extends Container implements AppScreen {
       userSettings.setSfxVolume(v / 100);
     });
     this.layout.addChild(this.sfxSlider);
+
+    this.hapticCheckBox = new Switch('햅틱');
+    this.hapticCheckBox.x = 77;
+    this.hapticCheckBox.y = 10;
+    this.panel.addChild(this.hapticCheckBox);
   }
 
   public async handleDoneButton() {
