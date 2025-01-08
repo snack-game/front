@@ -10,6 +10,7 @@ import { SnackgameApplication } from '../screen/SnackgameApplication';
 import { Label } from '../ui/Label';
 import { LargeButton } from '../ui/LargeButton';
 import { RoundedBox } from '../ui/RoundedBox';
+import { Switch } from '../ui/Switch';
 import { VolumeSlider } from '../ui/VolumeSlider';
 import { gamePause, gameResume } from '../util/api';
 import { storage } from '../util/storage';
@@ -37,6 +38,8 @@ export class SettingsPopup extends Container implements AppScreen {
   private bgmSlider: VolumeSlider;
   /** 효과음 볼륨을 변경하는 슬라이더 */
   private sfxSlider: VolumeSlider;
+  /** 햅틱 활성화 여부를 변경하는 스위치 */
+  private hapticCheckBox: Switch;
 
   constructor(
     private app: SnackgameApplication,
@@ -100,6 +103,14 @@ export class SettingsPopup extends Container implements AppScreen {
       userSettings.setSfxVolume(v / 100);
     });
     this.layout.addChild(this.sfxSlider);
+
+    this.hapticCheckBox = new Switch('햅틱');
+    this.hapticCheckBox.x = 77;
+    this.hapticCheckBox.y = 10;
+    this.hapticCheckBox.onCheck.connect((v) => {
+      userSettings.setHapticEnabled(v);
+    });
+    this.panel.addChild(this.hapticCheckBox);
   }
 
   public async handleDoneButton() {
@@ -124,6 +135,7 @@ export class SettingsPopup extends Container implements AppScreen {
     this.masterSlider.value = userSettings.getMasterVolume() * 100;
     this.bgmSlider.value = userSettings.getBgmVolume() * 100;
     this.sfxSlider.value = userSettings.getSfxVolume() * 100;
+    this.hapticCheckBox.checked = userSettings.getHapticEnabled();
   }
 
   /** 팝업을 애니메이션과 함께 표시 */

@@ -40,6 +40,17 @@ class StorageWrapper {
   public setObject(key: string, value: Record<string, unknown>) {
     this.setString(key, JSON.stringify(value));
   }
+
+  /** 저장소에 Boolean 값을 설정합니다. */
+  public setBoolean(key: string, value: boolean) {
+    this.setString(key, String(value));
+  }
+
+  /** 저장소에서 Boolean 값을 가져오거나, 값이 'true'가 아닌 경우 false를 반환합니다. */
+  public getBoolean(key: string) {
+    const str = this.getString(key) ?? '';
+    return str === 'true';
+  }
 }
 
 export const storage = new StorageWrapper();

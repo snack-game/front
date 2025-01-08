@@ -22,26 +22,30 @@ export class SnackGameActions {
     sfx.play('common/sfx-select.mp3');
 
     this.updateSelectedSnacks(position);
-    HapticFeedback.invokeImpactMedium();
+    HapticFeedback.invoke('impactMedium');
 
     const sum = this.snackGame.board.getSelectedSnacksSum();
 
     if (sum > 10) {
       this.snackGame.board.clearAllSelectedSnacks();
-      HapticFeedback.invokeNotificationError();
+      HapticFeedback.invoke('notificationError');
     }
 
     if (sum === 10) {
       sfx.play('common/sfx-match.mp3', { speed: 1.2, volume: 0.5 });
       const session = await this.snackGame.board.popAllSelectedSnacks();
 
-      if (this.snackGame.board.getSelectedSnacks().some(snack => snack.type === 2)) {
+      if (
+        this.snackGame.board
+          .getSelectedSnacks()
+          .some((snack) => snack.type === 2)
+      ) {
         this.snackGame.board.reset();
         this.snackGame.board.setup(this.snackGame.config, session!.board);
         this.snackGame.onSnackGameBoardReset?.();
-        HapticFeedback.invokeNotificationError();
+        HapticFeedback.invoke('notificationError');
       } else {
-        HapticFeedback.invokeNotificationSuccess();
+        HapticFeedback.invoke('notificationSuccess');
       }
 
       this.snackGame.board.clearAllSelectedSnacks();
