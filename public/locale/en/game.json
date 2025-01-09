@@ -6,7 +6,7 @@
   "infinite_mode": "Infinite Mode",
 
   "rule": "How to play",
-  "rule_text": "1. Click adjacent snacks to sum 10.\n2. Score points for each snack burst.\n3. Golden snack resets the board",
+  "rule_text": "1. Click adjacent snacks to sum 10.\n2. Score points for each snack burst.\n3. Golden snack resets the board.",
 
   "ready": "Ready...",
   "start": "Start!",
@@ -23,6 +23,6 @@
   "master_volume": "Master",
   "bgm_volume": "Background Music",
   "sfx_volume": "Sound Effects",
-  "haptic": "Haptic",
+  "haptic": "Haptic Feedback",
   "version": "Game version"
 }
