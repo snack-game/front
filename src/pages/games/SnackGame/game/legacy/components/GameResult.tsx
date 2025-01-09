@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useRecoilValue } from 'recoil';
 
@@ -24,6 +25,8 @@ interface GameResultProps {
 }
 
 const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
+  const { t } = useTranslation('game');
+
   const { data: profile } = useGetMemberProfile();
   const userStateValue = useRecoilValue(userState);
   const integrateMember = useIntegrateMember();
@@ -48,17 +51,20 @@ const GameResult = ({ score, percentile, reStart }: GameResultProps) => {
   return (
     <div className={'flex w-full flex-grow flex-col justify-evenly gap-4'}>
       <div className={'mx-auto flex flex-col items-center gap-4 font-semibold'}>
-        <p className="text-6xl text-primary">{score}점</p>
+        <p className="text-6xl text-primary">
+          {score}
+          {t('score')}
+        </p>
 
         {userStateValue.type !== 'GUEST' && (
           <>
-            <p>전체 사용자 중 상위 {percentile}%의 점수에요!</p>
+            <p>{t('result_percentile', { percentile })}</p>
             {profile.status && <ExpBarChart status={profile.status} />}
           </>
         )}
 
         <Button onClick={handleReStartButton} size={'lg'}>
-          재시작!
+          {t('restart')}
         </Button>
       </div>
       {userStateValue.type === 'GUEST' && (
