@@ -23,5 +23,6 @@
   "master_volume": "Master",
   "bgm_volume": "Background Music",
   "sfx_volume": "Sound Effects",
+  "haptic": "Haptic",
   "version": "Game version"
 }
