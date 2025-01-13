@@ -46,9 +46,10 @@ class StorageWrapper {
     this.setString(key, String(value));
   }
 
-  /** 저장소에서 Boolean 값을 가져오거나, 값이 'true'가 아닌 경우 false를 반환합니다. */
+  /** 저장소에서 Boolean 값을 가져오거나, 값을 가져올 수 없는 경우 undefined를 반환합니다. */
   public getBoolean(key: string) {
-    const str = this.getString(key) ?? '';
+    const str = this.getString(key);
+    if (!str) return undefined;
     return str === 'true';
   }
 }

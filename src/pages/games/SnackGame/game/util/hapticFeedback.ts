@@ -1,3 +1,4 @@
+import { newUserSettings } from './newUserSetting';
 import { userSettings } from './userSetting';
 
 type HapticMethod =
@@ -9,7 +10,7 @@ type HapticMethod =
 
 export const HapticFeedback = {
   async invoke(method: HapticMethod) {
-    const isHapticEnabled = userSettings.getHapticEnabled();
+    const isHapticEnabled = newUserSettings.getHapticEnabled();
     if (!isHapticEnabled) return;
 
     window.ReactNativeWebView?.postMessage(
