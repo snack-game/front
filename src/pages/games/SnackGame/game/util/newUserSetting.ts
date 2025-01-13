@@ -25,9 +25,9 @@ class NewUserSettings {
   private getDefaultSettings() {
     return {
       hapticEnabled: true,
-      volumeMaster: 0.38,
-      volumeBGM: 0.83,
-      volumeSFX: 0.83,
+      volumeMaster: 0.5,
+      volumeBGM: 1,
+      volumeSFX: 1,
     };
   }
 
