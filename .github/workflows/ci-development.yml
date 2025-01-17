@@ -40,9 +40,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp \
-            --recursive \
+          aws s3 sync \
+            --delete \
             --region ap-northeast-2 \
             dist s3://dev.snackga.me
 
-# TODO: Cloudfront 무효화 추가, 환경변수 등록 간소화, cp -> sync 명령어 대체 검토
+# TODO: Cloudfront 무효화 추가
