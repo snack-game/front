@@ -27,11 +27,10 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "VITE_API_URL=$VITE_API_URL" >> .env.development
-          echo "VITE_NODE_ENV=$VITE_NODE_ENV" >> .env.development
+          echo "VITE_API_URL=$VITE_DEV_API_URL" >> .env
+          echo "VITE_NODE_ENV=development" >> .env
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_NODE_ENV: ${{ secrets.VITE_NODE_ENV }}
+          VITE_DEV_API_URL: ${{ secrets.VITE_DEV_API_URL }}
 
       - name: Build application
         run: pnpm build
