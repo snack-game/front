@@ -25,6 +25,8 @@ const PATH = {
 
   ONE_LINK: 'https://snackgame.onelink.me/MHW6/github',
 
+  NOTICE_RSS: 'https://notice.snackga.me/index.xml',
+
   GOOGLE: '/oauth2/authorization/google',
   KAKAO: '/oauth2/authorization/kakao',
 

@@ -23,5 +23,6 @@
   "master_volume": "전체",
   "bgm_volume": "배경음",
   "sfx_volume": "효과음",
+  "haptic": "햅틱 피드백",
   "version": "게임 버전"
 }

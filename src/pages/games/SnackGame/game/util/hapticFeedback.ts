@@ -1,34 +1,22 @@
+import { userSettings } from './userSetting';
+
+type HapticMethod =
+  | 'notificationSuccess'
+  | 'notificationError'
+  | 'impactLight'
+  | 'impactMedium'
+  | 'impactHeavy';
+
 export const HapticFeedback = {
-    async invokeNotificationSuccess() {
-        window.ReactNativeWebView?.postMessage(JSON.stringify(
-            {
-                "type": "snackgame-haptic-feedback",
-                "method": "notificationSuccess"
-            }
-        ));
-    },
-    async invokeImpactMedium() {
-        window.ReactNativeWebView?.postMessage(JSON.stringify(
-            {
-                "type": "snackgame-haptic-feedback",
-                "method": "impactMedium"
-            }
-        ));
-    },
-    async invokeImpactHeavy() {
-        window.ReactNativeWebView?.postMessage(JSON.stringify(
-            {
-                "type": "snackgame-haptic-feedback",
-                "method": "impactHeavy"
-            }
-        ));
-    },
-    async invokeNotificationError() {
-        window.ReactNativeWebView?.postMessage(JSON.stringify(
-            {
-                "type": "snackgame-haptic-feedback",
-                "method": "notificationError"
-            }
-        ));
-    }
+  async invoke(method: HapticMethod) {
+    const isHapticEnabled = userSettings.getHapticEnabled();
+    if (!isHapticEnabled) return;
+
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({
+        type: 'snackgame-haptic-feedback',
+        method,
+      }),
+    );
+  },
 };
