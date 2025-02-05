@@ -8,7 +8,7 @@ import {
   snackGameRefresh,
   snackGameStart,
 } from '@api/apple-game.api';
-import { scoredAppleRectType } from '@pages/games/SnackGame/game/legacy/legacyType';
+import { scoredAppleRectType } from '@pages/games/AppleGame/appleGameType';
 import { userState } from '@utils/atoms/member.atom';
 
 import { ServerError } from '@constants/api.constant';

@@ -74,10 +74,10 @@ abstract class Apple {
 
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
-    ctx.font = `${this.radius}px Dovemayo_gothic`;
+    ctx.font = `${this.radius}px DovemayoGothic`;
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    ctx.textBaseline = 'alphabetic';
     ctx.fillText(
       String(this.appleNumber),
       this.position.x + this.radius,

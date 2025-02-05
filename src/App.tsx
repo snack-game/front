@@ -26,6 +26,9 @@ const SnackGamePage = lazy(
 const SnackGameBizPage = lazy(
   () => import('@pages/games/SnackgameBiz/SnackGameBizPage'),
 );
+const AppleGamePage = lazy(
+  () => import('@pages/games/AppleGame/view/appleGame/DefaultMode'),
+);
 
 const RankingPage = lazy(
   () => import('@pages/games/SnackGame/ranking/RankingPage'),
@@ -99,6 +102,7 @@ const App = () => {
             <Route element={<GameLayout />}>
               {/*Game*/}
               <Route path={PATH.SNACK_GAME} element={<SnackGamePage />} />
+              <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
               {/*Ranking*/}
               <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
