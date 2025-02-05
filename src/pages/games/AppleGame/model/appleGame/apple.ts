@@ -77,7 +77,6 @@ abstract class Apple {
     ctx.font = `${this.radius}px DovemayoGothic`;
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
-    // ctx.textBaseline = 'bottom';
     ctx.textBaseline = 'alphabetic';
     ctx.fillText(
       String(this.appleNumber),
