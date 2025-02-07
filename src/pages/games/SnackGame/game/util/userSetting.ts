@@ -3,7 +3,7 @@ import { KEY_GAME_SETTINGS } from '@constants/localStorage.constant';
 import { bgm, setMasterVolume, sfx } from './audio';
 import { storage } from './storage';
 
-class NewUserSettings {
+class UserSettings {
   private settings: {
     hapticEnabled: boolean;
     volumeMaster: number;
@@ -84,4 +84,4 @@ class NewUserSettings {
 }
 
 /** 공유된 사용자 설정 인스턴스 */
-export const newUserSettings = new NewUserSettings();
+export const userSettings = new UserSettings();

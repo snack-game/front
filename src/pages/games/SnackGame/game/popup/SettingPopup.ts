@@ -13,7 +13,6 @@ import { RoundedBox } from '../ui/RoundedBox';
 import { Switch } from '../ui/Switch';
 import { VolumeSlider } from '../ui/VolumeSlider';
 import { gamePause, gameResume } from '../util/api';
-import { newUserSettings } from '../util/newUserSetting';
 import { storage } from '../util/storage';
 import { userSettings } from '../util/userSetting';
 
@@ -90,21 +89,18 @@ export class SettingsPopup extends Container implements AppScreen {
     this.masterSlider = new VolumeSlider(t('master_volume', { ns: 'game' }));
     this.masterSlider.onUpdate.connect((v) => {
       userSettings.setMasterVolume(v / 100);
-      newUserSettings.setMasterVolume(v / 100);
     });
     this.layout.addChild(this.masterSlider);
 
     this.bgmSlider = new VolumeSlider(t('bgm_volume', { ns: 'game' }));
     this.bgmSlider.onUpdate.connect((v) => {
       userSettings.setBgmVolume(v / 100);
-      newUserSettings.setBgmVolume(v / 100);
     });
     this.layout.addChild(this.bgmSlider);
 
     this.sfxSlider = new VolumeSlider(t('sfx_volume', { ns: 'game' }));
     this.sfxSlider.onUpdate.connect((v) => {
       userSettings.setSfxVolume(v / 100);
-      newUserSettings.setSfxVolume(v / 100);
     });
     this.layout.addChild(this.sfxSlider);
 
@@ -113,7 +109,6 @@ export class SettingsPopup extends Container implements AppScreen {
     this.hapticCheckBox.y = 10;
     this.hapticCheckBox.onCheck.connect((v) => {
       userSettings.setHapticEnabled(v);
-      newUserSettings.setHapticEnabled(v);
     });
     this.panel.addChild(this.hapticCheckBox);
   }
@@ -137,10 +132,10 @@ export class SettingsPopup extends Container implements AppScreen {
 
   /** 팝업을 표시하기 직전에 설정 */
   public async onPrepare(screen: Rectangle) {
-    this.masterSlider.value = newUserSettings.getMasterVolume() * 100;
-    this.bgmSlider.value = newUserSettings.getBgmVolume() * 100;
-    this.sfxSlider.value = newUserSettings.getSfxVolume() * 100;
-    this.hapticCheckBox.checked = newUserSettings.getHapticEnabled();
+    this.masterSlider.value = userSettings.getMasterVolume() * 100;
+    this.bgmSlider.value = userSettings.getBgmVolume() * 100;
+    this.sfxSlider.value = userSettings.getSfxVolume() * 100;
+    this.hapticCheckBox.checked = userSettings.getHapticEnabled();
   }
 
   /** 팝업을 애니메이션과 함께 표시 */
