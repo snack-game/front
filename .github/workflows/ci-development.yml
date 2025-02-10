@@ -41,8 +41,8 @@ jobs:
 
       - name: Deploy to s3
         run: |
-          aws s3 sync \
-            --delete \
+          aws s3 cp \
+            --recursive \
             --region ap-northeast-2 \
             dist s3://dev.snackga.me
 
