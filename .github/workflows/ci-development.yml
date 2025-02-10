@@ -7,6 +7,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      CF_DISTRIBUTION_ID: ${{ secrets.AWS_CF_DISTRIBUTION_ID }}
+      VITE_DEV_API_URL: ${{ secrets.VITE_DEV_API_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,20 +35,19 @@ jobs:
         run: |
           echo "VITE_API_URL=$VITE_DEV_API_URL" >> .env
           echo "VITE_NODE_ENV=development" >> .env
-        env:
-          VITE_DEV_API_URL: ${{ secrets.VITE_DEV_API_URL }}
 
       - name: Build application
         run: pnpm build
 
       - name: Deploy to s3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           aws s3 sync \
             --delete \
             --region ap-northeast-2 \
             dist s3://dev.snackga.me
 
-# TODO: Cloudfront 무효화 추가
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $CF_DISTRIBUTION_ID \
+            --paths "/index.html" "/assets/common" "/assets/game" "/assets/preload"
