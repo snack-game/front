@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
+import GameResult from '@pages/games/AppleGame/components/GameResult';
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 
@@ -13,7 +14,6 @@ import useModal from '@hooks/useModal';
 
 import { SnackGameDefaultResponse, SnackGameVerify } from './game.type';
 import initializeApplication from './hook/initializeApplication';
-import GameResult from './legacy/components/GameResult';
 import { PausePopup } from './popup/PausePopup';
 import { RulePopup } from './popup/RulePopup';
 import { SettingsPopup } from './popup/SettingPopup';
