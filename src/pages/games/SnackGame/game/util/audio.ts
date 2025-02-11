@@ -1,5 +1,7 @@
-import { PlayOptions, Sound, sound } from '@pixi/sound';
+import { Sound, sound } from '@pixi/sound';
 import gsap from 'gsap';
+
+import type { PlayOptions } from '@pixi/sound';
 
 /**
  * 배경 음악을 관리하며, 한 번에 하나의 오디오 파일만 루프로 재생하고,
