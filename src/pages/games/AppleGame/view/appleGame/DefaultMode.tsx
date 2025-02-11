@@ -2,12 +2,6 @@ import { useEffect, useState } from 'react';
 
 import QueryBoundary from '@components/base/QueryBoundary';
 import retryError from '@components/Error/RetryError';
-import GameResult from '@pages/games/SnackGame/game/legacy/components/GameResult';
-import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
-import Apple from '@pages/games/SnackGame/game/legacy/model/appleGame/apple';
-import { AppleGame } from '@pages/games/SnackGame/game/legacy/model/appleGame/appleGame';
-import { GoldenApple } from '@pages/games/SnackGame/game/legacy/model/appleGame/goldenApple';
-import PlainApple from '@pages/games/SnackGame/game/legacy/model/appleGame/plainApple';
 
 import {
   useAppleGameRefresh,
@@ -20,7 +14,13 @@ import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import AppleGameView from './AppleGameView';
-import { scoredAppleRectType, goldModAppleType } from '../../legacyType';
+import { scoredAppleRectType, goldModAppleType } from '../../appleGameType';
+import GameResult from '../../components/GameResult';
+import SnackGameHUD from '../../components/SnackGameHUD';
+import Apple from '../../model/appleGame/apple';
+import { AppleGame } from '../../model/appleGame/appleGame';
+import { GoldenApple } from '../../model/appleGame/goldenApple';
+import PlainApple from '../../model/appleGame/plainApple';
 
 const DefaultMode = () => {
   const setError = useError();
@@ -163,17 +163,19 @@ const DefaultMode = () => {
 
   return (
     <QueryBoundary errorFallback={retryError}>
-      <SnackGameHUD
-        score={score}
-        time={remainingTime}
-        handleRefresh={refreshGame}
-      />
-      <AppleGameView
-        isOngoing={isOngoing}
-        startGame={startGame}
-        onRemove={onRemove}
-        appleGame={appleGame}
-      />
+      <div className='h-screen w-[80%] mx-auto'>
+        <SnackGameHUD
+          score={score}
+          time={remainingTime}
+          handleRefresh={refreshGame}
+        />
+        <AppleGameView
+          isOngoing={isOngoing}
+          startGame={startGame}
+          onRemove={onRemove}
+          appleGame={appleGame}
+        />
+      </div>
     </QueryBoundary>
   );
 };

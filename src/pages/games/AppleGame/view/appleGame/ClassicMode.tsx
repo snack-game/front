@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import GameResult from '@pages/games/SnackGame/game/legacy/components/GameResult';
-import SnackGameHUD from '@pages/games/SnackGame/game/legacy/components/SnackGameHUD';
-import Apple from '@pages/games/SnackGame/game/legacy/model/appleGame/apple';
-import { AppleGame } from '@pages/games/SnackGame/game/legacy/model/appleGame/appleGame';
-import PlainApple from '@pages/games/SnackGame/game/legacy/model/appleGame/plainApple';
-
 import useError from '@hooks/useError';
 import useModal from '@hooks/useModal';
 import useToast from '@hooks/useToast';
 
 import AppleGameView from './AppleGameView';
+import GameResult from '../../components/GameResult';
+import SnackGameHUD from '../../components/SnackGameHUD';
+import Apple from '../../model/appleGame/apple';
+import { AppleGame } from '../../model/appleGame/appleGame';
+import PlainApple from '../../model/appleGame/plainApple';
 
 const ClassicMode = () => {
   const setError = useError();

@@ -16,6 +16,8 @@ const PATH = {
   SNACK_GAME_BIZ: '/snack-game/biz',
   SNACK_GAME_RANKING: '/snack-game/ranking',
 
+  APPLE_GAME: '/apple-game',
+
   BLOG: 'https://blog.snackga.me/',
 
   FEED_BACK:
