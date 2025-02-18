@@ -11,6 +11,8 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       CF_DISTRIBUTION_ID: ${{ secrets.AWS_CF_DISTRIBUTION_ID }}
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      VITE_GA_TRACKING_ID: ${{ secrets.VITE_GA_TRACKING_ID }}
+      VITE_SENTRY_DNS: ${{ VITE_SENTRY_DNS }}
 
     steps:
       - name: Checkout
