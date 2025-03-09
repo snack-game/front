@@ -1,8 +1,13 @@
 {
-  "title": "Snack Game",
-  "desc": "Gather snacks until their total number equals 10!\nUse the golden snack to reset the board\nand aim for high scores!",
+  "snack_title": "Snack Game",
+  "snack_desc": "Gather snacks until their total number equals 10!\nUse the golden snack to reset the board\nand aim for high scores!",
+
+  "apple_title": "Apple Game",
+  "apple_desc": "Drag and gather apples until their total number equals 10!\nUse the golden apple to reset the board\nand aim for high scores!",
+
   "coming_soon": "Snack Game is preparing a variety of games.\nPlease look forward to the upcoming games!",
-  "start": "Start Game",
+
+  "start": "Play on the Web",
   "feedback": "Send Feedback",
   "blog_button": "Visit Blog",
   "install_app": "Install an App",

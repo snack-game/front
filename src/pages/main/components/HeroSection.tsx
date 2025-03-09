@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import AppleGameImage from '@assets/images/apple-game-image.avif';
+import AppleGameWebpImage from '@assets/images/apple-game-image.webp';
 import SnackGameImage from '@assets/images/logo-snack-game-letter.avif';
 import SnackGameWebpImage from '@assets/images/logo-snack-game-letter.webp';
 import ComingSoonImage from '@assets/images/main.avif';
@@ -26,13 +28,18 @@ const HeroSection = () => {
   const { t } = useTranslation(['landing']);
   const heroContents: HeroContent[] = [
     {
-      title: t('title'),
-      desc: t('desc'),
+      title: t('snack_title'),
+      desc: t('snack_desc'),
       carouselImages: [SnackGameImage, SnackGameWebpImage],
       heroActions: (
         <>
-          <Link to={PATH.SNACK_GAME}>
+          <Link to={PATH.ONE_LINK} target={'_blank'}>
             <Button size={'lg'} className={'w-full'}>
+              {t('install_app')}
+            </Button>
+          </Link>
+          <Link to={PATH.SNACK_GAME}>
+            <Button style={'border'} className={'w-full'}>
               {t('start')}
             </Button>
           </Link>
@@ -44,6 +51,33 @@ const HeroSection = () => {
         </>
       ),
       heroVisual: <MovingSnack />,
+    },
+    {
+      title: t('apple_title'),
+      desc: t('apple_desc'),
+      carouselImages: [AppleGameImage, AppleGameWebpImage],
+      heroActions: (
+        <>
+          <Link to={PATH.APPLE_GAME} target={'_blank'}>
+            <Button size={'lg'} className={'w-full'}>
+              {t('start')}
+            </Button>
+          </Link>
+          <Link to={PATH.FEED_BACK} target={'_blank'}>
+            <Button style={'border'} className={'w-full'}>
+              {t('feedback')}
+            </Button>
+          </Link>
+        </>
+      ),
+      heroVisual: (
+        <ImageWithFallback
+          sources={[{ srcSet: AppleGameImage, type: 'avif' }]}
+          src={AppleGameWebpImage}
+          alt={'apple game image'}
+          className={'rounded-full bg-primary-light'}
+        />
+      ),
     },
     {
       title: 'Coming Soon!',
