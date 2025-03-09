@@ -18,6 +18,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    selected: 0,
+    title: '제목',
+    desc: '설명',
+    carouselImages: [],
+    heroActions: <></>,
+    heroVisual: <></>,
   },
 };
