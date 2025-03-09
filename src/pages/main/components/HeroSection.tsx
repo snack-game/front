@@ -14,41 +14,49 @@ import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 
 import PATH from '@constants/path.constant';
 
+export interface HeroContent {
+  title: string;
+  desc: string;
+  carouselImages: string[];
+  heroActions: React.ReactNode;
+  heroVisual: React.ReactNode;
+}
+
 const HeroSection = () => {
   const { t } = useTranslation(['landing']);
-  const heroContents = [
+  const heroContents: HeroContent[] = [
     {
       title: t('title'),
       desc: t('desc'),
-      images: [SnackGameImage, SnackGameWebpImage],
-      leftContent: (
+      carouselImages: [SnackGameImage, SnackGameWebpImage],
+      heroActions: (
         <>
           <Link to={PATH.SNACK_GAME}>
             <Button size={'lg'} className={'w-full'}>
-              <Trans i18nKey={'start'}>바로가기!</Trans>
+              {t('start')}
             </Button>
           </Link>
           <Link to={PATH.FEED_BACK} target={'_blank'}>
             <Button style={'border'} className={'w-full'}>
-              <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
+              {t('feedback')}
             </Button>
           </Link>
         </>
       ),
-      rightContent: <MovingSnack />,
+      heroVisual: <MovingSnack />,
     },
     {
       title: 'Coming Soon!',
       desc: t('coming_soon'),
-      images: [ComingSoonImage, ComingSoonWebpImage],
-      leftContent: (
+      carouselImages: [ComingSoonImage, ComingSoonWebpImage],
+      heroActions: (
         <Link to={PATH.FEED_BACK} target={'_blank'}>
           <Button style={'border'} className={'w-full'}>
-            <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
+            {t('feedback')}
           </Button>
         </Link>
       ),
-      rightContent: (
+      heroVisual: (
         <ImageWithFallback
           sources={[{ srcSet: ComingSoonImage, type: 'avif' }]}
           src={ComingSoonWebpImage}

@@ -3,14 +3,9 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-interface HeroProps {
-  title: string;
-  desc: string;
-  leftContent: React.ReactNode;
-  rightContent: React.ReactNode;
-}
+import { HeroContent } from '@pages/main/components/HeroSection';
 
-const Hero = ({ title, desc, leftContent, rightContent }: HeroProps) => {
+const Hero = ({ title, desc, heroActions, heroVisual }: HeroContent) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +40,7 @@ const Hero = ({ title, desc, leftContent, rightContent }: HeroProps) => {
         <div className="max-w-md whitespace-pre text-sm text-primary-dark lg:text-lg">
           {desc}
         </div>
-        <div className={'mt-2 flex flex-col gap-4'}>{leftContent}</div>
+        <div className={'mt-2 flex flex-col gap-4'}>{heroActions}</div>
       </div>
       <div
         ref={imgRef}
@@ -53,7 +48,7 @@ const Hero = ({ title, desc, leftContent, rightContent }: HeroProps) => {
           'max-h-[250px] max-w-[250px] lg:max-h-[400px] lg:max-w-[400px]'
         }
       >
-        {rightContent}
+        {heroVisual}
       </div>
     </div>
   );
