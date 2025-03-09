@@ -1,13 +1,63 @@
 import { useState } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import SnackGameImage from '@assets/images/logo-snack-game-letter.avif';
 import SnackGameWebpImage from '@assets/images/logo-snack-game-letter.webp';
 import ComingSoonImage from '@assets/images/main.avif';
 import ComingSoonWebpImage from '@assets/images/main.webp';
+import Button from '@components/Button/Button';
 import Carousel from '@components/Carousel/Carousel';
 import Hero from '@components/Hero/Hero';
+import MovingSnack from '@components/Hero/MovingSnack';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
+
+import PATH from '@constants/path.constant';
 
 const HeroSection = () => {
+  const { t } = useTranslation(['landing']);
+  const heroContents = [
+    {
+      title: t('title'),
+      desc: t('desc'),
+      images: [SnackGameImage, SnackGameWebpImage],
+      leftContent: (
+        <>
+          <Link to={PATH.SNACK_GAME}>
+            <Button size={'lg'} className={'w-full'}>
+              <Trans i18nKey={'start'}>바로가기!</Trans>
+            </Button>
+          </Link>
+          <Link to={PATH.FEED_BACK} target={'_blank'}>
+            <Button style={'border'} className={'w-full'}>
+              <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
+            </Button>
+          </Link>
+        </>
+      ),
+      rightContent: <MovingSnack />,
+    },
+    {
+      title: 'Coming Soon!',
+      desc: t('coming_soon'),
+      images: [ComingSoonImage, ComingSoonWebpImage],
+      leftContent: (
+        <Link to={PATH.FEED_BACK} target={'_blank'}>
+          <Button style={'border'} className={'w-full'}>
+            <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
+          </Button>
+        </Link>
+      ),
+      rightContent: (
+        <ImageWithFallback
+          sources={[{ srcSet: ComingSoonImage, type: 'avif' }]}
+          src={ComingSoonWebpImage}
+          alt={'main image'}
+          className={'rounded-full bg-primary-light'}
+        />
+      ),
+    },
+  ];
   const [selected, setSelected] = useState<number>(0);
 
   return (
@@ -17,7 +67,7 @@ const HeroSection = () => {
       }
     >
       <div className={'flex h-full grow bg-white'}>
-        <Hero selected={selected} />
+        <Hero {...heroContents[selected]} />
       </div>
       <div
         className={
@@ -25,16 +75,7 @@ const HeroSection = () => {
         }
       >
         <Carousel
-          items={[
-            {
-              title: 'Snack Game',
-              images: [SnackGameImage, SnackGameWebpImage],
-            },
-            {
-              title: 'Coming Soon',
-              images: [ComingSoonImage, ComingSoonWebpImage],
-            },
-          ]}
+          items={heroContents}
           selected={selected}
           setSelected={setSelected}
         />

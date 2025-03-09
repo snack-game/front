@@ -1,70 +1,18 @@
 import { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-import ComingSoonImage from '@assets/images/main.avif';
-import ComingSoonWebPImage from '@assets/images/main.webp';
-import Button from '@components/Button/Button';
-import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
-
-import PATH from '@constants/path.constant';
-
-import MovingSnack from './MovingSnack';
-
 interface HeroProps {
-  selected: number;
+  title: string;
+  desc: string;
+  leftContent: React.ReactNode;
+  rightContent: React.ReactNode;
 }
 
-const Hero = ({ selected }: HeroProps) => {
-  const { t } = useTranslation(['landing']);
+const Hero = ({ title, desc, leftContent, rightContent }: HeroProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
-
-  const heroContents = [
-    {
-      title: t('title'),
-      desc: t('desc'),
-      leftContent: (
-        <>
-          <Link to={PATH.SNACK_GAME}>
-            <Button size={'lg'} className={'w-full'}>
-              <Trans i18nKey={'start'}>바로가기!</Trans>
-            </Button>
-          </Link>
-          <Link to={PATH.FEED_BACK} target={'_blank'}>
-            <Button style={'border'} className={'w-full'}>
-              <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
-            </Button>
-          </Link>
-        </>
-      ),
-      rightContent: <MovingSnack />,
-    },
-
-    {
-      title: 'Coming Soon!',
-      desc: t('coming_soon'),
-      leftContent: (
-        <Link to={PATH.FEED_BACK} target={'_blank'}>
-          <Button style={'border'} className={'w-full'}>
-            <Trans i18nKey={'feedback'}>피드백 보내기</Trans>
-          </Button>
-        </Link>
-      ),
-      rightContent: (
-        <ImageWithFallback
-          sources={[{ srcSet: ComingSoonImage, type: 'avif' }]}
-          src={ComingSoonWebPImage}
-          alt={'main image'}
-          className={'rounded-full bg-primary-light'}
-        />
-      ),
-    },
-  ];
-  const { title, desc, rightContent, leftContent } = heroContents[selected];
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -80,12 +28,12 @@ const Hero = ({ selected }: HeroProps) => {
     });
 
     gsap.from(imgRef.current, { x: 150, opacity: 0, duration: 0.3 });
-  }, [selected]);
+  }, [title]);
 
   return (
     <div
       className="mx-auto mt-16 flex w-full max-w-7xl flex-col-reverse items-center justify-around p-2 lg:mt-0 lg:flex-row"
-      key={selected}
+      key={title}
     >
       <div
         ref={containerRef}
@@ -99,7 +47,6 @@ const Hero = ({ selected }: HeroProps) => {
         </div>
         <div className={'mt-2 flex flex-col gap-4'}>{leftContent}</div>
       </div>
-
       <div
         ref={imgRef}
         className={
