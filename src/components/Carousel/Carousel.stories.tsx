@@ -21,11 +21,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     items: [
-      { title: 'Apple Game', images: [LogoImage, LogoWebpImage] },
-      { title: 'Overwatch', images: [LogoImage, LogoWebpImage] },
-      { title: 'Overwatch', images: [LogoImage, LogoWebpImage] },
-      { title: 'Overwatch', images: [LogoImage, LogoWebpImage] },
-      { title: 'Overwatch', images: [LogoImage, LogoWebpImage] },
+      { title: 'Apple Game', carouselImages: [LogoImage, LogoWebpImage] },
+      { title: 'Overwatch', carouselImages: [LogoImage, LogoWebpImage] },
+      { title: 'Overwatch', carouselImages: [LogoImage, LogoWebpImage] },
+      { title: 'Overwatch', carouselImages: [LogoImage, LogoWebpImage] },
+      { title: 'Overwatch', carouselImages: [LogoImage, LogoWebpImage] },
     ],
     selected: 0,
   },
