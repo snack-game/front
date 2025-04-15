@@ -12,6 +12,7 @@ import { ATOM_KEY } from '@constants/atom.constant';
 import { useGuest } from '@hooks/queries/auth.query';
 import useModal from '@hooks/useModal';
 
+import ProvocationSender from './components/ProvocationSender';
 import { SnackGameDefaultResponse, SnackGameVerify } from './game.type';
 import initializeApplication from './hook/initializeApplication';
 import { PausePopup } from './popup/PausePopup';
@@ -28,6 +29,8 @@ import {
   gameResume,
   gameStart,
 } from './util/api';
+import { waitFor } from './util/asyncUtils';
+import { canProvoke, getSurpassedPlayers } from './util/provocation.api';
 
 type Props = {
   replaceErrorHandler: (handler: () => void) => void;
@@ -154,8 +157,55 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
           reStart={() => application.show(GameScreen)}
         />
       ),
-      handleOutsideClick: navigateToLobby,
+      onClose: handleGameResultClose,
     });
+  };
+
+  const handleGameResultClose = async () => {
+    const isGuest =
+      JSON.parse(window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}')
+        .userState.type === 'GUEST';
+
+    if (isGuest) {
+      return navigateToLobby();
+    }
+
+    const canProvoke = await pollProvoke();
+    if (canProvoke) {
+      const targets = await getSurpassedPlayers();
+      openModal({
+        children: <ProvocationSender targets={targets} />,
+        onClose: navigateToLobby,
+      });
+    }
+
+    return navigateToLobby();
+  };
+
+  const pollProvoke = async (): Promise<boolean> => {
+    let isPolling = true;
+
+    while (isPolling) {
+      try {
+        const response = await canProvoke(session!.ownerId, session!.sessionId);
+
+        switch (response.status) {
+          case 200:
+            return response.data;
+          case 202:
+            await waitFor(1);
+            break;
+          default:
+            isPolling = false;
+            break;
+        }
+      } catch (error) {
+        console.error(error);
+        isPolling = false;
+      }
+    }
+
+    return false;
   };
 
   const navigateToLobby = async () => {
@@ -170,6 +220,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   useEffect(() => {
     if (pixiValue.assetsInit && !userInfo.id) navigateToLobby();
   }, []);
+
   return (
     <div ref={canvasBaseRef} className={'mx-auto h-full w-full max-w-xl'}></div>
   );

@@ -8,13 +8,13 @@ import { modalState } from '@utils/atoms/common.atom';
 import useModal from '@hooks/useModal';
 
 const Modal = () => {
-  const { open, children, handleOutsideClick } = useRecoilValue(modalState);
+  const { open, children, onClose } = useRecoilValue(modalState);
 
   const { closeModal } = useModal();
 
   const handleClose = () => {
     closeModal();
-    if (handleOutsideClick) handleOutsideClick();
+    if (onClose) onClose();
   };
 
   useEffect(() => {

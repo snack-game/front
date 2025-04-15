@@ -19,7 +19,7 @@ export const PrivateRoute = () => {
     if (!userInfo.id) {
       openModal({
         children: <Auth />,
-        handleOutsideClick: () => {
+        onClose: () => {
           navigate(PATH.SNACK_GAME, { replace: true });
         },
       });
