@@ -17,6 +17,11 @@
   "result_rank": "What's my rank?",
   "result_percentile": "Your score is in the top {{percentile}}% of all users!",
 
+  "new_high_score": "New High Score!",
+  "prompt_provoke_message": "Send a provoke message now!",
+  "send": "Send",
+  "send_complete": "Send Complete",
+
   "pause": "Pause",
   "confirm": "Confirm",
   "setting": "Setting",

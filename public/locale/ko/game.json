@@ -17,6 +17,11 @@
   "result_rank": "나는 몇 등일까?",
   "result_percentile": "전체 사용자 중 상위 {{percentile}}%의 점수에요!",
 
+  "new_high_score": "최고 기록 갱신!",
+  "prompt_provoke_message": "지금 바로 도발 메시지를 보내보세요",
+  "send": "전송",
+  "send_complete": "전송 완료",
+
   "pause": "일시정지",
   "confirm": "완료",
   "setting": "설정",
