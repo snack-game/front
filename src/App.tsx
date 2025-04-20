@@ -61,10 +61,16 @@ const App = () => {
 
   useEffect(() => {
     const updateProfile = async () => {
-      const profile = await getMemberProfile();
-      setUserState({ ...profile });
+      try {
+        const profile = await getMemberProfile();
+        setUserState({ ...profile });
+      } catch (e) {
+        resetUser();
+        deleteUserPersistState();
+      }
     };
 
+    if (window.location.pathname.includes('biz')) return;
     updateProfile();
 
     // const checkUserExpired = () => {
