@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { getMemberProfile } from '@api/members.api';
 import ErrorBoundary from '@components/base/ErrorBoundary';
@@ -12,7 +12,6 @@ import GameLayout from '@pages/GameLayout';
 import { PrivateRoute } from '@pages/PrivateRoute';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
-import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
 
@@ -49,11 +48,8 @@ const WithdrawPage = lazy(() => import('@pages/withdraw/WithdrawPage'));
 const NoticePage = lazy(() => import('@pages/user/notice/NoticePage'));
 
 const App = () => {
-  const [userStateValue, setUserState] = useRecoilState(userState);
+  const setUserState = useSetRecoilState(userState);
   const resetUser = useResetRecoilState(resetUserState);
-  const { storageValue, deleteStorageValue } = useLocalStorage<string>({
-    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
-  });
   const { deleteStorageValue: deleteUserPersistState } =
     useLocalStorage<string>({
       key: 'userPersistState',
@@ -72,22 +68,6 @@ const App = () => {
 
     if (window.location.pathname.includes('biz')) return;
     updateProfile();
-
-    // const checkUserExpired = () => {
-    //   if (!storageValue) return;
-
-    //   const currentTime = Date.now();
-    //   const oneMonthInMilliseconds = 30 * 24 * 60 * 60 * 1000;
-    //   const expireTime = parseInt(storageValue, 10);
-
-    //   if (expireTime && currentTime - expireTime > oneMonthInMilliseconds) {
-    //     resetUser();
-    //     deleteUserPersistState();
-    //     deleteStorageValue();
-    //   }
-    // };
-
-    // checkUserExpired();
   }, []);
 
   return (
