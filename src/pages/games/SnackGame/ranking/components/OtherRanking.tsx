@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 import { Level } from '@components/Level/Level';
-import { RankingType } from '@utils/types/common.type';
+import { RankingType } from '@utils/types/ranking.type';
 
 interface OtherRankingProps {
   otherRanking: RankingType[];

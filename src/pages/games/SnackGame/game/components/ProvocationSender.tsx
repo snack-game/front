@@ -6,9 +6,10 @@ import { useRecoilValue } from 'recoil';
 import Button from '@components/Button/Button';
 import Spacing from '@components/Spacing/Spacing';
 import { userState } from '@utils/atoms/member.atom';
-import { ProvocationTarget } from '@utils/types/common.type';
 
 import { useSendProvocation } from '@hooks/queries/provocation.query';
+
+import { ProvocationTarget } from '../game.type';
 
 const ProvocationSender = ({ targets }: { targets: ProvocationTarget[] }) => {
   const { t } = useTranslation('game');

@@ -5,7 +5,7 @@ import QueryBoundary from '@components/base/QueryBoundary';
 import RetryError from '@components/Error/RetryError';
 import Spacing from '@components/Spacing/Spacing';
 import { Tab, TabOptionType } from '@components/Tab/Tab';
-import { HistoryViewType } from '@utils/types/common.type';
+import { HistoryViewType } from '@utils/types/history.type';
 
 import { HistoryLineChart } from './HistoryLineChart';
 

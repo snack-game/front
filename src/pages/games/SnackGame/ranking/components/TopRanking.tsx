@@ -10,7 +10,7 @@ import Third from '@assets/images/third.avif';
 import ThirdWebp from '@assets/images/third.webp';
 import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import { Level } from '@components/Level/Level';
-import { RankingType } from '@utils/types/common.type';
+import { RankingType } from '@utils/types/ranking.type';
 
 interface TopRankingProps {
   topRanking: RankingType[];

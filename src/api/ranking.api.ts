@@ -3,7 +3,7 @@ import {
   RankingType,
   RankingViewType,
   SeasonType,
-} from '@utils/types/common.type';
+} from '@utils/types/ranking.type';
 
 export const totalRanking = async (gameId: RankingViewType) => {
   const { data } = await api.get(`/rankings/${gameId}?by=BEST_SCORE`);

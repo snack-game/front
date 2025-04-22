@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Level } from '@components/Level/Level';
 import Spacing from '@components/Spacing/Spacing';
-import { GameSeasonProps } from '@utils/types/common.type';
+import { GameSeasonProps } from '@utils/types/ranking.type';
 
 import {
   useGetSeasonRankingMe,

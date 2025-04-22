@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios';
 
 import api from '@api/index';
-import { ProvocationTarget } from '@utils/types/common.type';
+
+import { ProvocationTarget } from '../game.type';
 
 export const canProvoke = async (
   ownerId: number,
