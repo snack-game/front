@@ -165,21 +165,24 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     const isGuest =
       JSON.parse(window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}')
         .userState.type === 'GUEST';
-
     if (isGuest) {
       return navigateToLobby();
     }
 
     const canProvoke = await pollProvoke();
-    if (canProvoke) {
-      const targets = await getSurpassedPlayers();
-      openModal({
-        children: <ProvocationSender targets={targets} />,
-        onClose: navigateToLobby,
-      });
+    if (!canProvoke) {
+      return navigateToLobby();
     }
 
-    return navigateToLobby();
+    const targets = await getSurpassedPlayers();
+    if (targets.length === 0) {
+      return navigateToLobby();
+    }
+
+    return openModal({
+      children: <ProvocationSender targets={targets} />,
+      onClose: navigateToLobby,
+    });
   };
 
   const pollProvoke = async (): Promise<boolean> => {
