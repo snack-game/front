@@ -63,3 +63,9 @@ export type NoticeItemType = {
   description: string;
   date: string;
 };
+
+export type ProvocationTarget = {
+  name: string;
+  beforeRank: number;
+  currentRank: number;
+};
