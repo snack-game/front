@@ -12,9 +12,7 @@ import { MemberType } from '@utils/types/member.type';
 import { isApp, isIOSApp } from '@utils/userAgentIdentifier';
 
 import { QUERY_KEY } from '@constants/api.constant';
-import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
-import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 interface DialogProps {
@@ -29,9 +27,6 @@ interface OAuthContainerProps {
 const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
   const { t } = useTranslation();
   const [popup, setPopup] = useState<boolean>(false);
-  const { setStorageValue } = useLocalStorage({
-    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
-  });
 
   const setUserState = useSetRecoilState(userState);
   const openToast = useToast();
@@ -70,7 +65,6 @@ const OAuth = ({ oAuthOnSuccess }: OAuthContainerProps) => {
     setUserState(() => ({
       ...member,
     }));
-    setStorageValue(Date.now());
 
     queryClient.invalidateQueries({ queryKey: [QUERY_KEY.USER_PROFILE] });
   };

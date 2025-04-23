@@ -7,9 +7,7 @@ import { logOut } from '@api/auth.api';
 import TopBar from '@components/TopBar/TopBar';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
-import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
-import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 import LanguageSelect from './components/LanguageSelect';
@@ -23,15 +21,11 @@ const SettingPage = () => {
 
   const openToast = useToast();
   const navigate = useNavigate();
-  const { deleteStorageValue } = useLocalStorage({
-    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
-  });
 
   const handleLogout = async () => {
     resetUser();
     await logOut();
     openToast(t('login_logout'), 'success');
-    deleteStorageValue();
     window.dispatchEvent(new Event('loggedOut'));
     navigate(PATH.SNACK_GAME, { replace: true });
   };

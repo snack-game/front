@@ -9,10 +9,8 @@ import Button from '@components/Button/Button';
 import TopBar from '@components/TopBar/TopBar';
 import { resetUserState } from '@utils/atoms/member.atom';
 
-import { LOCAL_STORAGE_KEY } from '@constants/localStorage.constant';
 import PATH from '@constants/path.constant';
 import { useDeleteMember } from '@hooks/queries/members.query';
-import useLocalStorage from '@hooks/useLocalStorage';
 import useToast from '@hooks/useToast';
 
 const warningTextKey = ['ranking_deleted', 'history_deleted', 'level_reset'];
@@ -26,15 +24,11 @@ const WithdrawPage = () => {
   const navigate = useNavigate();
   const openToast = useToast();
   const { t } = useTranslation('withdraw');
-  const { deleteStorageValue } = useLocalStorage({
-    key: LOCAL_STORAGE_KEY.USER_EXPIRE_TIME,
-  });
 
   const handleWithdraw = async () => {
     resetUser();
     await withdrawMember.mutateAsync();
     openToast(t('withdraw_success'), 'success');
-    deleteStorageValue();
     window.dispatchEvent(new Event('loggedOut'));
     navigate(PATH.SNACK_GAME, { replace: true });
   };
