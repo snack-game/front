@@ -13,7 +13,7 @@ import {
   RankingType,
   RankingViewType,
   SeasonType,
-} from '@utils/types/common.type';
+} from '@utils/types/ranking.type';
 
 import { QUERY_KEY, ServerError } from '@constants/api.constant';
 

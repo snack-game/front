@@ -9,7 +9,7 @@ import Spacing from '@components/Spacing/Spacing';
 import OtherRanking from '@pages/games/SnackGame/ranking/components/OtherRanking';
 import TopRanking from '@pages/games/SnackGame/ranking/components/TopRanking';
 import { userState } from '@utils/atoms/member.atom';
-import { GameSeasonProps } from '@utils/types/common.type';
+import { GameSeasonProps } from '@utils/types/ranking.type';
 
 import {
   useGetSeasonRanking,

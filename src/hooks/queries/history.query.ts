@@ -2,7 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { getGameHistory } from '@api/history.api';
-import { GameHistoryResponse } from '@utils/types/common.type';
+import { GameHistoryResponse } from '@utils/types/history.type';
 
 import { QUERY_KEY } from '@constants/api.constant';
 

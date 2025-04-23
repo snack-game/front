@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { canvasOffsetType } from '@utils/types/common.type';
-
 import useDebouncedCallback from '@hooks/useDebouncedCallback';
+
+interface canvasOffsetType {
+  offsetWidth: number;
+  offsetHeight: number;
+  offsetLeft: number;
+  offsetTop: number;
+}
 
 export const useCanvasOffset = () => {
   const canvasBaseRef = useRef<HTMLDivElement>(null);

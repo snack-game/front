@@ -29,3 +29,9 @@ export type SnackGamePause = SnackGameDefaultResponse;
 export type SnackGameEnd = SnackGameDefaultResponse & {
   percentile: number;
 };
+
+export type ProvocationTarget = {
+  name: string;
+  beforeRank: number;
+  currentRank: number;
+};

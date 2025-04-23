@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from 'chart.js';
 
-import { HistoryViewType } from '@utils/types/common.type';
+import { HistoryViewType } from '@utils/types/history.type';
 
 import { useGetGameHistory } from '@hooks/queries/history.query';
 

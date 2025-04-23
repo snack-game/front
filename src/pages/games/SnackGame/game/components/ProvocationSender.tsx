@@ -9,11 +9,7 @@ import { userState } from '@utils/atoms/member.atom';
 
 import { useSendProvocation } from '@hooks/queries/provocation.query';
 
-interface ProvocationTarget {
-  name: string;
-  beforeRank: number;
-  currentRank: number;
-}
+import { ProvocationTarget } from '../game.type';
 
 const ProvocationSender = ({ targets }: { targets: ProvocationTarget[] }) => {
   const { t } = useTranslation('game');

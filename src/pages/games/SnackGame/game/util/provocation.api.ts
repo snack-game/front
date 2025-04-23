@@ -2,6 +2,8 @@ import { AxiosResponse } from 'axios';
 
 import api from '@api/index';
 
+import { ProvocationTarget } from '../game.type';
+
 export const canProvoke = async (
   ownerId: number,
   sessionId: number,
@@ -11,7 +13,7 @@ export const canProvoke = async (
   return response;
 };
 
-export const getSurpassedPlayers = async () => {
+export const getSurpassedPlayers = async (): Promise<ProvocationTarget[]> => {
   const { data } = await api.get('rankings/histories');
 
   return data;

@@ -8,7 +8,7 @@ import RetryError from '@components/Error/RetryError';
 import Spacing from '@components/Spacing/Spacing';
 import { Tab, TabOptionType } from '@components/Tab/Tab';
 import RankingSection from '@pages/games/SnackGame/ranking/components/RankingSection';
-import { RankingViewType } from '@utils/types/common.type';
+import { RankingViewType } from '@utils/types/ranking.type';
 
 import { useGetSeasons } from '@hooks/queries/ranking.query';
 
