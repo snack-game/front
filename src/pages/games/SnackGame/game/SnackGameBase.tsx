@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+import * as Sentry from '@sentry/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
@@ -176,6 +177,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
 
     const targets = await getSurpassedPlayers();
     if (targets.length === 0) {
+      Sentry.captureMessage(
+        `[🚨 ${import.meta.env.VITE_NODE_ENV}경고]: targets 배열이 비어있습니다. sessionId: ${session!.sessionId}`,
+        'error',
+      );
       return navigateToLobby();
     }
 
