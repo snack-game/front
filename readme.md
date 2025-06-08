@@ -29,7 +29,6 @@
 * `Hot Toast`
 * `GSAP`
 * `chart.js`
-* `storybook`
 ## For Game
 * `Pixi.js`
 * `@pixi/sound`
