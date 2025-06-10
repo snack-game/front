@@ -103,12 +103,8 @@ const HeroSection = () => {
   const [selected, setSelected] = useState<number>(0);
 
   return (
-    <section
-      className={
-        'flex h-screen flex-col bg-primary py-12 landscape:min-h-screen '
-      }
-    >
-      <div className={'flex h-full grow bg-white'}>
+    <section className={'flex min-h-screen flex-col bg-primary pb-12 pt-16'}>
+      <div className={'flex h-full grow bg-white pt-4'}>
         <Hero {...heroContents[selected]} />
       </div>
       <div
