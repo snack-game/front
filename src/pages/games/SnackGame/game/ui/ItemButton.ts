@@ -7,7 +7,7 @@ export type ItemType = 'bomb' | 'fever';
 export interface ItemButtonOptions {
   type: ItemType;
   count: number;
-  onUse: () => Promise<void>;
+  onUse: (type: ItemType) => Promise<void>;
 }
 
 export class ItemButton extends Container {
@@ -15,7 +15,7 @@ export class ItemButton extends Container {
   private icon: Sprite;
   private countLabel: Label;
   private count: number;
-  private onUse: () => Promise<void>;
+  private onUse: (type: ItemType) => Promise<void>;
 
   constructor({ type, count, onUse }: ItemButtonOptions) {
     super();
@@ -51,8 +51,8 @@ export class ItemButton extends Container {
 
   private async handleClick() {
     if (this.count <= 0) return;
-    await this.onUse();
     this.setCount(this.count - 1);
+    await this.onUse(this.type);
   }
 
   setCount(count: number) {
