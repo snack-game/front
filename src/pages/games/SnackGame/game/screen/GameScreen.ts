@@ -1,6 +1,8 @@
 import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
+import { ItemBar } from '@pages/games/SnackGame/game/ui/ItemBar';
+import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
 import {
   SnackGameBizStart,
   SnackGameBizVerify,
@@ -27,6 +29,28 @@ import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { HapticFeedback } from '../util/hapticFeedback';
 
+// TODO: 아이템 보유 조회 API 응답으로 교체
+const items = [
+  {
+    type: 'bomb' as const,
+    count: 1,
+  },
+  {
+    type: 'fever' as const,
+    count: 2,
+  },
+];
+
+// TODO: GameScreen 내부로 이동
+const fn = {
+  bomb: async () => {
+    console.log('use bomb');
+  },
+  fever: async () => {
+    console.log('use fever');
+  },
+};
+
 export class GameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
   public static assetBundles = ['game'];
@@ -49,6 +73,8 @@ export class GameScreen extends Container implements AppScreen {
   private settingsButton: IconButton;
   /** 게임 종료시 true가 됩니다. */
   private finished = false;
+  /** 아이템 보유 현황 조회/사용을 위한 컨테이너 */
+  private itemBar: ItemBar;
 
   constructor(
     private app: SnackgameApplication,
@@ -117,6 +143,18 @@ export class GameScreen extends Container implements AppScreen {
 
     this.beforeGameStart = new BeforeGameStart();
     this.addChild(this.beforeGameStart);
+
+    this.itemBar = new ItemBar(
+      items.map((item) => {
+        return {
+          ...item,
+          onUse: async (item: ItemType) => {
+            fn[item]();
+          },
+        };
+      }),
+    );
+    this.addChild(this.itemBar);
   }
 
   public async onPrepare({ width, height }: Rectangle) {
@@ -195,7 +233,7 @@ export class GameScreen extends Container implements AppScreen {
     this.score.width = width * 0.3;
     this.score.height = height * 0.1;
     this.score.x = centerX;
-    this.score.y = div - 80;
+    this.score.y = 90;
 
     this.beforeGameStart.x = centerX;
     this.beforeGameStart.y = centerY;
@@ -205,6 +243,9 @@ export class GameScreen extends Container implements AppScreen {
 
     this.settingsButton.x = width - 25;
     this.settingsButton.y = 25;
+
+    this.itemBar.x = width * 0.5;
+    this.itemBar.y = height * 0.24;
   }
 
   public async onShow({ width, height }: Rectangle) {
