@@ -1,5 +1,7 @@
 import { Container, Graphics } from 'pixi.js';
 
+import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
+
 import { Snack } from './Snack';
 import { SnackGame } from './SnackGame';
 import {
@@ -26,6 +28,7 @@ export class SnackGameBoard {
   public snacksMask: Graphics;
   /** 스낵 스프라이트를 위한 컨테이너 */
   public snacksContainer: Container;
+  public borderGraphics: Graphics;
   /** 보드의 행 수 */
   public rows = 0;
   /** 보드의 열 수 */
@@ -50,6 +53,9 @@ export class SnackGameBoard {
       .fill({ color: 0xff0000, alpha: 0.5 });
     this.snackGame.addChild(this.snacksMask);
     this.snacksContainer.mask = this.snacksMask;
+
+    this.borderGraphics = new Graphics();
+    this.snacksContainer.addChild(this.borderGraphics);
   }
 
   /**
@@ -282,5 +288,31 @@ export class SnackGameBoard {
   /** 스낵을 다른 모든 스낵 앞에 배치 */
   public bringToFront(snack: Snack) {
     this.snacksContainer.addChild(snack);
+  }
+
+  public changeBoardStyle(item: ItemType | null) {
+    if (item === 'bomb') {
+      this.showBorder();
+    } else {
+      this.hideBorder();
+    }
+  }
+
+  public showBorder() {
+    this.borderGraphics.clear();
+    this.borderGraphics
+      .rect(
+        -this.getWidth() / 2,
+        -this.getHeight() / 2,
+        this.getWidth(),
+        this.getHeight(),
+      )
+      .stroke({ width: 5, color: 0x000000 });
+    this.borderGraphics.visible = true;
+  }
+
+  public hideBorder() {
+    this.borderGraphics.visible = false;
+    this.borderGraphics.clear();
   }
 }
