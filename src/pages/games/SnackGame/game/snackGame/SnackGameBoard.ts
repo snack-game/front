@@ -229,8 +229,15 @@ export class SnackGameBoard {
   }
 
   /** 선택된 스낵들을 모두 pop */
-  public popAllSelectedSnacks() {
-    const session = this.snackGame.onStreak?.(this.selectedSnacks);
+  public popAllSelectedSnacks(position?: SnackGamePosition) {
+    let session;
+
+    if (this.snackGame.selectedItem === 'bomb' && position) {
+      session = this.snackGame.onBomb?.(position);
+    } else {
+      session = this.snackGame.onStreak?.(this.selectedSnacks);
+    }
+
     for (const snack of this.selectedSnacks) {
       this.popSnack(snack.getGridPosition());
     }

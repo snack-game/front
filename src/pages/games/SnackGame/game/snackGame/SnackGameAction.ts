@@ -1,3 +1,5 @@
+import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
+
 import { SnackGame } from './SnackGame';
 import { SnackGamePosition } from './SnackGameUtil';
 import { sfx } from '../util/audio';
@@ -20,6 +22,12 @@ export class SnackGameActions {
   public async actionTap(position: SnackGamePosition) {
     if (!this.snackGame.isPlaying()) return;
     sfx.play('common/sfx-select.mp3');
+
+    const isSelectedBomb = this.snackGame.getSelectedItem() === 'bomb';
+    if (isSelectedBomb) {
+      this.tapSnackWithBomb(position);
+      return;
+    }
 
     this.updateSelectedSnacks(position);
     HapticFeedback.invoke('impactMedium');
@@ -56,13 +64,47 @@ export class SnackGameActions {
     }
   }
 
+  async tapSnackWithBomb(position: SnackGamePosition) {
+    this.updateSelectedSnacks(position, 'bomb');
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let dc = -1; dc <= 1; dc++) {
+        this.updateSelectedSnacks(
+          { row: position.row + dr, column: position.column + dc },
+          'bomb',
+        );
+      }
+    }
+    const session = await this.snackGame.board.popAllSelectedSnacks(position);
+
+    if (
+      this.snackGame.board.getSelectedSnacks().some((snack) => snack.type === 2)
+    ) {
+      this.snackGame.board.reset();
+      this.snackGame.board.setup(this.snackGame.config, session!.board);
+      this.snackGame.onSnackGameBoardReset?.();
+      HapticFeedback.invoke('notificationError');
+    } else {
+      HapticFeedback.invoke('notificationSuccess');
+    }
+
+    this.snackGame.board.clearAllSelectedSnacks();
+  }
+
   /** position을 기준으로 선택된 스낵의 선택, 취소를 업데이트 합니다.
    * @param position 타겟 스낵 그리드 위치
+   * @param itemType (선택) 아이템 사용 시, 사용한 아이템의 종류
    */
-  updateSelectedSnacks(position: SnackGamePosition) {
+  updateSelectedSnacks(position: SnackGamePosition, itemType?: ItemType) {
     const snack = this.snackGame.board.getSnackByPosition(position);
     const selectedSnack = this.snackGame.board.getSelectedSnacks();
+
     if (!snack || snack.isLocked()) return;
+
+    if (itemType === 'bomb') {
+      snack.setIsSelected(true);
+      selectedSnack.push(snack);
+      return;
+    }
 
     /** 선택 불가능한 스낵을 선택하면 모든 선택 취소**/
     if (!snack.canSelect) {
