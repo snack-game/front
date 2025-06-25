@@ -10,13 +10,18 @@ import {
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
-import { SnackGameStart, SnackGameVerify } from '../game.type';
+import {
+  SnackGameDefaultResponse,
+  SnackGameStart,
+  SnackGameVerify,
+} from '../game.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { Snack } from '../snackGame/Snack';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import {
   SnackGameMode,
+  SnackGamePosition,
   Streak,
   snackGameGetConfig,
 } from '../snackGame/SnackGameUtil';
@@ -33,23 +38,13 @@ import { HapticFeedback } from '../util/hapticFeedback';
 const items = [
   {
     type: 'bomb' as const,
-    count: 1,
+    count: 5,
   },
   {
     type: 'fever' as const,
     count: 2,
   },
 ];
-
-// TODO: GameScreen 내부로 이동
-const fn = {
-  bomb: async () => {
-    console.log('use bomb');
-  },
-  fever: async () => {
-    console.log('use fever');
-  },
-};
 
 export class GameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
@@ -84,6 +79,9 @@ export class GameScreen extends Container implements AppScreen {
       isGolden: boolean,
     ) => Promise<SnackGameVerify | SnackGameBizVerify>,
     private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
+    private handleBomb: (
+      position: SnackGamePosition,
+    ) => Promise<SnackGameDefaultResponse>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
   ) {
@@ -130,6 +128,10 @@ export class GameScreen extends Container implements AppScreen {
 
       return this.handleStreak(streak, isGolden);
     };
+    this.snackGame.onBomb = (position: SnackGamePosition) => {
+      this.snackGame.setSelectedItem(null);
+      return this.handleBomb(position);
+    };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
     this.snackGame.onTimesUp = this.onTimesUp.bind(this);
@@ -149,7 +151,7 @@ export class GameScreen extends Container implements AppScreen {
         return {
           ...item,
           onUse: async (item: ItemType) => {
-            fn[item]();
+            this.snackGame.setSelectedItem(item);
           },
         };
       }),

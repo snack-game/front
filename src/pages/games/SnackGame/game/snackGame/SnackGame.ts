@@ -1,5 +1,6 @@
 import { Container } from 'pixi.js';
 
+import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
 import { SnackGameBizVerify } from '@pages/games/SnackgameBiz/game.type';
 
 import { Snack } from './Snack';
@@ -13,7 +14,11 @@ import {
   snackGameGetConfig,
   SnackType,
 } from './SnackGameUtil';
-import { SnackGameVerify, SnackResponse } from '../game.type';
+import {
+  SnackGameDefaultResponse,
+  SnackGameVerify,
+  SnackResponse,
+} from '../game.type';
 
 /** onMatch 이벤트 데이터에 대한 인터페이스 */
 export interface SnackGameOnMatchData {
@@ -52,6 +57,8 @@ export class SnackGame extends Container {
   public board: SnackGameBoard;
   /** 플레이어가 취할 수 있는 행동 정렬 */
   public actions: SnackGameActions;
+  /** 선택된 아이템을 관리 */
+  public selectedItem: ItemType | null;
 
   /** 매치가 감지되면 발생 */
   public onMatch?: (data: SnackGameOnMatchData) => void;
@@ -60,6 +67,9 @@ export class SnackGame extends Container {
   public onStreak?: (
     data: Snack[],
   ) => Promise<SnackGameVerify | SnackGameBizVerify>;
+  public onBomb?: (
+    position: SnackGamePosition,
+  ) => Promise<SnackGameDefaultResponse>;
   /** 게임 시간이 만료되면 발생 */
   public onTimesUp?: () => void;
   /** SnackGameBoard 리셋 시 발생*/
@@ -74,6 +84,7 @@ export class SnackGame extends Container {
     this.stats = new SnackGameStats(this);
     this.board = new SnackGameBoard(this);
     this.actions = new SnackGameActions(this);
+    this.selectedItem = null;
   }
 
   /**
@@ -127,5 +138,14 @@ export class SnackGame extends Container {
   /** 타이머 업데이트 */
   public update(delta: number) {
     this.timer.update(delta);
+  }
+
+  public getSelectedItem() {
+    return this.selectedItem;
+  }
+
+  public setSelectedItem(type: ItemType | null) {
+    console.log(`selectedItem이 ${type}으로 업데이트 되었어요`); // TODO: 삭제
+    this.selectedItem = type;
   }
 }

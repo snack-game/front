@@ -22,13 +22,14 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
-import { Streak } from './snackGame/SnackGameUtil';
+import { SnackGamePosition, Streak } from './snackGame/SnackGameUtil';
 import {
   verifyStreaks,
   gameEnd,
   gamePause,
   gameResume,
   gameStart,
+  triggerBomb,
 } from './util/api';
 import { waitFor } from './util/asyncUtils';
 import { canProvoke, getSurpassedPlayers } from './util/provocation.api';
@@ -68,6 +69,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
             handleGetMode,
             handleStreak,
             handleGameStart,
+            handleBomb,
             handleGamePause,
             handleGameEnd,
           ),
@@ -118,6 +120,11 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
       session = await handleStreaksMove();
     }
     return session!;
+  };
+
+  const handleBomb = async (position: SnackGamePosition) => {
+    session = await triggerBomb(session!.sessionId, position);
+    return session;
   };
 
   const handleStreaksMove = async (): Promise<SnackGameVerify> => {
