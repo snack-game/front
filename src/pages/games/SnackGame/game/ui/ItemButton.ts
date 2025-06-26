@@ -1,5 +1,8 @@
 import { ButtonContainer } from '@pixi/ui';
-import { Sprite } from 'pixi.js';
+import gsap from 'gsap';
+import { Sprite, Texture } from 'pixi.js';
+
+import { sfx } from '@pages/games/SnackGame/game/util/audio';
 
 import { Label } from './Label';
 
@@ -49,8 +52,30 @@ export class ItemButton extends ButtonContainer {
 
   private async handleDown() {
     if (this.count <= 0) return;
+    sfx.play('common/sfx-tap.mp3');
+    this.playRipple();
     this.setCount(this.count - 1);
     await this.onUse(this.type);
+  }
+
+  private async playRipple() {
+    const ripple = new Sprite();
+
+    gsap.killTweensOf(ripple.scale);
+    gsap.killTweensOf(ripple);
+
+    ripple.texture = Texture.from('ripple');
+    ripple.position.set(this.icon.width / 2, this.icon.height / 2);
+    ripple.anchor.set(0.5);
+    ripple.scale.set(0.5);
+    ripple.alpha = 0.5;
+
+    this.addChild(ripple);
+
+    gsap.to(ripple.scale, { x: 1.5, y: 1.5, duration: 0.6, ease: 'linear' });
+    await gsap.to(ripple, { alpha: 0, duration: 0.6, ease: 'linear' });
+
+    this.removeChild(ripple);
   }
 
   setCount(count: number) {
