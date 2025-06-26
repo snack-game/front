@@ -147,6 +147,6 @@ export class SnackGame extends Container {
   public setSelectedItem(type: ItemType | null) {
     console.log(`selectedItem이 ${type}으로 업데이트 되었어요`); // TODO: 삭제
     this.selectedItem = type;
-    this.board.changeBoardStyle(type);
+    this.board.applyItemOverlay(type);
   }
 }

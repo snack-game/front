@@ -1,4 +1,5 @@
-import { Container, Graphics } from 'pixi.js';
+import gsap from 'gsap';
+import { Container, Graphics, Sprite, Texture } from 'pixi.js';
 
 import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
 
@@ -290,29 +291,26 @@ export class SnackGameBoard {
     this.snacksContainer.addChild(snack);
   }
 
-  public changeBoardStyle(item: ItemType | null) {
+  public async applyItemOverlay(item: ItemType | null) {
     if (item === 'bomb') {
-      this.showBorder();
-    } else {
-      this.hideBorder();
+      const overlay = new Sprite(Texture.from('bomb_overlay'));
+
+      gsap.killTweensOf(overlay);
+
+      overlay.anchor.set(0.5);
+      overlay.alpha = 0;
+
+      this.snacksContainer.addChild(overlay);
+
+      await gsap.to(overlay, { alpha: 1, duration: 0.3, ease: 'linear' });
+      await gsap.to(overlay, {
+        alpha: 0,
+        duration: 0.6,
+        ease: 'linear',
+        delay: 0.3,
+      });
+
+      this.snacksContainer.removeChild(overlay);
     }
-  }
-
-  public showBorder() {
-    this.borderGraphics.clear();
-    this.borderGraphics
-      .rect(
-        -this.getWidth() / 2,
-        -this.getHeight() / 2,
-        this.getWidth(),
-        this.getHeight(),
-      )
-      .stroke({ width: 5, color: 0x000000 });
-    this.borderGraphics.visible = true;
-  }
-
-  public hideBorder() {
-    this.borderGraphics.visible = false;
-    this.borderGraphics.clear();
   }
 }
