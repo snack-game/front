@@ -1,4 +1,5 @@
-import { Container, Sprite } from 'pixi.js';
+import { ButtonContainer } from '@pixi/ui';
+import { Sprite } from 'pixi.js';
 
 import { Label } from './Label';
 
@@ -10,7 +11,7 @@ export interface ItemButtonOptions {
   onUse: (type: ItemType) => Promise<void>;
 }
 
-export class ItemButton extends Container {
+export class ItemButton extends ButtonContainer {
   public readonly type: ItemType;
   private icon: Sprite;
   private countLabel: Label;
@@ -21,13 +22,15 @@ export class ItemButton extends Container {
     super();
 
     this.type = type;
+    this.count = count;
+    this.onUse = onUse;
+    this.cursor = 'pointer';
 
     this.icon = Sprite.from(this.type);
     this.icon.width = 36;
     this.icon.height = 36;
     this.addChild(this.icon);
 
-    this.count = count;
     this.countLabel = new Label(String(this.count), {
       fill: 0xffffff,
       fontSize: 20,
@@ -41,15 +44,10 @@ export class ItemButton extends Container {
     this.countLabel.y = this.icon.height - 4;
     this.addChild(this.countLabel);
 
-    this.onUse = onUse;
-
-    this.interactive = true;
-    this.cursor = 'pointer';
-
-    this.on('pointerdown', this.handleClick.bind(this));
+    this.onDown.connect(this.handleDown.bind(this));
   }
 
-  private async handleClick() {
+  private async handleDown() {
     if (this.count <= 0) return;
     this.setCount(this.count - 1);
     await this.onUse(this.type);
@@ -58,15 +56,7 @@ export class ItemButton extends Container {
   setCount(count: number) {
     this.count = count;
     this.countLabel.text = String(count);
-    this.interactive = count > 0;
+    this.enabled = count > 0;
     this.alpha = count > 0 ? 1 : 0.5;
-  }
-
-  getWidth() {
-    return this.width;
-  }
-
-  getHeight() {
-    return this.height;
   }
 }
