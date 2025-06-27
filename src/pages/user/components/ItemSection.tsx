@@ -1,5 +1,5 @@
-import Button from '@components/Button/Button';
 import Spacing from '@components/Spacing/Spacing';
+import DailyRewardBox from '@pages/user/components/DailyRewardBox';
 import Item from '@pages/user/components/Item';
 
 // TODO: 서버 응답으로 교체
@@ -28,21 +28,6 @@ const ItemSection = () => {
       </div>
       <Spacing size={1.5} />
       <DailyRewardBox />
-    </div>
-  );
-};
-
-const DailyRewardBox = () => {
-  return (
-    <div className="flex h-[46px] items-center justify-between">
-      <div className="text-md flex flex-col">
-        매일 모든 아이템을 한 개씩 드려요!
-        <span className="text-sm text-[#6B7280]">
-          정책에 따라 수령 방식이 달라질 수 있어요.
-        </span>
-      </div>
-
-      <Button className="h-full">일일 보상 받기</Button>
     </div>
   );
 };
