@@ -1,5 +1,6 @@
 import Button from '@components/Button/Button';
 import Spacing from '@components/Spacing/Spacing';
+import Item from '@pages/user/components/Item';
 
 // TODO: 서버 응답으로 교체
 const items = [
@@ -25,16 +26,8 @@ const ItemSection = () => {
           <Item key={item.type} {...item} />
         ))}
       </div>
-      <Spacing size={1} />
+      <Spacing size={1.5} />
       <DailyRewardBox />
-    </div>
-  );
-};
-
-const Item = ({ type, count }: { type: string; count: number }) => {
-  return (
-    <div className="w-fit border">
-      {type} / {count}
     </div>
   );
 };
