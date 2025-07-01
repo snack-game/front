@@ -2,19 +2,11 @@ import Spacing from '@components/Spacing/Spacing';
 import DailyRewardBox from '@pages/user/components/DailyRewardBox';
 import Item from '@pages/user/components/Item';
 
-// TODO: 서버 응답으로 교체
-const items = [
-  {
-    type: 'bomb' as const,
-    count: 500,
-  },
-  {
-    type: 'fever' as const,
-    count: 2,
-  },
-];
+import { useGetUserItem } from '@hooks/queries/item.query';
 
-const ItemSection = () => {
+const ItemSection = ({ userId }: { userId: number }) => {
+  const { data: items } = useGetUserItem(userId);
+
   return (
     <div className={'w-full bg-white px-4 py-2'}>
       <span className={`mr-4 cursor-pointer text-lg text-primary`}>
@@ -22,8 +14,8 @@ const ItemSection = () => {
       </span>
       <Spacing size={2} />
       <div className="flex gap-4">
-        {items.map((item) => (
-          <Item key={item.type} {...item} />
+        {Object.entries(items).map(([type, count]) => (
+          <Item key={type} type={type} count={count} />
         ))}
       </div>
       <Spacing size={1.5} />

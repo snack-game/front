@@ -46,7 +46,7 @@ const UserInfo = () => {
         {profile.type === 'GUEST' && <GuestToMember />}
         {profile.type !== 'GUEST' && !isEditing && (
           <>
-            <ItemSection />
+            <ItemSection userId={profile.id!} />
             <Spacing size={2} />
             <ChartSection />
           </>

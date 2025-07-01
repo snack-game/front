@@ -5,6 +5,7 @@ export const QUERY_KEY = {
   USER_RANKING: 'userRanking',
 
   USER_PROFILE: 'userProfile',
+  USER_ITEM: 'userItem',
 
   SEASON_RANKING: 'seasonRanking',
   SEASON_USER_RANKING: 'seasonUserRanking',
