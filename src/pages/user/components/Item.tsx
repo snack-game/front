@@ -5,8 +5,8 @@ import FeverWebpImage from '@assets/images/fever.webp';
 import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 
 const itemImgSrc: Record<string, string[]> = {
-  bomb: [BombImage, BombWebpImage],
-  fever: [FeverImage, FeverWebpImage],
+  BOMB: [BombImage, BombWebpImage],
+  FEVER_TIME: [FeverImage, FeverWebpImage],
 };
 
 const Item = ({ type, count }: { type: string; count: number }) => {
