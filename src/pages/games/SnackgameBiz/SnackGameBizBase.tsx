@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { useRecoilValue } from 'recoil';
 
+import { BizGameScreen } from '@pages/games/SnackGame/game/screen/BizGameScreen';
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
 
@@ -11,7 +12,6 @@ import initializeApplication from '../SnackGame/game/hook/initializeApplication'
 import { PausePopup } from '../SnackGame/game/popup/PausePopup';
 import { RulePopup } from '../SnackGame/game/popup/RulePopup';
 import { SettingsPopup } from '../SnackGame/game/popup/SettingPopup';
-import { GameScreen } from '../SnackGame/game/screen/GameScreen';
 import { LobbyScreen } from '../SnackGame/game/screen/LobbyScreen';
 import { SnackgameApplication } from '../SnackGame/game/screen/SnackgameApplication';
 import { Streak } from '../SnackGame/game/snackGame/SnackGameUtil';
@@ -37,14 +37,11 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
         PausePopup,
         () => new PausePopup(application, handleGameResume, handleGameEnd),
       ],
+      [LobbyScreen, () => new LobbyScreen(application, handleSetMode)],
       [
-        LobbyScreen,
-        () => new LobbyScreen(application, handleSetMode),
-      ],
-      [
-        GameScreen,
+        BizGameScreen,
         () =>
-          new GameScreen(
+          new BizGameScreen(
             application,
             handleGetMode,
             handleStreak,
@@ -139,19 +136,21 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
 
   const onClientMessage = (e: MessageEvent) => {
     const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-    if (!data.type?.startsWith("snackgame-client")) return;
+    if (!data.type?.startsWith('snackgame-client')) return;
     switch (data.type) {
       case 'snackgame-client-restart-invoked':
         if (!session) {
-          (application.appScreenPool.get(LobbyScreen) as LobbyScreen).handleGameStartButton();
+          (
+            application.appScreenPool.get(LobbyScreen) as LobbyScreen
+          ).handleGameStartButton();
         }
         break;
     }
-  }
+  };
 
   useEffect(() => {
     window.addEventListener('message', onClientMessage);
-    return () => window.removeEventListener('message', onClientMessage)
+    return () => window.removeEventListener('message', onClientMessage);
   }, []);
 
   useEffect(() => {
