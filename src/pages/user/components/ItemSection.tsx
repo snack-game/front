@@ -22,7 +22,7 @@ const ItemSection = ({ userId }: { userId: number }) => {
         ))}
       </div>
       <Spacing size={1.5} />
-      <DailyRewardBox />
+      <DailyRewardBox userId={userId} />
     </div>
   );
 };

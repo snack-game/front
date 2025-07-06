@@ -1,25 +1,42 @@
 import { useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+
+import { getItem } from '@api/item.api';
 import Button from '@components/Button/Button';
 
+import { QUERY_KEY } from '@constants/api.constant';
 import { KEY_LAST_REWARDED_DATE } from '@constants/localStorage.constant';
+import useToast from '@hooks/useToast';
 
 const getTodayDateStr = () => {
   return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 };
 
-const DailyRewardBox = () => {
+const DailyRewardBox = ({ userId }: { userId: number }) => {
   const [isTodayRewarded, setIsTodayRewarded] = useState(
     () => localStorage.getItem(KEY_LAST_REWARDED_DATE) === getTodayDateStr(),
   );
 
-  const handleClick = async () => {
-    // TODO: 아이템별 지급 api 요청
-    // 아이템 조회 api 재호출
-    // 수령 여부에 따라 적절한 toast 띄우기
+  const queryClient = useQueryClient();
+  const openToast = useToast();
 
-    localStorage.setItem(KEY_LAST_REWARDED_DATE, getTodayDateStr());
-    setIsTodayRewarded(true);
+  const handleClick = async () => {
+    const ITEM_TYPE = ['BOMB', 'FEVER_TIME'] as const;
+
+    try {
+      await Promise.all(ITEM_TYPE.map((itemType) => getItem(itemType)));
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.USER_ITEM, userId],
+      });
+      openToast('일일 보상을 수령했습니다.', 'success');
+
+      localStorage.setItem(KEY_LAST_REWARDED_DATE, getTodayDateStr());
+      setIsTodayRewarded(true);
+    } catch (error) {
+      openToast('보상 수령 중 오류가 발생했습니다.', 'error');
+    }
   };
 
   return (
