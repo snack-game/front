@@ -22,7 +22,10 @@ const ItemSection = ({ userId }: { userId: number }) => {
         ))}
       </div>
       <Spacing size={1.5} />
-      <DailyRewardBox userId={userId} />
+      <DailyRewardBox
+        userId={userId}
+        lastRewarded={items.length ? items[0].lastGrantedAt : undefined}
+      />
     </div>
   );
 };

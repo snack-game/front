@@ -6,16 +6,21 @@ import { getItem } from '@api/item.api';
 import Button from '@components/Button/Button';
 
 import { QUERY_KEY } from '@constants/api.constant';
-import { KEY_LAST_REWARDED_DATE } from '@constants/localStorage.constant';
 import useToast from '@hooks/useToast';
 
 const getTodayDateStr = () => {
   return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 };
 
-const DailyRewardBox = ({ userId }: { userId: number }) => {
+const DailyRewardBox = ({
+  userId,
+  lastRewarded,
+}: {
+  userId: number;
+  lastRewarded: string | undefined;
+}) => {
   const [isTodayRewarded, setIsTodayRewarded] = useState(
-    () => localStorage.getItem(KEY_LAST_REWARDED_DATE) === getTodayDateStr(),
+    () => lastRewarded?.slice(0, 10) === getTodayDateStr(),
   );
 
   const queryClient = useQueryClient();
@@ -32,7 +37,6 @@ const DailyRewardBox = ({ userId }: { userId: number }) => {
       });
       openToast('일일 보상을 수령했습니다.', 'success');
 
-      localStorage.setItem(KEY_LAST_REWARDED_DATE, getTodayDateStr());
       setIsTodayRewarded(true);
     } catch (error) {
       openToast('보상 수령 중 오류가 발생했습니다.', 'error');

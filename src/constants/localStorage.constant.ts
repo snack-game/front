@@ -12,5 +12,3 @@ export const KEY_PREFIX_BEST_SCORE = 'stats-best-score-';
 export const KEY_GAME_MODE = 'game-mode';
 export const KEY_GAME_SETTINGS = 'game-settings';
 export const KEY_LAST_NOTICE_INFO = 'lastNoticeInfo';
-
-export const KEY_LAST_REWARDED_DATE = 'daily-reward';
