@@ -29,9 +29,12 @@ export class ItemButton extends ButtonContainer {
     super();
 
     this.type = type;
-    this.count = count;
     this.onUse = onUse;
     this.cursor = 'pointer';
+
+    this.count = count;
+    this.enabled = count > 0;
+    this.alpha = count > 0 ? 1 : 0.5;
 
     this.icon = Sprite.from(TEXTURE_MAP[this.type]);
     this.icon.width = 36;
