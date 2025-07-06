@@ -5,6 +5,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import Spacing from '@components/Spacing/Spacing';
 import ChartSection from '@pages/user/components/ChartSection';
 import GuestToMember from '@pages/user/components/GuestToMember';
+import ItemSection from '@pages/user/components/ItemSection';
 import ProfileSection from '@pages/user/components/ProfileSection';
 
 import PATH from '@constants/path.constant';
@@ -43,7 +44,13 @@ const UserInfo = () => {
         )}
         <Spacing size={14} />
         {profile.type === 'GUEST' && <GuestToMember />}
-        {profile.type !== 'GUEST' && !isEditing && <ChartSection />}
+        {profile.type !== 'GUEST' && !isEditing && (
+          <>
+            <ItemSection userId={profile.id!} />
+            <Spacing size={2} />
+            <ChartSection />
+          </>
+        )}
       </div>
     </div>
   );
