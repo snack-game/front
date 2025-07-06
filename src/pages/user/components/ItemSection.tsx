@@ -14,6 +14,9 @@ const ItemSection = ({ userId }: { userId: number }) => {
       </span>
       <Spacing size={2} />
       <div className="flex gap-4">
+        {items.length === 0 && (
+          <p className="text-[#6B7280]">보유한 아이템이 없습니다.</p>
+        )}
         {items.map(({ type, count }) => (
           <Item key={type} type={type} count={count} />
         ))}
