@@ -3,14 +3,16 @@ import BombWebpImage from '@assets/images/bomb.webp';
 import FeverImage from '@assets/images/fever.avif';
 import FeverWebpImage from '@assets/images/fever.webp';
 import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
+import { ItemType } from '@utils/types/item.type';
 
-const itemImgSrc: Record<string, string[]> = {
+const itemImgSrc: Record<ItemType, string[]> = {
   BOMB: [BombImage, BombWebpImage],
   FEVER_TIME: [FeverImage, FeverWebpImage],
 };
 
-const Item = ({ type, count }: { type: string; count: number }) => {
+const Item = ({ type, count }: { type: ItemType; count: number }) => {
   const imgSrc = itemImgSrc[type];
+
   return (
     <div className="relative flex flex-col items-center">
       <ImageWithFallback

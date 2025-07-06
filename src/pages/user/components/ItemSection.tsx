@@ -14,7 +14,7 @@ const ItemSection = ({ userId }: { userId: number }) => {
       </span>
       <Spacing size={2} />
       <div className="flex gap-4">
-        {Object.entries(items).map(([type, count]) => (
+        {items.map(({ type, count }) => (
           <Item key={type} type={type} count={count} />
         ))}
       </div>
