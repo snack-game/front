@@ -169,6 +169,7 @@ export class GameScreen extends Container implements AppScreen {
     this.score.hide(false);
     this.pauseButton.hide(false);
     this.timer.hide(false);
+    this.itemBar.hide(false);
     gsap.killTweensOf(this.gameContainer.pivot);
     this.gameContainer.pivot.y = -height * 0.7;
     gsap.killTweensOf(this.timer.scale);
@@ -246,6 +247,7 @@ export class GameScreen extends Container implements AppScreen {
     this.score.show();
     this.timer.show();
     this.pauseButton.show();
+    this.itemBar.show();
     await this.beforeGameStart.show();
     await waitFor(0.3);
     this.vfx?.playPopExplosion({ x: this.score.x, y: this.score.y });
@@ -257,6 +259,7 @@ export class GameScreen extends Container implements AppScreen {
   public async onHide({ width, height }: Rectangle) {
     this.score.hide();
     this.timer.hide();
+    this.itemBar.hide();
     await this.vfx?.playGridExplosion();
   }
 
