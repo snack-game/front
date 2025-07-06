@@ -3,10 +3,14 @@ import gsap from 'gsap';
 import { Sprite, Texture } from 'pixi.js';
 
 import { sfx } from '@pages/games/SnackGame/game/util/audio';
+import { ItemType } from '@utils/types/item.type';
 
 import { Label } from './Label';
 
-export type ItemType = 'bomb' | 'fever';
+const TEXTURE_MAP: Record<ItemType, string> = {
+  BOMB: 'bomb',
+  FEVER_TIME: 'fever',
+};
 
 export interface ItemButtonOptions {
   type: ItemType;
@@ -29,7 +33,7 @@ export class ItemButton extends ButtonContainer {
     this.onUse = onUse;
     this.cursor = 'pointer';
 
-    this.icon = Sprite.from(this.type);
+    this.icon = Sprite.from(TEXTURE_MAP[this.type]);
     this.icon.width = 36;
     this.icon.height = 36;
     this.addChild(this.icon);

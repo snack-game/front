@@ -1,4 +1,4 @@
-import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
+import { ItemType } from '@utils/types/item.type';
 
 import { SnackGame } from './SnackGame';
 import { SnackGamePosition } from './SnackGameUtil';
@@ -23,7 +23,7 @@ export class SnackGameActions {
     if (!this.snackGame.isPlaying()) return;
     sfx.play('common/sfx-select.mp3');
 
-    const isSelectedBomb = this.snackGame.getSelectedItem() === 'bomb';
+    const isSelectedBomb = this.snackGame.getSelectedItem() === 'BOMB';
     if (isSelectedBomb) {
       this.tapSnackWithBomb(position);
       return;
@@ -65,12 +65,12 @@ export class SnackGameActions {
   }
 
   async tapSnackWithBomb(position: SnackGamePosition) {
-    this.updateSelectedSnacks(position, 'bomb');
+    this.updateSelectedSnacks(position, 'BOMB');
     for (let dr = -1; dr <= 1; dr++) {
       for (let dc = -1; dc <= 1; dc++) {
         this.updateSelectedSnacks(
           { row: position.row + dr, column: position.column + dc },
-          'bomb',
+          'BOMB',
         );
       }
     }
@@ -100,7 +100,7 @@ export class SnackGameActions {
 
     if (!snack || snack.isLocked()) return;
 
-    if (itemType === 'bomb') {
+    if (itemType === 'BOMB') {
       snack.setIsSelected(true);
       selectedSnack.push(snack);
       return;

@@ -1,7 +1,7 @@
 import { Container } from 'pixi.js';
 
-import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
 import { SnackGameBizVerify } from '@pages/games/SnackgameBiz/game.type';
+import { ItemType } from '@utils/types/item.type';
 
 import { Snack } from './Snack';
 import { SnackGameActions } from './SnackGameAction';
@@ -145,7 +145,6 @@ export class SnackGame extends Container {
   }
 
   public setSelectedItem(type: ItemType | null) {
-    console.log(`selectedItem이 ${type}으로 업데이트 되었어요`); // TODO: 삭제
     this.selectedItem = type;
     this.board.applyItemOverlay(type);
   }

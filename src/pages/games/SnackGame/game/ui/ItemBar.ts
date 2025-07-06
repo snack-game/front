@@ -13,7 +13,7 @@ export class ItemBar extends Container {
   private box: RoundedBox;
   private buttons: ItemButton[] = [];
 
-  constructor(private items: ItemButtonOptions[]) {
+  constructor() {
     super();
 
     this.box = new RoundedBox({
@@ -22,7 +22,9 @@ export class ItemBar extends Container {
       color: 0xfff7ec,
     });
     this.addChild(this.box);
+  }
 
+  public setup(items: ItemButtonOptions[]) {
     items.forEach(({ type, count, onUse }, idx) => {
       const button = new ItemButton({
         type,

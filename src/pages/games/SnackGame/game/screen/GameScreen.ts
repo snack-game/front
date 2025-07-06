@@ -2,11 +2,11 @@ import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import { ItemBar } from '@pages/games/SnackGame/game/ui/ItemBar';
-import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
 import {
   SnackGameBizStart,
   SnackGameBizVerify,
 } from '@pages/games/SnackgameBiz/game.type';
+import { ItemResponse } from '@utils/types/item.type';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
@@ -33,18 +33,6 @@ import { Timer } from '../ui/Timer';
 import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { HapticFeedback } from '../util/hapticFeedback';
-
-// TODO: 아이템 보유 조회 API 응답으로 교체
-const items = [
-  {
-    type: 'bomb' as const,
-    count: 5,
-  },
-  {
-    type: 'fever' as const,
-    count: 2,
-  },
-];
 
 export class GameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
@@ -84,6 +72,7 @@ export class GameScreen extends Container implements AppScreen {
     ) => Promise<SnackGameDefaultResponse>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
+    private fetchUserItem: () => Promise<{ items: ItemResponse[] }>,
   ) {
     super();
 
@@ -146,23 +135,25 @@ export class GameScreen extends Container implements AppScreen {
     this.beforeGameStart = new BeforeGameStart();
     this.addChild(this.beforeGameStart);
 
-    this.itemBar = new ItemBar(
-      items.map((item) => {
-        return {
-          ...item,
-          onUse: async (item: ItemType) => {
-            this.snackGame.setSelectedItem(item);
-          },
-        };
-      }),
-    );
+    this.itemBar = new ItemBar();
     this.addChild(this.itemBar);
   }
 
   public async onPrepare({ width, height }: Rectangle) {
+    const { items } = await this.fetchUserItem();
+    this.itemBar.setup(
+      items.map((item) => {
+        return {
+          ...item,
+          onUse: async (type) => {
+            this.snackGame.setSelectedItem(type);
+          },
+        };
+      }),
+    );
+
     const { board } = await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
-
     const snackGameConfig = snackGameGetConfig({
       rows: board.length,
       columns: board[0].length,

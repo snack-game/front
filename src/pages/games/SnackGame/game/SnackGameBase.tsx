@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
+import { getItemInventory } from '@api/item.api';
 import GameResult from '@pages/games/AppleGame/components/GameResult';
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
@@ -72,6 +73,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
             handleBomb,
             handleGamePause,
             handleGameEnd,
+            fetchUserItem,
           ),
       ],
     );
@@ -96,6 +98,18 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
       window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}',
     ).userState;
     if (!isLoggedIn) await guestMutation.mutateAsync();
+  };
+
+  const fetchUserItem = async () => {
+    const isGuest =
+      JSON.parse(window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}')
+        .userState.type === 'GUEST';
+    if (isGuest) {
+      return { items: [] };
+    }
+
+    const data = await getItemInventory();
+    return data;
   };
 
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다

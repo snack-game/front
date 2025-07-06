@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { Container, Graphics, Sprite, Texture } from 'pixi.js';
 
-import { ItemType } from '@pages/games/SnackGame/game/ui/ItemButton';
+import { ItemType } from '@utils/types/item.type';
 
 import { Snack } from './Snack';
 import { SnackGame } from './SnackGame';
@@ -239,7 +239,7 @@ export class SnackGameBoard {
   public popAllSelectedSnacks(position?: SnackGamePosition) {
     let session;
 
-    if (this.snackGame.selectedItem === 'bomb' && position) {
+    if (this.snackGame.selectedItem === 'BOMB' && position) {
       session = this.snackGame.onBomb?.(position);
     } else {
       session = this.snackGame.onStreak?.(this.selectedSnacks);
@@ -292,7 +292,7 @@ export class SnackGameBoard {
   }
 
   public async applyItemOverlay(item: ItemType | null) {
-    if (item === 'bomb') {
+    if (item === 'BOMB') {
       const overlay = new Sprite(Texture.from('bomb_overlay'));
 
       gsap.killTweensOf(overlay);
