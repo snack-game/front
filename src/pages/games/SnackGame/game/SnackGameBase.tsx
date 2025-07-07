@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
+import { getItemInventory } from '@api/item.api';
 import GameResult from '@pages/games/AppleGame/components/GameResult';
 import { pixiState } from '@utils/atoms/game.atom';
 import { userState } from '@utils/atoms/member.atom';
@@ -22,13 +23,14 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
-import { Streak } from './snackGame/SnackGameUtil';
+import { SnackGamePosition, Streak } from './snackGame/SnackGameUtil';
 import {
   verifyStreaks,
   gameEnd,
   gamePause,
   gameResume,
   gameStart,
+  triggerBomb,
 } from './util/api';
 import { waitFor } from './util/asyncUtils';
 import { canProvoke, getSurpassedPlayers } from './util/provocation.api';
@@ -68,8 +70,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
             handleGetMode,
             handleStreak,
             handleGameStart,
+            handleBomb,
             handleGamePause,
             handleGameEnd,
+            fetchUserItem,
           ),
       ],
     );
@@ -96,6 +100,18 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     if (!isLoggedIn) await guestMutation.mutateAsync();
   };
 
+  const fetchUserItem = async () => {
+    const isGuest =
+      JSON.parse(window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}')
+        .userState.type === 'GUEST';
+    if (isGuest) {
+      return { items: [] };
+    }
+
+    const data = await getItemInventory();
+    return data;
+  };
+
   // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGameStart = async () => {
     session = await gameStart();
@@ -118,6 +134,11 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
       session = await handleStreaksMove();
     }
     return session!;
+  };
+
+  const handleBomb = async (position: SnackGamePosition) => {
+    session = await triggerBomb(session!.sessionId, position);
+    return session;
   };
 
   const handleStreaksMove = async (): Promise<SnackGameVerify> => {

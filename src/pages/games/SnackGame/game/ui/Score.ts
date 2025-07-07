@@ -31,12 +31,12 @@ export class Score extends Container {
     super();
 
     this.background = new Graphics();
-    this.background.circle(0, 0, 50);
+    this.background.circle(0, 0, 35);
     this.background.fill(0xfff7ec);
     this.addChild(this.background);
 
     this.circle = new Graphics();
-    this.circle.circle(0, 0, 50);
+    this.circle.circle(0, 0, 35);
     this.circle.fill(0xfff7ec);
     this.addChild(this.circle);
 

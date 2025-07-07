@@ -1,6 +1,8 @@
 import gsap from 'gsap';
 import { Container } from 'pixi.js';
 
+import { BizGameScreen } from '@pages/games/SnackGame/game/screen/BizGameScreen';
+
 import { PopExplosion } from './PopExplosion';
 import { GameScreen } from '../screen/GameScreen';
 import { Snack } from '../snackGame/Snack';
@@ -37,9 +39,9 @@ const easeJumpToCauldronScale = registerCustomEase(
  */
 export class GameEffects extends Container {
   /** 게임 화면 인스턴스 */
-  private game: GameScreen;
+  private game: GameScreen | BizGameScreen;
 
-  constructor(game: GameScreen) {
+  constructor(game: GameScreen | BizGameScreen) {
     super();
     this.game = game;
     this.sortableChildren = true;
@@ -93,7 +95,10 @@ export class GameEffects extends Container {
     copySnack.position.x = this.game.score.x;
     copySnack.position.y = this.game.score.y;
     this.addChild(copySnack);
-    await this.playFlyToTarget(copySnack, this.toLocal(snack.getGlobalPosition()));
+    await this.playFlyToTarget(
+      copySnack,
+      this.toLocal(snack.getGlobalPosition()),
+    );
     snack.visible = true;
     this.removeChild(copySnack);
     pool.giveBack(copySnack);

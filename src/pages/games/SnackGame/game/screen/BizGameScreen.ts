@@ -1,27 +1,20 @@
 import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
-import { ItemBar } from '@pages/games/SnackGame/game/ui/ItemBar';
 import {
   SnackGameBizStart,
   SnackGameBizVerify,
 } from '@pages/games/SnackgameBiz/game.type';
-import { ItemResponse } from '@utils/types/item.type';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
-import {
-  SnackGameDefaultResponse,
-  SnackGameStart,
-  SnackGameVerify,
-} from '../game.type';
+import { SnackGameStart, SnackGameVerify } from '../game.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { Snack } from '../snackGame/Snack';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import {
   SnackGameMode,
-  SnackGamePosition,
   Streak,
   snackGameGetConfig,
 } from '../snackGame/SnackGameUtil';
@@ -34,7 +27,7 @@ import { waitFor } from '../util/asyncUtils';
 import { bgm } from '../util/audio';
 import { HapticFeedback } from '../util/hapticFeedback';
 
-export class GameScreen extends Container implements AppScreen {
+export class BizGameScreen extends Container implements AppScreen {
   /** 화면에 필요한 에셋 번들 리스트 */
   public static assetBundles = ['game'];
 
@@ -56,8 +49,6 @@ export class GameScreen extends Container implements AppScreen {
   private settingsButton: IconButton;
   /** 게임 종료시 true가 됩니다. */
   private finished = false;
-  /** 아이템 보유 현황 조회/사용을 위한 컨테이너 */
-  private itemBar: ItemBar;
 
   constructor(
     private app: SnackgameApplication,
@@ -67,12 +58,8 @@ export class GameScreen extends Container implements AppScreen {
       isGolden: boolean,
     ) => Promise<SnackGameVerify | SnackGameBizVerify>,
     private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
-    private handleBomb: (
-      position: SnackGamePosition,
-    ) => Promise<SnackGameDefaultResponse>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
-    private fetchUserItem: () => Promise<{ items: ItemResponse[] }>,
   ) {
     super();
 
@@ -117,10 +104,6 @@ export class GameScreen extends Container implements AppScreen {
 
       return this.handleStreak(streak, isGolden);
     };
-    this.snackGame.onBomb = (position: SnackGamePosition) => {
-      this.snackGame.setSelectedItem(null);
-      return this.handleBomb(position);
-    };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
     this.snackGame.onTimesUp = this.onTimesUp.bind(this);
@@ -134,26 +117,12 @@ export class GameScreen extends Container implements AppScreen {
 
     this.beforeGameStart = new BeforeGameStart();
     this.addChild(this.beforeGameStart);
-
-    this.itemBar = new ItemBar();
-    this.addChild(this.itemBar);
   }
 
   public async onPrepare({ width, height }: Rectangle) {
-    const { items } = await this.fetchUserItem();
-    this.itemBar.setup(
-      items.map((item) => {
-        return {
-          ...item,
-          onUse: async (type) => {
-            this.snackGame.setSelectedItem(type);
-          },
-        };
-      }),
-    );
-
     const { board } = await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
+
     const snackGameConfig = snackGameGetConfig({
       rows: board.length,
       columns: board[0].length,
@@ -169,7 +138,6 @@ export class GameScreen extends Container implements AppScreen {
     this.score.hide(false);
     this.pauseButton.hide(false);
     this.timer.hide(false);
-    this.itemBar.hide(false);
     gsap.killTweensOf(this.gameContainer.pivot);
     this.gameContainer.pivot.y = -height * 0.7;
     gsap.killTweensOf(this.timer.scale);
@@ -227,7 +195,7 @@ export class GameScreen extends Container implements AppScreen {
     this.score.width = width * 0.3;
     this.score.height = height * 0.1;
     this.score.x = centerX;
-    this.score.y = 90;
+    this.score.y = div - 80;
 
     this.beforeGameStart.x = centerX;
     this.beforeGameStart.y = centerY;
@@ -237,9 +205,6 @@ export class GameScreen extends Container implements AppScreen {
 
     this.settingsButton.x = width - 25;
     this.settingsButton.y = 25;
-
-    this.itemBar.x = width * 0.5;
-    this.itemBar.y = height * 0.24;
   }
 
   public async onShow({ width, height }: Rectangle) {
@@ -247,7 +212,6 @@ export class GameScreen extends Container implements AppScreen {
     this.score.show();
     this.timer.show();
     this.pauseButton.show();
-    this.itemBar.show();
     await this.beforeGameStart.show();
     await waitFor(0.3);
     this.vfx?.playPopExplosion({ x: this.score.x, y: this.score.y });
@@ -259,7 +223,6 @@ export class GameScreen extends Container implements AppScreen {
   public async onHide({ width, height }: Rectangle) {
     this.score.hide();
     this.timer.hide();
-    this.itemBar.hide();
     await this.vfx?.playGridExplosion();
   }
 

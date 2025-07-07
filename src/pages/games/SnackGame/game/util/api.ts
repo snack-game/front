@@ -7,7 +7,7 @@ import {
   SnackGameStart,
   SnackGameVerify,
 } from '../game.type';
-import { Streak } from '../snackGame/SnackGameUtil';
+import { SnackGamePosition, Streak } from '../snackGame/SnackGameUtil';
 
 export const gameStart = async (): Promise<SnackGameStart> => {
   const { data } = await api.post('/games/2');
@@ -21,6 +21,17 @@ export const verifyStreaks = async (
 ): Promise<SnackGameVerify> => {
   const { data } = await api.post(`/games/2/${sessionId}/streaks`, { streaks });
 
+  return data;
+};
+
+export const triggerBomb = async (
+  sessionId: number,
+  { row, column }: SnackGamePosition,
+): Promise<SnackGameDefaultResponse> => {
+  const { data } = await api.post(`games/2/${sessionId}/bomb`, {
+    x: column,
+    y: row,
+  });
   return data;
 };
 

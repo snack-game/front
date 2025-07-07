@@ -1,4 +1,7 @@
-import { Container, Graphics } from 'pixi.js';
+import gsap from 'gsap';
+import { Container, Graphics, Sprite, Texture } from 'pixi.js';
+
+import { ItemType } from '@utils/types/item.type';
 
 import { Snack } from './Snack';
 import { SnackGame } from './SnackGame';
@@ -26,6 +29,7 @@ export class SnackGameBoard {
   public snacksMask: Graphics;
   /** 스낵 스프라이트를 위한 컨테이너 */
   public snacksContainer: Container;
+  public borderGraphics: Graphics;
   /** 보드의 행 수 */
   public rows = 0;
   /** 보드의 열 수 */
@@ -50,6 +54,9 @@ export class SnackGameBoard {
       .fill({ color: 0xff0000, alpha: 0.5 });
     this.snackGame.addChild(this.snacksMask);
     this.snacksContainer.mask = this.snacksMask;
+
+    this.borderGraphics = new Graphics();
+    this.snacksContainer.addChild(this.borderGraphics);
   }
 
   /**
@@ -229,8 +236,15 @@ export class SnackGameBoard {
   }
 
   /** 선택된 스낵들을 모두 pop */
-  public popAllSelectedSnacks() {
-    const session = this.snackGame.onStreak?.(this.selectedSnacks);
+  public popAllSelectedSnacks(position?: SnackGamePosition) {
+    let session;
+
+    if (this.snackGame.selectedItem === 'BOMB' && position) {
+      session = this.snackGame.onBomb?.(position);
+    } else {
+      session = this.snackGame.onStreak?.(this.selectedSnacks);
+    }
+
     for (const snack of this.selectedSnacks) {
       this.popSnack(snack.getGridPosition());
     }
@@ -275,5 +289,28 @@ export class SnackGameBoard {
   /** 스낵을 다른 모든 스낵 앞에 배치 */
   public bringToFront(snack: Snack) {
     this.snacksContainer.addChild(snack);
+  }
+
+  public async applyItemOverlay(item: ItemType | null) {
+    if (item === 'BOMB') {
+      const overlay = new Sprite(Texture.from('bomb_overlay'));
+
+      gsap.killTweensOf(overlay);
+
+      overlay.anchor.set(0.5);
+      overlay.alpha = 0;
+
+      this.snacksContainer.addChild(overlay);
+
+      await gsap.to(overlay, { alpha: 1, duration: 0.3, ease: 'linear' });
+      await gsap.to(overlay, {
+        alpha: 0,
+        duration: 0.6,
+        ease: 'linear',
+        delay: 0.3,
+      });
+
+      this.snacksContainer.removeChild(overlay);
+    }
   }
 }
