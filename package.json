@@ -43,15 +43,7 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
-    "@assetpack/cli": "^0.8.0",
-    "@assetpack/core": "^0.8.0",
-    "@assetpack/plugin-compress": "^0.8.0",
-    "@assetpack/plugin-ffmpeg": "^0.8.0",
-    "@assetpack/plugin-json": "^0.8.0",
-    "@assetpack/plugin-manifest": "^0.8.0",
-    "@assetpack/plugin-mipmap": "^0.8.0",
-    "@assetpack/plugin-texture-packer": "^0.8.0",
-    "@assetpack/plugin-webfont": "^0.8.0",
+    "@assetpack/core": "^1.4.0",
     "@svgr/core": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^4.38.0",
     "@types/react": "^18.0.37",
