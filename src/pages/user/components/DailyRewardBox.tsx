@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { getItem } from '@api/item.api';
+import { getDailyItem } from '@api/item.api';
 import Button from '@components/Button/Button';
 
 import { QUERY_KEY } from '@constants/api.constant';
@@ -30,7 +30,7 @@ const DailyRewardBox = ({
     const ITEM_TYPE = ['BOMB'] as const;
 
     try {
-      await Promise.all(ITEM_TYPE.map((itemType) => getItem(itemType)));
+      await Promise.all(ITEM_TYPE.map((itemType) => getDailyItem(itemType)));
 
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.USER_ITEM, userId],
