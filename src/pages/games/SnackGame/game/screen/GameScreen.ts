@@ -141,16 +141,14 @@ export class GameScreen extends Container implements AppScreen {
 
   public async onPrepare({ width, height }: Rectangle) {
     const { items } = await this.fetchUserItem();
-    this.itemBar.setup(
-      items.map((item) => {
-        return {
-          ...item,
-          onUse: async (type) => {
-            this.snackGame.setSelectedItem(type);
-          },
-        };
-      }),
-    );
+    this.itemBar.setup([
+      {
+        ...items[0],
+        onUse: async (type) => {
+          this.snackGame.setSelectedItem(type);
+        },
+      },
+    ]);
 
     const { board } = await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;

@@ -9,8 +9,13 @@ export const getItemInventory = async (): Promise<{
   return data;
 };
 
-export const getItem = async (itemType: ItemType): Promise<ItemResponse> => {
-  const { data } = await api.post('/games/2/item', { itemType });
+export const getDailyItem = async (
+  itemType: ItemType,
+): Promise<ItemResponse> => {
+  const { data } = await api.post('/games/2/item', {
+    itemType,
+    grantType: 'DAILY',
+  });
 
   return data;
 };
