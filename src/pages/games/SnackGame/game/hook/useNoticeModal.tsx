@@ -1,10 +1,13 @@
+import BombImage from '@assets/images/bomb.avif';
+import BombWebpImage from '@assets/images/bomb.webp';
 import Button from '@components/Button/Button';
+import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 
 import { KEY_LAST_NOTICE_INFO } from '@constants/localStorage.constant';
 import useModal from '@hooks/useModal';
 
 // notice_YYYYMMDD_keyword(_version)
-const CURRENT_ID = 'notice_20250608_keyword';
+const CURRENT_ID = 'notice_20250710_bomb';
 
 const Notice = () => {
   const { closeModal } = useModal();
@@ -24,7 +27,22 @@ const Notice = () => {
 
   return (
     <div className={'flex w-full flex-grow flex-col justify-between gap-4'}>
-      <div className="flex-grow">notice content</div>
+      <div className="flex flex-grow flex-col items-center justify-center gap-6 text-center">
+        <ImageWithFallback
+          sources={[{ srcSet: BombImage, type: 'avif' }]}
+          src={BombWebpImage}
+          alt="폭탄 아이템"
+          className="h-16 w-16"
+        />
+        <h3 className="text-lg font-bold">폭탄 아이템 출시!</h3>
+        <p className="text-md leading-relaxed text-gray-600">
+          스낵을 빠르게 제거할 수 있는 아이템이 출시되었어요! 사용법은{' '}
+          <span className="font-semibold text-primary">
+            프로필 → 설정 → 공지사항
+          </span>
+          에서 확인해 주세요.
+        </p>
+      </div>
       <div className="flex w-full justify-between gap-2 md:justify-evenly">
         <Button
           onClick={hideForToday}
