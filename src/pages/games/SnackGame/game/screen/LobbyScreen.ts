@@ -2,6 +2,8 @@ import gsap from 'gsap';
 import { t } from 'i18next';
 import { Container, Rectangle } from 'pixi.js';
 
+import { BizGameScreen } from '@pages/games/SnackGame/game/screen/BizGameScreen';
+
 import { AppScreen } from './appScreen';
 import { GameScreen } from './GameScreen';
 import { SnackgameApplication } from './SnackgameApplication';
@@ -30,7 +32,8 @@ export class LobbyScreen extends Container implements AppScreen {
   constructor(
     private app: SnackgameApplication,
     private handleSetMode: (mode: string) => void,
-    private handleNonLoggedInUser: () => Promise<void> = () => Promise.resolve(),
+    private handleNonLoggedInUser: () => Promise<void> = () =>
+      Promise.resolve(),
   ) {
     super();
 
@@ -67,7 +70,10 @@ export class LobbyScreen extends Container implements AppScreen {
     try {
       await this.handleNonLoggedInUser();
       this.handleSetMode('default');
-      this.app.show(GameScreen);
+
+      if (window.location.pathname.includes('biz'))
+        this.app.show(BizGameScreen);
+      else this.app.show(GameScreen);
     } catch (error) {
       this.app.setError(error);
     }
