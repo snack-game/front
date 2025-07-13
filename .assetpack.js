@@ -7,8 +7,14 @@ export default {
   pipes: [
     ...pixiPipes({
       compression: { jpg: true, png: true, webp: false },
-      texturePacker: { removeFileExtension: true },
-      manifest: { output: './public/assets/assets-manifest.json' },
+      texturePacker: {
+        texturePacker: {
+          removeFileExtension: true,
+        },
+      },
+      manifest: {
+        output: './public/assets/assets-manifest.json',
+      },
     }),
   ],
 };
