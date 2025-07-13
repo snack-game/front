@@ -69,6 +69,7 @@ export class GameScreen extends Container implements AppScreen {
     private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
     private handleBomb: (
       position: SnackGamePosition,
+      isGolden: boolean,
     ) => Promise<SnackGameDefaultResponse>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
@@ -117,9 +118,15 @@ export class GameScreen extends Container implements AppScreen {
 
       return this.handleStreak(streak, isGolden);
     };
-    this.snackGame.onBomb = (position: SnackGamePosition) => {
+    this.snackGame.onBomb = (position: SnackGamePosition, data: Snack[]) => {
       this.snackGame.setSelectedItem(null);
-      return this.handleBomb(position);
+      let isGolden = false;
+
+      data.forEach((snack) => {
+        if (snack.type === 2) isGolden = true;
+      });
+
+      return this.handleBomb(position, isGolden);
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
