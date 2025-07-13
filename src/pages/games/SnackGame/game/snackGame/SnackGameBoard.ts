@@ -240,7 +240,7 @@ export class SnackGameBoard {
     let session;
 
     if (this.snackGame.selectedItem === 'BOMB' && position) {
-      session = this.snackGame.onBomb?.(position);
+      session = this.snackGame.onBomb?.(position, this.selectedSnacks);
     } else {
       session = this.snackGame.onStreak?.(this.selectedSnacks);
     }

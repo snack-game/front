@@ -69,6 +69,7 @@ export class SnackGame extends Container {
   ) => Promise<SnackGameVerify | SnackGameBizVerify>;
   public onBomb?: (
     position: SnackGamePosition,
+    data: Snack[],
   ) => Promise<SnackGameDefaultResponse>;
   /** 게임 시간이 만료되면 발생 */
   public onTimesUp?: () => void;

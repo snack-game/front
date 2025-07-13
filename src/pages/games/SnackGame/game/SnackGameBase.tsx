@@ -136,7 +136,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     return session!;
   };
 
-  const handleBomb = async (position: SnackGamePosition) => {
+  const handleBomb = async (position: SnackGamePosition, isGolden: boolean) => {
+    if (isGolden) {
+      session = await handleStreaksMove();
+    }
     session = await triggerBomb(session!.sessionId, position);
     return session;
   };
