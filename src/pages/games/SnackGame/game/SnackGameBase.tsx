@@ -101,13 +101,6 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   const fetchUserItem = async () => {
-    const isGuest =
-      JSON.parse(window.localStorage.getItem(ATOM_KEY.USER_PERSIST) || '{}')
-        .userState.type === 'GUEST';
-    if (isGuest) {
-      return { items: [] };
-    }
-
     const data = await getItemInventory();
     return data;
   };
