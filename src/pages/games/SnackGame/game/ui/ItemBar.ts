@@ -40,6 +40,7 @@ export class ItemBar extends Container {
       this.buttons.push(button);
     });
   }
+
   public async show(animated = true) {
     if (this.showing) return;
     this.showing = true;
