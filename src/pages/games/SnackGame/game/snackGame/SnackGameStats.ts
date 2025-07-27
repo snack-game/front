@@ -37,7 +37,7 @@ export class SnackGameStats {
    * @param data The piece pop data
    */
   public registerPop(data: SnackGameOnPopData) {
-    const points = 1;
+    const points = this.snackGame.selectedItem === 'FEVER_TIME' ? 2 : 1;
     this.data.score += points;
     this.data.pops += 1;
     // if (data.isSpecial) {
