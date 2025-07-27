@@ -35,6 +35,14 @@ export const triggerBomb = async (
   return data;
 };
 
+export const triggerFever = async (
+  sessionId: number,
+): Promise<SnackGameDefaultResponse> => {
+  const { data } = await api.post(`games/2/${sessionId}/fever-time`);
+
+  return data;
+};
+
 export const gamePause = async (sessionId: number): Promise<SnackGamePause> => {
   const { data } = await api.post(`games/2/${sessionId}/pause`);
 
