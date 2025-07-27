@@ -31,6 +31,7 @@ import {
   gameResume,
   gameStart,
   triggerBomb,
+  triggerFever,
 } from './util/api';
 import { waitFor } from './util/asyncUtils';
 import { canProvoke, getSurpassedPlayers } from './util/provocation.api';
@@ -71,6 +72,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
             handleStreak,
             handleGameStart,
             handleBomb,
+            handleFever,
             handleGamePause,
             handleGameEnd,
             fetchUserItem,
@@ -134,6 +136,11 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
       session = await handleStreaksMove();
     }
     session = await triggerBomb(session!.sessionId, position);
+    return session;
+  };
+
+  const handleFever = async () => {
+    session = await triggerFever(session!.sessionId);
     return session;
   };
 
