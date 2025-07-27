@@ -2,7 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getNoticeXML } from '@api/notice.api';
 
-const parseXML = (xmlText: string) => {
+const parseNoticeTitleFromXML = (xmlText: string) => {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
   const items = xmlDoc.getElementsByTagName('item');
@@ -27,7 +27,7 @@ export const useGetNotices = () => {
     queryKey: ['notices'],
     queryFn: async () => {
       const data = await getNoticeXML();
-      return parseXML(data);
+      return parseNoticeTitleFromXML(data);
     },
   });
   return data;
