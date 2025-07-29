@@ -16,7 +16,7 @@ export const NoticeSection = () => {
     >
       <NoticeIcon className="h-[16px] w-[16px] shrink-0 text-primary" />
       <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-primary-deep-dark">
-        {noticeTitles[noticeTitles.length - 1].textContent}
+        {noticeTitles[noticeTitles.length - 1]}
       </p>
     </div>
   );
