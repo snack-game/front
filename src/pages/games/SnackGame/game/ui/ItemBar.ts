@@ -74,4 +74,8 @@ export class ItemBar extends Container {
       this.visible = false;
     }
   }
+
+  public setItemsLocked(locked: boolean) {
+    this.buttons.forEach((button) => button.setLocked(locked));
+  }
 }
