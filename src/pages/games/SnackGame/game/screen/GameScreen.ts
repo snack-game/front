@@ -120,6 +120,7 @@ export class GameScreen extends Container implements AppScreen {
     };
     this.snackGame.onBomb = (position: SnackGamePosition, data: Snack[]) => {
       this.snackGame.setSelectedItem(null);
+      this.itemBar.setItemsLocked(false);
       let isGolden = false;
 
       data.forEach((snack) => {
@@ -153,6 +154,7 @@ export class GameScreen extends Container implements AppScreen {
         ...items[0],
         onUse: async (type) => {
           this.snackGame.setSelectedItem(type);
+          this.itemBar.setItemsLocked(true);
         },
       },
     ]);
