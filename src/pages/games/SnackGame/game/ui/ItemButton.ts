@@ -92,7 +92,7 @@ export class ItemButton extends ButtonContainer {
     this.alpha = count > 0 ? 1 : 0.5;
   }
 
-  public setLocked(locked: boolean): void {
+  public setLocked(locked: boolean) {
     this.enabled = !locked;
     this.alpha = locked ? 0.5 : 1;
   }

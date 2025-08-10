@@ -75,7 +75,7 @@ export class ItemBar extends Container {
     }
   }
 
-  public setItemsLocked(locked: boolean): void {
+  public setItemsLocked(locked: boolean) {
     this.buttons.forEach((button) => button.setLocked(locked));
   }
 }
