@@ -17,7 +17,9 @@ const ItemSection = ({ userId }: { userId: number }) => {
         {items.length === 0 && (
           <p className="text-[#6B7280]">보유한 아이템이 없습니다.</p>
         )}
-        <Item type={items[0].type} count={items[0].count} />
+        {items.map((item) => (
+          <Item key={item.type} {...item} />
+        ))}
       </div>
       <Spacing size={1.5} />
       <DailyRewardBox
