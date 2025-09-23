@@ -23,6 +23,7 @@ import {
   SnackGameMode,
   SnackGamePosition,
   Streak,
+  StreakWithMeta,
   snackGameGetConfig,
 } from '../snackGame/SnackGameUtil';
 import { BeforeGameStart } from '../ui/BeforeGameStart';
@@ -66,7 +67,7 @@ export class GameScreen extends Container implements AppScreen {
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
     private handleStreak: (
-      streak: Streak,
+      streak: StreakWithMeta,
       isGolden: boolean,
     ) => Promise<SnackGameVerify | SnackGameBizVerify>,
     private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
@@ -114,6 +115,8 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.onPop = this.onPop.bind(this);
     this.snackGame.onStreak = (data: Snack[]) => {
       let isGolden = false;
+      const isFever = this.snackGame.selectedItem === 'FEVER_TIME';
+      const occurredAt = new Date().toISOString();
 
       const streak = data.reduce((acc: Streak, snack) => {
         if (snack.type === 2) isGolden = true;
@@ -123,7 +126,10 @@ export class GameScreen extends Container implements AppScreen {
         return acc;
       }, []);
 
-      return this.handleStreak(streak, isGolden);
+      return this.handleStreak(
+        { coordinates: streak, isFever, occurredAt },
+        isGolden,
+      );
     };
     this.snackGame.onBomb = (position: SnackGamePosition, data: Snack[]) => {
       this.snackGame.setSelectedItem(null);
