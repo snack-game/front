@@ -11,6 +11,11 @@ export type SnackGamePosition = { row: number; column: number };
 
 /** 스트릭 (내부 좌표의 모음) 타입 */
 export type Streak = { x: number; y: number }[];
+export type StreakWithMeta = {
+  coordinates: Streak;
+  isFever: boolean;
+  occurredAt: string;
+};
 
 /** 게임 모드 */
 export const snackGameModes = ['default', 'inf'] as const;

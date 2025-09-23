@@ -23,9 +23,11 @@ import {
   SnackGameMode,
   SnackGamePosition,
   Streak,
+  StreakWithMeta,
   snackGameGetConfig,
 } from '../snackGame/SnackGameUtil';
 import { BeforeGameStart } from '../ui/BeforeGameStart';
+import { FeverTimer } from '../ui/FeverTimer';
 import { GameEffects } from '../ui/GameEffect';
 import { IconButton } from '../ui/IconButton';
 import { Score } from '../ui/Score';
@@ -42,6 +44,8 @@ export class GameScreen extends Container implements AppScreen {
   public readonly snackGame: SnackGame;
   /** 게임 타이머 */
   public readonly timer: Timer;
+  /** 피버타임 아이템용 타이머 */
+  public readonly feverTimer: FeverTimer;
   /** 스낵게임 인스턴스를 위한 렌더링 컨테이너 */
   public readonly gameContainer: Container;
   /** 스낵게임 일시정지 Popup **/
@@ -63,7 +67,7 @@ export class GameScreen extends Container implements AppScreen {
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
     private handleStreak: (
-      streak: Streak,
+      streak: StreakWithMeta,
       isGolden: boolean,
     ) => Promise<SnackGameVerify | SnackGameBizVerify>,
     private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
@@ -71,6 +75,7 @@ export class GameScreen extends Container implements AppScreen {
       position: SnackGamePosition,
       isGolden: boolean,
     ) => Promise<SnackGameDefaultResponse>,
+    private handleFever: () => Promise<SnackGameDefaultResponse>,
     private handleGamePause: () => Promise<void>,
     private handleGameEnd: () => Promise<void>,
     private fetchUserItem: () => Promise<{ items: ItemResponse[] }>,
@@ -100,6 +105,9 @@ export class GameScreen extends Container implements AppScreen {
     this.timer = new Timer();
     this.addChild(this.timer);
 
+    this.feverTimer = new FeverTimer();
+    this.addChild(this.feverTimer);
+
     this.gameContainer = new Container();
     this.addChild(this.gameContainer);
 
@@ -107,6 +115,8 @@ export class GameScreen extends Container implements AppScreen {
     this.snackGame.onPop = this.onPop.bind(this);
     this.snackGame.onStreak = (data: Snack[]) => {
       let isGolden = false;
+      const isFever = this.snackGame.selectedItem === 'FEVER_TIME';
+      const occurredAt = new Date().toISOString();
 
       const streak = data.reduce((acc: Streak, snack) => {
         if (snack.type === 2) isGolden = true;
@@ -116,7 +126,10 @@ export class GameScreen extends Container implements AppScreen {
         return acc;
       }, []);
 
-      return this.handleStreak(streak, isGolden);
+      return this.handleStreak(
+        { coordinates: streak, isFever, occurredAt },
+        isGolden,
+      );
     };
     this.snackGame.onBomb = (position: SnackGamePosition, data: Snack[]) => {
       this.snackGame.setSelectedItem(null);
@@ -149,15 +162,22 @@ export class GameScreen extends Container implements AppScreen {
 
   public async onPrepare({ width, height }: Rectangle) {
     const { items } = await this.fetchUserItem();
-    this.itemBar.setup([
-      {
-        ...items[0],
-        onUse: async (type) => {
-          this.snackGame.setSelectedItem(type);
-          this.itemBar.setItemsLocked(true);
-        },
-      },
-    ]);
+    this.itemBar.setup(
+      items.map((item) => {
+        return {
+          ...item,
+          onUse: async (type) => {
+            this.snackGame.setSelectedItem(type);
+            if (type === 'FEVER_TIME') {
+              await this.handleFever();
+              this.feverTimer.start(30, () => {
+                this.snackGame.setSelectedItem(null);
+              });
+            }
+          },
+        };
+      }),
+    );
 
     const { board } = await this.handleGameStart();
     const mode = this.getCurrentMode() as SnackGameMode;
@@ -176,6 +196,7 @@ export class GameScreen extends Container implements AppScreen {
     this.score.hide(false);
     this.pauseButton.hide(false);
     this.timer.hide(false);
+    this.feverTimer.hide(false);
     this.itemBar.hide(false);
     gsap.killTweensOf(this.gameContainer.pivot);
     this.gameContainer.pivot.y = -height * 0.7;
@@ -186,6 +207,7 @@ export class GameScreen extends Container implements AppScreen {
   public update(time: Ticker) {
     this.snackGame.update(time.deltaMS);
     this.timer.updateTime(this.snackGame.timer.getTimeRemaining());
+    this.feverTimer.update(time.deltaMS);
     this.score.setScore(this.snackGame.stats.getScore());
   }
 
@@ -206,6 +228,9 @@ export class GameScreen extends Container implements AppScreen {
       await this.handleGamePause();
       this.gameContainer.interactiveChildren = false;
       this.snackGame.pause();
+      if (this.feverTimer.isRunning()) {
+        this.feverTimer.pause();
+      }
       this.app.presentPopup(popup ? popup : PausePopup);
     }
   }
@@ -213,6 +238,9 @@ export class GameScreen extends Container implements AppScreen {
   public async onResume() {
     this.gameContainer.interactiveChildren = true;
     this.snackGame.resume();
+    if (this.feverTimer.isRunning()) {
+      this.feverTimer.resume();
+    }
   }
 
   public reset() {
@@ -235,6 +263,9 @@ export class GameScreen extends Container implements AppScreen {
     this.score.height = height * 0.1;
     this.score.x = centerX;
     this.score.y = 90;
+
+    this.feverTimer.x = centerX;
+    this.feverTimer.y = 130;
 
     this.beforeGameStart.x = centerX;
     this.beforeGameStart.y = centerY;
@@ -266,6 +297,7 @@ export class GameScreen extends Container implements AppScreen {
   public async onHide({ width, height }: Rectangle) {
     this.score.hide();
     this.timer.hide();
+    this.feverTimer.hide();
     this.itemBar.hide();
     await this.vfx?.playGridExplosion();
   }

@@ -27,7 +27,7 @@ const DailyRewardBox = ({
   const openToast = useToast();
 
   const handleClick = async () => {
-    const ITEM_TYPE = ['BOMB'] as const;
+    const ITEM_TYPE = ['BOMB', 'FEVER_TIME'] as const;
 
     try {
       await Promise.all(ITEM_TYPE.map((itemType) => getDailyItem(itemType)));
