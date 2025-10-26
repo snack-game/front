@@ -44,7 +44,7 @@ const ServiceMaintenancePage = () => {
               </li>
               <li className="text-sm text-gray-700">
                 <span className="font-semibold">점검 영향:</span> 게임, 랭킹,
-                마이 페이지 등 서비스 전체 이용 불가
+                프로필 페이지 등 서비스 전체 이용 불가
               </li>
               <li className="text-sm text-gray-500">
                 * 변동 사항이 있을 경우{' '}
