@@ -39,8 +39,8 @@ const ServiceMaintenancePage = () => {
           <div className="w-full max-w-md rounded-lg border bg-white p-6">
             <ul className="space-y-3 text-left">
               <li className="text-sm text-gray-700">
-                <span className="font-semibold">점검 일시:</span> 2025. 11. 1
-                (토) 00:00 ~ 2025. 11. 2 (일) 23:59
+                <span className="font-semibold">점검 일시:</span> 2025. 11. 9
+                (일) 00:00 ~ 2025. 11. 10 (월) 23:59 (KST)
               </li>
               <li className="text-sm text-gray-700">
                 <span className="font-semibold">점검 영향:</span> 게임, 랭킹,
