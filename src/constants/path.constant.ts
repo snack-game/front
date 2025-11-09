@@ -27,8 +27,6 @@ const PATH = {
 
   NOTICE_RSS: 'https://notice.snackga.me/index.xml',
 
-  INSTAGRAM: 'https://www.instagram.com/snackga._.me/',
-
   GOOGLE: '/oauth2/authorization/google',
   KAKAO: '/oauth2/authorization/kakao',
 
