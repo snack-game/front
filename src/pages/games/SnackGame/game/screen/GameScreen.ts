@@ -2,19 +2,11 @@ import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import { ItemBar } from '@pages/games/SnackGame/game/ui/ItemBar';
-import {
-  SnackGameBizStart,
-  SnackGameBizVerify,
-} from '@pages/games/SnackgameBiz/game.type';
 import { ItemResponse } from '@utils/types/item.type';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
-import {
-  SnackGameDefaultResponse,
-  SnackGameStart,
-  SnackGameVerify,
-} from '../game.type';
+import { GameHandlers, ItemHandlers } from '../handlers.type';
 import { PausePopup } from '../popup/PausePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
 import { Snack } from '../snackGame/Snack';
@@ -23,7 +15,6 @@ import {
   SnackGameMode,
   SnackGamePosition,
   Streak,
-  StreakWithMeta,
   snackGameGetConfig,
 } from '../snackGame/SnackGameUtil';
 import { BeforeGameStart } from '../ui/BeforeGameStart';
@@ -66,18 +57,8 @@ export class GameScreen extends Container implements AppScreen {
   constructor(
     private app: SnackgameApplication,
     private getCurrentMode: () => string,
-    private handleStreak: (
-      streak: StreakWithMeta,
-      isGolden: boolean,
-    ) => Promise<SnackGameVerify | SnackGameBizVerify>,
-    private handleGameStart: () => Promise<SnackGameStart | SnackGameBizStart>,
-    private handleBomb: (
-      position: SnackGamePosition,
-      isGolden: boolean,
-    ) => Promise<SnackGameDefaultResponse>,
-    private handleFever: () => Promise<SnackGameDefaultResponse>,
-    private handleGamePause: () => Promise<void>,
-    private handleGameEnd: () => Promise<void>,
+    private gameHandlers: GameHandlers,
+    private itemHandlers: ItemHandlers,
     private fetchUserItem: () => Promise<{ items: ItemResponse[] }>,
   ) {
     super();
@@ -126,7 +107,7 @@ export class GameScreen extends Container implements AppScreen {
         return acc;
       }, []);
 
-      return this.handleStreak(
+      return this.gameHandlers.streak(
         { coordinates: streak, isFever, occurredAt },
         isGolden,
       );
@@ -140,7 +121,7 @@ export class GameScreen extends Container implements AppScreen {
         if (snack.type === 2) isGolden = true;
       });
 
-      return this.handleBomb(position, isGolden);
+      return this.itemHandlers.bomb(position, isGolden);
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
@@ -169,7 +150,7 @@ export class GameScreen extends Container implements AppScreen {
           onUse: async (type) => {
             this.snackGame.setSelectedItem(type);
             if (type === 'FEVER_TIME') {
-              await this.handleFever();
+              await this.itemHandlers.fever();
               this.feverTimer.start(30, () => {
                 this.snackGame.setSelectedItem(null);
               });
@@ -179,7 +160,7 @@ export class GameScreen extends Container implements AppScreen {
       }),
     );
 
-    const { board } = await this.handleGameStart();
+    const { board } = await this.gameHandlers.start();
     const mode = this.getCurrentMode() as SnackGameMode;
     const snackGameConfig = snackGameGetConfig({
       rows: board.length,
@@ -225,7 +206,7 @@ export class GameScreen extends Container implements AppScreen {
 
   public async onPause(popup?: AppScreenConstructor) {
     if (this.snackGame.isPlaying()) {
-      await this.handleGamePause();
+      await this.gameHandlers.pause();
       this.gameContainer.interactiveChildren = false;
       this.snackGame.pause();
       if (this.feverTimer.isRunning()) {
@@ -316,7 +297,7 @@ export class GameScreen extends Container implements AppScreen {
       this.finished = true;
       this.snackGame.stopPlaying();
 
-      await this.handleGameEnd();
+      await this.gameHandlers.end();
     } catch (error) {
       this.app.setError(error);
     }
