@@ -11,8 +11,6 @@ export interface BasePopupOptions {
   panelHeight: number;
   /** 팝업 제목 */
   title: string;
-  /** 팝업 제목 색상 (기본값: 0xf58529) */
-  titleColor?: number;
 }
 
 /** 모든 팝업의 공통 기능을 제공하는 기본 클래스 */
@@ -43,7 +41,7 @@ export abstract class BasePopup extends Container implements AppScreen {
     this.panel.addChild(this.panelBase);
 
     this.title = new Label(options.title, {
-      fill: options.titleColor ?? 0xf58529,
+      fill: 0xf58529,
       fontSize: 50,
     });
     this.title.y = -this.panelBase.boxHeight * 0.5 + 60;

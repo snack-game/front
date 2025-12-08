@@ -36,7 +36,6 @@ export class SettingsPopup extends BasePopup {
     super(app, {
       panelHeight: 600,
       title: t('setting', { ns: 'game' }),
-      titleColor: 0xfb923c,
     });
 
     this.doneButton = new LargeButton({ text: t('confirm', { ns: 'game' }) });
