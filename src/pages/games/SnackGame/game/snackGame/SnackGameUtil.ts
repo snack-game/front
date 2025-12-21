@@ -1,7 +1,12 @@
 import { SnackResponse } from '../game.type';
 
-/** 각 그리드 내부 스낵 타입 */
-export type SnackType = number; // TODO: 타입 안정성과 가독성을 위해 새로운 타입으로 정의
+/** 각 그리드 내부 스낵 타입 상수 */
+export const SNACK_TYPE = {
+  EMPTY: 0,
+  NORMAL: 1,
+  GOLDEN: 2,
+} as const;
+export type SnackType = (typeof SNACK_TYPE)[keyof typeof SNACK_TYPE];
 
 /** 스낵게임 board를 표현하는 2차원 배열 타입 */
 export type SnackGameGrid = SnackType[][];
@@ -76,10 +81,12 @@ export function snackGameCreateGrid(
   const grid: SnackGameGrid = [];
 
   for (let r = 0; r < rows; r++) {
-    const types = [];
+    const types: SnackType[] = [];
 
     for (let c = 0; c < columns; c++) {
-      const currentType = board[r][c].golden ? 2 : 1;
+      const currentType = board[r][c].golden
+        ? SNACK_TYPE.GOLDEN
+        : SNACK_TYPE.NORMAL;
       types.push(currentType);
     }
 
@@ -127,7 +134,7 @@ export function snackGameGetSnackType(
 export function snackGameSetPieceType(
   grid: SnackGameGrid,
   position: SnackGamePosition,
-  type: number,
+  type: SnackType,
 ) {
   grid[position.row][position.column] = type;
 }

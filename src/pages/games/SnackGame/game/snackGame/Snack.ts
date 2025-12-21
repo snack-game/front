@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { Container, Sprite, Texture } from 'pixi.js';
 
-import { SnackGamePosition } from './SnackGameUtil';
+import { SNACK_TYPE, SnackGamePosition, SnackType } from './SnackGameUtil';
 import { Label } from '../ui/Label';
 import {
   resolveAndKillTweens,
@@ -14,7 +14,7 @@ const defaultSnackOptions = {
   /** 텍스처 선택을 위한 스낵 이름 */
   name: '',
   /** 그리드 내부의 스낵 타입 */
-  type: 0,
+  type: SNACK_TYPE.EMPTY as SnackType,
   /** 넓이와 높이 사이즈 */
   size: 50,
   /** 스낵 숫자 */
@@ -42,7 +42,7 @@ export class Snack extends Container {
   /** 스낵의 열 인덱스 */
   public column = 0;
   /** 그리드 내부의 스낵 타입 */
-  public type = 0;
+  public type: SnackType = SNACK_TYPE.EMPTY;
   /** 텍스처 선택을 위한 스낵 이름 */
   public name = '';
   /** 스낵이 가진 숫자 */

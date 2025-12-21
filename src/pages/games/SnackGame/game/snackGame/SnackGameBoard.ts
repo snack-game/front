@@ -11,6 +11,7 @@ import {
   snackGameGetSnack,
   SnackGameGrid,
   SnackType,
+  SNACK_TYPE,
   snackGameGetSnackType,
   snackGameSetPieceType,
   snackGameCreateGrid,
@@ -79,7 +80,7 @@ export class SnackGameBoard {
 
       for (let i = 0; i < snacks.length; i++) {
         const name = snacks[i];
-        const type = i + 1;
+        const type = (i + 1) as SnackType; // TODO: SnackType <-> 에셋명 매핑을 다른 식으로 할 수 없을지?
 
         this.commonTypes.push(type);
         this.typesMap[type] = name;
@@ -115,7 +116,7 @@ export class SnackGameBoard {
    * @param snackType 새 스낵의 유형
    */
   public createSnack(position: SnackGamePosition, snackInfo: SnackResponse) {
-    const type = snackInfo.golden ? 2 : 1;
+    const type = snackInfo.golden ? SNACK_TYPE.GOLDEN : SNACK_TYPE.NORMAL;
     const name = this.typesMap[type];
     const snack = pool.get(Snack);
     const viewPosition = this.getViewPositionByGridPosition(position);
@@ -162,7 +163,7 @@ export class SnackGameBoard {
     // const combo = this.snackGame.process.getProcessRound();
 
     // 그리드의 해당 위치에 있는 스낵을 0으로 설정하고 보드에서 팝
-    snackGameSetPieceType(this.grid, position, 0);
+    snackGameSetPieceType(this.grid, position, SNACK_TYPE.EMPTY);
     const popData = { snack, type };
     this.snackGame.stats.registerPop(popData);
     this.snackGame.onPop?.(popData);
