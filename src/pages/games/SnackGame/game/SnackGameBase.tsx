@@ -16,6 +16,7 @@ import useModal from '@hooks/useModal';
 
 import ProvocationSender from './components/ProvocationSender';
 import { SnackGameDefaultResponse, SnackGameVerify } from './game.type';
+import { GameHandlers, ItemHandlers } from './handlers.type';
 import initializeApplication from './hook/initializeApplication';
 import { PausePopup } from './popup/PausePopup';
 import { RulePopup } from './popup/RulePopup';
@@ -49,48 +50,10 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const guestMutation = useGuest();
   const queryClient = useQueryClient();
 
-  // TODO: 훅 안으로 끌고 들어가기
-  const initializeAppScreens = async (application: SnackgameApplication) => {
-    application.appScreenPool.insert(
-      [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
-      [RulePopup, () => new RulePopup(application)],
-      [
-        PausePopup,
-        () => new PausePopup(application, handleGameResume, handleGameEnd),
-      ],
-      [
-        LobbyScreen,
-        () =>
-          new LobbyScreen(application, handleSetMode, handleNonLoggedInUser),
-      ],
-      [
-        GameScreen,
-        () =>
-          new GameScreen(
-            application,
-            handleGetMode,
-            handleStreak,
-            handleGameStart,
-            handleBomb,
-            handleFever,
-            handleGamePause,
-            handleGameEnd,
-            fetchUserItem,
-          ),
-      ],
-    );
-    return application.appScreenPool;
-  };
-  const application = initializeApplication({
-    canvasBaseRef,
-    initializeAppScreens,
-  });
-
   const handleApplicationError = () => {
     application.show(LobbyScreen);
   };
 
-  // 게임 진행 관련 functions
   let session: SnackGameDefaultResponse | undefined;
   let sessionMode: string | undefined;
   let cumulativeStreaks: StreakWithMeta[] = [];
@@ -107,47 +70,26 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
     return data;
   };
 
-  // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
-  const handleGameStart = async () => {
-    session = await gameStart();
-    return session;
-  };
-
   // TODO: 현재 PixiJS 컨테이너와 게임의 모든 것이 결합되어있는데,
   // 이것을 게임 상태(모드, 점수, 스트릭) 및 게임 규칙을 관리하는 순수한 스낵게임 클래스로 분리하면 좋겠네요.
   // 지금 아래에 있는 getMode, handleStreak 같은 단순 상태를 가져오는 메서드들을 축약하고 싶어요!
+
+  // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGetMode = () => sessionMode!;
   const handleSetMode = (mode: string) => {
     sessionMode = mode;
-  };
-
-  // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streak: StreakWithMeta, isGolden: boolean) => {
-    cumulativeStreaks = [...cumulativeStreaks, streak];
-
-    if (isGolden) {
-      session = await handleStreaksMove();
-    }
-    return session!;
-  };
-
-  const handleBomb = async (position: SnackGamePosition, isGolden: boolean) => {
-    if (isGolden) {
-      session = await handleStreaksMove();
-    }
-    session = await triggerBomb(session!.sessionId, position);
-    return session;
-  };
-
-  const handleFever = async () => {
-    session = await triggerFever(session!.sessionId);
-    return session;
   };
 
   const handleStreaksMove = async (): Promise<SnackGameVerify> => {
     const result = await verifyStreaks(session!.sessionId, cumulativeStreaks);
     cumulativeStreaks = [];
     return result;
+  };
+
+  // ==================== 게임 핸들러 ====================
+  const handleGameStart = async () => {
+    session = await gameStart();
+    return session;
   };
 
   const handleGamePause = async () => {
@@ -185,6 +127,77 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
       onClose: handleGameResultClose,
     });
   };
+
+  // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
+  const handleStreak = async (streak: StreakWithMeta, isGolden: boolean) => {
+    cumulativeStreaks = [...cumulativeStreaks, streak];
+
+    if (isGolden) {
+      session = await handleStreaksMove();
+    }
+    return session!;
+  };
+
+  // ==================== 아이템 핸들러 ====================
+  const handleBomb = async (position: SnackGamePosition, isGolden: boolean) => {
+    if (isGolden) {
+      session = await handleStreaksMove();
+    }
+    session = await triggerBomb(session!.sessionId, position);
+    return session;
+  };
+
+  const handleFever = async () => {
+    session = await triggerFever(session!.sessionId);
+    return session;
+  };
+
+  // ==================== 게임/아이템 핸들러 그룹핑 객체 ====================
+  const gameHandlers: GameHandlers = {
+    start: handleGameStart,
+    pause: handleGamePause,
+    resume: handleGameResume,
+    end: handleGameEnd,
+    streak: handleStreak,
+  };
+
+  const itemHandlers: ItemHandlers = {
+    bomb: handleBomb,
+    fever: handleFever,
+  };
+
+  // TODO: 훅 안으로 끌고 들어가기
+  const initializeAppScreens = async (application: SnackgameApplication) => {
+    application.appScreenPool.insert(
+      [SettingsPopup, () => new SettingsPopup(application, handleGameResume)],
+      [RulePopup, () => new RulePopup(application)],
+      [
+        PausePopup,
+        () => new PausePopup(application, handleGameResume, handleGameEnd),
+      ],
+      [
+        LobbyScreen,
+        () =>
+          new LobbyScreen(application, handleSetMode, handleNonLoggedInUser),
+      ],
+      [
+        GameScreen,
+        () =>
+          new GameScreen(
+            application,
+            handleGetMode,
+            gameHandlers,
+            itemHandlers,
+            fetchUserItem,
+          ),
+      ],
+    );
+    return application.appScreenPool;
+  };
+  const application = initializeApplication({
+    canvasBaseRef,
+    initializeAppScreens,
+  });
 
   const handleGameResultClose = async () => {
     const isGuest =
