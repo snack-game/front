@@ -28,13 +28,21 @@ export const snackGameModes = ['default', 'inf'] as const;
 /** 게임 모드 타입 */
 export type SnackGameMode = (typeof snackGameModes)[number];
 
-/** 각 게임 모드에 사용되는 snack 타입 배열 */
-const snacks: Record<SnackGameMode, string[]> = {
-  /** 기본 모드 */
-  default: ['snack', 'golden_snack'],
-  /** 무한 모드 */
-  inf: ['snack'],
+/** 각 게임 모드에 사용되는 스낵 타입-에셋 매핑 */
+const snackAssetsByMode: Record<SnackGameMode, Partial<Record<SnackType, string>>> = {
+  default: {
+    [SNACK_TYPE.NORMAL]: 'snack',
+    [SNACK_TYPE.GOLDEN]: 'golden_snack',
+  },
+  inf: {
+    [SNACK_TYPE.NORMAL]: 'snack',
+  },
 };
+
+/** 게임 모드별 스낵 타입-에셋 매핑을 반환 */
+export function getSnackAssets(mode: SnackGameMode): Record<SnackType, string> {
+  return snackAssetsByMode[mode] as Record<SnackType, string>;
+}
 
 /** 스낵게임 기본 설정 */
 export const defaultConfig = {
@@ -58,11 +66,6 @@ export function snackGameGetConfig(
   customConfig: Partial<SnackGameConfig> = {},
 ): SnackGameConfig {
   return { ...defaultConfig, ...customConfig };
-}
-
-/** 스낵게임에 필요한 스낵들을 모드 기준으로 구별해 반환합니다. */
-export function snackGameGetSnack(mode: SnackGameMode): string[] {
-  return [...snacks[mode]];
 }
 
 /**

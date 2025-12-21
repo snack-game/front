@@ -8,10 +8,9 @@ import { SnackGame } from './SnackGame';
 import {
   SnackGamePosition,
   SnackGameConfig,
-  snackGameGetSnack,
   SnackGameGrid,
-  SnackType,
   SNACK_TYPE,
+  getSnackAssets,
   snackGameGetSnackType,
   snackGameSetPieceType,
   snackGameCreateGrid,
@@ -37,10 +36,8 @@ export class SnackGameBoard {
   public columns = 0;
   /** 각 보드 슬롯의 크기 (너비 및 높이) */
   public tileSize = 0;
-  /** 게임에 사용 가능한 일반 유형 목록 */
-  public commonTypes: SnackType[] = [];
   /** 스낵 유형을 스낵 이름에 매핑 */
-  public typesMap!: Record<number, string>;
+  public typesMap: Record<number, string> | null = null;
   /** 선택된 Snack 스택 */
   public selectedSnacks: Snack[] = [];
 
@@ -72,19 +69,9 @@ export class SnackGameBoard {
     this.snacksMask.height = this.getHeight();
     this.snacksContainer.visible = true;
 
-    // 게임에서 사용될 스낵 타입 배열
-    const snacks = snackGameGetSnack(config.mode);
-
-    if (!this.commonTypes.length) {
-      this.typesMap = {};
-
-      for (let i = 0; i < snacks.length; i++) {
-        const name = snacks[i];
-        const type = (i + 1) as SnackType; // TODO: SnackType <-> 에셋명 매핑을 다른 식으로 할 수 없을지?
-
-        this.commonTypes.push(type);
-        this.typesMap[type] = name;
-      }
+    // 게임 모드에 맞는 스낵 타입-에셋 매핑 설정
+    if (!this.typesMap) {
+      this.typesMap = getSnackAssets(config.mode);
     }
 
     // 초기 격자 상태 생성
@@ -117,7 +104,7 @@ export class SnackGameBoard {
    */
   public createSnack(position: SnackGamePosition, snackInfo: SnackResponse) {
     const type = snackInfo.golden ? SNACK_TYPE.GOLDEN : SNACK_TYPE.NORMAL;
-    const name = this.typesMap[type];
+    const name = this.typesMap![type];
     const snack = pool.get(Snack);
     const viewPosition = this.getViewPositionByGridPosition(position);
     snack.onTap = (position) => this.snackGame.actions.actionTap(position);
