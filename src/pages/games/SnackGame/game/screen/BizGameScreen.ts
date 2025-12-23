@@ -52,7 +52,7 @@ export class BizGameScreen extends Container implements AppScreen {
 
   constructor(
     private app: SnackgameApplication,
-    private getCurrentMode: () => string,
+    private getCurrentMode: () => SnackGameMode,
     private handleStreak: (
       streak: Streak,
       isGolden: boolean,
@@ -121,7 +121,7 @@ export class BizGameScreen extends Container implements AppScreen {
 
   public async onPrepare({ width, height }: Rectangle) {
     const { board } = await this.handleGameStart();
-    const mode = this.getCurrentMode() as SnackGameMode;
+    const mode = this.getCurrentMode();
 
     const snackGameConfig = snackGameGetConfig({
       rows: board.length,

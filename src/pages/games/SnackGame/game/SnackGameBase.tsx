@@ -24,7 +24,11 @@ import { SettingsPopup } from './popup/SettingPopup';
 import { GameScreen } from './screen/GameScreen';
 import { LobbyScreen } from './screen/LobbyScreen';
 import { SnackgameApplication } from './screen/SnackgameApplication';
-import { SnackGamePosition, StreakWithMeta } from './snackGame/SnackGameUtil';
+import {
+  SnackGameMode,
+  SnackGamePosition,
+  StreakWithMeta,
+} from './snackGame/SnackGameUtil';
 import {
   verifyStreaks,
   gameEnd,
@@ -55,7 +59,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   };
 
   let session: SnackGameDefaultResponse | undefined;
-  let sessionMode: string | undefined;
+  let sessionMode: SnackGameMode | undefined;
   let cumulativeStreaks: StreakWithMeta[] = [];
 
   const handleNonLoggedInUser = async () => {
@@ -74,9 +78,8 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   // 이것을 게임 상태(모드, 점수, 스트릭) 및 게임 규칙을 관리하는 순수한 스낵게임 클래스로 분리하면 좋겠네요.
   // 지금 아래에 있는 getMode, handleStreak 같은 단순 상태를 가져오는 메서드들을 축약하고 싶어요!
 
-  // TODO: 모드를 타입으로 정의해도 괜찮을 것 같습니다
   const handleGetMode = () => sessionMode!;
-  const handleSetMode = (mode: string) => {
+  const handleSetMode = (mode: SnackGameMode) => {
     sessionMode = mode;
   };
 

@@ -9,6 +9,7 @@ import { GameScreen } from './GameScreen';
 import { SnackgameApplication } from './SnackgameApplication';
 import { RulePopup } from '../popup/RulePopup';
 import { SettingsPopup } from '../popup/SettingPopup';
+import { SnackGameMode } from '../snackGame/SnackGameUtil';
 import { IconButton } from '../ui/IconButton';
 import { LargeButton } from '../ui/LargeButton';
 import { SnackGameLetter } from '../ui/SnackGameLetter';
@@ -31,7 +32,7 @@ export class LobbyScreen extends Container implements AppScreen {
 
   constructor(
     private app: SnackgameApplication,
-    private handleSetMode: (mode: string) => void,
+    private handleSetMode: (mode: SnackGameMode) => void,
     private handleNonLoggedInUser: () => Promise<void> = () =>
       Promise.resolve(),
   ) {
