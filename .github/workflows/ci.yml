@@ -12,6 +12,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       CF_DISTRIBUTION_ID: ${{ secrets.AWS_CF_DISTRIBUTION_ID }}
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      VITE_NODE_ENV: production
       VITE_GA_TRACKING_ID: ${{ secrets.VITE_GA_TRACKING_ID }}
       VITE_SENTRY_DNS: ${{ secrets.VITE_SENTRY_DNS }}
 
@@ -30,11 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Set Environment Variables
-        run: |
-          echo "VITE_API_URL=$VITE_API_URL" >> .env
-          echo "VITE_NODE_ENV=production" >> .env
 
       - name: Build application
         run: pnpm build
