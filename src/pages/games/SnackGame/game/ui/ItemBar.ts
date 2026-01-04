@@ -27,6 +27,9 @@ export class ItemBar extends Container {
   }
 
   public setup(items: ItemButtonOptions[]) {
+    this.buttons.forEach((button) => button.destroy());
+    this.buttons = [];
+
     items.forEach(({ type, count, onUse }, idx) => {
       const button = new ItemButton({
         type,
