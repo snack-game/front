@@ -1,7 +1,7 @@
 import { ItemType } from '@utils/types/item.type';
 
 import { SnackGame } from './SnackGame';
-import { SnackGamePosition } from './SnackGameUtil';
+import { SNACK_TYPE, SnackGamePosition } from './SnackGameUtil';
 import { sfx } from '../util/audio';
 import { HapticFeedback } from '../util/hapticFeedback';
 
@@ -46,7 +46,7 @@ export class SnackGameActions {
       if (
         this.snackGame.board
           .getSelectedSnacks()
-          .some((snack) => snack.type === 2)
+          .some((snack) => snack.type === SNACK_TYPE.GOLDEN)
       ) {
         this.snackGame.board.reset();
         this.snackGame.board.setup(this.snackGame.config, session!.board);
@@ -77,7 +77,9 @@ export class SnackGameActions {
     const session = await this.snackGame.board.popAllSelectedSnacks(position);
 
     if (
-      this.snackGame.board.getSelectedSnacks().some((snack) => snack.type === 2)
+      this.snackGame.board
+        .getSelectedSnacks()
+        .some((snack) => snack.type === SNACK_TYPE.GOLDEN)
     ) {
       this.snackGame.board.reset();
       this.snackGame.board.setup(this.snackGame.config, session!.board);

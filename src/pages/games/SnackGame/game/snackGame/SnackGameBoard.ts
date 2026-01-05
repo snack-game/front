@@ -8,9 +8,9 @@ import { SnackGame } from './SnackGame';
 import {
   SnackGamePosition,
   SnackGameConfig,
-  snackGameGetSnack,
   SnackGameGrid,
-  SnackType,
+  SNACK_TYPE,
+  getSnackAssets,
   snackGameGetSnackType,
   snackGameSetPieceType,
   snackGameCreateGrid,
@@ -36,10 +36,8 @@ export class SnackGameBoard {
   public columns = 0;
   /** 각 보드 슬롯의 크기 (너비 및 높이) */
   public tileSize = 0;
-  /** 게임에 사용 가능한 일반 유형 목록 */
-  public commonTypes: SnackType[] = [];
   /** 스낵 유형을 스낵 이름에 매핑 */
-  public typesMap!: Record<number, string>;
+  public typesMap: Record<number, string> | null = null;
   /** 선택된 Snack 스택 */
   public selectedSnacks: Snack[] = [];
 
@@ -71,19 +69,9 @@ export class SnackGameBoard {
     this.snacksMask.height = this.getHeight();
     this.snacksContainer.visible = true;
 
-    // 게임에서 사용될 스낵 타입 배열
-    const snacks = snackGameGetSnack(config.mode);
-
-    if (!this.commonTypes.length) {
-      this.typesMap = {};
-
-      for (let i = 0; i < snacks.length; i++) {
-        const name = snacks[i];
-        const type = i + 1;
-
-        this.commonTypes.push(type);
-        this.typesMap[type] = name;
-      }
+    // 게임 모드에 맞는 스낵 타입-에셋 매핑 설정
+    if (!this.typesMap) {
+      this.typesMap = getSnackAssets(config.mode);
     }
 
     // 초기 격자 상태 생성
@@ -115,8 +103,8 @@ export class SnackGameBoard {
    * @param snackType 새 스낵의 유형
    */
   public createSnack(position: SnackGamePosition, snackInfo: SnackResponse) {
-    const type = snackInfo.golden ? 2 : 1;
-    const name = this.typesMap[type];
+    const type = snackInfo.golden ? SNACK_TYPE.GOLDEN : SNACK_TYPE.NORMAL;
+    const name = this.typesMap![type];
     const snack = pool.get(Snack);
     const viewPosition = this.getViewPositionByGridPosition(position);
     snack.onTap = (position) => this.snackGame.actions.actionTap(position);
@@ -162,7 +150,7 @@ export class SnackGameBoard {
     // const combo = this.snackGame.process.getProcessRound();
 
     // 그리드의 해당 위치에 있는 스낵을 0으로 설정하고 보드에서 팝
-    snackGameSetPieceType(this.grid, position, 0);
+    snackGameSetPieceType(this.grid, position, SNACK_TYPE.EMPTY);
     const popData = { snack, type };
     this.snackGame.stats.registerPop(popData);
     this.snackGame.onPop?.(popData);
