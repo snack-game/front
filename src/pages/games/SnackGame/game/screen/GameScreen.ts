@@ -57,7 +57,7 @@ export class GameScreen extends Container implements AppScreen {
 
   constructor(
     private app: SnackgameApplication,
-    private getCurrentMode: () => string,
+    private getCurrentMode: () => SnackGameMode,
     private gameHandlers: GameHandlers,
     private itemHandlers: ItemHandlers,
     private fetchUserItem: () => Promise<{ items: ItemResponse[] }>,
@@ -162,7 +162,7 @@ export class GameScreen extends Container implements AppScreen {
     );
 
     const { board } = await this.gameHandlers.start();
-    const mode = this.getCurrentMode() as SnackGameMode;
+    const mode = this.getCurrentMode();
     const snackGameConfig = snackGameGetConfig({
       rows: board.length,
       columns: board[0].length,
