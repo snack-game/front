@@ -20,6 +20,7 @@ import { SettingsPopup } from '../popup/SettingPopup';
 import { Snack } from '../snackGame/Snack';
 import { SnackGame, SnackGameOnPopData } from '../snackGame/SnackGame';
 import {
+  SNACK_TYPE,
   SnackGameMode,
   SnackGamePosition,
   Streak,
@@ -109,7 +110,7 @@ export class GameScreen extends Container implements AppScreen {
       let isGolden = false;
 
       const streak = data.reduce((acc: Streak, snack) => {
-        if (snack.type === 2) isGolden = true;
+        if (snack.type === SNACK_TYPE.GOLDEN) isGolden = true;
 
         const { row: y, column: x } = snack.getGridPosition();
         acc.push({ x, y });
@@ -124,7 +125,7 @@ export class GameScreen extends Container implements AppScreen {
       let isGolden = false;
 
       data.forEach((snack) => {
-        if (snack.type === 2) isGolden = true;
+        if (snack.type === SNACK_TYPE.GOLDEN) isGolden = true;
       });
 
       return this.handleBomb(position, isGolden);

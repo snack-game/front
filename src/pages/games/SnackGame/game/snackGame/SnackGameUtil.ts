@@ -1,7 +1,12 @@
 import { SnackResponse } from '../game.type';
 
-/** 각 그리드 내부 스낵 타입 */
-export type SnackType = number; // TODO: 타입 안정성과 가독성을 위해 새로운 타입으로 정의
+/** 각 그리드 내부 스낵 타입 상수 */
+export const SNACK_TYPE = {
+  EMPTY: 0,
+  NORMAL: 1,
+  GOLDEN: 2,
+} as const;
+export type SnackType = (typeof SNACK_TYPE)[keyof typeof SNACK_TYPE];
 
 /** 스낵게임 board를 표현하는 2차원 배열 타입 */
 export type SnackGameGrid = SnackType[][];
@@ -18,13 +23,21 @@ export const snackGameModes = ['default', 'inf'] as const;
 /** 게임 모드 타입 */
 export type SnackGameMode = (typeof snackGameModes)[number];
 
-/** 각 게임 모드에 사용되는 snack 타입 배열 */
-const snacks: Record<SnackGameMode, string[]> = {
-  /** 기본 모드 */
-  default: ['snack', 'golden_snack'],
-  /** 무한 모드 */
-  inf: ['snack'],
+/** 각 게임 모드에 사용되는 스낵 타입-에셋 매핑 */
+const snackAssetsByMode: Record<SnackGameMode, Partial<Record<SnackType, string>>> = {
+  default: {
+    [SNACK_TYPE.NORMAL]: 'snack',
+    [SNACK_TYPE.GOLDEN]: 'golden_snack',
+  },
+  inf: {
+    [SNACK_TYPE.NORMAL]: 'snack',
+  },
 };
+
+/** 게임 모드별 스낵 타입-에셋 매핑을 반환 */
+export function getSnackAssets(mode: SnackGameMode): Record<SnackType, string> {
+  return snackAssetsByMode[mode] as Record<SnackType, string>;
+}
 
 /** 스낵게임 기본 설정 */
 export const defaultConfig = {
@@ -50,11 +63,6 @@ export function snackGameGetConfig(
   return { ...defaultConfig, ...customConfig };
 }
 
-/** 스낵게임에 필요한 스낵들을 모드 기준으로 구별해 반환합니다. */
-export function snackGameGetSnack(mode: SnackGameMode): string[] {
-  return [...snacks[mode]];
-}
-
 /**
  * 주어진 스낵 타입을 바탕으로 2차원 배열 그리드를 생성합니다.
  * 기믹을 가진 요소는 초기 실행 시 생성될 랜덤한 index를 초기화 합니다.
@@ -71,10 +79,12 @@ export function snackGameCreateGrid(
   const grid: SnackGameGrid = [];
 
   for (let r = 0; r < rows; r++) {
-    const types = [];
+    const types: SnackType[] = [];
 
     for (let c = 0; c < columns; c++) {
-      const currentType = board[r][c].golden ? 2 : 1;
+      const currentType = board[r][c].golden
+        ? SNACK_TYPE.GOLDEN
+        : SNACK_TYPE.NORMAL;
       types.push(currentType);
     }
 
@@ -122,7 +132,7 @@ export function snackGameGetSnackType(
 export function snackGameSetPieceType(
   grid: SnackGameGrid,
   position: SnackGamePosition,
-  type: number,
+  type: SnackType,
 ) {
   grid[position.row][position.column] = type;
 }
