@@ -32,8 +32,14 @@ export class PausePopup extends BasePopup {
     this.panel.addChild(this.resumeButton);
   }
 
+  private setButtonsEnabled(isEnabled: boolean) {
+    this.endButton.enabled = isEnabled;
+    this.resumeButton.enabled = isEnabled;
+  }
+
   public async handleEndButton() {
     try {
+      this.setButtonsEnabled(false);
       await this.handleGameEnd();
     } catch (error) {
       this.app.setError(error);
@@ -42,6 +48,7 @@ export class PausePopup extends BasePopup {
 
   public async handleResumeButton() {
     try {
+      this.setButtonsEnabled(false);
       await this.handleGameResume();
       this.app.dismissPopup();
     } catch (error) {

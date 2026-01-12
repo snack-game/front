@@ -43,9 +43,20 @@ export class LargeButton extends FancyButton {
       height: opts.height,
     });
 
+    const disabledView = new NineSliceSprite({
+      texture: Texture.from('large-button-disabled'),
+      leftWidth: 36,
+      topHeight: 42,
+      rightWidth: 36,
+      bottomHeight: 52,
+      width: opts.width,
+      height: opts.height,
+    });
+
     super({
       defaultView,
       pressedView,
+      disabledView,
       anchor: 0.5,
     });
 
