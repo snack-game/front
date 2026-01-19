@@ -135,7 +135,7 @@ const SnackGameBase = ({ replaceErrorHandler }: Props) => {
   const handleStreak = async (streak: StreakWithMeta, isGolden: boolean) => {
     cumulativeStreaks = [...cumulativeStreaks, streak];
 
-    if (isGolden) {
+    if (isGolden || streak.isFever) {
       session = await handleStreaksMove();
     }
     return session!;
