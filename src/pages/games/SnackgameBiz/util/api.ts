@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Streak } from '@pages/games/SnackGame/game/snackGame/SnackGameUtil';
+import { StreakWithMeta } from '@pages/games/SnackGame/game/snackGame/SnackGameUtil';
 
 import {
   SnackGameBizDefaultResponse,
@@ -39,7 +39,7 @@ export const createGameApiClient = () => {
     },
     verifyStreaks: async (
       sessionId: number,
-      streaks: Streak[],
+      streaks: StreakWithMeta[],
     ): Promise<SnackGameBizVerify> => {
       const { data } = await api.post(
         `/games/${GAME_ID}/${sessionId}/streaks`,

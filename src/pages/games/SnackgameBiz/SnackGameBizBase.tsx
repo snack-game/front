@@ -16,7 +16,7 @@ import { LobbyScreen } from '../SnackGame/game/screen/LobbyScreen';
 import { SnackgameApplication } from '../SnackGame/game/screen/SnackgameApplication';
 import {
   SnackGameMode,
-  Streak,
+  StreakWithMeta,
 } from '../SnackGame/game/snackGame/SnackGameUtil';
 
 type Props = {
@@ -68,7 +68,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   // 게임 진행 관련 functions
   let session: SnackGameBizDefaultResponse | undefined;
   let sessionMode: SnackGameMode | undefined;
-  let cumulativeStreaks: Streak[] = [];
+  let cumulativeStreaks: StreakWithMeta[] = [];
 
   const handleGameStart = async () => {
     session = await gameApi.start();
@@ -85,7 +85,7 @@ const SnackGameBizBase = ({ replaceErrorHandler }: Props) => {
   };
 
   // TODO: 지금은 인자로 숫자를 사용하지만, '스트릭' VO를 만들어 사용하면 더 좋겠네요.
-  const handleStreak = async (streak: Streak, isGolden: boolean) => {
+  const handleStreak = async (streak: StreakWithMeta, isGolden: boolean) => {
     cumulativeStreaks = [...cumulativeStreaks, streak];
 
     if (isGolden) {
