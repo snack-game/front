@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import { Container, Rectangle, Ticker } from 'pixi.js';
 
 import { ItemBar } from '@pages/games/SnackGame/game/ui/ItemBar';
-import { ItemResponse } from '@utils/types/item.type';
+import { ItemResponse, ItemType } from '@utils/types/item.type';
 
 import { AppScreen, AppScreenConstructor } from './appScreen';
 import { SnackgameApplication } from './SnackgameApplication';
@@ -114,15 +114,15 @@ export class GameScreen extends Container implements AppScreen {
       );
     };
     this.snackGame.onBomb = (position: SnackGamePosition, data: Snack[]) => {
-      this.snackGame.setSelectedItem(null);
-      this.itemBar.setItemsLocked(false);
       let isGolden = false;
 
       data.forEach((snack) => {
         if (snack.type === SNACK_TYPE.GOLDEN) isGolden = true;
       });
 
-      return this.itemHandlers.bomb(position, isGolden);
+      const result = this.itemHandlers.bomb(position, isGolden);
+      this.releaseItem();
+      return result;
     };
     this.snackGame.onSnackGameBoardReset =
       this.onSnackGameBoardReset.bind(this);
@@ -149,11 +149,12 @@ export class GameScreen extends Container implements AppScreen {
         return {
           ...item,
           onUse: async (type) => {
-            this.snackGame.setSelectedItem(type);
+            this.selectItem(type);
+
             if (type === 'FEVER_TIME') {
               await this.itemHandlers.fever();
               this.feverTimer.start(30, () => {
-                this.snackGame.setSelectedItem(null);
+                this.releaseItem();
               });
             }
           },
@@ -185,12 +186,24 @@ export class GameScreen extends Container implements AppScreen {
     gsap.killTweensOf(this.timer.scale);
   }
 
-  /** 화면 업테이트, 하위 컴포넌트의 update함수를 모두 실행합니다. */
+  /** 화면 업데이트, 하위 컴포넌트의 update함수를 모두 실행합니다. */
   public update(time: Ticker) {
     this.snackGame.update(time.deltaMS);
     this.timer.updateTime(this.snackGame.timer.getTimeRemaining());
     this.feverTimer.update(time.deltaMS);
     this.score.setScore(this.snackGame.stats.getScore());
+  }
+
+  /** 아이템 선택 */
+  private selectItem(type: ItemType) {
+    this.snackGame.setSelectedItem(type);
+    this.itemBar.setItemsLocked(true);
+  }
+
+  /** 아이템 선택 해제 */
+  private releaseItem() {
+    this.snackGame.setSelectedItem(null);
+    this.itemBar.setItemsLocked(false);
   }
 
   private onSnackGameBoardReset() {
