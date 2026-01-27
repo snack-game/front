@@ -41,6 +41,7 @@ export class PausePopup extends BasePopup {
     try {
       this.setButtonsEnabled(false);
       await this.handleGameEnd();
+      this.setButtonsEnabled(true);
     } catch (error) {
       this.app.setError(error);
     }
@@ -50,6 +51,7 @@ export class PausePopup extends BasePopup {
     try {
       this.setButtonsEnabled(false);
       await this.handleGameResume();
+      this.setButtonsEnabled(true);
       this.app.dismissPopup();
     } catch (error) {
       this.app.setError(error);
