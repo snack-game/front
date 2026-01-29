@@ -15,6 +15,9 @@ import { resetUserState, userState } from '@utils/atoms/member.atom';
 import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
 
+import ServiceMaintenancePage from '@pages/maintenance/ServiceMaintenancePage';
+import { MaintenanceGuard } from '@pages/MaintenanceGuard';
+
 import '@utils/i18n/i18n';
 
 const MainPage = lazy(() => import('@pages/main/MainPage'));
@@ -73,65 +76,70 @@ const App = () => {
   return (
     <>
       <ErrorBoundary fallback={ErrorPage}>
-        <Suspense fallback={<Loading type={'page'} />}>
-          <Routes>
-            {/*Main*/}
-            <Route path={PATH.MAIN} element={<MainPage />} />
+        <MaintenanceGuard>
+          <Suspense fallback={<Loading type={'page'} />}>
+            <Routes>
+              {/*Main*/}
+              <Route path={PATH.MAIN} element={<MainPage />} />
 
-            {/*OAuth*/}
-            <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
-            <Route
-              path={PATH.OAUTH_FAILURE}
-              element={<ErrorPage message={'소셜 로그인에 실패했습니다.'} />}
-            />
+              {/*OAuth*/}
+              <Route path={PATH.OAUTH_SUCCESS} element={<OAuthPage />} />
+              <Route
+                path={PATH.OAUTH_FAILURE}
+                element={<ErrorPage message={'소셜 로그인에 실패했습니다.'} />}
+              />
 
-            <Route element={<GameLayout />}>
-              {/*Game*/}
-              <Route path={PATH.SNACK_GAME} element={<SnackGamePage />} />
-              <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+              {/*Maintenance*/}
+              <Route path={PATH.MAINTENANCE} element={<ServiceMaintenancePage />} />
 
-              {/*Ranking*/}
-              <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
+              <Route element={<GameLayout />}>
+                {/*Game*/}
+                <Route path={PATH.SNACK_GAME} element={<SnackGamePage />} />
+                <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
+
+                {/*Ranking*/}
+                <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
+
+                <Route element={<PrivateRoute />}>
+                  {/* User */}
+                  <Route path={PATH.USER} element={<UserPage />} />
+                </Route>
+              </Route>
+
+              <Route>
+                {/*Game*/}
+                <Route
+                  path={PATH.SNACK_GAME_BIZ}
+                  element={<SnackGameBizPage />}
+                />
+              </Route>
 
               <Route element={<PrivateRoute />}>
-                {/* User */}
-                <Route path={PATH.USER} element={<UserPage />} />
+                {/*Setting*/}
+                <Route path={PATH.SETTING} element={<SettingPage />} />
+
+                {/* Withdraw */}
+                <Route path={PATH.WITHDRAW} element={<WithdrawPage />} />
+
+                {/* Notices */}
+                <Route path={PATH.NOTICE} element={<NoticePage />} />
               </Route>
-            </Route>
 
-            <Route>
-              {/*Game*/}
+              {/* Policy */}
+              <Route path={PATH.POLICY} element={<PolicyPage />} />
+
+              {/*Error*/}
               <Route
-                path={PATH.SNACK_GAME_BIZ}
-                element={<SnackGameBizPage />}
+                path={PATH.NOT_FOUND_ERROR}
+                element={
+                  <ErrorPage error={new Error('존재하지 않는 페이지입니다!')} />
+                }
               />
-            </Route>
-
-            <Route element={<PrivateRoute />}>
-              {/*Setting*/}
-              <Route path={PATH.SETTING} element={<SettingPage />} />
-
-              {/* Withdraw */}
-              <Route path={PATH.WITHDRAW} element={<WithdrawPage />} />
-
-              {/* Notices */}
-              <Route path={PATH.NOTICE} element={<NoticePage />} />
-            </Route>
-
-            {/* Policy */}
-            <Route path={PATH.POLICY} element={<PolicyPage />} />
-
-            {/*Error*/}
-            <Route
-              path={PATH.NOT_FOUND_ERROR}
-              element={
-                <ErrorPage error={new Error('존재하지 않는 페이지입니다!')} />
-              }
-            />
-          </Routes>
-          <Modal />
-        </Suspense>
-        <Toast />
+            </Routes>
+            <Modal />
+          </Suspense>
+          <Toast />
+        </MaintenanceGuard>
       </ErrorBoundary>
     </>
   );

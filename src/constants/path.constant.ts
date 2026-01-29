@@ -11,6 +11,7 @@ const PATH = {
   POLICY: '/policy',
   WITHDRAW: '/user/setting/withdraw',
   NOTICE: '/user/setting/notices',
+  MAINTENANCE: '/maintenance',
 
   SNACK_GAME: '/snack-game',
   SNACK_GAME_BIZ: '/snack-game/biz',
@@ -26,6 +27,8 @@ const PATH = {
   ONE_LINK: 'https://snackgame.onelink.me/MHW6/github',
 
   NOTICE_RSS: 'https://notice.snackga.me/index.xml',
+
+  INSTAGRAM: 'https://www.instagram.com/snackga._.me/',
 
   GOOGLE: '/oauth2/authorization/google',
   KAKAO: '/oauth2/authorization/kakao',
