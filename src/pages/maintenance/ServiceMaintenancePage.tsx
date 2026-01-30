@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { Navigate } from 'react-router-dom';
 
 import MainAvifImage from '@assets/images/main.avif';
 import MainWebpImage from '@assets/images/main.webp';
@@ -6,9 +7,13 @@ import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import Spacing from '@components/Spacing/Spacing';
 
 import PATH from '@constants/path.constant';
-import { MAINTENANCE_START, MAINTENANCE_END } from '@constants/maintenance.constant';
+import { MAINTENANCE_START, MAINTENANCE_END, isInMaintenance } from '@constants/maintenance.constant';
 
 const ServiceMaintenancePage = () => {
+  if (!isInMaintenance()) {
+    return <Navigate to={PATH.MAIN} replace />;
+  }
+
   return (
     <>
       <Helmet>
