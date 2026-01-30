@@ -13,6 +13,7 @@ import { PrivateRoute } from '@pages/PrivateRoute';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
 import PATH from '@constants/path.constant';
+import { isInMaintenance } from '@constants/maintenance.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
 
 import ServiceMaintenancePage from '@pages/maintenance/ServiceMaintenancePage';
@@ -69,7 +70,7 @@ const App = () => {
       }
     };
 
-    if (window.location.pathname.includes('biz')) return;
+    if (window.location.pathname.includes('biz') || isInMaintenance()) return;
     updateProfile();
   }, []);
 
