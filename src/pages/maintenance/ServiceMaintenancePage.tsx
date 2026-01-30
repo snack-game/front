@@ -41,9 +41,7 @@ const ServiceMaintenancePage = () => {
             <ul className="space-y-3 text-left">
               <li className="text-sm text-gray-700">
                 <span className="font-semibold">점검 일시:</span>{' '}
-                {MAINTENANCE_START && MAINTENANCE_END
-                  && `${MAINTENANCE_START.toLocaleString()} ~ ${MAINTENANCE_END.toLocaleString()} (KST)`
-                }
+                {`${MAINTENANCE_START.toLocaleString()} ~ ${MAINTENANCE_END.toLocaleString()} (KST)`}
               </li>
               <li className="text-sm text-gray-700">
                 <span className="font-semibold">점검 영향:</span> 게임, 랭킹,

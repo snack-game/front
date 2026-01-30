@@ -3,7 +3,6 @@ import { useLocation, Navigate } from 'react-router-dom';
 import { isInMaintenance } from '@constants/maintenance.constant';
 import PATH from '@constants/path.constant';
 
-
 export const MaintenanceGuard = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
 
