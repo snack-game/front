@@ -9,7 +9,15 @@ i18next
   .use(initReactI18next)
   .use(HttpBackend)
   .init({
-    ns: ['game', 'landing', 'ranking', 'setting', 'translation', 'user'],
+    ns: [
+      'game',
+      'landing',
+      'ranking',
+      'setting',
+      'translation',
+      'user',
+      'maintenance',
+    ],
     fallbackLng: 'ko',
     backend: {
       loadPath: '/locale/{{lng}}/{{ns}}.json',
@@ -29,7 +37,7 @@ i18next
         'subdomain',
       ],
       caches: ['localStorage'],
-      convertDetectedLanguage: (lng) => lng.split('-')[0]
+      convertDetectedLanguage: (lng) => lng.split('-')[0],
     },
   });
 

@@ -1,0 +1,9 @@
+{
+  "title": "Service Maintenance Notice",
+  "description": "System maintenance is in progress\nto improve our service.",
+  "maintenance_time": "Maintenance Time",
+  "maintenance_impact": "Service Impact",
+  "impact_details": "All services, including games, rankings, and profiles, will be unavailable.",
+  "notice": "Any updates will be announced",
+  "official_sns": "on our official SNS channels."
+}

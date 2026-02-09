@@ -1,0 +1,9 @@
+{
+  "title": "서비스 점검 안내",
+  "description": "더 나은 서비스 제공을 위해\n시스템 점검을 진행하고 있습니다.",
+  "maintenance_time": "점검 일시",
+  "maintenance_impact": "점검 영향",
+  "impact_details": "게임, 랭킹, 프로필 페이지 등 서비스 전체 이용 불가",
+  "notice": "변동 사항이 있을 경우",
+  "official_sns": "공식 SNS를 통해 안내해 드리겠습니다"
+}

@@ -1,6 +1,6 @@
-export const MAINTENANCE_START = new Date('2026-02-09T21:00:00+09:00');
+export const MAINTENANCE_START = new Date('2026-02-09T11:00:00+09:00');
 export const MAINTENANCE_END = new Date('2026-02-09T23:59:00+09:00');
 
 export const isInMaintenance = (now = new Date()) => {
   return now >= MAINTENANCE_START && now <= MAINTENANCE_END;
-}
+};

@@ -9,15 +9,14 @@ import Loading from '@components/Loading/Loading';
 import Modal from '@components/Modal/Modal';
 import Toast from '@components/Toast/Toast';
 import GameLayout from '@pages/GameLayout';
+import ServiceMaintenancePage from '@pages/maintenance/ServiceMaintenancePage';
+import { MaintenanceGuard } from '@pages/MaintenanceGuard';
 import { PrivateRoute } from '@pages/PrivateRoute';
 import { resetUserState, userState } from '@utils/atoms/member.atom';
 
-import PATH from '@constants/path.constant';
 import { isInMaintenance } from '@constants/maintenance.constant';
+import PATH from '@constants/path.constant';
 import useLocalStorage from '@hooks/useLocalStorage';
-
-import ServiceMaintenancePage from '@pages/maintenance/ServiceMaintenancePage';
-import { MaintenanceGuard } from '@pages/MaintenanceGuard';
 
 import '@utils/i18n/i18n';
 
@@ -91,7 +90,10 @@ const App = () => {
               />
 
               {/*Maintenance*/}
-              <Route path={PATH.MAINTENANCE} element={<ServiceMaintenancePage />} />
+              <Route
+                path={PATH.MAINTENANCE}
+                element={<ServiceMaintenancePage />}
+              />
 
               <Route element={<GameLayout />}>
                 {/*Game*/}
@@ -99,7 +101,10 @@ const App = () => {
                 <Route path={PATH.APPLE_GAME} element={<AppleGamePage />} />
 
                 {/*Ranking*/}
-                <Route path={PATH.SNACK_GAME_RANKING} element={<RankingPage />} />
+                <Route
+                  path={PATH.SNACK_GAME_RANKING}
+                  element={<RankingPage />}
+                />
 
                 <Route element={<PrivateRoute />}>
                   {/* User */}
