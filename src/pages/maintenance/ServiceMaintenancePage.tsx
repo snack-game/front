@@ -6,8 +6,12 @@ import MainWebpImage from '@assets/images/main.webp';
 import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import Spacing from '@components/Spacing/Spacing';
 
+import {
+  MAINTENANCE_START,
+  MAINTENANCE_END,
+  isInMaintenance,
+} from '@constants/maintenance.constant';
 import PATH from '@constants/path.constant';
-import { MAINTENANCE_START, MAINTENANCE_END, isInMaintenance } from '@constants/maintenance.constant';
 
 const ServiceMaintenancePage = () => {
   if (!isInMaintenance()) {
@@ -46,7 +50,7 @@ const ServiceMaintenancePage = () => {
             <ul className="space-y-3 text-left">
               <li className="text-sm text-gray-700">
                 <span className="font-semibold">점검 일시:</span>{' '}
-                {`${MAINTENANCE_START.toLocaleString()} ~ ${MAINTENANCE_END.toLocaleString()} (KST)`}
+                {`${MAINTENANCE_START.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} ~ ${MAINTENANCE_END.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} (KST)`}
               </li>
               <li className="text-sm text-gray-700">
                 <span className="font-semibold">점검 영향:</span> 게임, 랭킹,
