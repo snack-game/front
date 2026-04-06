@@ -6,8 +6,10 @@ import ImageWithFallback from '@components/ImageWithFallback/ImageWithFallback';
 import { KEY_LAST_NOTICE_INFO } from '@constants/localStorage.constant';
 import useModal from '@hooks/useModal';
 
-// notice_YYYYMMDD_keyword(_version)
-const CURRENT_ID = 'notice_20250710_bomb';
+const NOTICE_CONFIG = {
+  id: 'notice_2025-07-10_bomb',
+  expireDate: '2025-07-17T23:59:59+09:00',
+} as const;
 
 const Notice = () => {
   const { closeModal } = useModal();
@@ -18,7 +20,7 @@ const Notice = () => {
     localStorage.setItem(
       KEY_LAST_NOTICE_INFO,
       JSON.stringify({
-        id: CURRENT_ID,
+        id: NOTICE_CONFIG.id,
         hideUntil: new Date(Date.now() + ONE_DAY),
       }),
     );
@@ -63,14 +65,19 @@ const Notice = () => {
 export const useNoticeModal = () => {
   const { openModal } = useModal();
 
+  const isNoticeExpired = () => {
+    return new Date() > new Date(NOTICE_CONFIG.expireDate);
+  };
+
   const isNoticeHidden = () => {
     const lastNotice = localStorage.getItem(KEY_LAST_NOTICE_INFO);
     const { id, hideUntil } = lastNotice ? JSON.parse(lastNotice) : {};
 
-    return id === CURRENT_ID && new Date(hideUntil) > new Date();
+    return id === NOTICE_CONFIG.id && new Date(hideUntil) > new Date();
   };
 
   const openNoticeModal = () => {
+    if (isNoticeExpired()) return;
     if (isNoticeHidden()) return;
 
     openModal({
